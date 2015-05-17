@@ -18,4 +18,6 @@ public class User extends Model{
     public String lastname;
     public String sha1;
 
+    public static Finder<String,User> find = new Finder<String, User>(String.class,User.class);
+
 }
