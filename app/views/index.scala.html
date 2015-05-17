@@ -1,0 +1,28 @@
+@(message: String)
+
+@main("HMS-System") {
+
+    <form action="@routes.Application.addUser()" method="post">
+        <table>
+            <tr>
+                <td>Matrikel Number:</td>
+                <td><input type="number" name="matrikel"/></td>
+            </tr>
+            <tr>
+                <td>First Name:</td>
+                <td><input type="text" name="firstname"/></td>
+            </tr>
+            <tr>
+                <td>Last Name:</td>
+                <td><input type = "text" name="lastname"/></td>
+            </tr>
+            <tr>
+               <td><button>Submit</button></td>
+            </tr>
+
+        </table>
+    </form>
+
+
+
+}
