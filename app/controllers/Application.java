@@ -1,8 +1,8 @@
 package controllers;
 
-import Utils.sha1generator;
 import models.User;
 import play.*;
+import play.api.libs.Crypto;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.ebean.Model;
@@ -10,10 +10,10 @@ import play.mvc.*;
 
 import views.html.*;
 
-import java.util.List;
+
 import static play.libs.Json.toJson;
 public class Application extends Controller {
-
+    public User currentuser = null;
     public static Result index() {
         return ok(index.render("HMS"));
     }
@@ -21,7 +21,7 @@ public class Application extends Controller {
     public static Result addUser(){
 
         User user = Form.form(User.class).bindFromRequest().get();
-        user.sha1= sha1generator.generateSha1(user.matrikel);
+        user.sha1= Crypto.sign(user.matrikel);
         user.save();
         return ok(register.render());
         //return redirect(routes.Application.getUser());
@@ -34,5 +34,9 @@ public class Application extends Controller {
         return ok(toJson(user));}
         else
         {return ok("User is not found");}
+    }
+
+    public static Result addRepo(){
+        return ok("leave it on purpose");
     }
 }
