@@ -13,5 +13,26 @@
 
     </table>
   </form>
+------------------------add remote repo---------------------------------
+  <form action="@routes.Application.addRemoteRepo()" method="post">
+    <table>
+      <tr>
+        <td>Host Name:</td>
+        <td><input type="text" name="hostname"/></td>
+      </tr>
+      <tr>
+        <td>SSH Pubkey:</td>
+        <td><input type="text" name="pubkey"/></td>
+      </tr>
+      <tr>
+        <td>Repo Name:</td>
+        <td><input type = "text" name="repo"/></td>
+      </tr>
+      <tr>
+        <td><button>Create Remote Repo</button></td>
+      </tr>
+
+    </table>
+  </form>
 </body>
 </html>
