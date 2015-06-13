@@ -94,7 +94,7 @@ public class Application extends Controller {
             }
         });
         ConfigManager manager = ConfigManager.create("/home/hao/gitolite-admin");
-        //ConfigManager manager = ConfigManager.create("git@localhost:gitolite-admin");
+        //ConfigManager manager = ConfigManager.create("ssh://git@localhost:22/gitolite-admin");
         Config config = manager.get();
 
             nl.minicom.gitolite.manager.models.User repouser = config.createUser(currentuser.matrikel);
