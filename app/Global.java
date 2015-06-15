@@ -28,7 +28,7 @@ public class Global extends GlobalSettings{
         postgresDb.setDriver("org.h2.Driver");
         postgresDb.setUsername("hms");
         postgresDb.setPassword("test");
-        postgresDb.setUrl("jdbc:h2:file:~/data/playdb");
+        postgresDb.setUrl("jdbc:h2:file:~/data_dynamic/playdb");
         postgresDb.setHeartbeatSql("select count(*) from t_one");
 
         config.setDataSourceConfig(postgresDb);
@@ -41,7 +41,7 @@ public class Global extends GlobalSettings{
         config.setDdlRun(true);
 
         config.setDefaultServer(false);
-        config.setRegister(false);
+        config.setRegister(true);
 
 
 // automatically determine the DatabasePlatform
@@ -56,7 +56,7 @@ public class Global extends GlobalSettings{
 
 
 // specify jars to search for entity beans
-        config.addJar("someJarThatContainsEntityBeans.jar");
+        //config.addJar("someJarThatContainsEntityBeans.jar");
 
 // create the EbeanServer instance
         EbeanServer server = EbeanServerFactory.create(config);
