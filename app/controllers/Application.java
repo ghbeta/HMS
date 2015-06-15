@@ -1,5 +1,6 @@
 package controllers;
 
+import com.avaje.ebean.Ebean;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
@@ -47,13 +48,17 @@ public class Application extends Controller {
         User user = Form.form(User.class).bindFromRequest().get();
         user.sha1= Crypto.sign(user.matrikel);
 
-
+        //Ebean.getServer();
         user.save();
         return ok(register.render());
 
         //return redirect(routes.Application.getUser());
     }
+    public static Result addDatenbank(){
 
+
+        return ok("test");
+    }
     public static Result getUser(){
         String matrikelnummer = DynamicForm.form().bindFromRequest().get("matrikel");
         User user = User.find.byId(matrikelnummer);
