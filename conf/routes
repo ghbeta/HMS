@@ -12,5 +12,7 @@ POST        /users               controllers.Application.getUser()
 POST        /repo                controllers.Application.addRepo()
 
 POST        /remote              controllers.Application.addRemoteRepo()
+
+POST       /database           controllers.Application.addDatenbank()
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file        controllers.Assets.at(path="/public", file)

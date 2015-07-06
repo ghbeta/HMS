@@ -5,6 +5,7 @@ import com.avaje.ebean.EbeanServer;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import models.Course;
 import models.User;
 import nl.minicom.gitolite.manager.exceptions.GitException;
 import nl.minicom.gitolite.manager.exceptions.ModificationException;
@@ -29,14 +30,19 @@ import play.data.Form;
 import play.db.ebean.Model;
 import play.mvc.*;
 
+import utils.CreateDB;
 import views.html.*;
 
 
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.List;
 
 import static play.libs.Json.toJson;
+import static utils.CreateDB.createServer;
+
 public class Application extends Controller {
     public static User currentuser = null;
     public static Result index() {
@@ -57,7 +63,31 @@ public class Application extends Controller {
     }
     public static Result addDatenbank(){
         DynamicForm requestData = Form.form().bindFromRequest();
-        String databasename=requestData.get("newsemester");
+        String semester=requestData.get("newsemester");
+        String courseid = requestData.get("courseid");
+        String coursename = requestData.get("coursename");
+
+        Course course= new Course();
+
+        course.setCourseId(courseid);
+        course.setCourseName(coursename);
+        course.setCreator(currentuser);
+
+        User semesteruser = new User();
+        semesteruser.setMatrikel(currentuser.getMatrikel());
+        semesteruser.setFirstname(currentuser.getFirstname());
+        semesteruser.setLastname(currentuser.getLastname());
+        semesteruser.setSha1(currentuser.getSha1());
+
+        List<Class> entity = new ArrayList<Class>();
+
+        entity.add(Course.class);
+        entity.add(User.class);
+        createServer(semester, entity);
+        semesteruser.save(semester);
+        course.save(semester);
+
+
 
         return ok("test");
     }

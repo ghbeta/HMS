@@ -34,5 +34,26 @@
 
     </table>
   </form>
+
+  <form action="@routes.Application.addDatenbank()" method="post">
+    <table>
+      <tr>
+        <td>which semester:</td>
+        <td><input type="text" name="newsemester"/></td>
+      </tr>
+      <tr>
+        <td>course id:</td>
+        <td><input type="text" name="courseid"/></td>
+      </tr>
+      <tr>
+        <td>course name:</td>
+        <td><input type="text" name="coursename"/></td>
+      </tr>
+      <tr>
+        <td><button>Create new database for this year</button></td>
+      </tr>
+
+    </table>
+  </form>
 </body>
 </html>
