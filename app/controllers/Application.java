@@ -1,6 +1,7 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.EbeanServer;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
@@ -49,19 +50,21 @@ public class Application extends Controller {
         user.sha1= Crypto.sign(user.matrikel);
 
         //Ebean.getServer();
-        user.save();
+        user.save("global");
         return ok(register.render());
 
         //return redirect(routes.Application.getUser());
     }
     public static Result addDatenbank(){
-
+        DynamicForm requestData = Form.form().bindFromRequest();
+        String databasename=requestData.get("newsemester");
 
         return ok("test");
     }
     public static Result getUser(){
         String matrikelnummer = DynamicForm.form().bindFromRequest().get("matrikel");
-        User user = User.find.byId(matrikelnummer);
+        EbeanServer db=Ebean.getServer("global");
+        User user =db.find(User.class,matrikelnummer); //User.find.byId(matrikelnummer);
         if(user != null){
         currentuser = user;
         return ok(createrepo.render());}
