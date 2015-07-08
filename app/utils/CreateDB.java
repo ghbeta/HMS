@@ -5,7 +5,11 @@ import com.avaje.ebean.EbeanServerFactory;
 import com.avaje.ebean.config.DataSourceConfig;
 import com.avaje.ebean.config.ServerConfig;
 import models.User;
+import play.Logger;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -17,24 +21,39 @@ public class CreateDB {
     public static void createServer(String name, List<Class> entity) {
         ServerConfig config = new ServerConfig();
         config.setName(name);
-
+       //config.loadFromProperties();
 // Define DataSource parameters
         DataSourceConfig postgresDb = new DataSourceConfig();
         postgresDb.setDriver("org.h2.Driver");
         postgresDb.setUsername("hms");
         postgresDb.setPassword("test");
         postgresDb.setUrl("jdbc:h2:file:~/data_dynamic/"+name);
-       // postgresDb.setHeartbeatSql("select count(*) from t_one");
 
+//       // postgresDb.setHeartbeatSql("select count(*) from t_one");
+//        //postgresDb.loadSettings("global");
+
+//
         config.setDataSourceConfig(postgresDb);
-
+        Path p= Paths.get(System.getProperty("user.home"),"data_dynamic",name+".h2.db");
+        Logger.info(p.toString());
+        File f = p.toFile();
 // specify a JNDI DataSource
 // config.setDataSourceJndiName("someJndiDataSourceName");
 
 // set DDL options...
-        config.setDdlGenerate(true);
-        config.setDdlRun(true);
+        if(f.exists()){
+            Logger.info("file is there");
+        config.setDdlGenerate(false);
+        config.setDdlRun(false);}
+        else
+        {Logger.info("wrong universe");
+            config.setDdlGenerate(true);
+            config.setDdlRun(true);
+        }
 
+
+
+        config.setUpdateChangesOnly(true);
         config.setDefaultServer(false);
         config.setRegister(true);
 
@@ -51,11 +70,11 @@ public class CreateDB {
         config.addClass(entity.get(i));}
         //config.addClass(Customer.class);
 
-
 // specify jars to search for entity beans
         //config.addJar("someJarThatContainsEntityBeans.jar");
 
 // create the EbeanServer instance
+
         EbeanServer server = EbeanServerFactory.create(config);
 
     }
