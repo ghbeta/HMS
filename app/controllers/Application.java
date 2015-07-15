@@ -141,6 +141,7 @@ public class Application extends Controller {
             repouser.setKey(host,pubkey);
 
         manager.apply(config);
+
         gitogit.pull().call();
         //gitogit.commit().setMessage("Add User").call();
         gitogit.push().call();

@@ -3,10 +3,7 @@ package models;
 import com.avaje.ebean.Ebean;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +11,7 @@ import java.util.List;
  * Created by Hao on 2015/5/17.
  */
 @Entity
+@Table(name = "users")
 public class User extends Model{
    public static final String DBServer="global";
     @Id
@@ -58,6 +56,7 @@ public class User extends Model{
     public String firstname;
     public String lastname;
     public String sha1;
+
 
 
 

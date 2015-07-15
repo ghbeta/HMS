@@ -3,18 +3,29 @@ package models;
 import com.avaje.ebean.Ebean;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Hao on 2015/7/6.
  */
 @Entity
+@Table(name = "Courses")
 public class Course extends Model {
     @Id
     public String courseId;
+
+    @OneToOne
+    public User Creator;
+
+
+
+    @OneToMany
+    public List<User> Assistant = new ArrayList<>();
+
+    public String courseName;
+
 
     public String getCourseId() {
         return courseId;
@@ -40,10 +51,13 @@ public class Course extends Model {
         Creator = creator;
     }
 
-    public String courseName;
+    public List<User> getAssistant() {
+        return Assistant;
+    }
 
-    @OneToOne
-    public User Creator;
+    public void setAssistant(List<User> assistant) {
+        Assistant = assistant;
+    }
 
     @Override
     public void save(String semester){
