@@ -19,11 +19,11 @@ import static play.data.Form.form;
 public class Application extends Controller {
 
     public static Result GO_HOME = redirect(
-            routes.Application.index()
+            controllers.routes.Application.index()
     );
 
     public static Result GO_DASHBOARD = redirect(
-            routes.Dashboard.index()
+            controllers.routes.Dashboard.index()
     );
 
     /**
