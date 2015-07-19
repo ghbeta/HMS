@@ -1,0 +1,10 @@
+@(user: User)
+
+@main(user) {
+
+    Logged in User
+    <ul>
+        <li>Matrikel Number: @user.id</li>
+        <li>Lastname: @user.getFirstname</li>
+    </ul>
+}

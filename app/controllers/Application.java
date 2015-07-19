@@ -1,177 +1,157 @@
 package controllers;
 
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.EbeanServer;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-import models.Course;
 import models.User;
-import nl.minicom.gitolite.manager.exceptions.GitException;
-import nl.minicom.gitolite.manager.exceptions.ModificationException;
-import nl.minicom.gitolite.manager.exceptions.ServiceUnavailable;
-import nl.minicom.gitolite.manager.models.Config;
-import nl.minicom.gitolite.manager.models.ConfigManager;
-import nl.minicom.gitolite.manager.models.Group;
-import nl.minicom.gitolite.manager.models.Permission;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRemoteException;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.JschConfigSessionFactory;
-import org.eclipse.jgit.transport.OpenSshConfig;
-import org.eclipse.jgit.transport.SshSessionFactory;
-import org.eclipse.jgit.util.FS;
-import play.*;
-import play.api.libs.Crypto;
-import play.data.DynamicForm;
+import utils.AppException;
+import play.Logger;
 import play.data.Form;
-import play.db.ebean.Model;
-import play.mvc.*;
+import play.data.validation.Constraints;
+import play.i18n.Messages;
+import play.mvc.Controller;
+import play.mvc.Result;
+import views.html.index;
 
-import utils.CreateDB;
-import views.html.*;
+import static play.data.Form.form;
 
-
-import java.io.File;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.List;
-
-import static play.libs.Json.toJson;
-import static utils.CreateDB.createServer;
-
+/**
+ * Login and Logout.
+ * User: yesnault
+ */
 public class Application extends Controller {
-    public static User currentuser = null;
+
+    public static Result GO_HOME = redirect(
+            routes.Application.index()
+    );
+
+    public static Result GO_DASHBOARD = redirect(
+            routes.Dashboard.index()
+    );
+
+    /**
+     * Display the login page or dashboard if connected
+     *
+     * @return login page or dashboard
+     */
     public static Result index() {
-        return ok(index.render("HMS"));
-        //return ok(register.render());
-    }
-
-    public static Result addUser(){
-
-        User user = Form.form(User.class).bindFromRequest().get();
-        user.sha1= Crypto.sign(user.matrikel);
-
-        //Ebean.getServer();
-        user.save("global");
-        return ok(register.render());
-
-        //return redirect(routes.Application.getUser());
-    }
-    public static Result addDatenbank(){
-        DynamicForm requestData = Form.form().bindFromRequest();
-        String semester=requestData.get("newsemester");
-        String courseid = requestData.get("courseid");
-        String coursename = requestData.get("coursename");
-
-        Course course= new Course();
-
-        course.setCourseId(courseid);
-        course.setCourseName(coursename);
-        course.setCreator(currentuser);
-
-        User semesteruser = new User();
-        semesteruser.setMatrikel(currentuser.getMatrikel());
-        semesteruser.setFirstname(currentuser.getFirstname());
-        semesteruser.setLastname(currentuser.getLastname());
-        semesteruser.setSha1(currentuser.getSha1());
-
-        List<Class> entity = new ArrayList<Class>();
-
-        entity.add(Course.class);
-        entity.add(User.class);
-        createServer(semester, entity);
-        semesteruser.save(semester);
-        course.save(semester);
-
-
-
-        return ok("test");
-    }
-    public static Result getUser(){
-        String matrikelnummer = DynamicForm.form().bindFromRequest().get("matrikel");
-        EbeanServer db=Ebean.getServer("global");
-        User user =db.find(User.class,matrikelnummer); //User.find.byId(matrikelnummer);
-        if(user != null){
-        currentuser = user;
-        return ok(createrepo.render());}
-        else
-        {return ok("User is not found");}
-    }
-
-    public static Result addRepo(){
-
-       File gitDir = new File("localrepo/"+currentuser.sha1+"/.git");
-        try {
-            FileRepository repo = new FileRepository(gitDir);
-            repo.create();
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Check that the email matches a confirmed user before we redirect
+        String email = ctx().session().get("email");
+        if (email != null) {
+            User user = User.findByEmail(email,"global");
+            if (user != null && user.validated) {
+                return GO_DASHBOARD;
+            } else {
+                Logger.debug("Clearing invalid session credentials");
+                session().clear();
+            }
         }
 
-        return ok("leave it on purpose");
+        return ok(index.render(form(Register.class), form(Login.class)));
     }
 
-    public static Result addRemoteRepo() throws ModificationException, ServiceUnavailable, IOException, GitException, InterruptedException, GitAPIException, JSchException {
-        //String host_current_user=System.getProperty("user.name");
-        //System.out.println("llllllllllllllllllllllllllll"+host_current_user);
+    /**
+     * Login class used by Login Form.
+     */
+    public static class Login {
 
-        DynamicForm requestData = Form.form().bindFromRequest();
-        String host=requestData.get("hostname");
-        String pubkey=requestData.get("pubkey");
-        String repo = requestData.get("repo");
-        Repository adminrepo = new FileRepository("/home/hao/gitolite-admin/.git");
-        Git gitogit = new Git(adminrepo);
-        SshSessionFactory.setInstance(new JschConfigSessionFactory() {
-            @Override
-            protected void configure(OpenSshConfig.Host host, Session session) {
-                session.setConfig("StrictHostKeyChecking","no");
+        @Constraints.Required
+        public String email;
+        @Constraints.Required
+        public String password;
+
+        /**
+         * Validate the authentication.
+         *
+         * @return null if validation ok, string with details otherwise
+         */
+        public String validate() {
+
+            User user = null;
+            try {
+                user = User.authenticate(email, password,"global");
+            } catch (AppException e) {
+                return Messages.get("error.technical");
             }
-        });
-        ConfigManager manager = ConfigManager.create("/home/hao/gitolite-admin");
-        //ConfigManager manager = ConfigManager.create("ssh://git@localhost:22/gitolite-admin");
-        Config config = manager.get();
+            if (user == null) {
+                return Messages.get("invalid.user.or.password");
+            } else if (!user.validated) {
+                return Messages.get("account.not.validated.check.mail");
+            }
+            return null;
+        }
 
-            nl.minicom.gitolite.manager.models.User repouser = config.createUser(currentuser.matrikel);
-
-            config.createRepository(repo).setPermission(repouser, Permission.ALL);
-            repouser.setKey(host,pubkey);
-
-        manager.apply(config);
-
-        gitogit.pull().call();
-        //gitogit.commit().setMessage("Add User").call();
-        gitogit.push().call();
-//        JSch jsch = new JSch();
-//        jsch.addIdentity("id_rsa");
-//        Session session = jsch.getSession("git","localhost",22);
-//        java.util.Properties prop = new java.util.Properties();
-//        prop.put("StrictHostKeyChecking","no");
-//        session.setConfig(prop);
-//        session.connect();
-//        SshSessionFactory factory = new JschConfigSessionFactory() {
-//            @Override
-//            protected void configure(OpenSshConfig.Host host, Session session) {
-//                session.setConfig("StrictHostKeyChecking","no");
-//            }
-//            protected JSch getJSch(final OpenSshConfig.Host hc, FS fs) throws  JSchException{
-//                JSch jsch = super.getJSch(hc,fs);
-//                jsch.removeAllIdentity();
-//                jsch.addIdentity("id_rsa");
-//                return jsch;
-//            }
-//        };
-
-        //gitogit.push().call();
-
-
-
-
-
-
-        return ok("git address: git@"+ InetAddress.getLocalHost()+":"+repo+".git");
     }
+
+    public static class Register {
+        public String id;
+
+        @Constraints.Required
+        public String email;
+
+        @Constraints.Required
+        public String lastname;
+
+        @Constraints.Required
+        public String firstname;
+
+        @Constraints.Required
+        public String inputPassword;
+
+        /**
+         * Validate the authentication.
+         *
+         * @return null if validation ok, string with details otherwise
+         */
+        public String validate() {
+            if (isBlank(email)) {
+                return "Email is required";
+            }
+
+            if (isBlank(lastname)) {
+                return "lastname is required";
+            }
+
+            if (isBlank(firstname)) {
+                return "firstname is required";
+            }
+
+            if (isBlank(inputPassword)) {
+                return "Password is required";
+            }
+
+            return null;
+        }
+
+        private boolean isBlank(String input) {
+            return input == null || input.isEmpty() || input.trim().isEmpty();
+        }
+    }
+
+    /**
+     * Handle login form submission.
+     *
+     * @return Dashboard if auth OK or login form if auth KO
+     */
+    public static Result authenticate() {
+        Form<Login> loginForm = form(Login.class).bindFromRequest();
+
+        Form<Register> registerForm = form(Register.class);
+
+        if (loginForm.hasErrors()) {
+            return badRequest(index.render(registerForm, loginForm));
+        } else {
+            session("email", loginForm.get().email);
+            return GO_DASHBOARD;
+        }
+    }
+
+    /**
+     * Logout and clean the session.
+     *
+     * @return Index page
+     */
+    public static Result logout() {
+        session().clear();
+        flash("success", Messages.get("youve.been.logged.out"));
+        return GO_HOME;
+    }
+
 }

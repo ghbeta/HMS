@@ -4,6 +4,7 @@ import com.avaje.ebean.EbeanServer;
 import com.avaje.ebean.EbeanServerFactory;
 import com.avaje.ebean.config.DataSourceConfig;
 import com.avaje.ebean.config.ServerConfig;
+import models.Token;
 import models.User;
 import play.*;
 import play.Application;
@@ -23,7 +24,8 @@ public class Global extends GlobalSettings {
         Logger.info("Application started....");
         List<Class> entity=new ArrayList<Class>();
         entity.add(User.class);
-        createServer("global",entity);
+        entity.add(Token.class);
+        createServer("global", entity);
     }
 }
 

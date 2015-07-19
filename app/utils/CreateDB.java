@@ -67,7 +67,8 @@ public class CreateDB {
 // ... the classpath looking for entity classes.
 
        for(int i=0;i<entity.size();i++){
-        config.addClass(entity.get(i));}
+        config.addClass(entity.get(i));
+           Logger.info(entity.get(i).getName());}
         //config.addClass(Customer.class);
 
 // specify jars to search for entity beans
