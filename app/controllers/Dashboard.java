@@ -6,13 +6,10 @@ import play.mvc.Result;
 import play.mvc.Security;
 import views.html.dashboard.index;
 
-/**
- * User: yesnault
- * Date: 22/01/12
- */
-@Security.Authenticated(Secured.class)
-public class Dashboard extends Controller {
 
+
+public class Dashboard extends Controller {
+    @Security.Authenticated(Secured.class)
     public static Result index() {
         return ok(index.render(User.findByEmail(request().username(),"global")));
     }
