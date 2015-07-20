@@ -1,0 +1,148 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="includes/diagramstyle.css">
+<script src="includes/dagre.min.js"></script>
+<script src="includes/graph.js"></script>
+<script src="includes/drawer.js"></script>
+</head>
+<body>
+<script>
+   var json = {
+   "typ":"class",
+   "nodes":[
+   {
+         "typ":"node",
+         "id":"HMSModel",
+         "attributes":[
+         "id : int",
+            "modTime : java.util.Date",
+            "value : String"
+         ]
+      },
+      {
+         "typ":"node",
+         "id":"Role"
+      },
+      {
+         "typ":"node",
+         "id":"User",
+         "attributes":[
+         "email : String",
+            "firstName : String",
+            "lastName : String",
+            "password : String",
+            "matrikelNumber : String",
+            "lastLogin : java.util.Date",
+            "emailValidated : String"
+         ]
+      },
+      {
+         "typ":"node",
+         "id":"Lecture",
+         "attributes":[
+         "name : String",
+            "description : String",
+            "questionsDuty ??? : String",
+            "closingdate : java.util.Date",
+            "optionalDuties : int",
+            "lowerProcentualBounderyOfDuties : int",
+            "minimumPercentageForExamination : int"
+         ]
+      },
+      {
+         "typ":"node",
+         "id":"Semester",
+         "attributes":[
+         "semester : String"
+         ]
+      },
+      {
+         "typ":"node",
+         "id":"Message",
+         "attributes":[
+         "body : String",
+            "date : java.util.Date"
+         ]
+      }
+   ],
+   "edges":[
+   {
+         "typ":"edge",
+         "source":{
+            "id":"Message",
+            "cardinality":"many",
+            "property":""
+         },
+         "target":{
+            "id":"HMSModel",
+            "cardinality":"one",
+            "property":"parent"
+         }
+      },
+      {
+         "typ":"edge",
+         "source":{
+            "id":"User",
+            "cardinality":"many",
+            "property":""
+         },
+         "target":{
+            "id":"Role",
+            "cardinality":"many",
+            "property":"role"
+         }
+      },
+      {
+         "typ":"edge",
+         "source":{
+            "id":"Message",
+            "cardinality":"many",
+            "property":"messages"
+         },
+         "target":{
+            "id":"User",
+            "cardinality":"one",
+            "property":"sender"
+         }
+      },
+      {
+         "typ":"edge",
+         "source":{
+            "id":"Semester",
+            "cardinality":"one",
+            "property":"semester"
+         },
+         "target":{
+            "id":"Lecture",
+            "cardinality":"many",
+            "property":"lectures"
+         }
+      },
+      {
+         "typ":"generalisation",
+         "source":{"id":"User"},
+         "target":{"id":"HMSModel"}
+      },
+      {
+         "typ":"generalisation",
+         "source":{"id":"Lecture"},
+         "target":{"id":"HMSModel"}
+      },
+      {
+         "typ":"generalisation",
+         "source":{"id":"Semester"},
+         "target":{"id":"HMSModel"}
+      },
+      {
+         "typ":"generalisation",
+         "source":{"id":"Message"},
+         "target":{"id":"HMSModel"}
+      }
+   ]
+}   ;
+   new Graph(json, {"canvasid":"canvasmodel", "display":"html", "fontsize":10,"bar":true}).layout(100,100);
+</script>
+
+</body>
+</html>
+
