@@ -16,6 +16,7 @@ import views.html.account.signup.create;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.UUID;
 
 import static play.data.Form.form;
@@ -23,8 +24,6 @@ import static play.data.Form.form;
 /**
  * Signup to PlayStartApp : save and send confirm mail.
  * <p/>
- * User: yesnault
- * Date: 31/01/12
  */
 public class Signup extends Controller {
 
@@ -144,6 +143,8 @@ public class Signup extends Controller {
             if (User.confirm(user,"global")) {
                 sendMailConfirmation(user);
                 flash("success", Messages.get("account.successfully.validated"));
+                user.dateCreation=new Date();
+                user.save("global");
                 return ok(views.html.account.signup.confirm.render());
             } else {
                 Logger.debug("Signup.confirm cannot confirm user");
