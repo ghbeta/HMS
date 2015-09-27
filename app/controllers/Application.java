@@ -20,6 +20,9 @@ public class Application extends Controller {
 
     public static Result GO_HOME = redirect(
             controllers.routes.Application.index()
+
+
+
     );
 
     public static Result GO_DASHBOARD = redirect(
@@ -153,5 +156,7 @@ public class Application extends Controller {
         flash("success", Messages.get("youve.been.logged.out"));
         return GO_HOME;
     }
+
+
 
 }
