@@ -48,10 +48,10 @@ public class Repo extends Model {
     }
 
 
-    @Override
-    public void save(String semester){
-        Ebean.getServer(semester).save(this);
-
-    }
+//    @Override
+//    public void save(String semester){
+//        Ebean.getServer(semester).save(this);
+//
+//    }
 
 }

@@ -2,6 +2,7 @@ package controllers.account;
 
 import controllers.Application;
 import models.User;
+import models.UserRoll;
 import utils.AppException;
 import utils.Hash;
 import utils.Mail;
@@ -144,6 +145,7 @@ public class Signup extends Controller {
                 sendMailConfirmation(user);
                 flash("success", Messages.get("account.successfully.validated"));
                 user.dateCreation=new Date();
+                user.roles= UserRoll.Users.toString();
                 user.save("global");
                 return ok(views.html.account.signup.confirm.render());
             } else {

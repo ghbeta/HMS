@@ -10,7 +10,9 @@ import play.Logger;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.List;
+import org.h2.tools.Server;
 
 /**
  * Created by Hao on 2015/7/6.
@@ -18,7 +20,10 @@ import java.util.List;
 public class CreateDB {
 
 
-    public static void createServer(String name, List<Class> entity) {
+    public static void createServer(String name, List<Class> entity) throws SQLException {
+        Server h2server= Server.createTcpServer();
+        h2server.start();
+
         ServerConfig config = new ServerConfig();
         config.setName(name);
        //config.loadFromProperties();
@@ -27,7 +32,7 @@ public class CreateDB {
         postgresDb.setDriver("org.h2.Driver");
         postgresDb.setUsername("hms");
         postgresDb.setPassword("test");
-        postgresDb.setUrl("jdbc:h2:file:~/data_dynamic/"+name);
+        postgresDb.setUrl("jdbc:h2:tcp://localhost/~/data_dynamic/"+name);
 
 //       // postgresDb.setHeartbeatSql("select count(*) from t_one");
 //        //postgresDb.loadSettings("global");

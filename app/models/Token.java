@@ -63,12 +63,12 @@ public class Token extends Model {
 
     }
 
-    @Override
-    public void save(String dbserver) {
-
-        Ebean.getServer(dbserver).save(this);
-        // super.save();
-    }
+//    @Override
+//    public void save(String dbserver) {
+//
+//        Ebean.getServer(dbserver).save(this);
+//        // super.save();
+//    }
     /**
      * Retrieve a token by id and type.
      *

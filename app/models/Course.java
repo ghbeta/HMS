@@ -59,9 +59,13 @@ public class Course extends Model {
         Assistant = assistant;
     }
 
-    @Override
-    public void save(String semester){
-        Ebean.getServer(semester).save(this);
-
-    }
+//    @Override
+//    public void save(String semester){
+//        Ebean.getServer(semester).save(this);
+//
+//    }
+//    @Override
+//    public void delete(String semester){
+//        Ebean.getServer(semester).delete(this);
+//    }
 }

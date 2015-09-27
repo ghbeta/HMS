@@ -92,12 +92,12 @@ public class User extends Model{
 
     //public static Finder<String,User> find = new Finder<String, User>(DBServer,String.class,User.class);
 //--------- Start using Quries to get the information
-    @Override
-    public void save(String dbserver) {
-
-       Ebean.getServer(dbserver).save(this);
-       // super.save();
-    }
+//    @Override
+//    public void save(String dbserver) {
+//
+//       Ebean.getServer(dbserver).save(this);
+//       // super.save();
+//    }
 
     public static EbeanServer currentServer(String database){
 
