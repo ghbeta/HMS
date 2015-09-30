@@ -1,6 +1,7 @@
 package controllers;
 
 import models.User;
+import models.UserRoll;
 import play.Logger;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -18,7 +19,7 @@ public class Secured extends Security.Authenticator {
         if(current.roles==null){
             current.roles="";
         }
-       if(current.roles.equals("user")){
+       if(current.roles.equals(UserRoll.Defaultuser.toString())){
            Logger.warn("authorized user is allowed");
        return ctx.session().get("email");
        }

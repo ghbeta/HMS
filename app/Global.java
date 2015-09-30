@@ -1,11 +1,7 @@
 
-
-import com.avaje.ebean.EbeanServer;
-import com.avaje.ebean.EbeanServerFactory;
-import com.avaje.ebean.config.DataSourceConfig;
-import com.avaje.ebean.config.ServerConfig;
 import models.Token;
 import models.User;
+import org.h2.tools.Server;
 import play.*;
 import play.Application;
 
@@ -26,11 +22,16 @@ public class Global extends GlobalSettings{
         List<Class> entity=new ArrayList<Class>();
         entity.add(User.class);
         entity.add(Token.class);
+
         try {
-            createServer("global", entity);
+            Server h2server= Server.createTcpServer();
+            h2server.start();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        createServer("global", entity);
+
     }
 }
 

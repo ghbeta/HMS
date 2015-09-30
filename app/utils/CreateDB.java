@@ -4,15 +4,13 @@ import com.avaje.ebean.EbeanServer;
 import com.avaje.ebean.EbeanServerFactory;
 import com.avaje.ebean.config.DataSourceConfig;
 import com.avaje.ebean.config.ServerConfig;
-import models.User;
 import play.Logger;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.SQLException;
 import java.util.List;
-import org.h2.tools.Server;
+
 
 /**
  * Created by Hao on 2015/7/6.
@@ -20,9 +18,7 @@ import org.h2.tools.Server;
 public class CreateDB {
 
 
-    public static void createServer(String name, List<Class> entity) throws SQLException {
-        Server h2server= Server.createTcpServer();
-        h2server.start();
+    public static void createServer(String name, List<Class> entity) {
 
         ServerConfig config = new ServerConfig();
         config.setName(name);
