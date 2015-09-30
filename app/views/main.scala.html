@@ -18,27 +18,26 @@
        <nav class="navbar navbar-inverse navbar-fixed-top">
 <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
-                    <span class="fa fa-bars fa-lg fa-inverse"></span>
+                    <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="@routes.Application.index()">
                     <i class="fa fa-rocket"></i> HMS System
                 </a>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class=""><a href="@routes.Application.index()">About</a></li>
-                </ul>
+                </div>
+    <div class="navbar-collapse collapse">
+        <form class="navbar-form navbar-right">
+    @login(loginForm)
+            </form>
+    </div>
             </div>
-            @login(loginForm)
             @logged(user)
-</div>
         </nav>
 
         <div class="container">
             <div class="row">
-
                 <div class="col-md-4 col-md-offset-11">@content</div>
-
 
             </div>
         </div>

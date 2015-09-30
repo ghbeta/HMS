@@ -4,8 +4,6 @@
     FieldConstructor(loginInput.render)
 }
 @if(loginForm != null) {
-
-
     @form(routes.Application.authenticate()) {
 
         @if(loginForm.hasGlobalErrors) {
@@ -13,21 +11,21 @@
                 <span class="label label-danger">@loginForm.globalError.message</span>
             </p>
         }
-
-        <fieldset>
-            @inputText(
-                loginForm("email"),
-                'placeholder -> Messages("email"),
-                'class -> "form-control"
-
-            )
+        <form>
             @inputPassword(
                 loginForm("password"),
                 'placeholder -> Messages("password"),
                 'class -> "form-control"
             )
-        </fieldset>
-        <button type="submit" class="btn btn-success">@Messages("signin.signin")</button>
-        <small><a href="@controllers.account.routes.Reset.ask">@Messages("forgot.password")</a></small>
+            @inputText(
+                loginForm("email"),
+                'placeholder -> Messages("email"),
+                'class -> "form-control"
+            )
+                <button type="submit" class="btn btn-success">@Messages("signin.signin")</button>
+                <small><a href="@controllers.account.routes.Reset.ask">@Messages("forgot.password")</a></small>
+        </form>
+
+
     }
 }
