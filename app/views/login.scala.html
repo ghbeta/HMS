@@ -1,37 +1,33 @@
 @(loginForm: Form[Application.Login])
-
 @import helper._
-@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
+@implicitFieldConstructor = @{
+    FieldConstructor(loginInput.render)
+}
+@if(loginForm != null) {
 
-<h3>@Messages("signin.signin")</h3>
 
-@form(routes.Application.authenticate(), 'class -> "form") {
+    @form(routes.Application.authenticate()) {
 
-    @if(loginForm.hasGlobalErrors) {
-        <p class="error">
-            <span class="label label-danger">@loginForm.globalError.message</span>
-        </p>
-    }
+        @if(loginForm.hasGlobalErrors) {
+            <p class="error">
+                <span class="label label-danger">@loginForm.globalError.message</span>
+            </p>
+        }
 
-    <fieldset>
-        @inputText(
-            loginForm("email"),
-            'placeholder -> Messages("email"),
-            '_label -> null,
-            '_help -> Messages("signin.your.email"),
-            'class -> "form-control"
-        )
-        @inputPassword(
-            loginForm("password"),
-            '_label -> null,
-            'placeholder -> Messages("password"),
-            '_help -> Messages("signin.your.password"),
-            'class -> "form-control"
-        )
-    </fieldset>
+        <fieldset>
+            @inputText(
+                loginForm("email"),
+                'placeholder -> Messages("email"),
+                'class -> "form-control"
 
-    <div class="form-actions">
-        <input type="submit" class="btn btn-primary" value="@Messages("signin.signin")">
+            )
+            @inputPassword(
+                loginForm("password"),
+                'placeholder -> Messages("password"),
+                'class -> "form-control"
+            )
+        </fieldset>
+        <button type="submit" class="btn btn-success">@Messages("signin.signin")</button>
         <small><a href="@controllers.account.routes.Reset.ask">@Messages("forgot.password")</a></small>
-    </div>
+    }
 }

@@ -3,11 +3,13 @@
 @*
  * Generate input according twitter bootstrap 3 rules.
  *@
-<div class="form-group @if(elements.hasErrors) {error}">
-    <label for="@elements.id">@elements.label</label>
-    @elements.input
-    <p class="help-inline">@elements.infos.mkString(", ")</p>
+<div class="form-horizontal @if(elements.hasErrors) {error}">
+    <div class="form-group">
+    <label for="@elements.id" class="col-sm-3 control-label">@elements.label</label>
+    <div class="col-sm-9"> @elements.input </div>
+    @*<p class="help-inline">@elements.infos.mkString(", ")</p>*@
     @if(elements.hasErrors) {
         <p class="help-inline">@elements.errors.mkString(", ")</p>
     }
+    </div>
 </div>

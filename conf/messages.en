@@ -33,9 +33,14 @@ signin.your.password=Your password
 
 forgot.password=Forgot password ?
 
+signup.label.matrikel=Student Number
+signup.label.email=Email
+signup.label.firstname=Firstname
+signup.label.lastname=Lastname
+signup.label.password=Password
 signup.signup=Sign Up
 signup.successfull=Sign Up - Successful !
-signup.new=New ?
+signup.new=New User
 signup.reset.password=Reset your password
 signup.generate.password=Generate a password
 signup.msg.created=You will receive a confirmation email soon. Check your email to activate your account.

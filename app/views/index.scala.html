@@ -1,21 +1,18 @@
-@(signupForm: Form[Application.Register], loginForm: Form[Application.Login])
+@(signupForm: Form[Application.Register],loginForm: Form[Application.Login])
 
 
 
-@main(null) {
+@main(null,loginForm){
 
   @wflash()
-  <div class="col-lg-6">
-      HMS System For Testing
-  </div>
-
-  <div class="col-lg-6">
-    <div class="well">
-      @login(loginForm)
-    </div>
+  @*<div class="col-lg-6">*@
+    @*<div class="well">*@
+@*//      @login(loginForm)*@
+    @*</div>*@
 
     <div class="well">
       @account.signup.createFormOnly(signupForm)
     </div>
-  </div>
+
+
 }

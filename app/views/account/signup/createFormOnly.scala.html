@@ -12,39 +12,41 @@
     <fieldset>
         @inputText(
             signupForm("id"),
-            'placeholder -> Messages("Your Matrikelnummber"),
-            '_label -> null,
+            'placeholder -> Messages("Only for Students"),
+            '_label -> Messages("signup.label.matrikel"),
             'class -> "form-control"
 
         )
         @inputText(
             signupForm("email"),
-            'placeholder -> Messages("email"),
-            '_label -> null,
+            'placeholder -> Messages("Required"),
+            '_label -> Messages("signup.label.email"),
             'class -> "form-control"
         )
         @inputText(
             signupForm("lastname"),
-            'placeholder -> Messages("firstname"),
-            '_label -> null,
+            'placeholder -> Messages("Required"),
+            '_label -> Messages("signup.label.lastname"),
             'class -> "form-control"
         )
         @inputText(
             signupForm("firstname"),
-            'placeholder -> Messages("lastname"),
-            '_label -> null,
+            'placeholder -> Messages("Required"),
+            '_label -> Messages("signup.label.firstname"),
             'class -> "form-control"
         )
         @inputPassword(
             signupForm("inputPassword"),
-            '_label -> null,
-            'placeholder -> Messages("password"),
+            '_label -> Messages("signup.label.password"),
+            'placeholder -> Messages("Required"),
             'class -> "form-control"
         )
     </fieldset>
 
-    <div class="form-actions">
-        <input type="submit" class="btn btn-primary" value="@Messages("signup.signup")">
+    <div class="form-group">
+        <div class="col-sm-offset-9 col-sm-3">
+        <input type="submit" class="btn btn-primary" value="@Messages("signup.signup")"></div>
     </div>
+
 }
 
