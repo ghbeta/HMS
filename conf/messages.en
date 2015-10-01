@@ -34,6 +34,8 @@ signin.your.password=Your password
 forgot.password=Forgot password ?
 
 signup.label.matrikel=Student Number
+signup.holder.student=Only for Students
+signup.holder.requried= Required
 signup.label.email=Email
 signup.label.firstname=Firstname
 signup.label.lastname=Lastname

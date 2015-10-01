@@ -12,19 +12,21 @@
             </p>
         }
         <form>
-            @inputPassword(
-                loginForm("password"),
-                'placeholder -> Messages("password"),
-                'class -> "form-control"
-            )
             @inputText(
                 loginForm("email"),
                 'placeholder -> Messages("email"),
                 'class -> "form-control"
             )
-                <button type="submit" class="btn btn-success">@Messages("signin.signin")</button>
-                <small><a href="@controllers.account.routes.Reset.ask">@Messages("forgot.password")</a></small>
+            @inputPassword(
+                loginForm("password"),
+                'placeholder -> Messages("password"),
+                'class -> "form-control"
+            )
+
+            <button type="submit" class="btn btn-success">@Messages("signin.signin")</button>
+            <small><a href="@controllers.account.routes.Reset.ask">@Messages("forgot.password")</a></small>
         </form>
+
 
 
     }

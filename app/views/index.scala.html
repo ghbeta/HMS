@@ -1,8 +1,8 @@
-@(signupForm: Form[Application.Register],loginForm: Form[Application.Login])
 
 
 
-@main(null,loginForm){
+
+@main(null){
 
   @wflash()
   @*<div class="col-lg-6">*@
@@ -11,7 +11,7 @@
     @*</div>*@
 
     <div class="well">
-      @account.signup.createFormOnly(signupForm)
+      @account.signup.createFormOnly()
     </div>
 
 
