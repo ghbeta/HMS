@@ -7,7 +7,7 @@ goback=Go Back
 logout=Logout
 password=Password
 error.technical=Technical Error, please Retry
-validate=Validate
+validate=Submit
 reset=Reset
 
 account.not.validated.check.mail=Account not validated. Check your emails.
@@ -40,6 +40,7 @@ signup.label.email=Email
 signup.label.firstname=Firstname
 signup.label.lastname=Lastname
 signup.label.password=Password
+signup.label.passwordagain= Type Again
 signup.signup=Sign Up
 signup.successfull=Sign Up - Successful !
 signup.new=New User
@@ -51,7 +52,7 @@ signup.valid.email=Invalid Email
 resetpassword=Reset Password
 resetpassword.mailsent=A mail has been sent, please check your mail.
 resetpassword.success=Your password has been reset.
-resetpassword.new.password=New password :
+resetpassword.new.password=New password
 
 changemail.mailsent=A mail has been sent, please check your mail.
 

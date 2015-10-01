@@ -1,18 +1,11 @@
-
-
-
-
-@main(null){
-
-  @wflash()
-  @*<div class="col-lg-6">*@
-    @*<div class="well">*@
-@*//      @login(loginForm)*@
-    @*</div>*@
-
-    <div class="well">
-      @account.signup.createFormOnly()
+@main(null) {
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 center-block">
+                @wflash()
+                @account.signup.createFormOnly()
+            </div>
+        </div>
     </div>
-
 
 }

@@ -1,15 +1,10 @@
- <form class="form-inline" action="@routes.Application.authenticate()" method="post">
-        <div class="form-group">
-            <input type="email" class="form-control" id="exampleInputEmail3"  name="email" placeholder="@Messages("email")">
-        </div>
-        <div class="form-group">
-            <input type="password" class="form-control" id="exampleInputPassword3" name="password" placeholder="@Messages("password")">
-        </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox"> @Messages("signin.remember")
-            </label>
-        </div>
-        <button type="submit" class="btn btn-success">@Messages("signin.signin")</button>
-        <small><a href="@controllers.account.routes.Reset.ask">@Messages("forgot.password")</a></small>
-    </form>
+<form class="form-inline" action="@routes.Application.authenticate()" method="post">
+    <div class="form-group">
+        <input type="email" class="form-control" id="exampleInputEmail3" name="email" placeholder="@Messages("email")">
+    </div>
+    <div class="form-group">
+        <input type="password" class="form-control" id="exampleInputPassword3" name="password" placeholder="@Messages("password")">
+    </div>
+    <button type="submit" class="btn btn-success">@Messages("signin.signin")</button>
+    <small><a href="@controllers.account.routes.Reset.ask">@Messages("forgot.password")</a></small>
+</form>

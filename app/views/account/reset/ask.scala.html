@@ -1,37 +1,33 @@
 @(askForm: Form[controllers.account.Reset.AskForm])
 
-@import helper._
-    @implicitFieldConstructor = @{
-        FieldConstructor(twitterBootstrapInput.render)
-    }
-
-
 @main(null) {
 
-    <div class="col col-lg-8">
-        <h3>@Messages("resetpassword")</h3>
-
-        @wflash()
-
-        @form(controllers.account.routes.Reset.runAsk()) {
-
-            <div class="form-group">
-            @inputText(
-                askForm("email"),
-                'placeholder -> Messages("email"),
-                '_label -> null,
-                'class -> "form-control"
-            )
-            </div>
-
-            <hr>
-            <input type="submit" class="btn btn-primary" value="@Messages("reset")">
-
-            <a href="@routes.Application.index" class="btn btn-default">@Messages("goback")</a>
-
-        }
-
-    </div>
-
+   <div class="container">
+       <div class="row">
+           <div class="col-md-6 col-md-offset-3">
+        <h4 class="">
+            Forgot your password?
+        </h4>
+       <form accept-charset="UTF-8" role="form" action="@controllers.account.routes.Reset.runAsk()" method="post">
+           <fieldset>
+               <span class="help-block">
+                   Email address you use to log in to your account
+                   <br>
+                   We'll send you an email with instructions to choose a new password.
+               </span>
+               <div class="form-group input-group">
+                   <span class="input-group-addon">
+                       <span class="glyphicon glyphicon-envelope"></span>
+                   </span>
+                   <input class="form-control" placeholder="@Messages("email")" name="email" type="email" required="">
+               </div>
+               <button type="submit" class="btn btn-primary btn-block">
+                   Continue
+               </button>
+           </fieldset>
+       </form>
+               </div>
+       </div>
+   </div>
 
 }
