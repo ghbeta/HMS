@@ -10,7 +10,7 @@ body {
 }
 
 .footer {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     width: 100%;
     /* Set the fixed height of the footer here */
@@ -34,4 +34,22 @@ body {
 }
 .container .text-muted {
     margin: 20px 0;
+}
+
+#bg {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+}
+#bg img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    min-width: 50%;
+    min-height: 50%;
 }

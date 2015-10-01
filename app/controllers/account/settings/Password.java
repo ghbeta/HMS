@@ -8,7 +8,7 @@ import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-
+import play.Logger;
 import java.net.MalformedURLException;
 
 /**
@@ -24,6 +24,7 @@ public class Password extends Controller {
      * @return index settings
      */
     public static Result index() {
+        Logger.debug(User.findByEmail(request().username(),"global").firstname);
         return ok(views.html.account.settings.password.render(User.findByEmail(request().username(),"global")));
     }
 

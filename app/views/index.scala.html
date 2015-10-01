@@ -1,9 +1,27 @@
 @main(null) {
-    <div class="container">
+    <div id="bg">
+        <img src="/assets/images/home.png">
+    </div>
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-5 center-block">
-                @wflash()
+            <br>
+            <div class="col-md-12 text-center">
+            @wflash()
+            </div>
+            <br>
+            <div class="col-md-4">
+                <div class="jumbotron well">
+                <h1>HMS</h1>
+                <p>A New Home Work Manage System with Git Support and Easy Data Management</p>
+                    <br>
+                <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+                </div>
+            </div>
+            <div class="col-md-12"></div>
+            <div class="col-md-4">
+                <div class="well well-sm">
                 @account.signup.createFormOnly()
+                </div>
             </div>
         </div>
     </div>

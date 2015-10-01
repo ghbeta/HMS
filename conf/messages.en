@@ -9,6 +9,7 @@ password=Password
 error.technical=Technical Error, please Retry
 validate=Submit
 reset=Reset
+about=About
 
 account.not.validated.check.mail=Account not validated. Check your emails.
 account.successfully.validated=Account successfully validated
@@ -33,7 +34,7 @@ signin.your.password=Your password
 signin.remember=Remember me
 forgot.password=Forgot password ?
 
-signup.label.matrikel=Student Number
+signup.label.matrikel=StudentNr.
 signup.holder.student=Only for Students
 signup.holder.requried= Required
 signup.label.email=Email
