@@ -28,11 +28,12 @@
                 </div>
     <div class="navbar-collapse collapse">
         <div class="navbar-form navbar-right">
-@*//    @login(loginForm)*@
+            @if(user == null){@login()}
             </div>
+        @logged(user)
     </div>
             </div>
-            @logged(user)
+
         </nav>
 
         <div class="container">
