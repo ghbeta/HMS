@@ -1,4 +1,4 @@
-package controllers;
+package controllers.account.Permission;
 
 import models.User;
 import models.UserRoll;

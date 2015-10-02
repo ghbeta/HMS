@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.account.Permission.Secured;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;

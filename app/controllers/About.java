@@ -1,14 +1,19 @@
 package controllers;
 
+import controllers.account.Permission.Permitall;
+import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.about;
-
+import play.Logger;
 /**
  * Created by Hao on 2015/10/1.
  */
 public class About extends Controller {
-    public static Result index(){
-        return ok(about.render());
+    @Security.Authenticated(Permitall.class)
+    public static Result index() {
+        Logger.info(request().username());
+        return ok(about.render(User.findByEmail(request().username(),"global")));
     }
 }

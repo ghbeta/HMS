@@ -1,6 +1,6 @@
 package controllers.account.settings;
 
-import controllers.Secured;
+import controllers.account.Permission.Secured;
 import models.Token;
 import models.User;
 import play.Logger;

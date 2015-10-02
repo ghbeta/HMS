@@ -1,6 +1,6 @@
 package controllers.account.settings;
 
-import controllers.Secured;
+import controllers.account.Permission.Secured;
 import models.Token;
 import models.User;
 import play.Logger;
@@ -8,7 +8,7 @@ import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import play.Logger;
+
 import java.net.MalformedURLException;
 
 /**
