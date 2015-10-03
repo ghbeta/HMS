@@ -1,9 +1,20 @@
-@main(null) {
-@*TODO: Use pop up window to show successfull*@
-    <h3>@Messages("signup.successfull")</h3>
-    @Messages("signup.msg.created")
-
-    <div class="form-actions">
-        <a href="@routes.Application.index" class="btn btn-default">@Messages("goback")</a>
-    </div>
+@(isshow:Boolean)
+@main() {
+    @if(isshow){
+        @index()
+    <div class="modal fade in show">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">@Messages("signup.successfull")</h4>
+                </div>
+                <div class="modal-body">
+                    <p>@Messages("signup.msg.created")</p>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-primary" href="@routes.Application.index" data-dismiss="modal">@Messages("goback")</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div> <!-- /.modal -->}
 }

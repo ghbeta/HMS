@@ -4,6 +4,7 @@ import controllers.Application;
 import models.User;
 import models.UserRoll;
 import utils.AppException;
+import utils.CreateExternalId;
 import utils.Hash;
 import utils.Mail;
 import org.apache.commons.mail.EmailException;
@@ -68,7 +69,11 @@ public class Signup extends Controller {
 
         try {
             User user = new User();
-            user.id=register.id;
+            if(register.id.isEmpty()||register.id==null){
+                user.id= CreateExternalId.generateId();
+            }
+            else{
+            user.id=register.id;}
             user.email = register.email;
             user.lastname = register.lastname;
             user.firstname = register.firstname;
@@ -78,7 +83,8 @@ public class Signup extends Controller {
             user.save("global");
             sendMailAskForConfirmation(user);
 
-            return ok(views.html.account.signup.created.render());
+            return ok(views.html.account.signup.created.render(true));
+            //return ok(views.html.index.render(true));
         } catch (EmailException e) {
             Logger.debug("Signup.save Cannot send email", e);
             flash("error", Messages.get("error.sending.email"));
