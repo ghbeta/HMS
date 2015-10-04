@@ -82,15 +82,15 @@ public class Signup extends Controller {
 
             user.save("global");
             sendMailAskForConfirmation(user);
-
-            return ok(views.html.account.signup.created.render(true));
-            //return ok(views.html.index.render(true));
+            flash("success",Messages.get("signup.msg.created"));
+            //return ok(views.html.account.signup.created.render(true));
+            return ok(views.html.index.render());
         } catch (EmailException e) {
             Logger.debug("Signup.save Cannot send email", e);
-            flash("error", Messages.get("error.sending.email"));
+            flash("danger", Messages.get("error.sending.email"));
         } catch (Exception e) {
             Logger.error("Signup.save error", e);
-            flash("error", Messages.get("error.technical"));
+            flash("danger", Messages.get("error.technical"));
         }
         return badRequest(create.render(registerForm));
     }
@@ -105,7 +105,7 @@ public class Signup extends Controller {
     private static Result checkBeforeSave(Form<Application.Register> registerForm, String email) {
         // Check unique email
         if (User.findByEmail(email,"global") != null) {
-            flash("error", Messages.get("error.email.already.exist"));
+            flash("danger", Messages.get("error.email.already.exist"));
             return badRequest(create.render(registerForm));
         }
 
@@ -138,13 +138,13 @@ public class Signup extends Controller {
     public static Result confirm(String token) {
         User user = User.findByConfirmationToken(token,"global");
         if (user == null) {
-            flash("error", Messages.get("error.unknown.email"));
-            return badRequest(views.html.account.signup.confirm.render());
+            flash("danger", Messages.get("error.unknown.email"));
+            return badRequest(views.html.account.signup.confirm.render(null));
         }
 
         if (user.validated) {
-            flash("error", Messages.get("error.account.already.validated"));
-            return badRequest(views.html.account.signup.confirm.render());
+            flash("danger", Messages.get("error.account.already.validated"));
+            return badRequest(views.html.account.signup.confirm.render(null));
         }
 
         try {
@@ -154,20 +154,20 @@ public class Signup extends Controller {
                 user.dateCreation=new Date();
                 user.roles= UserRoll.Defaultuser.toString();
                 user.save("global");
-                return ok(views.html.account.signup.confirm.render());
+                return ok(views.html.account.signup.confirm.render(user));
             } else {
                 Logger.debug("Signup.confirm cannot confirm user");
-                flash("error", Messages.get("error.confirm"));
-                return badRequest(views.html.account.signup.confirm.render());
+                flash("danger", Messages.get("error.confirm"));
+                return badRequest(views.html.account.signup.confirm.render(null));
             }
         } catch (AppException e) {
             Logger.error("Cannot signup", e);
-            flash("error", Messages.get("error.technical"));
+            flash("danger", Messages.get("error.technical"));
         } catch (EmailException e) {
             Logger.debug("Cannot send email", e);
-            flash("error", Messages.get("error.sending.confirm.email"));
+            flash("danger", Messages.get("error.sending.confirm.email"));
         }
-        return badRequest(views.html.account.signup.confirm.render());
+        return badRequest(views.html.account.signup.confirm.render(null));
     }
 
     /**

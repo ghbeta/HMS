@@ -136,7 +136,7 @@ public class Application extends Controller {
     public static Result authenticate() {
         Form<Login> loginForm = form(Login.class).bindFromRequest();
 
-        Form<Register> registerForm = form(Register.class);
+        //Form<Register> registerForm = form(Register.class);
 
         if (loginForm.hasErrors()) {
             //mod
@@ -146,6 +146,12 @@ public class Application extends Controller {
             return GO_DASHBOARD;
         }
     }
+
+   public static Result directlogin(User user){
+       Logger.info("direkt login"+user.email);
+       session("email",user.email);
+       return GO_DASHBOARD;
+   }
 
     /**
      * Logout and clean the session.

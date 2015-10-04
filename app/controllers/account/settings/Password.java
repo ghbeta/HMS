@@ -41,7 +41,7 @@ public class Password extends Controller {
             return ok(views.html.account.settings.password.render(user));
         } catch (MalformedURLException e) {
             Logger.error("Cannot validate URL", e);
-            flash("error", Messages.get("error.technical"));
+            flash("danger", Messages.get("error.technical"));
         }
         return badRequest(views.html.account.settings.password.render(user));
     }

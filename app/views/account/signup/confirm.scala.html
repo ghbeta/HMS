@@ -1,10 +1,37 @@
-@main(null) {
+@(user:User)
+@if(user!=null) {
+    @main(user) {
 
-    <h3>@Messages("signup.signup") - @Messages("confirmation")</h3>
 
-    @wflash()
+        <div class="modal fade in show">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">@Messages("signup.signup") - @Messages("confirmation")</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>@Messages("account.successfully.validated")</p>
+                    </div>
+                    <div class="modal-footer" action="@Application.directlogin(user)">
+                        <a type="button" class="btn btn-primary" href="@routes.Application.index()" data-dismiss="modal">@Messages("direct.login")</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div> <!-- /.modal -->
 
-    <div class="form-actions">
-        <a href="@routes.Application.index" class="btn btn-default">@Messages("goback")</a>
-    </div>
+
+    }
+}  else {
+
+
+
+
+
+
+
+        @index()
+
+
+
+
 }

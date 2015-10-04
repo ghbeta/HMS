@@ -1,0 +1,9 @@
+@main() {
+    @flash.map {
+        case (key, value) => {
+            <p class="">
+                <span class="alert alert-@key">@value</span>
+            </p>
+        }
+    }
+}

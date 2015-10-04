@@ -56,18 +56,18 @@ public class Email extends Controller {
         User user = User.findByEmail(request().username(),"global");
 
         if (askForm.hasErrors()) {
-            flash("error", Messages.get("signup.valid.email"));
+            flash("danger", Messages.get("signup.valid.email"));
             return badRequest(email.render(user, askForm));
         }
 
         try {
             String mail = askForm.get().email;
             Token.sendMailChangeMail(user, mail,"global");
-            flash("success", Messages.get("changemail.mailsent"));
+            flash("danger", Messages.get("changemail.mailsent"));
             return ok(email.render(user, askForm));
         } catch (MalformedURLException e) {
             Logger.error("Cannot validate URL", e);
-            flash("error", Messages.get("error.technical"));
+            flash("danger", Messages.get("error.technical"));
         }
         return badRequest(email.render(user, askForm));
     }
@@ -81,19 +81,19 @@ public class Email extends Controller {
         User user = User.findByEmail(request().username(),"global");
 
         if (token == null) {
-            flash("error", Messages.get("error.technical"));
+            flash("danger", Messages.get("error.technical"));
             return badRequest(views.html.account.settings.emailValidate.render(user));
         }
 
         Token resetToken = Token.findByTokenAndType(token, Token.TypeToken.email,"global");
         if (resetToken == null) {
-            flash("error", Messages.get("error.technical"));
+            flash("danger", Messages.get("error.technical"));
             return badRequest(views.html.account.settings.emailValidate.render(user));
         }
 
         if (resetToken.isExpired()) {
             resetToken.delete();
-            flash("error", Messages.get("error.expiredmaillink"));
+            flash("danger", Messages.get("error.expiredmaillink"));
             return badRequest(views.html.account.settings.emailValidate.render(user));
         }
 
