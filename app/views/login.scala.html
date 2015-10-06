@@ -1,3 +1,4 @@
+<div class="navbar-form navbar-right">
 <form class="form-inline" action="@routes.Application.authenticate()" method="post">
     <div class="form-group">
         <input type="email" class="form-control" id="exampleInputEmail3" name="email" placeholder="@Messages("email")">
@@ -8,3 +9,4 @@
     <button type="submit" class="btn btn-success">@Messages("signin.signin")</button>
     <small><a href="@controllers.account.routes.Reset.ask">@Messages("forgot.password")</a></small>
 </form>
+    </div>

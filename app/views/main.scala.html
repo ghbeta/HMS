@@ -15,7 +15,6 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/font-awesome.min.css")">
     </head>
     <body>
-
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -33,10 +32,9 @@
                     </ul>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <div class="navbar-form navbar-right">
-                    @if(user == null) {@login()}
-                    </div>
-                    @logged(user)
+                    @if(user == null) {@login()
+                    }else{
+                    @logged(user)}
                 </div>
             </div>
 

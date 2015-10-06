@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Ebean;
+import org.joda.time.DateTime;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
@@ -11,29 +12,37 @@ import java.util.List;
  * Created by Hao on 2015/7/6.
  */
 @Entity
-@Table(name = "Courses")
-public class Course extends Model {
+@Table(name = "Lecture")
+public class Lecture extends Model {
     @Id
-    public String courseId;
-
-    @OneToOne
-    public User Creator;
-
-
-
-    @OneToMany
-    public List<User> Assistant = new ArrayList<>();
-
+    @Column(unique = true)
     public String courseName;
 
+    @Column(columnDefinition = "TEXT")
+    public String desription;
 
-    public String getCourseId() {
-        return courseId;
-    }
 
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
-    }
+    public DateTime closingdate;
+
+    public int optionalDuties;
+    public float lowerProcentualBounderyOfDuties;
+
+    public float minimumPercentageForExamination;
+
+    public String semester;
+
+    @OneToOne
+    public User lasteditor;
+
+
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    public List<User> Assistant = new ArrayList<>();
+
+
+
+
+
 
     public String getCourseName() {
         return courseName;
@@ -43,12 +52,12 @@ public class Course extends Model {
         this.courseName = courseName;
     }
 
-    public User getCreator() {
-        return Creator;
+    public User getlasteditor() {
+        return lasteditor;
     }
 
-    public void setCreator(User creator) {
-        Creator = creator;
+    public void setlasteditor(User lasteditor) {
+        this.lasteditor = lasteditor;
     }
 
     public List<User> getAssistant() {
@@ -56,7 +65,7 @@ public class Course extends Model {
     }
 
     public void setAssistant(List<User> assistant) {
-        Assistant = assistant;
+        this.Assistant = assistant;
     }
 
 //    @Override

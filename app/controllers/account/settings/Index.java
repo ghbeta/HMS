@@ -1,6 +1,6 @@
 package controllers.account.settings;
 
-import controllers.account.Permission.Secured;
+import Permission.Secured;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;

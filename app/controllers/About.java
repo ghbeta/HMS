@@ -1,6 +1,6 @@
 package controllers;
 
-import controllers.account.Permission.Permitall;
+import Permission.Permitall;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;

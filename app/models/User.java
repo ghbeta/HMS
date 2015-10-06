@@ -7,6 +7,7 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import utils.AppException;
 import utils.Hash;
+import utils.MD5Util;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.List;
 public class User extends Model{
    public static final String DBServer="global";
     @Id
+    @Column(unique = true)
     public String id;
 
     public String firstname;
@@ -39,19 +41,31 @@ public class User extends Model{
     @Formats.NonEmpty
     public String passwordHash;
 
+    public String userHash;
+
     @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date dateCreation;
+
+    @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
+    public Date dateLastlogin;
 
     @Formats.NonEmpty
     public Boolean validated = false;
 
+    @Column(unique = true)
+    public String ssh;
 
-    public String sha1;
+    @ManyToMany(cascade=CascadeType.ALL)
+    public Lecture lecture;
 
-    public static String getDBServer() {
-        return DBServer;
+
+    public String getUserHash(){
+        return userHash;
     }
 
+    public void setUserHash(){
+        this.userHash= MD5Util.md5Hex(this.email);
+    }
     public String getMatrikel() {
         return id;
     }
@@ -76,12 +90,12 @@ public class User extends Model{
         this.lastname = lastname;
     }
 
-    public String getSha1() {
-        return sha1;
+    public String getSsh() {
+        return ssh;
     }
 
-    public void setSha1(String sha1) {
-        this.sha1 = sha1;
+    public void setSsh(String ssh) {
+        this.ssh = ssh;
     }
 
 

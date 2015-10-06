@@ -79,7 +79,7 @@ public class Signup extends Controller {
             user.firstname = register.firstname;
             user.passwordHash = Hash.createPassword(register.inputPassword);
             user.confirmationToken = UUID.randomUUID().toString();
-
+            user.setUserHash();
             user.save("global");
             sendMailAskForConfirmation(user);
             flash("success",Messages.get("signup.msg.created"));

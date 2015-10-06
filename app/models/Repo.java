@@ -1,6 +1,5 @@
 package models;
 
-import com.avaje.ebean.Ebean;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
@@ -21,7 +20,7 @@ public class Repo extends Model {
     User owner;
 
     @ManyToOne
-    Course course;
+    Lecture course;
 
     public String getReponame() {
         return reponame;
@@ -39,11 +38,11 @@ public class Repo extends Model {
         this.owner = owner;
     }
 
-    public Course getCourse() {
+    public Lecture getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
+    public void setCourse(Lecture course) {
         this.course = course;
     }
 
