@@ -10,6 +10,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
 
+import java.util.Date;
+
 import static play.data.Form.form;
 
 /**
@@ -143,6 +145,11 @@ public class Application extends Controller {
             return badRequest(index.render());
         } else {
             session("email", loginForm.get().email);
+            User user = User.findByEmail(loginForm.get().email,"global");
+            if(user!=null){
+                user.dateLastlogin=new Date();
+                user.save("global");
+            }
             return GO_DASHBOARD;
         }
     }

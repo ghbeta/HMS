@@ -1,5 +1,6 @@
 title=HMS System
 
+
 confirm=Confirmation
 email=Email
 fullname=Full Name
@@ -11,6 +12,10 @@ validate=Submit
 reset=Reset
 about=About
 direct.login=Direct Login
+settings=Settings
+
+dashboard.profile=My Profile
+dashboard.lecture=Lectures Management
 
 account.not.validated.check.mail=Account not validated. Check your emails.
 account.successfully.validated=Account successfully validated
