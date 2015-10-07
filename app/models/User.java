@@ -56,8 +56,8 @@ public class User extends Model{
     @Column(unique = true)
     public String ssh;
 
-    @ManyToMany(cascade=CascadeType.ALL,mappedBy = "user")
-    public Lecture lecture;
+    @ManyToMany(cascade=CascadeType.ALL,mappedBy = "assistant")
+    public List<Lecture> lectures;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "editor")
     public Set<Assignment> assignments;

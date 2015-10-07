@@ -7,6 +7,7 @@ import play.db.ebean.Model;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Hao on 2015/7/6.
@@ -37,7 +38,7 @@ public class Lecture extends Model {
 
 
     @ManyToMany(cascade=CascadeType.ALL)
-    public List<User> Assistant = new ArrayList<>();
+    public List<User> assistants;
 
 
 
@@ -60,13 +61,7 @@ public class Lecture extends Model {
         this.lasteditor = lasteditor;
     }
 
-    public List<User> getAssistant() {
-        return Assistant;
-    }
 
-    public void setAssistant(List<User> assistant) {
-        this.Assistant = assistant;
-    }
 
 //    @Override
 //    public void save(String semester){
