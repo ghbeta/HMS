@@ -21,9 +21,9 @@ public class Assignment extends Model {
 
 
     @ManyToOne
-    @JoinColumn(name="editor_id")
+    @JoinColumn(name="assignments")
     public User editor;
 
-    @OneToMany(mappedBy = "assignment_id")
+    @OneToMany(mappedBy = "assignment")
     public Set<Exercise> exercises;
 }

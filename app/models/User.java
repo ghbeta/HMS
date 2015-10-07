@@ -56,7 +56,7 @@ public class User extends Model{
     @Column(unique = true)
     public String ssh;
 
-    @ManyToMany(cascade=CascadeType.ALL,mappedBy = "assistant")
+    @ManyToMany(cascade=CascadeType.ALL)
     public List<Lecture> lectures;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "editor")

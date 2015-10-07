@@ -17,10 +17,10 @@ public class Exercise extends Model {
     public String content;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="exercises")
     public User marker;
 
     @ManyToOne
-    @JoinColumn(name="assignment_id")
+    @JoinColumn(name="exercises")
     public Assignment assignment;
 }
