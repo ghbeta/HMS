@@ -13,6 +13,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Hao on 2015/5/17.
@@ -55,9 +56,14 @@ public class User extends Model{
     @Column(unique = true)
     public String ssh;
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade=CascadeType.ALL,mappedBy = "user")
     public Lecture lecture;
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "editor")
+    public Set<Assignment> assignments;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "marker")
+    public Set<Exercise> exercises;
 
     public String getUserHash(){
         return userHash;
