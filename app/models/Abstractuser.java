@@ -1,5 +1,7 @@
 package models;
 
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.EbeanServer;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -47,4 +49,11 @@ public class Abstractuser extends Model {
 
     @Column(unique = true)
     public String ssh;
+
+    public static EbeanServer currentServer(String database){
+
+        return Ebean.getServer(database);
+
+    }
+
 }

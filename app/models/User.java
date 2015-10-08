@@ -77,11 +77,6 @@ public class User extends Abstractuser{
 //       // super.save();
 //    }
 
-    public static EbeanServer currentServer(String database){
-
-        return Ebean.getServer(database);
-
-    }
     /**
      * Retrieve a user from an email.
      *
