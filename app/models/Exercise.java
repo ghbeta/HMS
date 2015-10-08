@@ -18,7 +18,7 @@ public class Exercise extends Model {
 
     @ManyToOne
     @JoinColumn(name="exercises")
-    public User marker;
+    public Semesteruser marker;
 
     @ManyToOne
     @JoinColumn(name="exercises")

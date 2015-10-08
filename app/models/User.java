@@ -20,50 +20,8 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "users")
-public class User extends Model{
-   public static final String DBServer="global";
-    @Id
-    @Column(unique = true)
-    public String id;
-
-    public String firstname;
-    public String lastname;
-
-    public String roles;
-
-    public String confirmationToken;
-
-    @Constraints.Required
-    @Formats.NonEmpty
-    @Column(unique = true)
-    public String email;
-
-    @Constraints.Required
-    @Formats.NonEmpty
-    public String passwordHash;
-
-    public String userHash;
-
-    @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
-    public Date dateCreation;
-
-    @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
-    public Date dateLastlogin;
-
-    @Formats.NonEmpty
-    public Boolean validated = false;
-
-    @Column(unique = true)
-    public String ssh;
-
-    @ManyToMany(cascade=CascadeType.ALL)
-    public List<Lecture> lectures;
-
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "editor")
-    public Set<Assignment> assignments;
-
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "marker")
-    public Set<Exercise> exercises;
+public class User extends Abstractuser{
+    public static final String DBServer="global";
 
     public String getUserHash(){
         return userHash;

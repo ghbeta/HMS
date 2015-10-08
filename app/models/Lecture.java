@@ -33,12 +33,12 @@ public class Lecture extends Model {
     public String semester;
 
     @OneToOne
-    public User lasteditor;
+    public Semesteruser lasteditor;
 
 
 
     @ManyToMany(cascade=CascadeType.ALL)
-    public List<User> assistants;
+    public List<Semesteruser> assistants;
 
 
 
@@ -53,11 +53,11 @@ public class Lecture extends Model {
         this.courseName = courseName;
     }
 
-    public User getlasteditor() {
+    public Semesteruser getlasteditor() {
         return lasteditor;
     }
 
-    public void setlasteditor(User lasteditor) {
+    public void setlasteditor(Semesteruser lasteditor) {
         this.lasteditor = lasteditor;
     }
 

@@ -22,7 +22,7 @@ public class Assignment extends Model {
 
     @ManyToOne
     @JoinColumn(name="assignments")
-    public User editor;
+    public Semesteruser editor;
 
     @OneToMany(mappedBy = "assignment")
     public Set<Exercise> exercises;

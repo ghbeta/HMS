@@ -21,9 +21,6 @@ public class Global extends GlobalSettings{
         List<Class> entity=new ArrayList<Class>();
         entity.add(User.class);
         entity.add(Token.class);
-        entity.add(Lecture.class);
-        entity.add(Assignment.class);
-        entity.add(Exercise.class);
 
         try {
             Server h2server= Server.createTcpServer();
