@@ -17,7 +17,7 @@ public class Repo extends Model {
     String reponame;
 
     @ManyToOne
-    User owner;
+    Semesteruser owner;
 
     @ManyToOne
     Lecture course;
@@ -30,11 +30,11 @@ public class Repo extends Model {
         this.reponame = reponame;
     }
 
-    public User getOwner() {
+    public Semesteruser getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setSemesteruser(Semesteruser owner) {
         this.owner = owner;
     }
 

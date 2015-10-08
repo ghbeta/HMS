@@ -25,6 +25,9 @@ public class Semesteruser extends Abstractuser {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "editor")
     public Set<Assignment> assignments;
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "owner")
+    public Set<Repo> repos;
+
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "marker")
     public Set<Exercise> exercises;
 }

@@ -40,8 +40,8 @@ public class Lecture extends Model {
     @ManyToMany(cascade=CascadeType.ALL)
     public List<Semesteruser> assistants;
 
-
-
+    @OneToMany(cascade=CascadeType.ALL,mappedBy = "course")
+    public Set<Repo> repos;
 
 
 
