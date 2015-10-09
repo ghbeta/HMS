@@ -63,7 +63,7 @@ public class Email extends Controller {
         try {
             String mail = askForm.get().email;
             Token.sendMailChangeMail(user, mail,"global");
-            flash("danger", Messages.get("changemail.mailsent"));
+            flash("success", Messages.get("changemail.mailsent"));
             return ok(email.render(user, askForm));
         } catch (MalformedURLException e) {
             Logger.error("Cannot validate URL", e);

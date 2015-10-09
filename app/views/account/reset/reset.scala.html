@@ -1,6 +1,6 @@
-@(resetForm: Form[controllers.account.Reset.ResetForm], token: String)
+@(user:User, token: String)
 
-@main(null) {
+@main(user) {
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">

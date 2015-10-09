@@ -1,20 +1,73 @@
 @(user: User)(content: Html)
 
-@main(user) {
+@dashboard.dashboard(user){
 
-    <div class="row">
-        <div class="col col-lg-4">
-            <ul class="nav nav-pills nav-stacked">
-                <li>
-                    <a href="@controllers.account.settings.routes.Password.index">@Messages("password")</a>
-                </li>
-                <li>
-                    <a href="@controllers.account.settings.routes.Email.index">@Messages("email")</a>
-                </li>
-            </ul>
-        </div>
-        <div class="col col-lg-8">
+    <div class="well media col-md-6 col-md-offset-1">
+        <div class="text-center">
         @content
         </div>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#profile" data-toggle="tab">Update SSH</a></li>
+            <li><a href="#email" data-toggle="tab">Update Email</a></li>
+            <li><a href="#password" data-toggle="tab">Update Password</a></li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active in" id="profile">
+             <h4>@Messages("need.ssh")</h4>
+                <form>
+                    <div class="form-group">
+                        <label>@Messages("ssh.current")</label>
+                        <input type="text" class="form-control" placeholder="@user.ssh" disabled="disabled">
+                    </div>
+                    <div class="form-group">
+                        <label>@Messages("ssh.new")</label>
+                        <input type="text" class="form-control"  placeholder="@Messages("ssh.type")">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+            <div class="tab-pane fade" id = "email">
+                <form action="@controllers.account.settings.routes.Email.runEmail()" method="post">
+                    <div class="form-group">
+                        <label>@Messages("email.current")</label>
+                        <input type="email" class="form-control" placeholder="@user.email" disabled="disabled">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">@Messages("email.new")</label>
+                        <input type="email" class="form-control" name="email" placeholder="@Messages("email.type")">
+                    </div>
+                    <button type="submit" class="btn btn-default">Reset</button>
+                </form>
+            </div>
+            <div class="tab-pane fade" id = "password">
+                <form>
+                    <div class="form-group">
+                        <label>@Messages("password")</label>
+                        <input type="password" class="form-control" placeholder="@Messages("password")">
+                    </div>
+                    <div class="form-group">
+                        <label>@Messages("email.new")</label>
+                        <input type="password" class="form-control"placeholder="@Messages("password.again")">
+                    </div>
+                    <button type="submit" class="btn btn-default">Reset</button>
+                </form>
+            </div>
+        </div>
     </div>
+
+    @*<div class="row">*@
+        @*<div class="col col-lg-4">*@
+            @*<ul class="nav nav-pills nav-stacked">*@
+                @*<li>*@
+                    @*<a href="@controllers.account.settings.routes.Password.index">@Messages("password")</a>*@
+                @*</li>*@
+                @*<li>*@
+                    @*<a href="@controllers.account.settings.routes.Email.index">@Messages("email")</a>*@
+                @*</li>*@
+            @*</ul>*@
+        @*</div>*@
+
+    @*</div>*@
+
+
 }

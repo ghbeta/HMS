@@ -2,6 +2,7 @@ package controllers.account;
 
 import models.Token;
 import models.User;
+import play.mvc.Http;
 import utils.AppException;
 import utils.Mail;
 import org.apache.commons.mail.EmailException;
@@ -124,8 +125,12 @@ public class Reset extends Controller {
             return badRequest(ask.render(askForm));
         }
 
-        Form<ResetForm> resetForm = form(ResetForm.class);
-        return ok(views.html.account.reset.reset.render(resetForm, token));
+        //Form<ResetForm> resetForm = form(ResetForm.class);
+
+        User current=User.findByEmail(ctx().session().get("email"), "global");
+
+        return ok(views.html.account.reset.reset.render(current, token));
+
     }
 
     /**
@@ -133,23 +138,23 @@ public class Reset extends Controller {
      */
     public static Result runReset(String token) {
         Form<ResetForm> resetForm = form(ResetForm.class).bindFromRequest();
-
+        User current=User.findByEmail(ctx().session().get("email"), "global");
         if (resetForm.hasErrors()) {
             flash("danger", Messages.get("signup.valid.password"));
-            return badRequest(views.html.account.reset.reset.render(resetForm, token));
+            return badRequest(views.html.account.reset.reset.render(null, token));
         }
 
         try {
             Token resetToken = Token.findByTokenAndType(token, Token.TypeToken.password,"global");
             if (resetToken == null) {
                 flash("danger", Messages.get("error.technical"));
-                return badRequest(views.html.account.reset.reset.render(resetForm, token));
+                return badRequest(views.html.account.reset.reset.render(current, token));
             }
 
             if (resetToken.isExpired()) {
                 resetToken.delete();
                 flash("danger", Messages.get("error.expiredresetlink"));
-                return badRequest(views.html.account.reset.reset.render(resetForm, token));
+                return badRequest(views.html.account.reset.reset.render(current, token));
             }
 
             // check email
@@ -158,7 +163,7 @@ public class Reset extends Controller {
                 // display no detail (email unknown for example) to
                 // avoir check email by foreigner
                 flash("danger", Messages.get("error.technical"));
-                return badRequest(views.html.account.reset.reset.render(resetForm, token));
+                return badRequest(views.html.account.reset.reset.render(current, token));
             }
 
             String password = resetForm.get().inputPassword;
@@ -167,13 +172,13 @@ public class Reset extends Controller {
             // Send email saying that the password has just been changed.
             sendPasswordChanged(user);
             flash("success", Messages.get("resetpassword.success"));
-            return ok(views.html.account.reset.reset.render(resetForm, token));
+            return ok(views.html.account.reset.reset.render(current, token));
         } catch (AppException e) {
             flash("danger", Messages.get("error.technical"));
-            return badRequest(views.html.account.reset.reset.render(resetForm, token));
+            return badRequest(views.html.account.reset.reset.render(current, token));
         } catch (EmailException e) {
             flash("danger", Messages.get("error.technical"));
-            return badRequest(views.html.account.reset.reset.render(resetForm, token));
+            return badRequest(views.html.account.reset.reset.render(current, token));
         }
 
     }

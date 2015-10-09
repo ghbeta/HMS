@@ -7,12 +7,21 @@ fullname=Full Name
 goback=Go Back
 logout=Logout
 password=Password
+password.again = Confirm Password
 error.technical=Technical Error, please Retry
 validate=Submit
 reset=Reset
 about=About
 direct.login=Direct Login
 settings=Settings
+need.ssh = You need SSH Key to Use the Git Repo
+ssh.current= Current SSH
+ssh.new= New SSH
+ssh.type= Type in Your New SSH Key
+email.new= New Email
+email.current = Current Email
+email.type=Give Your new Email Here
+
 
 dashboard.profile=My Profile
 dashboard.lecture=Lectures Management
