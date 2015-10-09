@@ -1,5 +1,6 @@
 package models;
 
+import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
@@ -14,14 +15,18 @@ import javax.persistence.Table;
 @Table(name = "Repos")
 public class Repo extends Model {
     @Id
-    String reponame;
+    public String reponame;
+
+    @Constraints.Required
+    public String repopath;
 
     @ManyToOne
-    Semesteruser owner;
+    public Semesteruser owner;
 
     @ManyToOne
-    Lecture course;
+    public Lecture course;
 
+    public String semester;
     public String getReponame() {
         return reponame;
     }

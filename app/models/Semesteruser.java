@@ -4,10 +4,8 @@ import play.data.format.Formats;
 import play.data.validation.Constraints;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.validation.Constraint;
 import java.util.List;
 import java.util.Set;
 
@@ -30,4 +28,7 @@ public class Semesteruser extends Abstractuser {
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "marker")
     public Set<Exercise> exercises;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "sender")
+    public Set<Message> messages;
 }

@@ -18,6 +18,7 @@ public class Assignment extends Model {
 
     public int totalpoints;
 
+    public String semester;
 
 
     @ManyToOne

@@ -13,6 +13,8 @@ public class Exercise extends Model {
     @Id
     public String title;
 
+    public String semester;
+
     @Column(columnDefinition = "TEXT")
     public String content;
 
