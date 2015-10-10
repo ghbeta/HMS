@@ -32,6 +32,8 @@ POST    /reset/:token               controllers.account.Reset.runReset(token:Str
 
 GET     /email/:token               controllers.account.settings.Email.validateEmail(token:String)
 
+# Get all the Lectures related to the current user.
+GET    /all                         controllers.lectures.Alllectures.allLectures()
 #About static page
 GET     /about                      controllers.About.index()
 # Map static resources from the /public folder to the /assets URL path

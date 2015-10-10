@@ -1,0 +1,28 @@
+@(user:User)(semesters:List[Semester])
+@dashboard.dashboard(user){
+  <div class="panel-group col-md-6 col-md-offset-1" id="semesterlist" role="tablist" aria-multiselectable="true">
+    <ul>
+    @for(semester <- semesters) {
+      <li>
+        <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="a@semester.semester">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#semesterlist"  href="#@semester.semester" aria-expanded="false" aria-controls="@semester.semester">
+            @semester.semester
+            </a>
+          </h4>
+        </div>
+        <div id="@semester.semester" class="panel-collapse collapse" role="tabpanel" aria-labelledby="a@semester.semester">
+          <div class="panel-body">
+          comes later
+          </div>
+        </div>
+      </div>
+      </li>
+    }
+    </ul>
+  </div>
+
+
+
+}

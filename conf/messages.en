@@ -21,8 +21,13 @@ ssh.type= Type in Your New SSH Key
 email.new= New Email
 email.current = Current Email
 email.type=Give Your new Email Here
+home=Home Page
+lectures.success=Success
+lectures.danger=Something is Wrong
 
-
+lectures.all=All Available Lectures
+lectures.my= My Lectures
+lectures.new=Create Lectures
 dashboard.profile=My Profile
 dashboard.lecture=Lectures Management
 

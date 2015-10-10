@@ -1,6 +1,6 @@
 package controllers.account.settings;
 
-import Permission.Secured;
+import Permission.Secureddefault;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -11,7 +11,7 @@ import play.mvc.Security;
  * User: yesnault
  * Date: 15/05/12
  */
-@Security.Authenticated(Secured.class)
+@Security.Authenticated(Secureddefault.class)
 public class Index extends Controller {
 
     /**

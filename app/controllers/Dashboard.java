@@ -1,6 +1,6 @@
 package controllers;
 
-import Permission.Secured;
+import Permission.Secureddefault;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -10,7 +10,7 @@ import views.html.dashboard.index;
 
 
 public class Dashboard extends Controller {
-    @Security.Authenticated(Secured.class)
+    @Security.Authenticated(Secureddefault.class)
     public static Result index() {
         return ok(index.render(User.findByEmail(request().username(),"global")));
     }

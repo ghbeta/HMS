@@ -1,6 +1,6 @@
 package controllers.account.settings;
 
-import Permission.Secured;
+import Permission.Secureddefault;
 import models.Token;
 import models.User;
 import play.Logger;
@@ -15,7 +15,7 @@ import java.net.MalformedURLException;
  * User: yesnault
  * Date: 15/05/12
  */
-@Security.Authenticated(Secured.class)
+@Security.Authenticated(Secureddefault.class)
 public class Password extends Controller {
 
     /**

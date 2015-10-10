@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import java.util.List;
+
 import static com.avaje.ebean.Ebean.getServer;
 
 /**
@@ -26,7 +28,11 @@ public class Semester extends Model {
         this.semester = semester;
     }
 
-    public Semester findsemester(String semester){
+    public static Semester findsemester(String semester){
         return getServer("global").find(Semester.class).where().eq("semester",semester).findUnique();
+    }
+
+    public static List<Semester> getallsemester(){
+        return getServer("global").find(Semester.class).orderBy("semester desc").findList();
     }
 }
