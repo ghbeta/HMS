@@ -22,7 +22,7 @@ public class Lecture extends Model {
     @Column(columnDefinition = "TEXT")
     public String desription;
 
-
+    public boolean localrepo;
     public DateTime closingdate;
 
     public int optionalDuties;

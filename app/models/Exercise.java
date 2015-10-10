@@ -15,6 +15,10 @@ public class Exercise extends Model {
 
     public String semester;
 
+    public boolean evalueated;
+
+    public boolean ishandin;
+
     @Column(columnDefinition = "TEXT")
     public String content;
 
