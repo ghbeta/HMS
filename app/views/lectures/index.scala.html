@@ -1,6 +1,11 @@
 @(user:User)(semesters:List[Semester])
 @dashboard.dashboard(user){
-  <div class="panel-group col-md-6 col-md-offset-1" id="semesterlist" role="tablist" aria-multiselectable="true">
+  <div class="panel-group col-md-6 col-md-offset-1 well" id="semesterlist" role="tablist" aria-multiselectable="true">
+    <div class="page-header"  >
+    <h1 class="text-center">Lectures
+        <small>Choose Semester for details</small>
+      </h1>
+    </div>
     <ul>
     @for(semester <- semesters) {
       <li>
