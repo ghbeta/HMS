@@ -24,7 +24,7 @@ email.type=Give Your new Email Here
 home=Home Page
 lectures.success=Success
 lectures.danger=Something is Wrong
-
+lectures.none = You do not seem to subscribe any Lectures in this semester
 lectures.all=All Available Lectures
 lectures.my= My Lectures
 lectures.new=Create Lectures

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static com.avaje.ebean.Ebean.getServer;
+
 /**
  * Created by Hao on 2015/7/6.
  */
@@ -62,6 +64,11 @@ public class Lecture extends Model {
     }
 
 
+    public static List<Lecture> getalllectures(String databasename){
+
+        return getServer(databasename).find(Lecture.class).orderBy("coursename desc").findList();
+
+    }
 
 //    @Override
 //    public void save(String semester){

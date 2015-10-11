@@ -1,0 +1,48 @@
+@(user:User)(lecturemap:Map[String,List[Lecture]])
+
+@dashboard.dashboard(user){
+  <div class="panel-group col-md-6 col-md-offset-1 well" id="mylecturelist" role="tablist" aria-multiselectable="true">
+    <div class="page-header"  >
+      <h1 class="text-center">My Lectures
+        <small>Choose Semester for details</small>
+      </h1>
+    </div>
+
+   @if((lecturemap != null)){
+     <ul>
+     @for((key,value) <- lecturemap){
+       <li>
+         <div class="panel panel-default">
+           <div class="panel-heading" role="tab" id="a@key">
+             <h4 class="panel-title">
+               <a role="button" data-toggle="collapse" data-parent="#mylecturelist"  href="#@key" aria-expanded="false" aria-controls="@key">
+               @key
+               </a>
+             </h4>
+           </div>
+           <div id="@key" class="panel-collapse collapse" role="tabpanel" aria-labelledby="a@key">
+             <div class="list-group">
+               @if(value != null){
+               @for(lecture <- value) {
+                 <a href="#" class="list-group-item">
+                 @lecture.courseName
+                 </a>
+               }} else {
+                 @Messages("lectures.none")
+               }
+             </div>
+           </div>
+         </div>
+       </li>
+     }</ul>
+   }else{
+     @wflash
+   }
+
+  </div>
+
+
+
+
+
+}

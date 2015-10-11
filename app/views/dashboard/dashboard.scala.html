@@ -45,8 +45,11 @@
           </div>
           <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
             <div class="list-group">
-              <a href="@controllers.lectures.routes.Alllectures.allLectures()" class="list-group-item">
+              <a href="@controllers.lectures.routes.Lecturehub.allLectures()" class="list-group-item">
               @Messages("lectures.all")
+              </a>
+              <a href="@controllers.lectures.routes.Lecturehub.myLectures()" class="list-group-item">
+              @Messages("lectures.my")
               </a>
             </div>
           </div>
