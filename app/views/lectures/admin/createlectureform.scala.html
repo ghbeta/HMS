@@ -1,0 +1,81 @@
+@(user:User)
+@dashboard.dashboard(user){
+<div class="col-md-6 col-md-offset-1 well">
+    <div class="page-header"  >
+        <h1 class="text-center">Lecture Form
+            <small>Use this form to create new lecture</small>
+        </h1>
+    </div>
+    <form action="@controllers.lectures.admin.routes.Createlecture.createlecture()" method="post">
+          <div class="form-inline">
+              <div class="form-group">
+            <select class="form-control" name="yearprefix">
+                <option value="WS">WS</option>
+                <option value="SS">SS</option>
+            </select>
+              </div>
+            <div class="form-group">
+                <label class="control-label">@Messages("lecture.form.year")</label>
+                <input type="text" class="form-control " name="year" placeholder="2XXX">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">@Messages("lecture.form.title")</label>
+                <input type="text" class="form-control" name="coursename">
+            </div>
+            <div class="checkbox">
+                <label class="control-label">
+                    <input type="checkbox" name="localrepo" value="true">
+                    @Messages("lecture.form.repo")
+                </label>
+            </div>
+           </div>
+        <br>
+          <div class="form-inline">
+            <div class="form-group">
+                <label class="control-label">@Messages("lecture.form.totalassignment")</label>
+                <input type="number" class="form-control" name="totalassignment" placeholder="12">
+            </div>
+            <div class="form-group">
+                <label class="control-label">@Messages("lecture.form.option")</label>
+                <input type="number" class="form-control" name="optionalassigment" placeholder="2">
+            </div>
+          </div>
+        <br>
+          <div class="form-inline">
+            <div class="form-group">
+                <label class="control-label">@Messages("lecture.form.validhandin")</label>
+                <input type="number" class="form-control" name="percentageforvalidassignment" placeholder="0.5">
+            </div>
+            <div class="form-group">
+                <label class="control-label6">@Messages("lecture.form.validexam")</label>
+                <input type="number" class="form-control" name="percentageforexam" placeholder="0.5">
+            </div>
+         </div>
+        <br>
+         <div class="form-inline">
+            <div class="form-group">
+                <label class="control-label">@Messages("lecture.form.totalvalid")</label>
+                <input type="number" class="form-control" name="numberofvalidassignment" placeholder="10">
+            </div>
+             <div class="form-group">
+                 <label class="control-label">@Messages("lecture.form.closingdate")</label>
+                 <input id="datetimepicker1" type="text" class="form-control" name="closingdate" placeholder="@Messages("lecture.form.date")">
+             </div>
+        </div>
+        <br>
+
+        <div class="form-group">
+            <label>@Messages("lecture.form.description")</label>
+            <textarea class="form-control"  name="description" rows="10">
+            </textarea>
+        </div>
+
+        <div class="form-group pull-right">
+                <button type="submit" class="btn btn-success">@Messages("lecture.form.create")</button>
+        </div>
+
+</form>
+</div>
+
+}

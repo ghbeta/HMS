@@ -27,8 +27,11 @@ public class Lecture extends Model {
     public boolean localrepo;
     public DateTime closingdate;
 
-    public int optionalDuties;
-    public float lowerProcentualBounderyOfDuties;
+    public boolean closed;
+    public int totalassignment;
+    public int optionalassignments;
+    public int requriednumberofvalidassignment;
+    public float requiredpercentfovalidassignment;
 
     public float minimumPercentageForExamination;
 
