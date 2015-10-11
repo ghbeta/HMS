@@ -39,8 +39,9 @@ public class Lecture extends Model {
 
 
 
+
     @ManyToMany(cascade=CascadeType.ALL)
-    public List<Semesteruser> assistants;
+    public List<Semesteruser> attendent;
 
     @OneToMany(cascade=CascadeType.ALL,mappedBy = "course")
     public Set<Repo> repos;
@@ -68,6 +69,10 @@ public class Lecture extends Model {
 
         return getServer(databasename).find(Lecture.class).orderBy("coursename desc").findList();
 
+    }
+
+    public static List<Lecture> getalllecturesbyemail(String email,String databasename){
+        return getServer(databasename).find(Lecture.class).fetch("attendent").where().eq("email",email).findList();
     }
 
 //    @Override

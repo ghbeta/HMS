@@ -1,4 +1,4 @@
-@(user:User)(semesters:List[Semester])
+@(user:User)(lectureall:Map[String,List[Lecture]])
 @dashboard.dashboard(user){
   <div class="panel-group col-md-6 col-md-offset-1 well" id="semesterlist" role="tablist" aria-multiselectable="true">
     <div class="page-header"  >
@@ -6,26 +6,37 @@
         <small>Choose Semester for details</small>
       </h1>
     </div>
+    @if(lectureall!=null){
     <ul>
-    @for(semester <- semesters) {
+    @for((key,value) <- lectureall) {
       <li>
         <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="a@semester.semester">
+        <div class="panel-heading" role="tab" id="a@key">
           <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#semesterlist"  href="#@semester.semester" aria-expanded="false" aria-controls="@semester.semester">
-            @semester.semester
+            <a role="button" data-toggle="collapse" data-parent="#semesterlist"  href="#@key" aria-expanded="false" aria-controls="@key">
+            @key
             </a>
           </h4>
         </div>
-        <div id="@semester.semester" class="panel-collapse collapse" role="tabpanel" aria-labelledby="a@semester.semester">
-          <div class="panel-body">
-          comes later
+        <div id="@key" class="panel-collapse collapse" role="tabpanel" aria-labelledby="a@key">
+          <div class="list-group">
+          @if(value != null){
+            @for(lecture <- value) {
+              <a href="#" class="list-group-item">
+              @lecture.courseName
+              </a>
+            }} else {
+            @Messages("lectures.none")
+          }
           </div>
         </div>
       </div>
       </li>
     }
     </ul>
+    }else{
+      @wflash
+    }
   </div>
 
 

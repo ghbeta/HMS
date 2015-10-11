@@ -27,12 +27,19 @@ import static play.data.Form.form;
 public class Lecturehub extends Controller {
     @Security.Authenticated(Securedstudents.class)
     public static Result allLectures() {
+        Map<String,List<Lecture>> alllectures= new HashMap<>();
         User currentuser=User.findByEmail(request().username(),"global");
         List<Semester> semesters= Semester.getallsemester();
         if(semesters!=null){
-            //TODO querying all the lectures using semester name
+            for(int i=0;i<semesters.size();i++){
+                try {
+                    alllectures.put(semesters.get(i).semester,Lecture.getalllectures(semesters.get(i).semester));
+                } catch (Exception e) {
+                    alllectures.put(semesters.get(i).semester, null);
+                }
+            }
             flash("success",Messages.get("lecture.success"));
-        return ok(index.render(currentuser, semesters));}
+        return ok(index.render(currentuser, alllectures));}
         else
         {
             flash("danger", Messages.get("lecture.danger"));
@@ -41,20 +48,18 @@ public class Lecturehub extends Controller {
     }
     @Security.Authenticated(Securedstudents.class)
     public static Result myLectures(){
-        Map<String,List<Lecture>> lecturesacross= new HashMap<>();
+        Map<String,List<Lecture>> mylecturesacross= new HashMap<>();
         User currentuser=User.findByEmail(request().username(),"global");
         List<Semester> semesters= Semester.getallsemester();
-        Logger.debug(semesters.get(1).semester);
         if(semesters != null){
            for(int i=0;i<semesters.size();i++){
-               Logger.debug(semesters.get(i).semester);
                try {
-                   lecturesacross.put(semesters.get(i).semester,Lecture.getalllectures(semesters.get(i).semester));
+                   mylecturesacross.put(semesters.get(i).semester,Lecture.getalllecturesbyemail(currentuser.email,semesters.get(i).semester));
                } catch (Exception e) {
-                   lecturesacross.put(semesters.get(i).semester, null);
+                   mylecturesacross.put(semesters.get(i).semester, null);
                }
            }
-           return ok(lecturemy.render(currentuser,lecturesacross));
+           return ok(lecturemy.render(currentuser,mylecturesacross));
         }
         else
         {
