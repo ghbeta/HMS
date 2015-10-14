@@ -71,20 +71,22 @@ public class Createlecture extends Controller {
 
     @Security.Authenticated(Securedteacher.class)
     public static Result createlecture() {
-        //Form<Login> loginForm = form(Login.class).bindFromRequest();
 
-        //Form<LectureRegister> createlectureForm = form(LectureRegister.class).bindFromRequest();
-        String semester = "WS2016";//createlectureForm.get().yearprefix+createlectureForm.get().year;
-        //if(Semester.findsemester(semester)==null){
-        List<Class> entity = new ArrayList<Class>();
-        entity.add(Semesteruser.class);
-        entity.add(Assignment.class);
-        entity.add(Exercise.class);
-        entity.add(Lecture.class);
-        entity.add(Message.class);
-        entity.add(Repo.class);
-        createServer(semester, entity);
-        //}
+        Form<LectureRegister> createlectureForm = form(LectureRegister.class).bindFromRequest();
+        String semester = createlectureForm.get().yearprefix+createlectureForm.get().year;
+        if(Semester.findsemester(semester)==null){
+            Semester addsemester = new Semester();
+            addsemester.semester=semester;
+            addsemester.save("global");
+            List<Class> entity = new ArrayList<Class>();
+            entity.add(Semesteruser.class);
+            entity.add(Assignment.class);
+            entity.add(Exercise.class);
+            entity.add(Lecture.class);
+            entity.add(Message.class);
+            entity.add(Repo.class);
+            createServer(semester, entity);
+        }
 //        Lecture lecture= new Lecture();
 //        lecture.semester=semester;
 //        lecture.courseName=createlectureForm.get().coursename;
