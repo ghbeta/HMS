@@ -4,11 +4,13 @@ import com.avaje.ebean.EbeanServer;
 import com.avaje.ebean.EbeanServerFactory;
 import com.avaje.ebean.config.DataSourceConfig;
 import com.avaje.ebean.config.ServerConfig;
+import org.h2.tools.Server;
 import play.Logger;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.List;
 
 
@@ -29,7 +31,7 @@ public class CreateDB {
         postgresDb.setUsername("hms");
         postgresDb.setPassword("test");
         postgresDb.setUrl("jdbc:h2:tcp://localhost/~/data_dynamic/"+name);
-
+        //postgresDb.setUrl("jdbc:h2:file:~/data_dynamic/"+name);
 //       // postgresDb.setHeartbeatSql("select count(*) from t_one");
 //        //postgresDb.loadSettings("global");
 
@@ -77,7 +79,8 @@ public class CreateDB {
 
 // create the EbeanServer instance
 
-        EbeanServer server = EbeanServerFactory.create(config);
+        EbeanServer server =
+                EbeanServerFactory.create(config);
 
     }
 }

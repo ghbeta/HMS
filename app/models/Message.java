@@ -5,6 +5,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -13,30 +14,34 @@ import java.util.Set;
 @Entity
 @Table(name="messages")
 public class Message extends Model {
+    @Id
+    @GeneratedValue
+    String messageid;
     @Column(columnDefinition = "Text")
     public String messagebody;
 
     public String semester;
 
     @Formats.DateTime(pattern = "dd.MM.yyyy hh:mm:ss")
-    private org.joda.time.DateTime date;
+    public org.joda.time.DateTime date;
 
+    @ManyToOne
+    public Message parent;
     @OneToMany(mappedBy = "parent")
-    private final Set<Message> answers = new LinkedHashSet<Message>();
+    public List<Message> answers;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Message parent;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Exercise exercise;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Lecture lecture;
+    @ManyToOne
+    public Exercise exercise;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Assignment assignment;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Semesteruser sender;
+    @ManyToOne
+    public Lecture lecture;
+//
+    @ManyToOne
+    public Assignment assignment;
+//
+    @ManyToOne
+    public Semesteruser sender;
 
 }

@@ -15,7 +15,7 @@ import static com.avaje.ebean.Ebean.getServer;
  * Created by Hao on 2015/7/6.
  */
 @Entity
-@Table(name = "Lecture")
+@Table(name = "lecture")
 public class Lecture extends Model {
     @Id
     @Column(unique = true)
@@ -25,7 +25,7 @@ public class Lecture extends Model {
     public String desription;
 
     public boolean localrepo;
-    public DateTime closingdate;
+    public String closingdate;
 
     public boolean closed;
     public int totalassignment;
@@ -39,17 +39,18 @@ public class Lecture extends Model {
 
     @OneToOne
     public Semesteruser lasteditor;
-
-
-
+//
+    @OneToMany(cascade=CascadeType.ALL,mappedBy = "lecture")
+    public List<Assignment> assignments;
 
     @ManyToMany(cascade=CascadeType.ALL)
     public List<Semesteruser> attendent;
-
+//
     @OneToMany(cascade=CascadeType.ALL,mappedBy = "course")
-    public Set<Repo> repos;
-
-
+    public List<Repo> repos;
+//
+    @OneToMany(cascade=CascadeType.ALL,mappedBy = "lecture")
+    public List<Message> messages;
 
     public String getCourseName() {
         return courseName;

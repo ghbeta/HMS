@@ -3,32 +3,41 @@ package models;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 
-import javax.persistence.CascadeType;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
 /**
  * Created by Hao on 2015/10/8.
  */
+@Entity
+@Table(name="semesterusers")
 public class Semesteruser extends Abstractuser {
+
     @Constraints.Required
     @Formats.NonEmpty
     public String semester;
 
     @ManyToMany(cascade= CascadeType.ALL)
     public List<Lecture> lectures;
-
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "editor")
-    public Set<Assignment> assignments;
-
+//
+    @ManyToMany(cascade = CascadeType.ALL)
+    public List<Assignment> assignments;
+//
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "owner")
-    public Set<Repo> repos;
-
+    public List<Repo> repos;
+//
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "marker")
-    public Set<Exercise> exercises;
-
+    public List<Exercise> exercises;
+//
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "sender")
-    public Set<Message> messages;
+    public List<Message> messages;
+
+    public static Semesteruser findByEmail(String email,String database) {
+        return currentServer(database).find(Semesteruser.class).where().eq("email", email).findUnique();
+    }
+
+    public static Semesteruser findById(String id,String database){
+        return currentServer(database).find(Semesteruser.class).where().eq("id",id).findUnique();
+    }
 }

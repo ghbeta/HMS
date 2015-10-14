@@ -3,6 +3,7 @@ package models;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Hao on 2015/10/7.
@@ -23,10 +24,13 @@ public class Exercise extends Model {
     public String content;
 
     @ManyToOne
-    @JoinColumn(name="exercises")
+    //@JoinColumn(name="exercises")
     public Semesteruser marker;
 
     @ManyToOne
-    @JoinColumn(name="exercises")
+    //@JoinColumn(name="exercises")
     public Assignment assignment;
+
+    @OneToMany(mappedBy = "exercise")
+    public List<Message> messages;
 }

@@ -40,6 +40,8 @@ lecture.form.description= Lecture Description:
 lecture.form.closingdate= Lecture Finish Date:
 lecture.form.create= Create!
 lecture.form.date=DD/MM/YY
+lecture.form.des.none="There is no description for this lecture yet"
+lecture.create.success="Lecture has been successfully created "
 dashboard.profile=My Profile
 dashboard.lecture=Lectures Management
 

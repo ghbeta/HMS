@@ -22,6 +22,8 @@ public class Global extends GlobalSettings{
         entity.add(User.class);
         entity.add(Token.class);
         entity.add(Semester.class);
+
+
         try {
             Server h2server= Server.createTcpServer();
             h2server.start();

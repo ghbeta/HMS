@@ -3,16 +3,13 @@ package models;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Hao on 2015/7/15.
  */
 @Entity
-@Table(name = "Repos")
+@Table(name = "repos")
 public class Repo extends Model {
     @Id
     public String reponame;
@@ -21,9 +18,11 @@ public class Repo extends Model {
     public String repopath;
 
     @ManyToOne
+    //@JoinColumn
     public Semesteruser owner;
 
     @ManyToOne
+    //@JoinColumn
     public Lecture course;
 
     public String semester;
@@ -35,13 +34,13 @@ public class Repo extends Model {
         this.reponame = reponame;
     }
 
-    public Semesteruser getOwner() {
-        return owner;
-    }
-
-    public void setSemesteruser(Semesteruser owner) {
-        this.owner = owner;
-    }
+//    public Semesteruser getOwner() {
+//        return owner;
+//    }
+//
+//    public void setSemesteruser(Semesteruser owner) {
+//        this.owner = owner;
+//    }
 
     public Lecture getCourse() {
         return course;
