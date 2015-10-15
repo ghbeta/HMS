@@ -71,7 +71,7 @@ public class Lecture extends Model {
 
     public static List<Lecture> getalllectures(String databasename){
 
-        return getServer(databasename).find(Lecture.class).orderBy("coursename desc").findList();
+        return getServer(databasename).find(Lecture.class).orderBy("courseName desc").findList();
 
     }
 

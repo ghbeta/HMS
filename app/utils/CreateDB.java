@@ -40,6 +40,8 @@ public class CreateDB {
         Path p= Paths.get(System.getProperty("user.home"),"data_dynamic",name+".h2.db");
         Logger.info(p.toString());
         File f = p.toFile();
+
+
 // specify a JNDI DataSource
 // config.setDataSourceJndiName("someJndiDataSourceName");
 
