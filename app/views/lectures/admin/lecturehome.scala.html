@@ -1,6 +1,12 @@
 @(user:User)(semesteruser: Semesteruser)(lecture: Lecture)
 
 @dashboard.dashboard(user){
-  @wflash
-  to do sth
+  <div class="container col-md-6 col-md-offset-1 well">
+    <ul>
+      <li>@user.lastname</li>
+      <li>@semesteruser.semester</li>
+      <li>@lecture.courseName</li>
+      <li>@lecture.desription</li>
+    </ul>
+  </div>
 }

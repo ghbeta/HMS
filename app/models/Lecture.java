@@ -79,6 +79,10 @@ public class Lecture extends Model {
         return getServer(databasename).find(Lecture.class).fetch("attendent").where().eq("email",email).findList();
     }
 
+    public static Lecture getlecturebyname(String name,String databasename){
+        return getServer(databasename).find(Lecture.class).where().eq("courseName",name).findUnique();
+    }
+
 //    @Override
 //    public void save(String semester){
 //        Ebean.getServer(semester).save(this);
