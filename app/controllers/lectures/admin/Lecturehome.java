@@ -16,6 +16,7 @@ public class Lecturehome extends Controller {
        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
        Semesteruser currentsemesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
        Lecture selectedlecture=Lecture.getlecturebyname(lecture,semester);
+        //todo somevalidate function should be placed here
         return ok(lecturehome.render(currentuser,currentsemesteruser,selectedlecture));
 
     }
