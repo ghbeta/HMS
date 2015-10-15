@@ -43,7 +43,7 @@ public class Lecturehub extends Controller {
         else
         {
             flash("danger", Messages.get("lecture.danger"));
-            return badRequest();
+            return badRequest(index.render(currentuser, alllectures));
         }
     }
     @Security.Authenticated(Securedstudents.class)
@@ -64,7 +64,7 @@ public class Lecturehub extends Controller {
         else
         {
             flash("danger", Messages.get("lecture.danger"));
-            return badRequest();
+            return badRequest(lecturemy.render(currentuser,mylecturesacross));
         }
     }
 }

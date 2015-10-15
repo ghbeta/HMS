@@ -9,6 +9,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.lectures.admin.createlectureform;
+import views.html.lectures.admin.lecturehome;
+
 import static play.data.Form.form;
 import static utils.CreateDB.createServer;
 
@@ -73,6 +75,7 @@ public class Createlecture extends Controller {
     public static Result createlecture() {
 
         Form<LectureRegister> createlectureForm = form(LectureRegister.class).bindFromRequest();
+
         String semester = createlectureForm.get().yearprefix+createlectureForm.get().year;
         if(Semester.findsemester(semester)==null){
             Semester addsemester = new Semester();
@@ -116,9 +119,8 @@ public class Createlecture extends Controller {
             semesteruser=null;
         }
 
-
+        User globaluser=User.findByEmail(ctx().session().get("email"),"global");
         if(semesteruser==null){
-            User globaluser=User.findByEmail(ctx().session().get("email"),"global");
             semesteruser= new Semesteruser();
             semesteruser.email=globaluser.email;
             semesteruser.firstname=globaluser.firstname;
@@ -134,12 +136,17 @@ public class Createlecture extends Controller {
         if(!lecture.attendent.contains(lecture.lasteditor)){
             lecture.attendent.add(lecture.lasteditor);
         }
+        try{
         lecture.save(lecture.semester);
+            flash("success", Messages.get("lecture.create.success"));
+            return ok(lecturehome.render(globaluser,semesteruser,lecture));}
+        catch (Exception e){
+            flash("danger",Messages.get("lecture.create.fail"));
+            return badRequest(lecturehome.render(globaluser,semesteruser,lecture));
+        }
        // System.out.println("Form<LectureRegister>: " + createlectureForm);
-        flash("success", Messages.get("lecture.create.success"));
-        return ok(createlectureForm.get().closingdate);
+
         //return ok("done");
          }
-
 
 }
