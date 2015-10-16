@@ -20,6 +20,9 @@ public class Message extends Model {
     @Column(columnDefinition = "Text")
     public String messagebody;
 
+    @Version
+    private Long version;
+
     public String semester;
 
     @Formats.DateTime(pattern = "dd.MM.yyyy hh:mm:ss")

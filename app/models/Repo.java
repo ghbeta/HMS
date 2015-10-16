@@ -21,6 +21,9 @@ public class Repo extends Model {
     //@JoinColumn
     public Semesteruser owner;
 
+    @Version
+    private Long version;
+
     @ManyToOne
     //@JoinColumn
     public Lecture course;

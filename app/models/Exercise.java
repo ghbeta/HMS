@@ -16,6 +16,8 @@ public class Exercise extends Model {
 
     public String semester;
 
+    public float points;
+
     public boolean evalueated;
 
     public boolean ishandin;

@@ -22,7 +22,7 @@
            </div>
            <div id="@key" class="panel-collapse collapse" role="tabpanel" aria-labelledby="a@key">
              <div class="list-group">
-               @if(value != null){
+               @if(value != null && value.size>0){
                @for(lecture <- value) {
                  <a href="@controllers.lectures.admin.routes.Lecturehome.generatelecturehome(user.lastname,key,lecture.courseName)" class="list-group-item">
                  @lecture.courseName

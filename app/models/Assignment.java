@@ -21,6 +21,8 @@ public class Assignment extends Model {
 
     public String semester;
 
+    @Version
+    private Long version;
 
     @ManyToMany
     public List<Semesteruser> students;
