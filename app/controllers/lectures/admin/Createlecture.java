@@ -136,10 +136,29 @@ public class Createlecture extends Controller {
         if(!lecture.attendent.contains(lecture.lasteditor)){
             lecture.attendent.add(lecture.lasteditor);
         }
+        if(lecture.totalassignment>0){
+        for(int i=1;i<=lecture.totalassignment;i++){
+            Assignment assignment=new Assignment();
+            assignment.title=Messages.get("lecture.homework")+i;
+            assignment.semester=semester;
+            assignment.lecture=lecture;
+            lecture.assignments.add(assignment);
+        }}
+        if(lecture.optionalassignments>0) {
+            for (int i = 1; i <= lecture.optionalassignments; i++) {
+                Assignment assignment = new Assignment();
+                assignment.title = Messages.get("lecture.homework.optional") + i;
+                assignment.semester = semester;
+                assignment.lecture = lecture;
+                lecture.assignmentsoptional.add(assignment);
+            }
+        }
         try{
         lecture.save(lecture.semester);
             flash("success", Messages.get("lecture.create.success"));
-            return ok(lecturehome.render(globaluser,semesteruser,lecture));}
+            //return redirect(lecturehome.render(globaluser,semesteruser,lecture));
+            return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(globaluser.lastname,semester,lecture.courseName));
+        }
         catch (Exception e){
             flash("danger",Messages.get("lecture.create.fail"));
             return badRequest(lecturehome.render(globaluser,semesteruser,lecture));

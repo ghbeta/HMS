@@ -13,11 +13,15 @@ import java.util.Set;
 @Table(name="assignment")
 public class Assignment extends Model {
     @Id
+    @GeneratedValue
+    public String id;
+
     public String title;
 
     public int numberofexercise;
 
     public int totalpoints;
+
 
     public String semester;
 

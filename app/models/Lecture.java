@@ -46,6 +46,9 @@ public class Lecture extends Model {
     @OneToMany(cascade=CascadeType.ALL,mappedBy = "lecture")
     public List<Assignment> assignments;
 
+    @OneToMany(cascade=CascadeType.ALL,mappedBy = "lecture")
+    public List<Assignment> assignmentsoptional;
+
     @ManyToMany(cascade=CascadeType.ALL)
     public List<Semesteruser> attendent;
 //
