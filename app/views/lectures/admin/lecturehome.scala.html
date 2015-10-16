@@ -33,8 +33,26 @@
         <div class="panel panel-default">
           <div class="panel-heading">@Messages("lecture.home.homeworks")</div>
           <div class="panel-body">
-
+          @Messages("lecture.home.upload")
           </div>
+          <table class="table table-striped custab">
+            <thead>
+              <tr>
+                <th>@Messages("assignment.title")</th>
+                <th>@Messages("assignment.lecture")</th>
+                <th  class="text-center">@Messages("assignment.action")</th>
+                <th>@Messages("assignment.points")</th>
+              </tr>
+            </thead>
+            @for(currentassignment <- lecture.assignments){
+              <tr>
+                <td>@currentassignment.title</td>
+                <td>@currentassignment.lecture.courseName</td>
+                <td  class="text-center"><a href="#"><i class="fa fa-upload" href="#"></i></a></td>
+                <td>@currentassignment.totalpoints</td>
+              </tr>
+            }
+          </table>
         </div>
       </div>
       <div class="tab-pane" id="editor">Secondo sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.

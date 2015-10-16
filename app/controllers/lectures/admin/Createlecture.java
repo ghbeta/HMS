@@ -150,7 +150,7 @@ public class Createlecture extends Controller {
                 assignment.title = Messages.get("lecture.homework.optional") + i;
                 assignment.semester = semester;
                 assignment.lecture = lecture;
-                lecture.assignmentsoptional.add(assignment);
+                lecture.assignments.add(assignment);
             }
         }
         try{
