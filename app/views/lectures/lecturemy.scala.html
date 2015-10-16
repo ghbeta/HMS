@@ -30,15 +30,17 @@
                   </a>}else{
                    <a href="@controllers.lectures.user.routes.Lecturehome.generatelecturehome(user.lastname,key,lecture.courseName)" class="list-group-item">
                      @lecture.courseName
-                 }
-               }} else {
+                 </a>}
+               }
+               } else {
                  @Messages("lectures.none")
                }
              </div>
            </div>
          </div>
        </li>
-     }</ul>
+     }
+     </ul>
    }else{
      @wflash
    }
