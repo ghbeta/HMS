@@ -24,9 +24,13 @@
              <div class="list-group">
                @if(value != null && value.size>0){
                @for(lecture <- value) {
-                 <a href="@controllers.lectures.admin.routes.Lecturehome.generatelecturehome(user.lastname,key,lecture.courseName)" class="list-group-item">
+                 @if(user.roles.toString.equals("Teachers")||user.roles.toString.equals("Assistants")){
+                   <a href="@controllers.lectures.admin.routes.Lecturehome.generatelecturehome(user.lastname,key,lecture.courseName)" class="list-group-item">
                  @lecture.courseName
-                 </a>
+                  </a>}else{
+                   <a href="@controllers.lectures.user.routes.Lecturehome.generatelecturehome(user.lastname,key,lecture.courseName)" class="list-group-item">
+                     @lecture.courseName
+                 }
                }} else {
                  @Messages("lectures.none")
                }
