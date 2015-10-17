@@ -20,8 +20,6 @@ public class Lecturehome extends Controller {
 
     public static class Lecturetermform{
 
-        public String coursename;
-
 
         public String localrepo;
 
@@ -58,6 +56,24 @@ public class Lecturehome extends Controller {
         Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
         Form<Descriptionform> descriptionformForm=Form.form(Descriptionform.class).bindFromRequest();
         currentlecture.desription=descriptionformForm.get().modifieddescription;
+        currentlecture.update(semester);
+        return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
+    }
+
+    public static Result modifyterms(String user, String semester,String lecture){
+        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
+        Semesteruser currentsemesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
+        Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
+        Form<Lecturetermform> lecturetermformForm=Form.form(Lecturetermform.class).bindFromRequest();
+        //currentlecture.desription=descriptionformForm.get().modifieddescription;
+        currentlecture.localrepo=lecturetermformForm.get().localrepo.equals("true");
+        currentlecture.closingdate=lecturetermformForm.get().closingdate;
+        currentlecture.totalassignment=lecturetermformForm.get().totalassignment;
+        currentlecture.optionalassignments=lecturetermformForm.get().optionalassigment;
+        currentlecture.requriednumberofvalidassignment=lecturetermformForm.get().numberofvalidassignment;
+        currentlecture.requiredpercentfovalidassignment=lecturetermformForm.get().percentageforvalidassignment;
+        currentlecture.minimumPercentageForExamination=lecturetermformForm.get().percentageforexam;
+        currentlecture.desription="666";
         currentlecture.update(semester);
         return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
     }
