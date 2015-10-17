@@ -3,17 +3,23 @@
 @dashboard.dashboard(user){
   <div class="col-md-6 col-md-offset-1 well well-sm">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#preview" data-toggle="tab">@Messages("lecture.home.admin")</a></li>
+      <li class="active"><a href="#home" data-toggle="tab">@Messages("lecture.home.admin")</a></li>
       @if(user.roles.toString.equals("Teachers")){
        <li><a href="#editor" data-toggle="tab">@Messages("lecture.home.editor")</a></li>
       }
       <li><a href="#forum" data-toggle="tab">@Messages("lecture.home.forum")</a></li>
     </ul>
     <div class="tab-content">
-      <div class="tab-pane active" id="preview">
+      <div class="tab-pane active" id="home">
         <br>
         <div class="panel panel-default">
-        <div class="panel-heading">@Messages("lecture.home.des") <span class="label label-info pull-right">@lecture.courseName</span> <span class="label label-success pull-right">@lecture.semester</span> </div>
+        <div class="panel-heading">@Messages("lecture.home.des")
+          <span class="label label-info pull-right">@lecture.courseName</span>
+          <span class="label label-success pull-right">@lecture.semester</span>
+          <a href="#" data-toggle="modal" data-target="#bdescriptionModal">
+            <i class="fa fa-pencil-square-o" data-toggle="modal" data-target="#descriptionModal"></i>
+          </a>
+        </div>
         <div class="panel-body">
           @lecture.desription
         </div>
@@ -65,4 +71,22 @@
     </div>
   </div>
 
+  @*here begins with modal for description change*@
+  <div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+          <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <h3>Modal Body</h3>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 }
