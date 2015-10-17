@@ -41,6 +41,8 @@ public class Lecturehome extends Controller {
 
         public float percentageforexam;
     }
+
+
     public static Result generatelecturehome(String user, String semester,String lecture){
        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
        Semesteruser currentsemesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);

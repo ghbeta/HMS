@@ -41,7 +41,11 @@
         </div>
         <hr>
         <div class="panel panel-default">
-          <div class="panel-heading">@Messages("lecture.home.homeworks")</div>
+          <div class="panel-heading">@Messages("lecture.home.homeworks")
+            <button title="Create new homework" class="btn btn-link"  data-toggle="modal" data-target="#assignmentModal">
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
           <div class="panel-body">
           @Messages("lecture.home.homework")
           </div>
@@ -150,6 +154,24 @@
                 </label>
               </div>
             }
+            <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("lecture.form.close")</button>
+            <button type="submit" class="btn btn-primary pull-right">@Messages("lecture.form.change")</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  @*here begins with modal for assignment change*@
+  <div class="modal fade" id="assignmentModal" tabindex="-1" role="dialog" aria-labelledby="assignmentModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">@Messages("lecture.form.newassignment")</h4>
+        </div>
+        <div class="modal-body">
+          <form method="post">
+
             <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("lecture.form.close")</button>
             <button type="submit" class="btn btn-primary pull-right">@Messages("lecture.form.change")</button>
           </form>
