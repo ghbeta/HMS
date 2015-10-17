@@ -41,8 +41,10 @@ GET         /createlecture                       controllers.lectures.admin.Crea
 POST        /createlecture                       controllers.lectures.admin.Createlecture.createlecture()
 #Generate Lecture home page for teacher or assistance
 GET         /usr/:user/:semester/:lecture        controllers.lectures.admin.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
+#Modify the Lecture content description(Teacher)
+POST       /usr/:user/:semester/:lecture        controllers.lectures.admin.Lecturehome.modifydescription(user:String,semester:String,lecture:String)
 #Generate Lecture home page for students
-GET        /usr/:user/:semester/:lecture         controllers.lectures.user.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
+GET         /usr/:user/:semester/:lecture        controllers.lectures.user.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
 #About static page
 GET         /about                               controllers.About.index()
 # Map static resources from the /public folder to the /assets URL path

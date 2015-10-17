@@ -39,7 +39,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">@Messages("lecture.home.homeworks")</div>
           <div class="panel-body">
-          @Messages("lecture.home.upload")
+          @Messages("lecture.home.homework")
           </div>
           <table class="table table-striped custab">
             <thead>
@@ -72,19 +72,21 @@
   </div>
 
   @*here begins with modal for description change*@
-  <div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog" aria-labelledby="descriptionModal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
-          <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+          <h4 class="modal-title" id="myModalLabel">@Messages("lecture.form.moddes")</h4>
         </div>
         <div class="modal-body">
-          <h3>Modal Body</h3>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <form action="@controllers.lectures.admin.routes.Lecturehome.modifydescription(user.lastname,lecture.semester,lecture.courseName)" method="post">
+            <div class="form-group">
+              <label>@Messages("lecture.form.description")</label>
+              <textarea class="form-control"  name="modifieddescription" rows="10">@lecture.desription</textarea>
+            </div>
+            <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("lecture.form.close")</button>
+            <button type="submit" class="btn btn-primary pull-right">@Messages("lecture.form.change")</button>
+          </form>
         </div>
       </div>
     </div>
