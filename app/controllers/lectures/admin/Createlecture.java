@@ -59,8 +59,38 @@ public class Createlecture extends Controller {
 
 
         public String validate() {
-            //todo maybe some validation later
+            if(isblank(yearprefix)){
+                return "yearprefix is required ";
+            }
+            if(isblank(year)){
+                return "year is required ";
+            }
+            if(isblank(coursename)){
+                return "coursename is required ";
+            }
+            if(isblank(closingdate)){
+                return "closingdate is required ";
+            }
+            if(isblank(totalassignment)){
+                return "totalassignment is required ";
+            }
+            if(isblank(optionalassigment)){
+                return "optionalassigment is required ";
+            }
+            if(isblank(numberofvalidassignment)){
+                return "numberofvalidassignment is required ";
+            }
+            if(isblank(percentageforvalidassignment)){
+                return "percentageforvalidassignment is required ";
+            }
+            if(isblank(percentageforexam)){
+                return "percentageforexam is required ";
+            }
             return null;
+        }
+
+        public boolean isblank(Object t){
+            return t==null;
         }
 
     }
@@ -75,68 +105,67 @@ public class Createlecture extends Controller {
     public static Result createlecture() {
 
         Form<LectureRegister> createlectureForm = form(LectureRegister.class).bindFromRequest();
-        System.out.println(createlectureForm);
-        String semester = createlectureForm.get().yearprefix+createlectureForm.get().year;
 
-        if(Semester.findsemester(semester)==null){
-            Semester addsemester = new Semester();
-            addsemester.semester=semester;
-            addsemester.save("global");
-            List<Class> entity = new ArrayList<Class>();
-            entity.add(Semesteruser.class);
-            entity.add(Assignment.class);
-            entity.add(Exercise.class);
-            entity.add(Lecture.class);
-            entity.add(Message.class);
-            entity.add(Repo.class);
-            createServer(semester, entity);
-        }
-        Lecture lecture= new Lecture();
-        lecture.semester=semester;
-        lecture.courseName=createlectureForm.get().coursename;
-        if(createlectureForm.get().description!=null){
-        lecture.desription=createlectureForm.get().description;}
-        else
-        {
-            lecture.desription= Messages.get("lecture.form.des.none");
-        }
-        if(createlectureForm.get().localrepo==null){
-            lecture.localrepo=false;
-        }
-        else if(createlectureForm.get().localrepo.equals("true")){
-            lecture.localrepo=true;
-        }
+        if(!createlectureForm.hasErrors()) {
 
-        lecture.closingdate=createlectureForm.get().closingdate;
-        lecture.totalassignment=createlectureForm.get().totalassignment;
-        lecture.optionalassignments=createlectureForm.get().optionalassigment;
-        lecture.requriednumberofvalidassignment=createlectureForm.get().numberofvalidassignment;
-        lecture.requiredpercentfovalidassignment=createlectureForm.get().percentageforvalidassignment;
-        lecture.minimumPercentageForExamination=createlectureForm.get().percentageforexam;
-        Semesteruser semesteruser=null;
-        try{
-            semesteruser=Semesteruser.findByEmail(ctx().session().get("email"),lecture.semester);
-        }catch(Exception e){
-            semesteruser=null;
-        }
+            String semester = createlectureForm.get().yearprefix + createlectureForm.get().year;
+            if (Semester.findsemester(semester) == null) {
+                Semester addsemester = new Semester();
+                addsemester.semester = semester;
+                addsemester.save("global");
+                List<Class> entity = new ArrayList<Class>();
+                entity.add(Semesteruser.class);
+                entity.add(Assignment.class);
+                entity.add(Exercise.class);
+                entity.add(Lecture.class);
+                entity.add(Message.class);
+                entity.add(Repo.class);
+                createServer(semester, entity);
+            }
+            Lecture lecture = new Lecture();
+            lecture.semester = semester;
+            lecture.courseName = createlectureForm.get().coursename;
+            if (createlectureForm.get().description != null) {
+                lecture.desription = createlectureForm.get().description;
+            } else {
+                lecture.desription = Messages.get("lecture.form.des.none");
+            }
+            if (createlectureForm.get().localrepo == null) {
+                lecture.localrepo = false;
+            } else if (createlectureForm.get().localrepo.equals("true")) {
+                lecture.localrepo = true;
+            }
 
-        User globaluser=User.findByEmail(ctx().session().get("email"),"global");
-        if(semesteruser==null){
-            semesteruser= new Semesteruser();
-            semesteruser.email=globaluser.email;
-            semesteruser.firstname=globaluser.firstname;
-            semesteruser.id=globaluser.id;
-            semesteruser.lastname=globaluser.lastname;
-            semesteruser.roles=globaluser.roles;
-            semesteruser.ssh=globaluser.ssh;
-            //suser=globaluser;
-            semesteruser.semester=lecture.semester;
-            semesteruser.save(lecture.semester);
-        }
-        lecture.lasteditor=semesteruser;
-        if(!lecture.attendent.contains(lecture.lasteditor)){
-            lecture.attendent.add(lecture.lasteditor);
-        }
+            lecture.closingdate = createlectureForm.get().closingdate;
+            lecture.totalassignment = createlectureForm.get().totalassignment;
+            lecture.optionalassignments = createlectureForm.get().optionalassigment;
+            lecture.requriednumberofvalidassignment = createlectureForm.get().numberofvalidassignment;
+            lecture.requiredpercentfovalidassignment = createlectureForm.get().percentageforvalidassignment;
+            lecture.minimumPercentageForExamination = createlectureForm.get().percentageforexam;
+            Semesteruser semesteruser = null;
+            try {
+                semesteruser = Semesteruser.findByEmail(ctx().session().get("email"), lecture.semester);
+            } catch (Exception e) {
+                semesteruser = null;
+            }
+
+            User globaluser = User.findByEmail(ctx().session().get("email"), "global");
+            if (semesteruser == null) {
+                semesteruser = new Semesteruser();
+                semesteruser.email = globaluser.email;
+                semesteruser.firstname = globaluser.firstname;
+                semesteruser.id = globaluser.id;
+                semesteruser.lastname = globaluser.lastname;
+                semesteruser.roles = globaluser.roles;
+                semesteruser.ssh = globaluser.ssh;
+                //suser=globaluser;
+                semesteruser.semester = lecture.semester;
+                semesteruser.save(lecture.semester);
+            }
+            lecture.lasteditor = semesteruser;
+            if (!lecture.attendent.contains(lecture.lasteditor)) {
+                lecture.attendent.add(lecture.lasteditor);
+            }
 //        if(lecture.totalassignment>0){
 //        for(int i=1;i<=lecture.totalassignment;i++){
 //            Assignment assignment=new Assignment();
@@ -154,19 +183,20 @@ public class Createlecture extends Controller {
 //                lecture.assignments.add(assignment);
 //            }
 //        }
-        try{
-        lecture.save(lecture.semester);
-            flash("success", Messages.get("lecture.create.success"));
-            //return redirect(lecturehome.render(globaluser,semesteruser,lecture));
-            return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(globaluser.lastname,semester,lecture.courseName));
+            try {
+                lecture.save(lecture.semester);
+                flash("success", Messages.get("lecture.create.success"));
+                //return redirect(lecturehome.render(globaluser,semesteruser,lecture));
+                return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(globaluser.lastname, semester, lecture.courseName));
+            } catch (Exception e) {
+                flash("danger", Messages.get("lecture.create.fail"));
+                return badRequest(lecturehome.render(globaluser, semesteruser, lecture));
+            }
         }
-        catch (Exception e){
-            flash("danger",Messages.get("lecture.create.fail"));
-            return badRequest(lecturehome.render(globaluser,semesteruser,lecture));
+        else{
+            flash("danger", Messages.get("lecture.create.fail"));
+            return redirect(routes.Createlecture.createlectureform());
         }
-       // System.out.println("Form<LectureRegister>: " + createlectureForm);
-
-        //return ok("done");
          }
 
 }
