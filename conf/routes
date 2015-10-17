@@ -42,9 +42,9 @@ POST        /createlecture                       controllers.lectures.admin.Crea
 #Generate Lecture home page for teacher or assistance
 GET         /admin/:user/:semester/:lecture        controllers.lectures.admin.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
 #Modify the Lecture content description(Teacher)
-POST        /usr/:user/:semester/:lecture/description        controllers.lectures.admin.Lecturehome.modifydescription(user:String,semester:String,lecture:String)
+POST        /admin/:user/:semester/:lecture/description        controllers.lectures.admin.Lecturehome.modifydescription(user:String,semester:String,lecture:String)
 #Modify the Lecture content terms(Teacher)
-POST       /usr/:user/:semester/:lecture/terms        controllers.lectures.admin.Lecturehome.modifyterms(user:String,semester:String,lecture:String)
+POST       /admin/:user/:semester/:lecture/terms        controllers.lectures.admin.Lecturehome.modifyterms(user:String,semester:String,lecture:String)
 #Generate Lecture home page for students
 GET         /usr/:user/:semester/:lecture        controllers.lectures.user.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
 #About static page
