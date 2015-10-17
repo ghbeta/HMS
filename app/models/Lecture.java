@@ -2,10 +2,12 @@ package models;
 
 import com.avaje.ebean.Ebean;
 import org.joda.time.DateTime;
+import play.data.format.Formats;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +30,9 @@ public class Lecture extends Model {
     private Long version;
 
     public boolean localrepo;
-    public String closingdate;
+
+    @Formats.DateTime(pattern = "yyyy-MM-dd")
+    public Date closingdate;
 
     public boolean closed;
     public int totalassignment;

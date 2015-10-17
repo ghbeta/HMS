@@ -9,6 +9,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.lectures.admin.lecturehome;
 
+import java.util.Date;
+
 /**
  * Created by Hao on 2015/10/15.
  */
@@ -24,7 +26,7 @@ public class Lecturehome extends Controller {
         public String localrepo;
 
 
-        public String closingdate;
+        public Date closingdate;
 
 
         public int totalassignment;
@@ -75,7 +77,6 @@ public class Lecturehome extends Controller {
         currentlecture.requriednumberofvalidassignment=lecturetermformForm.get().numberofvalidassignment;
         currentlecture.requiredpercentfovalidassignment=lecturetermformForm.get().percentageforvalidassignment;
         currentlecture.minimumPercentageForExamination=lecturetermformForm.get().percentageforexam;
-        currentlecture.desription="666";
         currentlecture.update(semester);
         return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
     }

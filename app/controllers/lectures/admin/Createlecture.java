@@ -38,7 +38,7 @@ public class Createlecture extends Controller {
         public String localrepo;
 
         @Constraints.Required
-        public String closingdate;
+        public Date closingdate;
 
         @Constraints.Required
         public int totalassignment;
@@ -75,8 +75,9 @@ public class Createlecture extends Controller {
     public static Result createlecture() {
 
         Form<LectureRegister> createlectureForm = form(LectureRegister.class).bindFromRequest();
-
+        System.out.println(createlectureForm);
         String semester = createlectureForm.get().yearprefix+createlectureForm.get().year;
+
         if(Semester.findsemester(semester)==null){
             Semester addsemester = new Semester();
             addsemester.semester=semester;

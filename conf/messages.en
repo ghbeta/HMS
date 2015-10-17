@@ -57,6 +57,7 @@ lecture.form.modterms=Change the terms of the lecture
 lecture.form.info1=Current Repo type is Remote repo,check to change repo to local repo
 lecture.form.info2=Current Repo type is Local repo, uncheck to change repo to remote
 lecture.form.newassignment=Create new assignment
+lecture.closingdate=Finish Date:
 lecture.create.success="Lecture has been successfully created "
 lectrue.create.fail="Lecture can not be created pls try again later"
 lecture.home.admin=Home

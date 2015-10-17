@@ -22,6 +22,8 @@ public class Assignment extends Model {
 
     public int totalpoints;
 
+    public String uploadfile;
+
 
 
     public String semester;
