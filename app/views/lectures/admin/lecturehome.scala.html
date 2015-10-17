@@ -1,7 +1,7 @@
 @(user:User)(semesteruser: Semesteruser)(lecture: Lecture)
 
 @dashboard.dashboard(user){
-  <div class="col-md-6 col-md-offset-1 well well-sm">
+  <div class="col-md-8 well well-sm">
     <ul class="nav nav-tabs">
       <li class="active"><a href="#home" data-toggle="tab">@Messages("lecture.home.admin")</a></li>
       @if(user.roles.toString.equals("Teachers")){
@@ -14,11 +14,11 @@
         <br>
         <div class="panel panel-default">
         <div class="panel-heading">@Messages("lecture.home.des")
+          <button class="btn btn-link"  data-toggle="modal" data-target="#descriptionModal">
+          <i class="fa fa-pencil-square-o"></i>
+          </button>
           <span class="label label-info pull-right">@lecture.courseName</span>
           <span class="label label-success pull-right">@lecture.semester</span>
-          <a href="#" data-toggle="modal" data-target="#bdescriptionModal">
-            <i class="fa fa-pencil-square-o" data-toggle="modal" data-target="#descriptionModal"></i>
-          </a>
         </div>
         <div class="panel-body">
           @lecture.desription
