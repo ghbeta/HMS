@@ -3,6 +3,7 @@ package models;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -29,6 +30,10 @@ public class Assignment extends Model {
 
     public boolean ishandin;
 
+    public Date deadline;
+
+    public Date handin;
+
     public String semester;
 
     @Version
@@ -43,6 +48,8 @@ public class Assignment extends Model {
     @ManyToOne
     //@JoinColumn
     public Lecture lecture;
+
+    public boolean isExpired(){return deadline!=null&&handin.before(deadline);}
 //
 
 }

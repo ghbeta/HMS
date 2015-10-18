@@ -59,20 +59,9 @@ public class Lecture extends Model {
     @OneToMany(cascade=CascadeType.ALL,mappedBy = "lecture")
     public List<Message> messages;
 
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public Semesteruser getlasteditor() {
-        return lasteditor;
-    }
-
-    public void setlasteditor(Semesteruser lasteditor) {
-        this.lasteditor = lasteditor;
+    public boolean isExpired(){
+        Date date=new Date();
+        return closingdate!=null&&date.before(closingdate);
     }
 
 
