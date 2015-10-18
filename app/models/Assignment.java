@@ -26,6 +26,8 @@ public class Assignment extends Model {
 
 
 
+    public boolean ishandin;
+
     public String semester;
 
     @Version

@@ -12,6 +12,9 @@ import java.util.List;
 @Table(name="exercise")
 public class Exercise extends Model {
     @Id
+    @GeneratedValue
+    public String id;
+
     public String title;
 
     public String semester;
@@ -20,10 +23,8 @@ public class Exercise extends Model {
 
     public boolean evalueated;
 
-    public boolean ishandin;
-
-    @Column(columnDefinition = "TEXT")
-    public String content;
+    @ManyToMany
+    public List<Semesteruser> students;
 
     @ManyToOne
     //@JoinColumn(name="exercises")
