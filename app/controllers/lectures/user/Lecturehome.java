@@ -1,8 +1,10 @@
 package controllers.lectures.user;
 
+import controllers.lectures.*;
 import models.Lecture;
 import models.Semesteruser;
 import models.User;
+import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.lectures.user.lecturehome;
@@ -16,7 +18,13 @@ public class Lecturehome extends Controller {
         Semesteruser currentsemesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
         Lecture selectedlecture=Lecture.getlecturebyname(lecture,semester);
         //todo somevalidate function should be placed here
-        return ok(lecturehome.render(currentuser, currentsemesteruser, selectedlecture));
+        if(!selectedlecture.isExpired()){
+        return ok(lecturehome.render(currentuser, currentsemesteruser, selectedlecture));}
+        else
+        {
+            flash("danger", Messages.get("lecture.home.expired"));
+            return redirect(controllers.lectures.routes.Lecturehub.myLectures());
+        }
 
     }
 }
