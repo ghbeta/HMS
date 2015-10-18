@@ -26,14 +26,14 @@ public class Exercise extends Model {
     @Column(columnDefinition = "TEXT")
     public String comments;
 
-    @ManyToMany
+    @ManyToMany(cascade= CascadeType.ALL)
     public List<Semesteruser> students;
 
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.ALL)
     //@JoinColumn(name="exercises")
     public Semesteruser marker;
 
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.ALL)
     //@JoinColumn(name="exercises")
     public Assignment assignment;
 

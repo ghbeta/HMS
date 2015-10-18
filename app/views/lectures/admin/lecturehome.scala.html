@@ -171,11 +171,28 @@
           <h4 class="modal-title" id="myModalLabel">@Messages("lecture.form.newassignment")</h4>
         </div>
         <div class="modal-body">
-          <form method="post">
-
+          <form action="@controllers.lectures.admin.routes.Lecturehome.addassignment(user.lastname,lecture.semester,lecture.courseName)" method="post" enctype="multipart/form-data">
+            <div class="row">
+              <div class="col-xs-4">
+                <label>@Messages("Number.exercise")</label>
+                <input type="number" class="form-control" name="numberofexercise">
+              </div>
+              <div class="col-xs-4">
+                <label>@Messages("deadline")</label>
+                <input type="date" class="form-control" name="deadline">
+              </div>
+              <div class="col-xs-4">
+                <label>@Messages("lecture.action.upload")</label>
+                <input type="file" name="uploadfile">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>@Messages("lecture.form.addionalinfo")</label>
+              <textarea class="form-control"  name="addtionalinfo" rows="10"></textarea>
+            </div>
             <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("lecture.form.close")</button>
             <button type="submit" class="btn btn-primary pull-right">@Messages("lecture.form.change")</button>
-          </form>
+            </form>
         </div>
       </div>
     </div>

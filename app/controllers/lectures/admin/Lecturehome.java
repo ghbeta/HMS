@@ -1,16 +1,25 @@
 package controllers.lectures.admin;
 
-import models.Lecture;
-import models.Semester;
-import models.Semesteruser;
-import models.User;
+import Permission.Securedassistant;
+import Permission.Securedteacher;
+import controllers.Assets;
+import models.*;
+import play.Logger;
+import play.Play;
 import play.data.Form;
-import play.mvc.Controller;
-import play.mvc.Result;
+import play.i18n.Messages;
+import play.mvc.*;
 import views.html.lectures.admin.lecturehome;
-
+import play.mvc.Http.MultipartFormData;
+import play.mvc.Http.MultipartFormData.FilePart;
+import javax.persistence.Column;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Date;
-
+import org.apache.commons.io.FileUtils;
+import static utils.UploadPath.uploadpath;
+import static utils.UploadPath.downloadpath;
 /**
  * Created by Hao on 2015/10/15.
  */
@@ -44,7 +53,21 @@ public class Lecturehome extends Controller {
         public float percentageforexam;
     }
 
+    public static class Assignmentform{
 
+        public int numberofexercise;
+
+        public File uploadfile;
+
+        @Column(columnDefinition = "TEXT")
+        public String addtionalinfo;
+
+        public Date deadline;
+
+
+    }
+
+    @Security.Authenticated(Securedteacher.class)
     public static Result generatelecturehome(String user, String semester,String lecture){
        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
        Semesteruser currentsemesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
@@ -54,16 +77,19 @@ public class Lecturehome extends Controller {
 
     }
 
+    @Security.Authenticated(Securedteacher.class)
     public static Result modifydescription(String user, String semester,String lecture){
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
         Semesteruser currentsemesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
         Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
         Form<Descriptionform> descriptionformForm=Form.form(Descriptionform.class).bindFromRequest();
+
         currentlecture.desription=descriptionformForm.get().modifieddescription;
         currentlecture.update(semester);
         return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
     }
 
+    @Security.Authenticated(Securedteacher.class)
     public static Result modifyterms(String user, String semester,String lecture){
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
         Semesteruser currentsemesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
@@ -79,5 +105,57 @@ public class Lecturehome extends Controller {
         currentlecture.minimumPercentageForExamination=lecturetermformForm.get().percentageforexam;
         currentlecture.update(semester);
         return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
+    }
+
+    @Security.Authenticated(Securedteacher.class)
+    public static Result addassignment(String user,String semester,String lecture){
+        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
+        Semesteruser currentsemesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
+        Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
+        Form<Assignmentform> assignmentformForm=Form.form(Assignmentform.class).bindFromRequest();
+
+
+        Assignment assignment=new Assignment();
+        assignment.numberofexercise=assignmentformForm.get().numberofexercise;
+        if(currentlecture.assignments.size()==0){
+            assignment.title= Messages.get("lecture.homework")+1;
+
+        }else{
+            assignment.title=Messages.get("lecture.homework")+(currentlecture.assignments.size()+1);
+
+        }
+        assignment.addtionalinfo=assignmentformForm.get().addtionalinfo;
+        assignment.deadline=assignmentformForm.get().deadline;
+        MultipartFormData body= request().body().asMultipartFormData();
+        FilePart filePart=body.getFile("uploadfile");
+        if(filePart != null){
+            String filename = filePart.getFilename();
+            //String contentType=filePart.getContentType();
+            Logger.debug("what is:"+filename);
+
+            File file= filePart.getFile();
+            String path="";
+            try {
+                FileUtils.moveFile(file, new File(uploadpath("assignment",semester,lecture), filename));
+                path = downloadpath("assignment",semester,lecture)+filename;
+            } catch (IOException ioe) {
+                flash("danger",Messages.get("Lecture.assignment.uploadfail"));
+                return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
+            }
+
+
+
+            assignment.uploadfile=path;
+            currentlecture.assignments.add(assignment);
+            currentlecture.update(semester);
+            flash("success", Messages.get("Lecture.assignment.create"));
+            return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
+        } else {
+            flash("danger",Messages.get("Lecture.assignment.uploadfail"));
+            return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
+        }
+
+
+
     }
 }

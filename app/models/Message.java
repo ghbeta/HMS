@@ -28,7 +28,7 @@ public class Message extends Model {
     @Formats.DateTime(pattern = "dd.MM.yyyy hh:mm:ss")
     public org.joda.time.DateTime date;
 
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.ALL)
     public Message parent;
     @OneToMany(mappedBy = "parent")
     public List<Message> answers;
@@ -37,12 +37,12 @@ public class Message extends Model {
 
 
 
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.ALL)
     public Lecture lecture;
 //
 
 //
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.ALL)
     public Semesteruser sender;
 
 }

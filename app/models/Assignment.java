@@ -28,6 +28,9 @@ public class Assignment extends Model {
     @Column(columnDefinition = "TEXT")
     public String comments;
 
+    @Column(columnDefinition = "TEXT")
+    public String addtionalinfo;
+
     public boolean ishandin;
 
     public Date deadline;
@@ -39,13 +42,13 @@ public class Assignment extends Model {
     @Version
     private Long version;
 
-    @ManyToMany
+    @ManyToMany(cascade= CascadeType.ALL)
     public List<Semesteruser> students;
 //
-    @OneToMany(mappedBy = "assignment")
+    @OneToMany(cascade= CascadeType.ALL,mappedBy = "assignment")
     public List<Exercise> exercises;
 
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.ALL)
     //@JoinColumn
     public Lecture lecture;
 

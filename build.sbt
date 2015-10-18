@@ -12,6 +12,7 @@ libraryDependencies ++= Seq(
   cache,
   "org.mindrot" % "jbcrypt" % "0.3m",
   "com.typesafe.play.plugins" %% "play-plugins-mailer" % "2.3.1",
+  "commons-io" % "commons-io" % "2.4",
   javaWs,
   filters
 )
