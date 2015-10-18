@@ -55,7 +55,7 @@
             <thead>
               <tr>
                 <th>@Messages("assignment.title")</th>
-                <th>@Messages("assignment.lecture")</th>
+                <th>@Messages("assignment.exercise")</th>
                 <th>@Messages("lecture.form.addionalinfo")</th>
                 <th  class="text-center">@Messages("assignment.action")</th>
                 <th>@Messages("assignment.status")</th>
@@ -65,12 +65,48 @@
             @for(currentassignment <- lecture.assignments){
               <tr>
                 <td>@currentassignment.title</td>
-                <td>@currentassignment.lecture.courseName</td>
+                <td>@currentassignment.numberofexercise</td>
                 <td>@currentassignment.addtionalinfo</td>
-                <td  class="text-center"><a href="#"><i class="fa fa-upload" href="#"></i></a></td>
+                <td  class="text-center"> <a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.modify")"><i class="fa fa-pencil-square-o"></i></a>        </td>
                 <td>@currentassignment.getNumberofHandinStudents(currentassignment,lecture,lecture.semester)/@currentassignment.students.size()</td>
                 <td>@currentassignment.deadline</td>
               </tr>
+              <div class="modal fade" id="@currentassignment.id" tabindex="-1" role="dialog" aria-labelledby="@currentassignment.id" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="myModalLabel">@Messages("lecture.form.modassignment")</h4>
+                    </div>
+                    <div class="modal-body">
+                      <form action="@controllers.lectures.admin.routes.Lecturehome.modifyassignment(currentassignment.id,lecture.semester,lecture.courseName)" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                          <div class="col-xs-6">
+                            <label>@Messages("Number.exercise")</label>
+                            <input type="number" class="form-control" name="numberofexercise" value="@currentassignment.numberofexercise">
+                          </div>
+                          <div class="col-xs-6">
+                            <label>@Messages("deadline")</label>
+                            <input type="date" class="form-control" name="deadline" value="@currentassignment.deadline.format("yyyy-MM-dd")">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label>@Messages("lecture.action.upload")</label>
+                          <input type="file" name="uploadfile">
+                        </div>
+                        <samp class="alert-link">@Messages("Lecture.assignment.path")@currentassignment.uploadfile</samp>
+                        @*todo:add more file also delte file*@
+                        <div class="form-group">
+                          <label>@Messages("lecture.form.addionalinfo")</label>
+                          <textarea class="form-control"  name="addtionalinfo" rows="10">@currentassignment.addtionalinfo</textarea>
+                        </div>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("lecture.form.close")</button>
+                        <button type="submit" class="btn btn-primary pull-right">@Messages("lecture.form.change")</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
             }
           </table>
         </div>
@@ -177,18 +213,18 @@
         <div class="modal-body">
           <form action="@controllers.lectures.admin.routes.Lecturehome.addassignment(user.lastname,lecture.semester,lecture.courseName)" method="post" enctype="multipart/form-data">
             <div class="row">
-              <div class="col-xs-4">
+              <div class="col-xs-6">
                 <label>@Messages("Number.exercise")</label>
-                <input type="number" class="form-control" name="numberofexercise">
+                <input type="number" class="form-control" name="numberofexercise" >
               </div>
-              <div class="col-xs-4">
+              <div class="col-xs-6">
                 <label>@Messages("deadline")</label>
                 <input type="date" class="form-control" name="deadline">
               </div>
-              <div class="col-xs-4">
-                <label>@Messages("lecture.action.upload")</label>
-                <input type="file" name="uploadfile">
-              </div>
+            </div>
+            <div class="form-group">
+              <label>@Messages("lecture.action.upload")</label>
+              <input type="file" name="uploadfile">
             </div>
             <div class="form-group">
               <label>@Messages("lecture.form.addionalinfo")</label>

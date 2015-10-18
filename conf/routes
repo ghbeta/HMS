@@ -3,54 +3,56 @@
 # ~~~~
 
 # Home page
-GET         /                                                  controllers.Application.index()
-GET         /dashboard                                         controllers.Dashboard.index()
+GET         /                                                     controllers.Application.index()
+GET         /dashboard                                            controllers.Dashboard.index()
 
-POST        /login                                             controllers.Application.authenticate()
-GET         /logout                                            controllers.Application.logout()
+POST        /login                                                controllers.Application.authenticate()
+GET         /logout                                               controllers.Application.logout()
 
-GET         /settings                                          controllers.account.settings.Index.index()
-GET         /settings/password                                 controllers.account.settings.Password.index()
-POST        /settings/password                                 controllers.account.settings.Password.runPassword()
-GET         /settings/email                                    controllers.account.settings.Email.index()
-POST        /settings/email                                    controllers.account.settings.Email.runEmail()
+GET         /settings                                             controllers.account.settings.Index.index()
+GET         /settings/password                                    controllers.account.settings.Password.index()
+POST        /settings/password                                    controllers.account.settings.Password.runPassword()
+GET         /settings/email                                       controllers.account.settings.Email.index()
+POST        /settings/email                                       controllers.account.settings.Email.runEmail()
 
 # Registers the user, sending an email to confirm the account.
-GET         /signup                                            controllers.account.Signup.create()
-POST        /signup                                            controllers.account.Signup.save()
+GET         /signup                                               controllers.account.Signup.create()
+POST        /signup                                               controllers.account.Signup.save()
 
 # Accessed when the user confirms the registration.
-GET         /confirm/:confirmToken                             controllers.account.Signup.confirm(confirmToken:String)
+GET         /confirm/:confirmToken                                controllers.account.Signup.confirm(confirmToken:String)
 
 # Displays a page to send a reset email given the user's email.
-GET         /reset/ask                                         controllers.account.Reset.ask()
-POST        /reset/ask                                         controllers.account.Reset.runAsk()
+GET         /reset/ask                                            controllers.account.Reset.ask()
+POST        /reset/ask                                            controllers.account.Reset.runAsk()
 
 # Resets the password using the password.
-GET         /reset/:token                                      controllers.account.Reset.reset(token:String)
-POST        /reset/:token                                      controllers.account.Reset.runReset(token:String)
+GET         /reset/:token                                         controllers.account.Reset.reset(token:String)
+POST        /reset/:token                                         controllers.account.Reset.runReset(token:String)
 
-GET         /email/:token                                      controllers.account.settings.Email.validateEmail(token:String)
+GET         /email/:token                                         controllers.account.settings.Email.validateEmail(token:String)
 
 # Get all the Lectures related to the current user.
-GET         /all                                               controllers.lectures.Lecturehub.allLectures()
+GET         /all                                                  controllers.lectures.Lecturehub.allLectures()
 # Get all my Lectures
-GET         /mylecture                                         controllers.lectures.Lecturehub.myLectures()
+GET         /mylecture                                            controllers.lectures.Lecturehub.myLectures()
 #Create Lecture page for the user roll teacher
-GET         /createlecture                                     controllers.lectures.admin.Createlecture.createlectureform()
-POST        /createlecture                                     controllers.lectures.admin.Createlecture.createlecture()
+GET         /createlecture                                        controllers.lectures.admin.Createlecture.createlectureform()
+POST        /createlecture                                        controllers.lectures.admin.Createlecture.createlecture()
 #Generate Lecture home page for teacher or assistance
-GET         /admin/:user/:semester/:lecture                    controllers.lectures.admin.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
+GET         /admin/:user/:semester/:lecture                       controllers.lectures.admin.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
 #Modify the Lecture content description(Teacher)
-POST        /admin/:user/:semester/:lecture/description        controllers.lectures.admin.Lecturehome.modifydescription(user:String,semester:String,lecture:String)
+POST        /admin/:user/:semester/:lecture/description           controllers.lectures.admin.Lecturehome.modifydescription(user:String,semester:String,lecture:String)
 #Modify the Lecture content terms(Teacher)
-POST        /admin/:user/:semester/:lecture/terms              controllers.lectures.admin.Lecturehome.modifyterms(user:String,semester:String,lecture:String)
+POST        /admin/:user/:semester/:lecture/terms                 controllers.lectures.admin.Lecturehome.modifyterms(user:String,semester:String,lecture:String)
 #Add assignment to lecture(Teacher)
-POST       /admin/:user/:semester/:lecture/add_assignment      controllers.lectures.admin.Lecturehome.addassignment(user:String,semester:String,lecture:String)
+POST        /admin/:user/:semester/:lecture/add_assignment        controllers.lectures.admin.Lecturehome.addassignment(user:String,semester:String,lecture:String)
+#Modify assignment in lecture(Teacher)
+POST       /admin/:semester/:lecture/mod_assignment           controllers.lectures.admin.Lecturehome.modifyassignment(assignmentid:String,semester:String,lecture:String)
 #Generate Lecture home page for students
-GET         /usr/:user/:semester/:lecture                      controllers.lectures.user.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
+GET         /usr/:user/:semester/:lecture                         controllers.lectures.user.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
 #About static page
-GET         /about                                             controllers.About.index()
+GET         /about                                                controllers.About.index()
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                                      controllers.Assets.at(path="/public", file)
+GET         /assets/*file                                         controllers.Assets.at(path="/public", file)
 

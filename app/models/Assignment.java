@@ -1,5 +1,6 @@
 package models;
 
+import play.data.format.Formats;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
@@ -7,6 +8,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import static com.avaje.ebean.Ebean.getServer;
 
 /**
  * Created by Hao on 2015/10/7.
@@ -34,6 +37,7 @@ public class Assignment extends Model {
 
     public boolean ishandin;
 
+    @Formats.DateTime(pattern = "yyyy-MM-dd")
     public Date deadline;
 
     public Date handin;
@@ -59,5 +63,8 @@ public class Assignment extends Model {
         return Semesteruser.findByAssignemtnandLecture(assignment,lecture,database).size();
     }
 //
+    public static Assignment findById(String database,String id){
+        return getServer(database).find(Assignment.class).where().eq("id",id).findUnique();
+    }
 
 }

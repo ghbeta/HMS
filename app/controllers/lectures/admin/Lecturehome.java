@@ -121,7 +121,11 @@ public class Lecturehome extends Controller {
             assignment.title= Messages.get("lecture.homework")+1;
 
         }else{
-            assignment.title=Messages.get("lecture.homework")+(currentlecture.assignments.size()+1);
+            if(currentlecture.assignments.size()+1<=currentlecture.totalassignment){
+            assignment.title=Messages.get("lecture.homework")+(currentlecture.assignments.size()+1);}
+            else if(currentlecture.assignments.size()+1>currentlecture.totalassignment&&currentlecture.assignments.size()+1<=currentlecture.totalassignment+currentlecture.optionalassignments){
+                assignment.title=Messages.get("lecture.homework.optional")+(currentlecture.assignments.size()+1);
+            }
 
         }
         assignment.addtionalinfo=assignmentformForm.get().addtionalinfo;
@@ -157,5 +161,20 @@ public class Lecturehome extends Controller {
 
 
 
+    }
+
+    @Security.Authenticated(Securedteacher.class)
+    public static Result modifyassignment(String assignmentid,String semester,String lecture){
+        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
+        Semesteruser currentsemesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
+        Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
+        Form<Assignmentform> assignmentformForm=Form.form(Assignmentform.class).bindFromRequest();
+        Assignment assignment=Assignment.findById(semester,assignmentid);
+        assignment.numberofexercise=assignmentformForm.get().numberofexercise;
+        assignment.addtionalinfo=assignmentformForm.get().addtionalinfo;
+        assignment.deadline=assignmentformForm.get().deadline;
+        assignment.update(semester);
+        flash("success", Messages.get("Lecture.assignment.create"));
+        return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
     }
 }

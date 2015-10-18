@@ -48,6 +48,7 @@ public class Lecture extends Model {
     public Semesteruser lasteditor;
 //
     @OneToMany(cascade=CascadeType.ALL,mappedBy = "lecture")
+    @OrderColumn(name = "title")
     public List<Assignment> assignments;
 
     @ManyToMany(cascade=CascadeType.ALL)
