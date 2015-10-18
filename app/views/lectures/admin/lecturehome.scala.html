@@ -68,7 +68,8 @@
                 <td>@currentassignment.lecture.courseName</td>
                 <td>@currentassignment.addtionalinfo</td>
                 <td  class="text-center"><a href="#"><i class="fa fa-upload" href="#"></i></a></td>
-                <td>0/@lecture.attendent</td>
+                <td>@currentassignment.getNumberofHandinStudents(currentassignment,lecture,lecture.semester)/@currentassignment.students.size()</td>
+                <td>@currentassignment.deadline</td>
               </tr>
             }
           </table>

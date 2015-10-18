@@ -4,6 +4,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -53,6 +54,10 @@ public class Assignment extends Model {
     public Lecture lecture;
 
     public boolean isExpired(){return deadline!=null&&handin.before(deadline);}
+
+    public int getNumberofHandinStudents(Assignment assignment,Lecture lecture,String database){
+        return Semesteruser.findByAssignemtnandLecture(assignment,lecture,database).size();
+    }
 //
 
 }

@@ -4,6 +4,7 @@ import play.data.format.Formats;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -44,9 +45,20 @@ public class Semesteruser extends Abstractuser {
         return currentServer(database).find(Semesteruser.class).where().eq("id",id).findUnique();
     }
 
-    public static List<Semesteruser> findStudentsByLecture(Lecture lecture,String database){
-        return currentServer(database).find(Semesteruser.class).fetch("lectures").where().eq("courseName",lecture.courseName).where().eq("roles",UserRoll.Students.toString()).findList();
+    public static List<Semesteruser> findByAssignemtnandLecture(Assignment assignment,Lecture lecture,String database){
+        return currentServer(database).find(Semesteruser.class).fetch("lectures").where().eq("id",lecture.courseName).where().eq("id",assignment.id).findList();
     }
+//    public List<Semesteruser> getstudents(List<Semesteruser> all){
+//        Iterator<Semesteruser> s=all.iterator();
+//        while(s.hasNext()){
+//            Semesteruser current=s.next();
+//            if(!current.roles.equals(UserRoll.Students.toString())){
+//                s.remove();
+//            }
+//        }
+//        return all;
+//        //return currentServer(database).find(Semesteruser.class).fetch("lectures").where().eq("courseName",lecture.courseName).where().eq("roles",UserRoll.Students.toString()).findList();
+//    }
 
 
 }
