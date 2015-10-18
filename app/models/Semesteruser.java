@@ -43,4 +43,10 @@ public class Semesteruser extends Abstractuser {
     public static Semesteruser findById(String id,String database){
         return currentServer(database).find(Semesteruser.class).where().eq("id",id).findUnique();
     }
+
+    public static List<Semesteruser> findStudentsByLecture(Lecture lecture,String database){
+        return currentServer(database).find(Semesteruser.class).fetch("lectures").where().eq("courseName",lecture.courseName).where().eq("roles",UserRoll.Students.toString()).findList();
+    }
+
+
 }

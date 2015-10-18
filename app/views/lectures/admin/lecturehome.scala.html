@@ -56,16 +56,19 @@
               <tr>
                 <th>@Messages("assignment.title")</th>
                 <th>@Messages("assignment.lecture")</th>
+                <th>@Messages("lecture.form.addionalinfo")</th>
                 <th  class="text-center">@Messages("assignment.action")</th>
-                <th>@Messages("assignment.points")</th>
+                <th>@Messages("assignment.status")</th>
+                <th>@Messages("assignment.expired")</th>
               </tr>
             </thead>
             @for(currentassignment <- lecture.assignments){
               <tr>
                 <td>@currentassignment.title</td>
                 <td>@currentassignment.lecture.courseName</td>
+                <td>@currentassignment.addtionalinfo</td>
                 <td  class="text-center"><a href="#"><i class="fa fa-upload" href="#"></i></a></td>
-                <td>@currentassignment.totalpoints</td>
+                <td>0/@lecture.attendent</td>
               </tr>
             }
           </table>
