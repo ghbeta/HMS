@@ -35,14 +35,12 @@ public class Message extends Model {
 
 
 
-    @ManyToOne
-    public Exercise exercise;
+
 
     @ManyToOne
     public Lecture lecture;
 //
-    @ManyToOne
-    public Assignment assignment;
+
 //
     @ManyToOne
     public Semesteruser sender;

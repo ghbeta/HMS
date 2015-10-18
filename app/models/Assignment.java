@@ -24,7 +24,8 @@ public class Assignment extends Model {
 
     public String uploadfile;
 
-
+    @Column(columnDefinition = "TEXT")
+    public String comments;
 
     public boolean ishandin;
 
@@ -43,6 +44,5 @@ public class Assignment extends Model {
     //@JoinColumn
     public Lecture lecture;
 //
-    @OneToMany(cascade=CascadeType.ALL,mappedBy = "assignment")
-    public List<Message> messages;
+
 }

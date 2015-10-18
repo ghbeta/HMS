@@ -23,6 +23,9 @@ public class Exercise extends Model {
 
     public boolean evalueated;
 
+    @Column(columnDefinition = "TEXT")
+    public String comments;
+
     @ManyToMany
     public List<Semesteruser> students;
 
@@ -34,6 +37,5 @@ public class Exercise extends Model {
     //@JoinColumn(name="exercises")
     public Assignment assignment;
 
-    @OneToMany(mappedBy = "exercise")
-    public List<Message> messages;
+
 }
