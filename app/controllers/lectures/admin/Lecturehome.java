@@ -19,7 +19,6 @@ import java.nio.file.Files;
 import java.util.Date;
 import org.apache.commons.io.FileUtils;
 import static utils.UploadPath.uploadpath;
-import static utils.UploadPath.downloadpath;
 /**
  * Created by Hao on 2015/10/15.
  */
@@ -132,16 +131,17 @@ public class Lecturehome extends Controller {
         assignment.deadline=assignmentformForm.get().deadline;
         MultipartFormData body= request().body().asMultipartFormData();
         FilePart filePart=body.getFile("uploadfile");
+        String filename="";
         if(filePart != null){
-            String filename = filePart.getFilename();
+            filename = filePart.getFilename();
             //String contentType=filePart.getContentType();
             Logger.debug("what is:"+filename);
 
             File file= filePart.getFile();
             String path="";
             try {
-                FileUtils.moveFile(file, new File(uploadpath("assignment",semester,lecture), filename));
-                path = downloadpath("assignment",semester,lecture)+filename;
+                FileUtils.moveFile(file, new File("~/"+uploadpath("assignment",semester,lecture), filename));
+                path = uploadpath("assignment", semester, lecture)+filename;
             } catch (IOException ioe) {
                 flash("danger",Messages.get("Lecture.assignment.uploadfail"));
                 return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
@@ -150,6 +150,7 @@ public class Lecturehome extends Controller {
 
 
             assignment.uploadfile=path;
+            assignment.filename=filename;
             currentlecture.assignments.add(assignment);
             currentlecture.update(semester);
             flash("success", Messages.get("Lecture.assignment.create"));

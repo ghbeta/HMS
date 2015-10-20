@@ -29,6 +29,8 @@ public class Assignment extends Model {
 
     public String uploadfile;
 
+    public String filename;
+
     @Column(columnDefinition = "TEXT")
     public String comments;
 

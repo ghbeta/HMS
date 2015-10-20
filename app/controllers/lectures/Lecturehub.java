@@ -14,6 +14,8 @@ import views.html.account.signup.create;
 import views.html.lectures.index;
 import views.html.lectures.lecturemy;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +67,16 @@ public class Lecturehub extends Controller {
         {
             flash("danger", Messages.get("lecture.danger"));
             return badRequest(lecturemy.render(currentuser,mylecturesacross));
+        }
+    }
+    @Security.Authenticated(Securedstudents.class)
+    public static Result getFiles(String path){
+        try{
+            return ok(new File("~/"+path));
+
+        }catch (Exception e){
+            flash("danger", Messages.get("file.notexist"));
+            return badRequest();
         }
     }
 }

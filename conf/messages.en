@@ -84,6 +84,7 @@ lecture.validassignmentinfo=Required percentage of points for a valid assignment
 lecture.validexaminfo=Required percentage of total points for Exam:
 lecture.validoptionalinfo=Number of Optional Assignments:
 lecutre.validoptionalinfo1=.(Hand in Optional Assignments can increased percentage of total points)
+file.notexist= File not exist
 dashboard.profile=My Profile
 dashboard.lecture=Lectures Management
 

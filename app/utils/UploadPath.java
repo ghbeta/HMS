@@ -5,13 +5,13 @@ package utils;
  */
 public class UploadPath {
     public static String uploadpath(String type,String semester,String lecturename){
-        String path= "public/"+type+"/"+semester+"/"+lecturename;
+        String path= type+"/"+semester+"/"+lecturename;
         return path;
 
     }
 
-    public static String downloadpath(String type,String semester,String lecturename){
-        String path= type+"/"+semester+"/"+lecturename+"/";
-        return path;
-    }
+//    public static String downloadpath(String type,String semester,String lecturename){
+//        String path= type+"/"+semester+"/"+lecturename+"/";
+//        return path;
+//    }
 }
