@@ -94,12 +94,9 @@
                           <label>@Messages("lecture.action.upload")</label>
                           <input type="file" name="uploadfile">
                         </div>
-                        <div class="checkbox">
-                          <label class="control-label">
-                            <input type="checkbox" name="deletefile" value="delete">
-                            <samp class="alert-link">@Messages("Lecture.assignment.path")@currentassignment.filename</samp>
-                          </label>
-                        </div>
+
+                        <samp class="alert-link">@Messages("Lecture.assignment.path")@currentassignment.filename</samp>
+
 
                         @*todo:add more file also delte file*@
                         <div class="form-group">
