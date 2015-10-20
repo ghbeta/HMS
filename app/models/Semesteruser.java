@@ -48,6 +48,10 @@ public class Semesteruser extends Abstractuser {
     public static List<Semesteruser> findByAssignemtnandLecture(Assignment assignment,Lecture lecture,String database){
         return currentServer(database).find(Semesteruser.class).fetch("lectures").where().eq("id",lecture.courseName).where().eq("id",assignment.id).findList();
     }
+
+    public static List<Semesteruser> findAllstudentsByLecture(String database,Lecture lecture){
+        return currentServer(database).find(Semesteruser.class).fetch("lectures").where().eq("id", lecture.courseName).where().eq("roles", UserRoll.Students.toString()).findList();
+    }
 //    public List<Semesteruser> getstudents(List<Semesteruser> all){
 //        Iterator<Semesteruser> s=all.iterator();
 //        while(s.hasNext()){

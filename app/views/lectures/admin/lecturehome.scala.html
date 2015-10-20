@@ -4,7 +4,7 @@
   <div class="col-md-8 well well-sm">
     <ul class="nav nav-tabs">
       <li class="active"><a href="#home" data-toggle="tab">@Messages("lecture.home.admin")</a></li>
-      
+
        <li><a href="#editor" data-toggle="tab">@Messages("lecture.home.correction")</a></li>
 
       <li><a href="#forum" data-toggle="tab">@Messages("lecture.home.forum")</a></li>
@@ -117,8 +117,28 @@
           </table>
         </div>
       </div>
-      <div class="tab-pane" id="editor">Secondo sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
-        Aliquam in felis sit amet augue.
+      <br>
+      <div class="tab-pane" id="editor">
+
+        <div class="panel-group" id="homeworkcorrectionlist" role="tablist" aria-multiselectable="true">
+        @if(lecture.assignments.size()>0){
+        @for(assignment <- lecture.assignments) {
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="a@assignment.title">
+                <a role="button" data-toggle="collapse"  data-parent="#assignmentlist" href="#@assignment.title" aria-expanded="true" aria-controls="@assignment.title">
+                  @assignment.title <span class="badge pull-right">@assignment.getNumberofHandinStudents(assignment,lecture,lecture.semester)/@assignment.students.size()</span>
+                </a>
+              </div>
+              <div id="@assignment.title" class="panel-collapse collapse" role="tabpanel" aria-labelledby="uncorrected">
+                <div class="panel-body">
+              @*todo:add tables here based on the students name*@
+          </div>
+              </div>
+            </div>
+          }}else {
+          <div class="alert alert-info">@Messages("lecutres.correction.none")</div>
+        }
+          </div>
       </div>
       <div class="tab-pane" id="forum">Secondo sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
         Aliquam in felis sit amet augue.
