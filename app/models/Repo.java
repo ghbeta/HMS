@@ -17,14 +17,14 @@ public class Repo extends Model {
     @Constraints.Required
     public String repopath;
 
-    @ManyToOne(cascade= CascadeType.ALL)
+    @ManyToOne//(cascade= CascadeType.ALL)
     //@JoinColumn
     public Semesteruser owner;
 
     @Version
     private Long version;
 
-    @ManyToOne(cascade= CascadeType.ALL)
+    @ManyToOne//(cascade= CascadeType.ALL)
     //@JoinColumn
     public Lecture course;
 

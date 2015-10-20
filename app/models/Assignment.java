@@ -49,13 +49,13 @@ public class Assignment extends Model {
     @Version
     private Long version;
 
-    @ManyToMany(cascade= CascadeType.ALL)
+    @ManyToMany//(cascade= CascadeType.ALL)
     public List<Semesteruser> students;
 //
     @OneToMany(cascade= CascadeType.ALL,mappedBy = "assignment")
     public List<Exercise> exercises;
 
-    @ManyToOne(cascade= CascadeType.ALL)
+    @ManyToOne//(cascade= CascadeType.REMOVE)
     //@JoinColumn
     public Lecture lecture;
 
@@ -71,5 +71,9 @@ public class Assignment extends Model {
 
     public static Assignment findByLectureAndName(String database,String lecturename,String assignmentname){
         return getServer(database).find(Assignment.class).where().eq("lecture.courseName",lecturename).where().eq("title",assignmentname).findUnique();
+    }
+
+    public static void deleteAssignment(String database,Assignment assignment){
+        getServer(database).find(Assignment.class).where().eq("id",assignment.id).findUnique().delete();
     }
 }

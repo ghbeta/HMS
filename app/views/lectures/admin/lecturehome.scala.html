@@ -67,7 +67,10 @@
                 <td>@currentassignment.title@if(currentassignment.uploadfile!=null){<a href="@controllers.lectures.routes.Lecturehub.getFiles(currentassignment.uploadfile)"><i class="fa fa-download"></i></a>}</td>
                 <td>@currentassignment.numberofexercise</td>
                 <td>@currentassignment.addtionalinfo</td>
-                <td  class="text-center"> <a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.modify")"><i class="fa fa-pencil-square-o"></i></a>        </td>
+                <td  class="text-center">
+                  <a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.modify")"><i class="fa fa-pencil-square-o"></i></a>
+                  <a title="@Messages("delete.assignment")" href="@controllers.lectures.admin.routes.Lecturehome.deleteAssignment(lecture.courseName,currentassignment.title,lecture.semester)"><i class="fa fa-times"></i></a>
+                </td>
                 <td>@currentassignment.getNumberofHandinStudents(currentassignment,lecture,lecture.semester)/@currentassignment.students.size()</td>
                 <td>@currentassignment.deadline</td>
               </tr>

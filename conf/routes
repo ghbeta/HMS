@@ -49,6 +49,7 @@ POST        /admin/:user/:semester/:lecture/terms                 controllers.le
 POST        /admin/:user/:semester/:lecture/add_assignment        controllers.lectures.admin.Lecturehome.addassignment(user:String,semester:String,lecture:String)
 #Modify assignment in lecture(Teacher)
 POST        /admin/:semester/:lecture/mod_assignment              controllers.lectures.admin.Lecturehome.modifyassignment(assignmentid:String,semester:String,lecture:String)
+GET       /admin/:semester/:lecture/:assignment/delete           controllers.lectures.admin.Lecturehome.deleteAssignment(lecture:String,assignment:String,semester:String)
 #Generate Lecture home page for students
 GET         /usr/:user/:semester/:lecture                         controllers.lectures.user.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
 #About static page

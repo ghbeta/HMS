@@ -29,11 +29,11 @@ public class Exercise extends Model {
     @ManyToMany(cascade= CascadeType.ALL)
     public List<Semesteruser> students;
 
-    @ManyToOne(cascade= CascadeType.ALL)
+    @ManyToOne//(cascade= CascadeType.ALL)
     //@JoinColumn(name="exercises")
     public Semesteruser marker;
 
-    @ManyToOne(cascade= CascadeType.ALL)
+    @ManyToOne//(cascade= CascadeType.ALL)
     //@JoinColumn(name="exercises")
     public Assignment assignment;
 
