@@ -1,9 +1,11 @@
 package models;
 
+import org.apache.commons.io.FileUtils;
 import play.data.format.Formats;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
+import java.io.File;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -74,6 +76,10 @@ public class Assignment extends Model {
     }
 
     public static void deleteAssignment(String database,Assignment assignment){
-        getServer(database).find(Assignment.class).where().eq("id",assignment.id).findUnique().delete();
+        try{
+            FileUtils.forceDelete(new File("files/" + assignment.uploadfile));
+            assignment.delete(database);
+        }catch(Exception e){}
+        assignment.delete(database);
     }
 }

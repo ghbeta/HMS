@@ -190,7 +190,6 @@ public class Lecturehome extends Controller {
         if(filePart != null){
         try {
             FileUtils.forceDelete(new File("files/"+assignment.uploadfile));
-
             FileUtils.moveFile(file, new File("files/"+uploadpath("assignment",semester,lecture), filename));
             path = uploadpath("assignment", semester, lecture)+"/"+filename;
             assignment.uploadfile=path;
@@ -215,9 +214,10 @@ public class Lecturehome extends Controller {
         Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
         try{
             Assignment currentassignment = Assignment.findByLectureAndName(semester,lecture,assignment);
+           Assignment.deleteAssignment(semester,currentassignment);
             //Logger.warn(currentassignment.filename);
             //Assignment.deleteAssignment(semester,currentassignment);
-            currentassignment.delete(semester);
+            //Assignment.deleteAssignment(semester,currentassignment);
             flash("success", Messages.get("assignment.delete"));
             return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
         }catch (Exception e){
