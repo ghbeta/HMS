@@ -69,4 +69,7 @@ public class Assignment extends Model {
         return getServer(database).find(Assignment.class).where().eq("id",id).findUnique();
     }
 
+    public static Assignment findByLectureAndName(String database,String lecturename,String assignmentname){
+        return getServer(database).find(Assignment.class).where().eq("lecture.courseName",lecturename).where().eq("title",assignmentname).findUnique();
+    }
 }

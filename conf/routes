@@ -54,7 +54,8 @@ GET         /usr/:user/:semester/:lecture                         controllers.le
 #About static page
 GET         /about                                                controllers.About.index()
 #File service (hosted file on host server)
-GET        /files/:path                                           controllers.lectures.Lecturehub.getFiles(path:String)
+GET         /files/:path                                          controllers.lectures.Lecturehub.getFiles(path:String)
+#GET         /files/delete/:filename                               controllers.lectures.Lecturehub.deleteFiles(lecture:String,assignment:String,semester:String,filename:String)
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                                         controllers.Assets.at(path="/public", file)
 

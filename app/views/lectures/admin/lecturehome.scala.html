@@ -64,7 +64,7 @@
             </thead>
             @for(currentassignment <- lecture.assignments){
               <tr>
-                <td>@currentassignment.title</td>
+                <td>@currentassignment.title@if(currentassignment.uploadfile!=null){<a href="@controllers.lectures.routes.Lecturehub.getFiles(currentassignment.uploadfile)"><i class="fa fa-download"></i></a>}</td>
                 <td>@currentassignment.numberofexercise</td>
                 <td>@currentassignment.addtionalinfo</td>
                 <td  class="text-center"> <a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.modify")"><i class="fa fa-pencil-square-o"></i></a>        </td>
@@ -94,7 +94,13 @@
                           <label>@Messages("lecture.action.upload")</label>
                           <input type="file" name="uploadfile">
                         </div>
-                        <samp class="alert-link">@Messages("Lecture.assignment.path")@currentassignment.uploadfile</samp>
+                        <div class="checkbox">
+                          <label class="control-label">
+                            <input type="checkbox" name="deletefile" value="delete">
+                            <samp class="alert-link">@Messages("Lecture.assignment.path")@currentassignment.filename</samp>
+                          </label>
+                        </div>
+
                         @*todo:add more file also delte file*@
                         <div class="form-group">
                           <label>@Messages("lecture.form.addionalinfo")</label>

@@ -63,6 +63,7 @@ public class Lecturehome extends Controller {
 
         public Date deadline;
 
+        public String deletefile;
 
     }
 
@@ -140,9 +141,10 @@ public class Lecturehome extends Controller {
             File file= filePart.getFile();
             String path="";
             try {
-                FileUtils.moveFile(file, new File("~/"+uploadpath("assignment",semester,lecture), filename));
-                path = uploadpath("assignment", semester, lecture)+filename;
-            } catch (IOException ioe) {
+                //file.renameTo(new File("~/"+uploadpath("assignment",semester,lecture)));
+                FileUtils.moveFile(file, new File("files/"+uploadpath("assignment",semester,lecture), filename));
+                path = uploadpath("assignment", semester, lecture)+"/"+filename;
+            } catch (Exception ioe) {
                 flash("danger",Messages.get("Lecture.assignment.uploadfail"));
                 return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
             }
@@ -174,8 +176,22 @@ public class Lecturehome extends Controller {
         assignment.numberofexercise=assignmentformForm.get().numberofexercise;
         assignment.addtionalinfo=assignmentformForm.get().addtionalinfo;
         assignment.deadline=assignmentformForm.get().deadline;
-        assignment.update(semester);
-        flash("success", Messages.get("Lecture.assignment.create"));
-        return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
+        if(assignmentformForm.get().deletefile.equals("delete")){
+        try {
+            FileUtils.forceDelete(new File("files/"+assignment.uploadfile));
+            assignment.uploadfile=null;
+            assignment.filename=null;
+            assignment.update(semester);
+            flash("success",Messages.get("file.delete"));
+            return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname, semester, currentlecture.courseName));
+        } catch (IOException e) {
+            flash("danger",Messages.get("file.delete.fail"));
+            return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
+        }}
+        else {
+            assignment.update(semester);
+            flash("success", Messages.get("Lecture.assignment.create"));
+            return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
+        }
     }
 }

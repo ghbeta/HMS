@@ -36,7 +36,7 @@ deadline=Deadline
 Number.exercise=Amount of exercise
 Lecture.assignment.uploadfail=File Upload failed
 Lecture.assignment.create=Assignment is created
-Lecture.assignment.path=Current uploaded File:
+Lecture.assignment.path=Delete current uploaded File:
 lectures.success=Success
 lectures.danger=Something is Wrong
 lectures.none = You do not seem to subscribe any Lectures in this semester
@@ -85,6 +85,8 @@ lecture.validexaminfo=Required percentage of total points for Exam:
 lecture.validoptionalinfo=Number of Optional Assignments:
 lecutre.validoptionalinfo1=.(Hand in Optional Assignments can increased percentage of total points)
 file.notexist= File not exist
+file.delete= File delete sucess
+file.delete.fail=File delte failed
 dashboard.profile=My Profile
 dashboard.lecture=Lectures Management
 
