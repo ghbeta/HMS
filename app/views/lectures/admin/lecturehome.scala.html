@@ -4,9 +4,9 @@
   <div class="col-md-8 well well-sm">
     <ul class="nav nav-tabs">
       <li class="active"><a href="#home" data-toggle="tab">@Messages("lecture.home.admin")</a></li>
-      @if(user.roles.toString.equals("Teachers")){
-       <li><a href="#editor" data-toggle="tab">@Messages("lecture.home.editor")</a></li>
-      }
+      
+       <li><a href="#editor" data-toggle="tab">@Messages("lecture.home.correction")</a></li>
+
       <li><a href="#forum" data-toggle="tab">@Messages("lecture.home.forum")</a></li>
     </ul>
     <div class="tab-content">
