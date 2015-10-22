@@ -87,10 +87,12 @@
                     </div>
                   </div>
                 }
-              </table>} else {
-              <div class="alert alert-danger text-center">@Messages("lecture.singin") <form action="@controllers.lectures.user.Lecturehome.addSemesterusertoLecture(semesteruser.semester,lecture,semesteruser)" >
+              </table>} else{
+              <div class="alert alert-danger text-center">@Messages("lecture.singin")
+                <form action="@controllers.lectures.user.Lecturehome.addSemesterusertoLecture(semesteruser.semester,lecture,semesteruser)" >
                 <button class="btn btn-success" type="submit">@Messages("lecture.singup")</button>
-              </form></div>}
+              </form>
+              </div>}
           </div>
 
         </div>

@@ -110,7 +110,7 @@ public class Createlecture extends Controller {
 
             String semester = createlectureForm.get().yearprefix + createlectureForm.get().year;
             User globaluser=User.findByEmail(ctx().session().get("email"),"global");
-            Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,globaluser);
+
             if (Semester.findsemester(semester) == null) {
                 Semester addsemester = new Semester();
                 addsemester.semester = semester;
@@ -145,7 +145,7 @@ public class Createlecture extends Controller {
             lecture.requiredpercentfovalidassignment = createlectureForm.get().percentageforvalidassignment;
             lecture.minimumPercentageForExamination = createlectureForm.get().percentageforexam;
 
-
+            Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,globaluser);
             lecture.lasteditor = semesteruser;
             if (!lecture.attendent.contains(lecture.lasteditor)) {
                 lecture.attendent.add(lecture.lasteditor);

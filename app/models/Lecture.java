@@ -88,7 +88,7 @@ else{
 
     public static List<Lecture> getalllectures(String email,String databasename){
 
-        return getServer(databasename).find(Lecture.class).fetch("attendent").where().ne("email",email).orderBy("courseName desc").findList();
+        return getServer(databasename).find(Lecture.class).where().ne("attendent.email",email).findList();
 
     }
 
