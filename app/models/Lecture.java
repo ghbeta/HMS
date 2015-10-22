@@ -74,13 +74,16 @@ public class Lecture extends Model {
         }
     }
 
-    public static void addSemesteruser(String database,Semesteruser user,Lecture currentlecture){
-        if()
+    public static boolean addSemesteruser(String database,Semesteruser user,Lecture currentlecture){
+
          if(!currentlecture.attendent.contains(user)){
              currentlecture.attendent.add(user);
              currentlecture.update(database);
+             return true;
          }
-
+else{
+             return false;
+         }
     }
 
     public static List<Lecture> getalllectures(String email,String databasename){

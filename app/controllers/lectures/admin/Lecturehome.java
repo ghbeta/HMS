@@ -85,7 +85,7 @@ public class Lecturehome extends Controller {
     @Security.Authenticated(Securedteacher.class)
     public static Result modifydescription(String user, String semester,String lecture){
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
-        Semesteruser currentsemesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
+        Semesteruser currentsemesteruser=Semesteruser.getSemesteruserfomrUser(semester, currentuser);
         Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
         Form<Descriptionform> descriptionformForm=Form.form(Descriptionform.class).bindFromRequest();
 
@@ -97,7 +97,7 @@ public class Lecturehome extends Controller {
     @Security.Authenticated(Securedteacher.class)
     public static Result modifyterms(String user, String semester,String lecture){
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
-        Semesteruser currentsemesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
+        Semesteruser currentsemesteruser=Semesteruser.getSemesteruserfomrUser(semester, currentuser);
         Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
         Form<Lecturetermform> lecturetermformForm=Form.form(Lecturetermform.class).bindFromRequest();
         //currentlecture.desription=descriptionformForm.get().modifieddescription;
@@ -115,7 +115,7 @@ public class Lecturehome extends Controller {
     @Security.Authenticated(Securedteacher.class)
     public static Result addassignment(String user,String semester,String lecture){
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
-        Semesteruser currentsemesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
+        Semesteruser currentsemesteruser=Semesteruser.getSemesteruserfomrUser(semester, currentuser);
         Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
         Form<Assignmentform> assignmentformForm=Form.form(Assignmentform.class).bindFromRequest();
 
@@ -175,7 +175,7 @@ public class Lecturehome extends Controller {
     @Security.Authenticated(Securedteacher.class)
     public static Result modifyassignment(String assignmentid,String semester,String lecture){
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
-        Semesteruser currentsemesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
+        Semesteruser currentsemesteruser=Semesteruser.getSemesteruserfomrUser(semester, currentuser);
         Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
         Form<Assignmentform> assignmentformForm=Form.form(Assignmentform.class).bindFromRequest();
         Assignment assignment=Assignment.findById(semester,assignmentid);
