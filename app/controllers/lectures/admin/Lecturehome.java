@@ -70,7 +70,7 @@ public class Lecturehome extends Controller {
     @Security.Authenticated(Securedteacher.class)
     public static Result generatelecturehome(String user, String semester,String lecture){
        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
-       Semesteruser currentsemesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
+       Semesteruser currentsemesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
        Lecture selectedlecture=Lecture.getlecturebyname(lecture,semester);
         if(selectedlecture.isExpired()){
             return ok(lecturehome.render(currentuser, currentsemesteruser, selectedlecture));}

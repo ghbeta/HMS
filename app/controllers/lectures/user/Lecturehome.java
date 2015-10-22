@@ -15,8 +15,9 @@ import views.html.lectures.user.lecturehome;
 public class Lecturehome extends Controller {
     public static Result generatelecturehome(String user, String semester,String lecture){
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
-        Semesteruser currentsemesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
         Lecture selectedlecture=Lecture.getlecturebyname(lecture,semester);
+        Semesteruser currentsemesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
+
 
         if(selectedlecture.isExpired()){
         return ok(lecturehome.render(currentuser, currentsemesteruser, selectedlecture));}
