@@ -51,7 +51,7 @@ public class Assignment extends Model {
     @Version
     private Long version;
 
-    @ManyToMany//(cascade= CascadeType.ALL)
+    @ManyToMany(cascade= CascadeType.ALL)//,mappedBy = "assignments")
     public List<Semesteruser> students;
 //
     @OneToMany(cascade= CascadeType.ALL,mappedBy = "assignment")

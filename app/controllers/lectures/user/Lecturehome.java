@@ -32,14 +32,32 @@ public class Lecturehome extends Controller {
 
     }
     @Security.Authenticated(Securedstudents.class)
-    public static void addSemesterusertoLecture(String semester,Lecture lecture,Semesteruser semesteruser){
+    public static Result addSemesterusertoLecture(String user, String semester,String lecturename){
+        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
+        Lecture lecture=Lecture.getlecturebyname(lecturename,semester);
+        Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
         if(Lecture.addSemesteruser(semester,semesteruser,lecture)){
-            redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
+            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
         }
         else
         {
             flash("danger", Messages.get("lecture.adduser.fail"));
-            redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, semester, lecture.courseName));
+            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, semester, lecture.courseName));
+        }
+    }
+
+    @Security.Authenticated(Securedstudents.class)
+    public static Result deleteSemesteruserfromlecture(String user, String semester,String lecturename){
+        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
+        Lecture lecture=Lecture.getlecturebyname(lecturename,semester);
+        Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
+        if(Lecture.deleteSemesteruser(semester,semesteruser,lecture)){
+            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
+        }
+        else
+        {
+            flash("danger", Messages.get("lecture.adduser.fail"));
+            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, semester, lecture.courseName));
         }
     }
 }

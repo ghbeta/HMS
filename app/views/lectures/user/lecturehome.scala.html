@@ -87,12 +87,18 @@
                     </div>
                   </div>
                 }
-              </table>} else{
+              </table>
+
+            <a class="btn btn-danger pull-right" href="@controllers.lectures.user.routes.Lecturehome.deleteSemesteruserfromlecture(semesteruser.lastname,lecture.semester,lecture.courseName)">Leave</a>
+
+            } else{
+
               <div class="alert alert-danger text-center">@Messages("lecture.singin")
-                <form action="@controllers.lectures.user.Lecturehome.addSemesterusertoLecture(semesteruser.semester,lecture,semesteruser)" >
-                <button class="btn btn-success" type="submit">@Messages("lecture.singup")</button>
-              </form>
-              </div>}
+                <br>
+                <a class="btn btn-success text-center" href="@controllers.lectures.user.routes.Lecturehome.addSemesterusertoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" type="submit" >Join</a>
+
+              </div>
+              }
           </div>
 
         </div>

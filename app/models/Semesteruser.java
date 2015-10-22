@@ -25,7 +25,7 @@ public class Semesteruser extends Abstractuser {
     @ManyToMany(cascade = CascadeType.ALL)
     public List<Assignment> assignments;
 
-    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "students")
+    @ManyToMany(cascade = CascadeType.ALL)//,mappedBy = "students")
     public List<Exercise> handinexercises;
 //
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "owner")

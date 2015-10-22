@@ -52,7 +52,7 @@ public class Lecture extends Model {
     @OrderColumn(name = "title")
     public List<Assignment> assignments;
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade=CascadeType.ALL)//,mappedBy = "lectures")
     public List<Semesteruser> attendent;
 //
     @OneToMany(cascade=CascadeType.ALL,mappedBy = "course")
@@ -87,12 +87,23 @@ else{
          }
     }
 
+    public static boolean deleteSemesteruser(String database,Semesteruser user,Lecture currentlecture){
+        if(currentlecture.attendent.contains(user)){
+            currentlecture.attendent.remove(user);
+            currentlecture.update(database);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public static List<Lecture> getalllectures(String email,String databasename){
 //        for(int i =0;i<getServer(databasename).find(Lecture.class).fetch("attendent").where().not(Expr.eq("email", email)).findList().size();i++){
 //            System.out.println(email+getServer(databasename).find(Lecture.class).where().ne("attendent.email",email).findList().get(i).attendent.get(1).email);
 //        }
 
-        return getServer(databasename).find(Lecture.class).fetch("attendent").where().not(Expr.eq("email", email)).findList();
+        return getServer(databasename).find(Lecture.class).fetch("attendent").findList();
 
     }
 
