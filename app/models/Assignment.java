@@ -61,7 +61,9 @@ public class Assignment extends Model {
     //@JoinColumn
     public Lecture lecture;
 
-    public boolean isExpired(){return deadline!=null&&handin.before(deadline);}
+    public boolean isExpired(){
+        Date date=new Date();
+        return deadline!=null&&date.before(deadline);}
 
     public int getNumberofHandinStudents(Assignment assignment,Lecture lecture,String database){
         return Semesteruser.findByAssignemtnandLecture(assignment,lecture,database).size();

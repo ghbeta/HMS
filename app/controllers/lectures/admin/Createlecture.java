@@ -109,6 +109,8 @@ public class Createlecture extends Controller {
         if(!createlectureForm.hasErrors()) {
 
             String semester = createlectureForm.get().yearprefix + createlectureForm.get().year;
+            User globaluser=User.findByEmail(ctx().session().get("email"),"global");
+            Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,globaluser);
             if (Semester.findsemester(semester) == null) {
                 Semester addsemester = new Semester();
                 addsemester.semester = semester;
@@ -142,26 +144,8 @@ public class Createlecture extends Controller {
             lecture.requriednumberofvalidassignment = createlectureForm.get().numberofvalidassignment;
             lecture.requiredpercentfovalidassignment = createlectureForm.get().percentageforvalidassignment;
             lecture.minimumPercentageForExamination = createlectureForm.get().percentageforexam;
-            Semesteruser semesteruser = null;
-            try {
-                semesteruser = Semesteruser.findByEmail(ctx().session().get("email"), lecture.semester);
-            } catch (Exception e) {
-                semesteruser = null;
-            }
 
-            User globaluser = User.findByEmail(ctx().session().get("email"), "global");
-            if (semesteruser == null) {
-                semesteruser = new Semesteruser();
-                semesteruser.email = globaluser.email;
-                semesteruser.firstname = globaluser.firstname;
-                semesteruser.id = globaluser.id;
-                semesteruser.lastname = globaluser.lastname;
-                semesteruser.roles = globaluser.roles;
-                semesteruser.ssh = globaluser.ssh;
-                //suser=globaluser;
-                semesteruser.semester = lecture.semester;
-                semesteruser.save(lecture.semester);
-            }
+
             lecture.lasteditor = semesteruser;
             if (!lecture.attendent.contains(lecture.lasteditor)) {
                 lecture.attendent.add(lecture.lasteditor);

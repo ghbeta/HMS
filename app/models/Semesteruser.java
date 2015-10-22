@@ -37,6 +37,37 @@ public class Semesteruser extends Abstractuser {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "sender")
     public List<Message> messages;
 
+
+    public static Semesteruser getSemesteruserfomrUser(String database,User user){
+        Semesteruser semesteruser = null;
+        try {
+            semesteruser = Semesteruser.findByEmail(user.email, database);
+        } catch (Exception e) {
+            semesteruser = null;
+        }
+
+
+        if (semesteruser == null) {
+            semesteruser = new Semesteruser();
+            semesteruser.email = user.email;
+            semesteruser.firstname = user.firstname;
+            semesteruser.id = user.id;
+            semesteruser.lastname = user.lastname;
+            semesteruser.roles = user.roles;
+            semesteruser.ssh = user.ssh;
+            //suser=globaluser;
+            semesteruser.semester = database;
+            semesteruser.save(database);
+            return semesteruser;
+        }
+        else{
+            return semesteruser;
+        }
+
+
+    }
+
+
     public static Semesteruser findByEmail(String email,String database) {
         return currentServer(database).find(Semesteruser.class).where().eq("email", email).findUnique();
     }

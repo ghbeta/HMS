@@ -65,6 +65,18 @@ public class Lecture extends Model {
         return closingdate!=null&&date.before(closingdate);
     }
 
+    public boolean isUsercontain(Semesteruser user){
+        if(user==null){
+            return false;
+        }
+        else{
+            return attendent.contains(user);
+        }
+    }
+
+    public static void addSemesteruser(String database,Semesteruser user){
+
+    }
 
     public static List<Lecture> getalllectures(String email,String databasename){
 
