@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
 import org.joda.time.DateTime;
 import play.data.format.Formats;
 import play.db.ebean.Model;
@@ -87,8 +88,11 @@ else{
     }
 
     public static List<Lecture> getalllectures(String email,String databasename){
+//        for(int i =0;i<getServer(databasename).find(Lecture.class).fetch("attendent").where().not(Expr.eq("email", email)).findList().size();i++){
+//            System.out.println(email+getServer(databasename).find(Lecture.class).where().ne("attendent.email",email).findList().get(i).attendent.get(1).email);
+//        }
 
-        return getServer(databasename).find(Lecture.class).where().ne("attendent.email",email).findList();
+        return getServer(databasename).find(Lecture.class).fetch("attendent").where().not(Expr.eq("email", email)).findList();
 
     }
 
