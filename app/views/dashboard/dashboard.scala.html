@@ -17,12 +17,12 @@
         <div class="panel panel-default">
           <div class="panel-heading" role="tab" id="headingOne">
             <h4 class="panel-title">
-              <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <a role="button" data-toggle="collapse" data-parent="#accordion" href="#myProfile" aria-expanded="true" aria-controls="collapseOne">
               @Messages("dashboard.profile")
               </a>
             </h4>
           </div>
-          <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div id="myProfile" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
             <div class="list-group">
               <a href="@controllers.routes.Dashboard.index()" class="list-group-item">
               @Messages("home")
@@ -37,12 +37,12 @@
         <div class="panel panel-default">
           <div class="panel-heading" role="tab" id="headingTwo">
             <h4 class="panel-title">
-              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"  href="#collapseTwo"aria-expanded="true" aria-controls="collapseTwo">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"  href="#lectures"aria-expanded="true" aria-controls="collapseTwo">
               @Messages("dashboard.lecture")
               </a>
             </h4>
           </div>
-          <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+          <div id="lectures" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
             <div class="list-group">
               <a href="@controllers.lectures.routes.Lecturehub.allLectures()" class="list-group-item">
               @Messages("lectures.all")
@@ -60,12 +60,12 @@
         <div class="panel panel-default">
           <div class="panel-heading" role="tab" id="headingThree">
             <h4 class="panel-title">
-              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#homeworks" aria-expanded="true" aria-controls="collapseThree">
                 Reserve
               </a>
             </h4>
           </div>
-          <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+          <div id="homeworks" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
             <div class="panel-body">
              reserve
             </div>

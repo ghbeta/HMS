@@ -41,6 +41,8 @@ GET         /createlecture                                        controllers.le
 POST        /createlecture                                        controllers.lectures.admin.Createlecture.createlecture()
 #Generate Lecture home page for teacher or assistance
 GET         /admin/:user/:semester/:lecture                       controllers.lectures.admin.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
+#Generate lecture home page for students
+GET        /students/:user/:semester/:lecture                     controllers.lectures.user.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
 #Modify the Lecture content description(Teacher)
 POST        /admin/:user/:semester/:lecture/description           controllers.lectures.admin.Lecturehome.modifydescription(user:String,semester:String,lecture:String)
 #Modify the Lecture content terms(Teacher)
@@ -49,7 +51,7 @@ POST        /admin/:user/:semester/:lecture/terms                 controllers.le
 POST        /admin/:user/:semester/:lecture/add_assignment        controllers.lectures.admin.Lecturehome.addassignment(user:String,semester:String,lecture:String)
 #Modify assignment in lecture(Teacher)
 POST        /admin/:semester/:lecture/mod_assignment              controllers.lectures.admin.Lecturehome.modifyassignment(assignmentid:String,semester:String,lecture:String)
-GET       /admin/:semester/:lecture/:assignment/delete           controllers.lectures.admin.Lecturehome.deleteAssignment(lecture:String,assignment:String,semester:String)
+GET         /admin/:semester/:lecture/:assignment/delete          controllers.lectures.admin.Lecturehome.deleteAssignment(lecture:String,assignment:String,semester:String)
 #Generate Lecture home page for students
 GET         /usr/:user/:semester/:lecture                         controllers.lectures.user.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
 #About static page
