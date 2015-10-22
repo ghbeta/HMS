@@ -39,7 +39,7 @@ public class Lecturehub extends Controller {
         if(semesters!=null){
             for(int i=0;i<semesters.size();i++){
                 try {
-                    alllectures.put(semesters.get(i).semester,Lecture.getalllectures(semesters.get(i).semester));
+                    alllectures.put(semesters.get(i).semester,Lecture.getalllectures(currentuser.email,semesters.get(i).semester));
                 } catch (Exception e) {
                     alllectures.put(semesters.get(i).semester, null);
                 }

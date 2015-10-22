@@ -66,14 +66,14 @@ public class Lecture extends Model {
     }
 
 
-    public static List<Lecture> getalllectures(String databasename){
+    public static List<Lecture> getalllectures(String email,String databasename){
 
-        return getServer(databasename).find(Lecture.class).orderBy("courseName desc").findList();
+        return getServer(databasename).find(Lecture.class).fetch("attendent").where().ne("email",email).orderBy("courseName desc").findList();
 
     }
 
     public static List<Lecture> getalllecturesbyemail(String email,String databasename){
-        return getServer(databasename).find(Lecture.class).fetch("attendent").where().eq("email",email).findList();
+        return getServer(databasename).find(Lecture.class).fetch("attendent").where().eq("email",email).findList();// retrun only the lecture list with the username
     }
 
     public static Lecture getlecturebyname(String name,String databasename){
