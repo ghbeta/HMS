@@ -25,7 +25,7 @@ public class Semesteruser extends Abstractuser {
     @ManyToMany(cascade = CascadeType.ALL)
     public List<Assignment> assignments;
 
-    @ManyToMany(cascade = CascadeType.ALL)//,mappedBy = "students")
+    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "students")
     public List<Exercise> handinexercises;
 //
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "owner")
@@ -78,6 +78,10 @@ public class Semesteruser extends Abstractuser {
 
     public static List<Semesteruser> findByAssignemtnandLecture(Assignment assignment,Lecture lecture,String database){
         return currentServer(database).find(Semesteruser.class).fetch("lectures").where().eq("id",lecture.courseName).where().eq("id",assignment.id).findList();
+    }
+
+    public static List<Semesteruser> findSemesteruserbyLecture(String database,Lecture lecture){
+        return currentServer(database).find(Semesteruser.class).fetch("lectures").where().eq("courseName",lecture.courseName).findList();
     }
 
     public static List<Semesteruser> findAllstudentsByLecture(String database,Lecture lecture){

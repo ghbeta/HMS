@@ -52,7 +52,7 @@ public class Lecture extends Model {
     @OrderColumn(name = "title")
     public List<Assignment> assignments;
 
-    @ManyToMany(cascade=CascadeType.ALL)//,mappedBy = "lectures")
+    @ManyToMany(cascade=CascadeType.ALL,mappedBy = "lectures")
     public List<Semesteruser> attendent;
 //
     @OneToMany(cascade=CascadeType.ALL,mappedBy = "course")
@@ -102,13 +102,15 @@ else{
 //        for(int i =0;i<getServer(databasename).find(Lecture.class).fetch("attendent").where().not(Expr.eq("email", email)).findList().size();i++){
 //            System.out.println(email+getServer(databasename).find(Lecture.class).where().ne("attendent.email",email).findList().get(i).attendent.get(1).email);
 //        }
-
-        return getServer(databasename).find(Lecture.class).fetch("attendent").findList();
+        //System.out.println(getServer(databasename).find(Lecture.class).fetch("attendent").where().ne("lastname","deng").findList().size());
+        //Semesteruser currentuser[]= new Semesteruser[1];
+        Semesteruser currentuser=Semesteruser.findByEmail(email,databasename);
+        return getServer(databasename).find(Lecture.class).where().in("attendent", currentuser).findList();
 
     }
 
     public static List<Lecture> getalllecturesbyemail(String email,String databasename){
-        return getServer(databasename).find(Lecture.class).fetch("attendent").where().eq("email",email).findList();// retrun only the lecture list with the username
+        return getServer(databasename).find(Lecture.class).where().eq("attendent.email",email).findList();// retrun only the lecture list with the username
     }
 
     public static Lecture getlecturebyname(String name,String databasename){
