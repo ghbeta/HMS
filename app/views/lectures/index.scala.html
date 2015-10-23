@@ -20,9 +20,9 @@
         </div>
         <div id="@key" class="panel-collapse collapse" role="tabpanel" aria-labelledby="a@key">
           <div class="list-group">
-          @if(value != null){
+          @if(value != null && !value.isEmpty){
             @for(lecture <- value) {
-              @if(lecture != null) {
+
                 @if(user.roles.toString.equals("Teachers") || user.roles.toString.equals("Assistants")) {
                   <a href="@controllers.lectures.admin.routes.Lecturehome.generatelecturehome(user.lastname, key, lecture.courseName)" class="list-group-item">
                   @lecture.courseName
@@ -35,7 +35,7 @@
                     </a>
                   }
                 }
-              }else {<div class="alert alert-danger">@Messages("lectures.allnone")</div>}
+              
             }
 
 
