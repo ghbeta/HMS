@@ -1,7 +1,7 @@
 package models;
 
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.Expr;
+import com.avaje.ebean.*;
+import com.avaje.ebean.Query;
 import org.joda.time.DateTime;
 import play.data.format.Formats;
 import play.db.ebean.Model;
@@ -99,18 +99,25 @@ else{
     }
 
     public static List<Lecture> getalllectures(String email,String databasename){
-//        for(int i =0;i<getServer(databasename).find(Lecture.class).fetch("attendent").where().not(Expr.eq("email", email)).findList().size();i++){
-//            System.out.println(email+getServer(databasename).find(Lecture.class).where().ne("attendent.email",email).findList().get(i).attendent.get(1).email);
-//        }
-        //System.out.println(getServer(databasename).find(Lecture.class).fetch("attendent").where().ne("lastname","deng").findList().size());
-        //Semesteruser currentuser[]= new Semesteruser[1];
-        Semesteruser currentuser=Semesteruser.findByEmail(email,databasename);
-        return getServer(databasename).find(Lecture.class).where().in("attendent", currentuser).findList();
 
+         Semesteruser currentuser;//[]= new Semesteruser[1];
+        if(Semesteruser.findByEmail(email,databasename)!=null) {
+            currentuser = Semesteruser.findByEmail(email, databasename);
+            List<Lecture> all=getServer(databasename).find(Lecture.class).findList();
+            if(all.removeAll(currentuser.lectures)){
+
+            return all;
+
+        }
+            else return null;
+        }
+        else{
+            return getServer(databasename).find(Lecture.class).findList();
+        }
     }
 
     public static List<Lecture> getalllecturesbyemail(String email,String databasename){
-        return getServer(databasename).find(Lecture.class).where().eq("attendent.email",email).findList();// retrun only the lecture list with the username
+        return getServer(databasename).find(Lecture.class).where().eq("attendent.email", email).findList();// retrun only the lecture list with the username
     }
 
     public static Lecture getlecturebyname(String name,String databasename){
