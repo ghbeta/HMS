@@ -37,6 +37,8 @@ public class Lecturehome extends Controller {
         Lecture lecture=Lecture.getlecturebyname(lecturename,semester);
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
         if(Lecture.addSemesteruser(semester,semesteruser,lecture)){
+            semesteruser.assignments.addAll(lecture.assignments);
+            semesteruser.update(semester);
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
         }
         else
