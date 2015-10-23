@@ -48,6 +48,7 @@ Lecture.assignment.path=Delete current uploaded File:
 lectures.success=Success
 lectures.danger=Something is Wrong
 lectures.none = You do not seem to subscribe any Lectures in this semester
+lectures.allnone= There is no available lecture for now
 lectures.all=All Available Lectures
 lectures.my= My Lectures
 lectures.new=Create Lectures
