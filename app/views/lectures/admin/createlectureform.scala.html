@@ -33,6 +33,8 @@
                 </label>
             </div>
            </div>
+
+        <div class="hide" id="local">
         <br>
           <div class="form-inline">
             <div class="form-group">
@@ -66,8 +68,18 @@
                  <input type="date" class="form-control" name="closingdate" placeholder="@Messages("lecture.form.date")">
              </div>
         </div>
-        <br>
 
+        <br>
+        </div>
+
+
+                <div class="show form-inline" id="remote">
+                    <label class="control-label">@Messages("lecture.form.closingdate")</label>
+                    <input type="date" class="form-control" name="closingdate" placeholder="@Messages("lecture.form.date")">
+
+                </div>
+
+        
         <div class="form-group">
             <label>@Messages("lecture.form.description")</label>
             <textarea class="form-control"  name="description" rows="10"></textarea>
