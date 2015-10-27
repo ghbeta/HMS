@@ -37,7 +37,7 @@ public class Global extends GlobalSettings{
 
 
         try {
-            Server h2server= Server.createTcpServer();
+            Server h2server= Server.createTcpServer("-tcpAllowOthers");
             h2server.start();
         } catch (SQLException e) {
             e.printStackTrace();
