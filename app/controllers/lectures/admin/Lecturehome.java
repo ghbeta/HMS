@@ -119,7 +119,7 @@ public class Lecturehome extends Controller {
         Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
         Form<Assignmentform> assignmentformForm=Form.form(Assignmentform.class).bindFromRequest();
 
-
+        if(!assignmentformForm.hasErrors()){
         Assignment assignment=new Assignment();
         assignment.numberofexercise=assignmentformForm.get().numberofexercise;
         if(currentlecture.assignments.size()==0){
@@ -162,6 +162,12 @@ public class Lecturehome extends Controller {
 
 
 
+
+        }
+        else {
+            flash("danger",Messages.get("Lecture.assignment.uploadfail"));
+            return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
+        }
 
         } else {
             flash("danger",Messages.get("Lecture.assignment.uploadfail"));
