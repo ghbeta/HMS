@@ -23,6 +23,9 @@ import java.util.Set;
 public class User extends Abstractuser{
     public static final String DBServer="global";
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "sshowner")
+    public List<SSH> sshs;
+
     public String getUserHash(){
         return userHash;
     }
@@ -30,37 +33,7 @@ public class User extends Abstractuser{
     public void setUserHash(){
         this.userHash= MD5Util.md5Hex(this.email);
     }
-    public String getMatrikel() {
-        return id;
-    }
 
-    public void setMatrikel(String matrikel) {
-        this.id = matrikel;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getSsh() {
-        return ssh;
-    }
-
-    public void setSsh(String ssh) {
-        this.ssh = ssh;
-    }
 
 
 

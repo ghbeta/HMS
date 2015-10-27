@@ -162,13 +162,13 @@
                   }
                 </table>
 
-                <a class="btn btn-danger pull-right" href="@controllers.lectures.user.routes.Lecturehome.deleteSemesteruserfromlecture(semesteruser.lastname,lecture.semester,lecture.courseName)">Leave</a>
+                <a class="btn btn-danger pull-right" href="@controllers.lectures.user.routes.Lecturehome.deleteSemesteruserfromlecture(semesteruser.lastname,lecture.semester,lecture.courseName)">@Messages("lecture.leave")</a>
 
               } else{
 
                 <div class="alert alert-danger text-center">@Messages("lecture.singin")
                   <br>
-                  <a class="btn btn-success text-center" href="@controllers.lectures.user.routes.Lecturehome.addSemesterusertoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" type="submit" >Join</a>
+                  <a class="btn btn-success text-center" href="@controllers.lectures.user.routes.Lecturehome.addSemesterusertoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" type="submit" >@Messages("lecture.join")</a>
 
                 </div>
               }

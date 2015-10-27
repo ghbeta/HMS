@@ -1,7 +1,6 @@
 @(user: User)(content: Html)
 
 @dashboard.dashboard(user){
-
     <div class="well media col-md-6 col-md-offset-1">
         <div class="text-center">
         @content
@@ -13,18 +12,33 @@
         </ul>
         <div id="myTabContent" class="tab-content">
             <div class="tab-pane active in" id="profile">
-             <h4>@Messages("need.ssh")</h4>
-                <form>
-                    <div class="form-group">
-                        <label>@Messages("ssh.current")</label>
-                        <input type="text" class="form-control" placeholder="@user.ssh" disabled="disabled">
-                    </div>
-                    <div class="form-group">
-                        <label>@Messages("ssh.new")</label>
-                        <input type="text" class="form-control"  placeholder="@Messages("ssh.type")">
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
+             <h4 class="page-header">@Messages("need.ssh")<small>
+             @Messages("need.ssh2")
+             </small></h4>
+          @if(!user.sshs.isEmpty) {
+              <table class="table table-striped custab col-md-6">
+                  <thead>
+                      <tr>
+                          <th>@Messages("ssh.addtitle")</th>
+                          <th>@Messages("ssh.addkey")</th>
+                          <th>@Messages("ssh.action")</th>
+                      </tr>
+                  </thead>
+                  @for(ssh <- user.sshs) {
+                      <tr>
+                          <td>@ssh.title</td>
+                          <td>@ssh.ssh</td>
+                          <td><form action="@controllers.account.settings.routes.ModifySSH.deletessh(ssh.id)" method="post"><button class="btn btn-danger" type="submit">@Messages("ssh.delete")</button></form></td>
+                      </tr>
+                  }
+              </table>
+          } else {
+
+              <div class="alert alert-warning">@Messages("ssh.none")</div>
+          }
+                <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#addSSH">
+                   @Messages("ssh.new")
+                </button>
             </div>
             <div class="tab-pane fade" id = "email">
                 <form action="@controllers.account.settings.routes.Email.runEmail()" method="post">
@@ -48,19 +62,33 @@
         </div>
     </div>
 
-    @*<div class="row">*@
-        @*<div class="col col-lg-4">*@
-            @*<ul class="nav nav-pills nav-stacked">*@
-                @*<li>*@
-                    @*<a href="@controllers.account.settings.routes.Password.index">@Messages("password")</a>*@
-                @*</li>*@
-                @*<li>*@
-                    @*<a href="@controllers.account.settings.routes.Email.index">@Messages("email")</a>*@
-                @*</li>*@
-            @*</ul>*@
-        @*</div>*@
+    <div class="modal fade" id="addSSH" tabindex="-1" role="dialog" aria-labelledby="addSSH">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="addSSH">@Messages("ssh.add.modal")</h4>
+                </div>
+                <div class="modal-body">
+                   <form action="@controllers.account.settings.routes.ModifySSH.addssh()" method="post">
+                     <div class="form-group">
+                         <label>@Messages("ssh.addtitle")</label>
+                         <input type="text" class="form-control" name="title" placeholder="@Messages("ssh.givename")">
+                     </div>
+                       <div class="form-group">
+                           <label>@Messages("ssh.addkey")</label>
+                           <textarea class="form-control" rows="3" name="ssh" placeholder="@Messages("ssh.copyssh")"></textarea>
+                       </div>
+                       <button type="submit" class="btn btn-primary" >@Messages("ssh.add")</button>
+                   </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-    @*</div>*@
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 }

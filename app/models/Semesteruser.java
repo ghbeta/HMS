@@ -54,7 +54,7 @@ public class Semesteruser extends Abstractuser {
             semesteruser.id = user.id;
             semesteruser.lastname = user.lastname;
             semesteruser.roles = user.roles;
-            semesteruser.ssh = user.ssh;
+            //semesteruser.sshs = user.sshs;
             //suser=globaluser;
             semesteruser.semester = database;
             semesteruser.save(database);

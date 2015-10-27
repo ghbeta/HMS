@@ -53,3 +53,8 @@ body {
     min-width: 50%;
     min-height: 50%;
 }
+
+table {
+    table-layout: fixed;
+    word-wrap: break-word;
+}

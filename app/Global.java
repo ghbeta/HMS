@@ -26,6 +26,7 @@ public class Global extends GlobalSettings{
         entity.add(User.class);
         entity.add(Token.class);
         entity.add(Semester.class);
+        entity.add(SSH.class);
 
         List<Class> entity1 = new ArrayList<Class>();
         entity1.add(Semesteruser.class);

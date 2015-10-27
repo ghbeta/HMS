@@ -47,6 +47,8 @@ public class Lecturehome extends Controller {
         }
     }
 
+
+
     @Security.Authenticated(Securedstudents.class)
     public static Result deleteSemesteruserfromlecture(String user, String semester,String lecturename){
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");

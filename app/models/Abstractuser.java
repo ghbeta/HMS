@@ -6,10 +6,11 @@ import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Hao on 2015/10/8.
@@ -47,8 +48,10 @@ public class Abstractuser extends Model {
     @Formats.NonEmpty
     public Boolean validated = false;
 
-    @Column(unique = true)
-    public String ssh;
+
+
+
+
 
     public static EbeanServer currentServer(String database){
 
