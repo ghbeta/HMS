@@ -19,6 +19,7 @@
             @lecture.desription
           </div>
         </div>
+        @if(lecture.localrepo){
         <div class="panel panel-default">
           <div class="panel-heading">@Messages("lecture.home.terms")
           </div>
@@ -103,6 +104,79 @@
           </div>
 
         </div>
+        } else {
+          <div class="panel panel-default">
+            <div class="panel-heading">@Messages("lecture.home.terms")
+            </div>
+            <div class="panel-body">
+            @Messages("lecture.home.terms.remote")
+            </div>
+          </div>
+          <hr>
+          <div class="panel panel-default">
+
+            <div class="panel-heading">@Messages("lecture.home.homeworks")
+            </div>
+            <div class="panel-body">
+              @Messages("lecture.home.homework")
+              <br>
+              @if(lecture.attendent.contains(semesteruser)){
+                <table class="table table-striped custab">
+                  <thead>
+                    <tr>
+                      <th>@Messages("assignment.title")</th>
+                      <th>@Messages("assignment.exercise")</th>
+                      <th>@Messages("lecture.form.addionalinfo")</th>
+                      <th>@Messages("assignment.status.repo")</th>
+                      <th>@Messages("assignment.expired")</th>
+                    </tr>
+                  </thead>
+                  @for(currentassignment <- lecture.assignments){
+                    <tr>
+                      <td>@currentassignment.title@if(currentassignment.uploadfile!=null){<a href="@controllers.lectures.routes.Lecturehub.getFiles(currentassignment.uploadfile)"><i class="fa fa-download"></i></a>}</td>
+                      <td>@currentassignment.numberofexercise</td>
+                      <td>@currentassignment.addtionalinfo</td>
+
+                      <td>last commit</td>
+                      <td>@currentassignment.deadline</td>
+                    </tr>
+                    <div class="modal fade" id="@currentassignment.id" tabindex="-1" role="dialog" aria-labelledby="@currentassignment.id" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">@Messages("Assignment.handin")</h4>
+                          </div>
+                          <div class="modal-body">
+                            <form action="#some action for this form final mark for the semester homeworks" method="post">
+                              <div class="form-group">
+                                <label>@Messages("Assignment.commit")</label>
+                                <textarea class="form-control"  name="addtionalinfo" rows="10"></textarea>
+                              </div>
+                              <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("lecture.form.close")</button>
+                              <button type="submit" class="btn btn-primary pull-right">@Messages("lecture.form.change")</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                </table>
+
+                <a class="btn btn-danger pull-right" href="@controllers.lectures.user.routes.Lecturehome.deleteSemesteruserfromlecture(semesteruser.lastname,lecture.semester,lecture.courseName)">Leave</a>
+
+              } else{
+
+                <div class="alert alert-danger text-center">@Messages("lecture.singin")
+                  <br>
+                  <a class="btn btn-success text-center" href="@controllers.lectures.user.routes.Lecturehome.addSemesterusertoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" type="submit" >Join</a>
+
+                </div>
+              }
+            </div>
+
+          </div>
+
+        }
       </div>
       <div class="tab-pane" id="forum">
         there is a forum
