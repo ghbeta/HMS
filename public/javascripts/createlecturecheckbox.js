@@ -5,7 +5,7 @@ $(document).ready(function(){
     $('input[type="checkbox"]').click(function(){
         if($(this).attr("value")=="true"){
             $("#local").toggleClass("hide show");
-            $("#remote").toggleClass("show hide");
+            //$("#remote").toggleClass("show hide");
         }
 
 
