@@ -1,7 +1,6 @@
 package controllers.lectures.user;
 
 import Permission.Securedstudents;
-import controllers.lectures.*;
 import models.Lecture;
 import models.Semesteruser;
 import models.User;
@@ -36,7 +35,7 @@ public class Lecturehome extends Controller {
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
         Lecture lecture=Lecture.getlecturebyname(lecturename,semester);
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
-        if(Lecture.addSemesteruser(semester,semesteruser,lecture)){
+        if(Lecture.addSemesterusertoLecture(semester, semesteruser, lecture)){
             semesteruser.assignments.addAll(lecture.assignments);
             semesteruser.update(semester);
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
@@ -53,7 +52,7 @@ public class Lecturehome extends Controller {
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
         Lecture lecture=Lecture.getlecturebyname(lecturename,semester);
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
-        if(Lecture.deleteSemesteruser(semester,semesteruser,lecture)){
+        if(Lecture.deleteSemesteruserfromLecture(semester, semesteruser, lecture)){
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
         }
         else

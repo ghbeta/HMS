@@ -75,7 +75,7 @@ public class Lecture extends Model {
         }
     }
 
-    public static boolean addSemesteruser(String database,Semesteruser user,Lecture currentlecture){
+    public static boolean addSemesterusertoLecture(String database, Semesteruser user, Lecture currentlecture){
 
          if(!currentlecture.attendent.contains(user)){
              currentlecture.attendent.add(user);
@@ -87,7 +87,7 @@ else{
          }
     }
 
-    public static boolean deleteSemesteruser(String database,Semesteruser user,Lecture currentlecture){
+    public static boolean deleteSemesteruserfromLecture(String database, Semesteruser user, Lecture currentlecture){
         if(currentlecture.attendent.contains(user)){
             currentlecture.attendent.remove(user);
             currentlecture.update(database);
