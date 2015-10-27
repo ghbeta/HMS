@@ -134,16 +134,18 @@ public class Createlecture extends Controller {
             }
             if (createlectureForm.get().localrepo == null) {
                 lecture.localrepo = false;
+                lecture.totalassignment=1;
             } else if (createlectureForm.get().localrepo.equals("true")) {
                 lecture.localrepo = true;
+                lecture.totalassignment = createlectureForm.get().totalassignment;
+                lecture.optionalassignments = createlectureForm.get().optionalassigment;
+                lecture.requriednumberofvalidassignment = createlectureForm.get().numberofvalidassignment;
+                lecture.requiredpercentfovalidassignment = createlectureForm.get().percentageforvalidassignment;
+                lecture.minimumPercentageForExamination = createlectureForm.get().percentageforexam;
             }
 
             lecture.closingdate = createlectureForm.get().closingdate;
-            lecture.totalassignment = createlectureForm.get().totalassignment;
-            lecture.optionalassignments = createlectureForm.get().optionalassigment;
-            lecture.requriednumberofvalidassignment = createlectureForm.get().numberofvalidassignment;
-            lecture.requiredpercentfovalidassignment = createlectureForm.get().percentageforvalidassignment;
-            lecture.minimumPercentageForExamination = createlectureForm.get().percentageforexam;
+
 
             Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,globaluser);
             lecture.lasteditor = semesteruser;

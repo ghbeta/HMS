@@ -26,6 +26,7 @@
           @lecture.desription
         </div>
       </div>
+      @if(lecture.localrepo){
       <div class="panel panel-default">
         <div class="panel-heading">@Messages("lecture.home.terms")
           <button class="btn btn-link"  data-toggle="modal" data-target="#termsModal">
@@ -116,29 +117,117 @@
           }
         </table>
       </div>
+      } else {
+        <div class="panel panel-default">
+          <div class="panel-heading">@Messages("lecture.home.terms")
+          </div>
+          <div class="panel-body">
+          @Messages("lecture.home.terms.remote")
+          </div>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">@Messages("lecture.home.homeworks")
+            <button title="Create new homework" class="btn btn-link"  data-toggle="modal" data-target="#assignmentModal">
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
+          <div class="panel-body">
+          @Messages("lecture.home.homework.remote")
+          </div>
+          <table class="table table-striped custab">
+            <thead>
+              <tr>
+                <th>@Messages("assignment.title")</th>
+                <th>@Messages("assignment.exercise")</th>
+                <th>@Messages("lecture.form.addionalinfo")</th>
+                <th  class="text-center">@Messages("assignment.action")</th>
+                <th>@Messages("assignment.status")</th>
+                <th>@Messages("assignment.expired")</th>
+              </tr>
+            </thead>
+            @for(currentassignment <- lecture.assignments){
+              <tr>
+                <td>@currentassignment.title@if(currentassignment.uploadfile!=null){<a href="@controllers.lectures.routes.Lecturehub.getFiles(currentassignment.uploadfile)"><i class="fa fa-download"></i></a>}</td>
+                <td>@currentassignment.numberofexercise</td>
+                <td>@currentassignment.addtionalinfo</td>
+                <td  class="text-center">
+                  <a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.modify")"><i class="fa fa-pencil-square-o"></i></a>
+                  <a title="@Messages("delete.assignment")" href="@controllers.lectures.admin.routes.Lecturehome.deleteAssignment(lecture.courseName,currentassignment.title,lecture.semester)"><i class="fa fa-times"></i></a>
+                </td>
+                <td>@currentassignment.getNumberofHandinStudents(currentassignment,lecture,lecture.semester)/@currentassignment.students.size()</td>
+                <td>@currentassignment.deadline</td>
+              </tr>
+              <div class="modal fade" id="@currentassignment.id" tabindex="-1" role="dialog" aria-labelledby="@currentassignment.id" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="myModalLabel">@Messages("lecture.form.modassignment")</h4>
+                    </div>
+                    <div class="modal-body">
+                      <form action="@controllers.lectures.admin.routes.Lecturehome.modifyassignment(currentassignment.id,lecture.semester,lecture.courseName)" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                          <div class="col-xs-6">
+                            <label>@Messages("Number.exercise")</label>
+                            <input type="number" class="form-control" name="numberofexercise" value="@currentassignment.numberofexercise">
+                          </div>
+                          <div class="col-xs-6">
+                            <label>@Messages("deadline")</label>
+                            <input type="date" class="form-control" name="deadline" value="@currentassignment.deadline.format("yyyy-MM-dd")">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label>@Messages("lecture.action.upload")</label>
+                          <input type="file" name="uploadfile">
+                        </div>
+
+                        <samp class="alert-link">@Messages("Lecture.assignment.path")@currentassignment.filename</samp>
+
+
+                        @*todo:add more file also delte file*@
+                        <div class="form-group">
+                          <label>@Messages("lecture.form.addionalinfo")</label>
+                          <textarea class="form-control"  name="addtionalinfo" rows="10">@currentassignment.addtionalinfo</textarea>
+                        </div>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("lecture.form.close")</button>
+                        <button type="submit" class="btn btn-primary pull-right">@Messages("lecture.form.change")</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </table>
+        </div>
+
+      }
     </div>
       <br>
       <div class="tab-pane" id="editor">
 
-        <div class="panel-group" id="homeworkcorrectionlist" role="tablist" aria-multiselectable="true">
-        @if(lecture.assignments.size()>0){
-        @for(assignment <- lecture.assignments) {
-            <div class="panel panel-default">
-              <div class="panel-heading" role="tab" id="a@assignment.title">
-                <a role="button" data-toggle="collapse"  data-parent="#assignmentlist" href="#@assignment.title" aria-expanded="true" aria-controls="@assignment.title">
-                  @assignment.title <span class="badge pull-right">@assignment.getNumberofHandinStudents(assignment,lecture,lecture.semester)/@assignment.students.size()</span>
-                </a>
+          <div class="panel-group" id="homeworkcorrectionlist" role="tablist" aria-multiselectable="true">
+          @if(lecture.assignments.size() > 0) {
+            @for(assignment <- lecture.assignments) {
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="a@assignment.title">
+                  <a role="button" data-toggle="collapse" data-parent="#assignmentlist" href="#@assignment.title" aria-expanded="true" aria-controls="@assignment.title">
+                    @assignment.title <span class="badge pull-right">@assignment.getNumberofHandinStudents(assignment, lecture, lecture.semester)
+                    /@assignment.students.size()</span>
+                  </a>
+                </div>
+                <div id="@assignment.title" class="panel-collapse collapse" role="tabpanel" aria-labelledby="uncorrected">
+                  <div class="panel-body">
+                    @*todo:add tables here based on the students name*@
+                  </div>
+                </div>
               </div>
-              <div id="@assignment.title" class="panel-collapse collapse" role="tabpanel" aria-labelledby="uncorrected">
-                <div class="panel-body">
-              @*todo:add tables here based on the students name*@
+            }
+          } else {
+            <div class="alert alert-info">@Messages("lecutres.correction.none")</div>
+          }
           </div>
-              </div>
-            </div>
-          }}else {
-          <div class="alert alert-info">@Messages("lecutres.correction.none")</div>
-        }
-          </div>
+
       </div>
       <div class="tab-pane" id="forum">Secondo sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
         Aliquam in felis sit amet augue.
