@@ -188,18 +188,25 @@ public class Lecturehome extends Controller {
         assignment.numberofexercise=assignmentformForm.get().numberofexercise;
         assignment.addtionalinfo=assignmentformForm.get().addtionalinfo;
         assignment.deadline=assignmentformForm.get().deadline;
+        FilePart filePart=null;
+       try{
         MultipartFormData body= request().body().asMultipartFormData();
-        FilePart filePart=body.getFile("uploadfile");
+        filePart=body.getFile("uploadfile");}
+       catch(Exception e){
+           filePart=null;
+       }
         String filename="";
 
-        filename = filePart.getFilename();
+
         //String contentType=filePart.getContentType();
         //Logger.debug("what is:"+filename);
 
-        File file= filePart.getFile();
+
         String path="";
         if(filePart != null){
         try {
+            File file= filePart.getFile();
+            filename = filePart.getFilename();
             FileUtils.forceDelete(new File("files/"+assignment.uploadfile));
             FileUtils.moveFile(file, new File("files/"+uploadpath("assignment",semester,lecture), filename));
             path = uploadpath("assignment", semester, lecture)+"/"+filename;

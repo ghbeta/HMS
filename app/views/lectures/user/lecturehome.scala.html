@@ -124,7 +124,7 @@
               @if(Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture)!=null&&semesteruser.roles.equals(UserRoll.Students.toString)){
                 @Messages("lecture.home.homework.remote.exist")@Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture).repopath
               }else{
-                <form action="#someaction" method="post">@Messages("lecture.home.homework.remote.noexist") <button class="btn btn-success pull-right" type="submit">@Messages("lecture.remote.generate")</button></form>
+                <form action="@controllers.lectures.user.routes.Lecturehome.addRemoteRepotoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" method="post">@Messages("lecture.home.homework.remote.noexist") <button class="btn btn-success pull-right" type="submit">@Messages("lecture.remote.generate")</button></form>
               }
 
 

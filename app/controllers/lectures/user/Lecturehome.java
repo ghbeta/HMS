@@ -31,6 +31,19 @@ public class Lecturehome extends Controller {
         }
 
     }
+    public static Result addRemoteRepotoLecture(String user,String semester,String lecturename){
+        Semesteruser semesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
+        Lecture lecture=Lecture.getlecturebyname(lecturename,semester);
+        try{
+
+
+        System.out.println(request().getHeader("Host")+System.getProperty("user.home"));
+        return  redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,lecture.semester,lecture.courseName));}
+        catch(Exception e){
+            flash("danger",e.getMessage());
+            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
+        }
+    }
     @Security.Authenticated(Securedstudents.class)
     public static Result addSemesterusertoLecture(String user, String semester,String lecturename){
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
@@ -43,6 +56,7 @@ public class Lecturehome extends Controller {
                 semesteruser.update(semester);
                 return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
             }catch(Exception e){
+                flash("danger",Messages.get("Error.add.user.lecture"));
                 return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
             }
 
@@ -74,4 +88,6 @@ public class Lecturehome extends Controller {
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, semester, lecture.courseName));
         }
     }
+
+
 }
