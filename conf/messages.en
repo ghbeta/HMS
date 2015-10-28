@@ -123,6 +123,7 @@ dashboard.profile=My Profile
 dashboard.lecture=Lectures Management
 Error.add.user.lecture=add you to this lecture Fail!
 Error.add.user.repo= can not give you a repo right now!
+repo.create.after.fail= Repo creation failed pls try again
 
 account.not.validated.check.mail=Account not validated. Check your emails.
 account.successfully.validated=Account successfully validated

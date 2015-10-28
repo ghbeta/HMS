@@ -1,14 +1,12 @@
 package controllers.lectures.user;
 
 import Permission.Securedstudents;
-import models.Lecture;
-import models.Semesteruser;
-import models.User;
-import models.UserRoll;
+import models.*;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import utils.CreateRepo;
 import views.html.lectures.user.lecturehome;
 
 /**
@@ -31,14 +29,33 @@ public class Lecturehome extends Controller {
         }
 
     }
-    public static Result addRemoteRepotoLecture(String user,String semester,String lecturename){
+    public static Result addRemoteRepotoLecture(String user1,String semester,String lecturename){
         Semesteruser semesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
         Lecture lecture=Lecture.getlecturebyname(lecturename,semester);
+        User user=User.findByEmail(ctx().session().get("email"),"global");
         try{
 
 
-        System.out.println(request().getHeader("Host")+System.getProperty("user.home"));
+        //System.out.println(request().getHeader("Host")+System.getProperty("user.home"));
+       String repopath=CreateRepo.createRemoteRepo(user,lecture,request().getHeader("Host"));
+       if(repopath!=null){
+
+           Repo newrepo = new Repo();
+           newrepo.course=lecture;
+           newrepo.owner=semesteruser;
+           newrepo.repopath=repopath;
+           newrepo.semester=lecture.semester;
+           newrepo.save(lecture.semester);
+           //semesteruser.repos.add(newrepo);
+           //semesteruser.update(lecture.semester);
         return  redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,lecture.semester,lecture.courseName));}
+            else{
+           flash("danger",Messages.get("repo.create.after.fail"));
+           return  redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,lecture.semester,lecture.courseName));
+       }
+
+
+        }
         catch(Exception e){
             flash("danger",e.getMessage());
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
@@ -53,8 +70,24 @@ public class Lecturehome extends Controller {
             if(semesteruser.roles.equals(UserRoll.Students.toString())){
             semesteruser.assignments.addAll(lecture.assignments);
             try{
-                semesteruser.update(semester);
-                return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
+                String repopath=CreateRepo.createRemoteRepo(currentuser,lecture,request().getHeader("Host"));
+                if(repopath!=null){
+                    Repo newrepo = new Repo();
+                    newrepo.course=lecture;
+                    newrepo.owner=semesteruser;
+                    newrepo.repopath=repopath;
+                    newrepo.semester=lecture.semester;
+                    newrepo.save(lecture.semester);
+                    //semesteruser.repos.add(newrepo);
+                    //semesteruser.update(lecture.semester);
+                    //semesteruser.update(semester);
+                    return  redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,lecture.semester,lecture.courseName));}
+                else{
+                    flash("danger",Messages.get("repo.create.after.fail"));
+                    return  redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,lecture.semester,lecture.courseName));
+                }
+
+
             }catch(Exception e){
                 flash("danger",Messages.get("Error.add.user.lecture"));
                 return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
