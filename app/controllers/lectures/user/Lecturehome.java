@@ -113,7 +113,14 @@ public class Lecturehome extends Controller {
         Lecture lecture=Lecture.getlecturebyname(lecturename,semester);
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
         if(Lecture.deleteSemesteruserfromLecture(semester, semesteruser, lecture)){
-            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
+            try{
+                CreateRepo.deleteRepo(currentuser,lecture,request().getHeader("Host"));
+                return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
+            }catch (Exception e){
+                flash("danger", Messages.get("lecture.adduser.fail"));
+                return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, semester, lecture.courseName));
+            }
+
         }
         else
         {

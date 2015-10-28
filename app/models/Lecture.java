@@ -104,12 +104,12 @@ else{
         if(Semesteruser.findByEmail(email,databasename)!=null) {
             currentuser = Semesteruser.findByEmail(email, databasename);
             List<Lecture> all=getServer(databasename).find(Lecture.class).findList();
-            if(all.removeAll(currentuser.lectures)){
+            if(currentuser.lectures!=null&&all.removeAll(currentuser.lectures)){
 
             return all;
 
         }
-            else return null;
+            else {return all;}
         }
         else{
             return getServer(databasename).find(Lecture.class).findList();

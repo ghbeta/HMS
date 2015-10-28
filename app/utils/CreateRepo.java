@@ -63,7 +63,7 @@ public class CreateRepo {
         }
 
     }
-    public static boolean deleteRepo(User user, Lecture lecture,String serverhost) throws IOException, ServiceUnavailable, GitException {
+    public static boolean deleteRepo(User user, Lecture lecture,String serverhost) throws IOException, ServiceUnavailable, GitException, GitAPIException {
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(lecture.semester,user);
         String reponame=lecture.courseName+"_"+user.id;
         Repository adminrepo = new FileRepository("/home/hao/gitolite-admin/.git");
@@ -73,6 +73,9 @@ public class CreateRepo {
         nl.minicom.gitolite.manager.models.Repository repotodelete = config.getRepository(reponame);
 
         if(config.removeRepository(repotodelete)){
+            manager.applyAsync(config);
+            gitogit.pull().call();
+            gitogit.push().call();
             Repo repo=Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture);
             try{
             repo.delete(lecture.semester);

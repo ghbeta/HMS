@@ -20,7 +20,7 @@
         </div>
         <div id="@key" class="panel-collapse collapse" role="tabpanel" aria-labelledby="a@key">
           <div class="list-group">
-          @if(value != null && !value.isEmpty){
+          @if(value != null && value.nonEmpty){
             @for(lecture <- value) {
 
                 @if(user.roles.toString.equals("Teachers") || user.roles.toString.equals("Assistants")) {

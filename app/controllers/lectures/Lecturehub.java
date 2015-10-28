@@ -48,6 +48,7 @@ public class Lecturehub extends Controller {
         return ok(index.render(currentuser, alllectures));}
         else
         {
+            Logger.warn("semesters is null");
             flash("danger", Messages.get("lecture.danger"));
             return badRequest(index.render(currentuser, alllectures));
         }
