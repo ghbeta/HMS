@@ -46,6 +46,7 @@ public class Assignment extends Model {
 
     public Date handin;
 
+
     public String semester;
 
     @Version
@@ -64,6 +65,14 @@ public class Assignment extends Model {
     public boolean isExpired(){
         Date date=new Date();
         return deadline!=null&&date.before(deadline);}
+
+    public void setishandin(){
+       ishandin=(deadline !=null&&handin.before(deadline));
+    }
+
+    public boolean getisHandin(){
+        return ishandin;
+    }
 
     public int getNumberofHandinStudents(Assignment assignment,Lecture lecture,String database){
         return Semesteruser.findByAssignemtnandLecture(assignment,lecture,database).size();
