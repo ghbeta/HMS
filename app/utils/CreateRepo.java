@@ -4,6 +4,8 @@ import com.jcraft.jsch.Session;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import models.Lecture;
+import models.Repo;
+import models.Semesteruser;
 import models.User;
 import nl.minicom.gitolite.manager.exceptions.GitException;
 import nl.minicom.gitolite.manager.exceptions.ModificationException;
@@ -61,7 +63,27 @@ public class CreateRepo {
         }
 
     }
+    public static boolean deleteRepo(User user, Lecture lecture,String serverhost) throws IOException, ServiceUnavailable, GitException {
+        Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(lecture.semester,user);
+        String reponame=lecture.courseName+"_"+user.id;
+        Repository adminrepo = new FileRepository("/home/hao/gitolite-admin/.git");
+        Git gitogit = new Git(adminrepo);
+        ConfigManager manager = ConfigManager.create(System.getProperty("user.home")+"/gitolite-admin");
+        Config config = manager.get();
+        nl.minicom.gitolite.manager.models.Repository repotodelete = config.getRepository(reponame);
 
+        if(config.removeRepository(repotodelete)){
+            Repo repo=Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture);
+            try{
+            repo.delete(lecture.semester);
+            return true;}
+            catch (Exception e){
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
     public static String hostparser(String serverhost){
          if(serverhost.contains(":")){
              String[] parts=serverhost.split(":");
