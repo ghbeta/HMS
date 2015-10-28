@@ -67,6 +67,9 @@ public class Semesteruser extends Abstractuser {
 
     }
 
+//    public Repo getRepofromRepos(String semester,Semesteruser semesteruser,Lecture lecture){
+//        return Repo.findRepoByLectureAndOwner(semester,semesteruser,lecture);
+//    }
 
     public static Semesteruser findByEmail(String email,String database) {
         return currentServer(database).find(Semesteruser.class).where().eq("email", email).findUnique();

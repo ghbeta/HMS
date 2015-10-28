@@ -4,6 +4,7 @@ import Permission.Securedstudents;
 import models.Lecture;
 import models.Semesteruser;
 import models.User;
+import models.UserRoll;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -36,9 +37,19 @@ public class Lecturehome extends Controller {
         Lecture lecture=Lecture.getlecturebyname(lecturename,semester);
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
         if(Lecture.addSemesterusertoLecture(semester, semesteruser, lecture)){
+            if(semesteruser.roles.equals(UserRoll.Students.toString())){
             semesteruser.assignments.addAll(lecture.assignments);
+            try{
+                semesteruser.update(semester);
+                return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
+            }catch(Exception e){
+                return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
+            }
+
+            }
+            else{
             semesteruser.update(semester);
-            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
+            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));}
         }
         else
         {

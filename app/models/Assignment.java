@@ -70,7 +70,7 @@ public class Assignment extends Model {
        ishandin=(deadline !=null&&handin.before(deadline));
     }
 
-    public boolean getisHandin(){
+    public boolean getishandin(){
         return ishandin;
     }
 

@@ -91,13 +91,13 @@
                 }
               </table>
 
-            <a class="btn btn-danger pull-right" href="@controllers.lectures.user.routes.Lecturehome.deleteSemesteruserfromlecture(semesteruser.lastname,lecture.semester,lecture.courseName)">Leave</a>
+            <a class="btn btn-danger pull-right" href="@controllers.lectures.user.routes.Lecturehome.deleteSemesteruserfromlecture(semesteruser.lastname,lecture.semester,lecture.courseName)">@Messages("lecture.leave")</a>
 
             } else{
 
               <div class="alert alert-danger text-center">@Messages("lecture.singin")
                 <br>
-                <a class="btn btn-success text-center" href="@controllers.lectures.user.routes.Lecturehome.addSemesterusertoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" type="submit" >Join</a>
+                <a class="btn btn-success text-center" href="@controllers.lectures.user.routes.Lecturehome.addSemesterusertoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" type="submit" >@Messages("lecture.join")</a>
 
               </div>
               }
@@ -118,7 +118,13 @@
             <div class="panel-heading">@Messages("lecture.home.homeworks")
             </div>
             <div class="panel-body">
-              @Messages("lecture.home.homework")
+              @Messages("lecture.home.homework.remote")
+              @if(Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture)!=null&&semesteruser.roles.equals(UserRoll.Students.toString)){
+                @Messages("lecture.home.homework.remote.exist")@Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture).repopath
+              }else{
+                @Messages("lecture.home.homework.remote.noexist")<form action="#someaction" method="post"><button class="btn btn-success" type="submit">@Messages("lecture.remote.generate")</button></form>
+              }
+
               <br>
               @if(lecture.attendent.contains(semesteruser)){
                 <table class="table table-striped custab">

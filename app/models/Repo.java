@@ -2,7 +2,7 @@ package models;
 
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
-
+import static com.avaje.ebean.Ebean.getServer;
 import javax.persistence.*;
 
 /**
@@ -12,7 +12,8 @@ import javax.persistence.*;
 @Table(name = "repos")
 public class Repo extends Model {
     @Id
-    public String reponame;
+    @GeneratedValue
+    public String id;
 
     @Constraints.Required
     public String repopath;
@@ -29,29 +30,16 @@ public class Repo extends Model {
     public Lecture course;
 
     public String semester;
-    public String getReponame() {
-        return reponame;
-    }
 
-    public void setReponame(String reponame) {
-        this.reponame = reponame;
-    }
 
-//    public Semesteruser getOwner() {
-//        return owner;
-//    }
-//
-//    public void setSemesteruser(Semesteruser owner) {
-//        this.owner = owner;
-//    }
-
-    public Lecture getCourse() {
-        return course;
-    }
-
-    public void setCourse(Lecture course) {
-        this.course = course;
-    }
+   public static Repo findRepoByLectureAndOwner(String semester,Semesteruser semesteruser,Lecture lecture){
+       Repo repo=getServer(semester).find(Repo.class).fetch("owner").fetch("course").where().eq("owner.id",semesteruser.id).eq("course.courseName",lecture.courseName).findUnique();
+       if(semesteruser.repos.contains(repo)){
+       return repo;}
+       else {
+           return null;
+       }
+   }
 
 
 //    @Override
