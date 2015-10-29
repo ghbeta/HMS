@@ -51,7 +51,7 @@ public class CreateRepo {
         if(!user.sshs.isEmpty()){
             for(int i=0;i<user.sshs.size();i++){
                 Logger.warn("add repo now");
-                repouser.setKey(user.sshs.get(i).title,user.sshs.get(i).ssh);
+                repouser.setKey(user.sshs.get(i).title, user.sshs.get(i).ssh);
 
             }
             manager.applyAsync(config);
@@ -65,6 +65,12 @@ public class CreateRepo {
 
     }
     public static boolean deleteRepo(User user, Lecture lecture,String serverhost) throws IOException, ServiceUnavailable, GitException, GitAPIException {
+        SshSessionFactory.setInstance(new JschConfigSessionFactory() {
+            @Override
+            protected void configure(OpenSshConfig.Host host, Session session) {
+                session.setConfig("StrictHostKeyChecking", "no");
+            }
+        });
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(lecture.semester,user);
         String reponame=lecture.courseName+"_"+user.id;
         Repository adminrepo = new FileRepository("/home/hao/gitolite-admin/.git");
@@ -74,6 +80,7 @@ public class CreateRepo {
         nl.minicom.gitolite.manager.models.Repository repotodelete = config.getRepository(reponame);
 
         if(config.removeRepository(repotodelete)){
+            Logger.warn("start delete repo");
             manager.applyAsync(config);
             gitogit.pull().call();
             gitogit.push().call();
