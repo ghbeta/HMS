@@ -46,7 +46,7 @@ public class CreateRepo {
         nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(user.id);
 
         String reponame=lecture.courseName+"_"+user.id;
-        config.createRepository(lecture.courseName+"_"+user.id).setPermission(repouser, Permission.ALL);
+        config.ensureRepositoryExists(lecture.courseName+"_"+user.id).setPermission(repouser, Permission.ALL);
         Logger.warn("size"+user.sshs.size());
         if(!user.sshs.isEmpty()){
             for(int i=0;i<user.sshs.size();i++){

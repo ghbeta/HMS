@@ -40,6 +40,7 @@ public class ModifySSH extends Controller{
 
         user.sshs.add(ssh);
         user.update("global");
+
         //user.update("global");
         return redirect(routes.Index.index());}
         else{
