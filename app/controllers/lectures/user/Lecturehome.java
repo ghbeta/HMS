@@ -154,9 +154,10 @@ public class Lecturehome extends Controller {
         });
        try{
         Collection<Ref> refs = Git.lsRemoteRepository().setHeads(true).setTags(true).setRemote(gitpath).call();
+
            for (Ref ref : refs) {
                System.out.println("Ref: " + ref);
-               result.concat(ref.toString());
+               result = result.concat(ref.toString());
            }
        return result;
            }
