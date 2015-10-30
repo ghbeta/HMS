@@ -145,6 +145,7 @@ public class Lecturehome extends Controller {
         String serverhost=request().getHeader("Host");
         String reponame=lecture.courseName+"_"+"a6d14de05d7b2c3cf4fae7ae14cfa7f3";//semesteruser.userHash;
         String gitpath= "git@"+ hostparser(serverhost)+":"+reponame+".git";
+        String result="";
         SshSessionFactory.setInstance(new JschConfigSessionFactory() {
             @Override
             protected void configure(OpenSshConfig.Host host, Session session) {
@@ -155,8 +156,9 @@ public class Lecturehome extends Controller {
         Collection<Ref> refs = Git.lsRemoteRepository().setHeads(true).setTags(true).setRemote(gitpath).call();
            for (Ref ref : refs) {
                System.out.println("Ref: " + ref);
+               result.concat(ref.toString());
            }
-       return "read success";
+       return result;
            }
        catch(Exception e){
            return e.getMessage();
