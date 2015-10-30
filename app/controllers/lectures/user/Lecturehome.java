@@ -1,13 +1,23 @@
 package controllers.lectures.user;
 
 import Permission.Securedstudents;
+import com.jcraft.jsch.Session;
 import models.*;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.lib.*;
+import org.eclipse.jgit.transport.JschConfigSessionFactory;
+import org.eclipse.jgit.transport.OpenSshConfig;
+import org.eclipse.jgit.transport.SshSessionFactory;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import utils.CreateRepo;
 import views.html.lectures.user.lecturehome;
+
+import java.io.IOException;
+
+import static utils.CreateRepo.hostparser;
 
 /**
  * Created by Hao on 2015/10/15.
@@ -129,5 +139,18 @@ public class Lecturehome extends Controller {
         }
     }
 
+    public static String lastUpdateStatus(Semesteruser semesteruser,Lecture lecture){
+        String serverhost=request().getHeader("Host");
+        String reponame=lecture.courseName+"_"+semesteruser.id;
+        String gitpath= "git address: git@"+ hostparser(serverhost)+":"+reponame+".git";
+        SshSessionFactory.setInstance(new JschConfigSessionFactory() {
+            @Override
+            protected void configure(OpenSshConfig.Host host, Session session) {
+                session.setConfig("StrictHostKeyChecking", "no");
+            }
+        });
+
+        Git usergit = Git.cloneRepository().;
+    }
 
 }

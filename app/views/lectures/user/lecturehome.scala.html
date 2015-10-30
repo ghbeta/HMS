@@ -122,7 +122,7 @@
               <br>
               @if(lecture.attendent.contains(semesteruser)){
               @if(Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture)!=null&&semesteruser.roles.equals(UserRoll.Students.toString)){
-                @Messages("lecture.home.homework.remote.exist")@Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture).repopath
+                @Messages("lecture.home.homework.remote.exist")<br><p class="bg-info">@Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture).repopath</p>
               }else{
                 <form action="@controllers.lectures.user.routes.Lecturehome.addRemoteRepotoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" method="post">@Messages("lecture.home.homework.remote.noexist") <button class="btn btn-success pull-right" type="submit">@Messages("lecture.remote.generate")</button></form>
               }
