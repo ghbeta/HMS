@@ -43,10 +43,15 @@ public class CreateRepo {
         Git gitogit = new Git(adminrepo);
         ConfigManager manager = ConfigManager.create(System.getProperty("user.home")+"/gitolite-admin");
         Config config = manager.get();
-        nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(user.id);
+        nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(user.userHash);
+        nl.minicom.gitolite.manager.models.User admin=config.getUser("admin");
+
 
         String reponame=lecture.courseName+"_"+user.id;
-        config.ensureRepositoryExists(lecture.courseName+"_"+user.id).setPermission(repouser, Permission.ALL);
+        nl.minicom.gitolite.manager.models.Repository repository = config.ensureRepositoryExists(lecture.courseName+"_"+user.id);
+        repository.setPermission(repouser, Permission.ALL);
+        repository.setPermission(admin,Permission.READ_ONLY);
+
         Logger.warn("size"+user.sshs.size());
         if(!user.sshs.isEmpty()){
             for(int i=0;i<user.sshs.size();i++){

@@ -159,7 +159,7 @@ public class Lecturehome extends Controller {
        return "read success";
            }
        catch(Exception e){
-           return "read fail";
+           return e.getMessage();
        }
     }
 

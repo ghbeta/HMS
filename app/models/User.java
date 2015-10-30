@@ -26,9 +26,7 @@ public class User extends Abstractuser{
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "sshowner")
     public List<SSH> sshs;
 
-    public String getUserHash(){
-        return userHash;
-    }
+
 
     public void setUserHash(){
         this.userHash= MD5Util.md5Hex(this.email);
