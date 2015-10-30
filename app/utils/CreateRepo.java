@@ -50,7 +50,7 @@ public class CreateRepo {
         String reponame=lecture.courseName+"_"+user.userHash;
         nl.minicom.gitolite.manager.models.Repository repository = config.ensureRepositoryExists(lecture.courseName+"_"+user.userHash);
         repository.setPermission(repouser, Permission.ALL);
-        //repository.setPermission(admin, Permission.READ_ONLY);
+        repository.setPermission(admin, Permission.READ_ONLY);
 
         Logger.warn("size"+user.sshs.size());
         if(!user.sshs.isEmpty()){
