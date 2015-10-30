@@ -39,7 +39,7 @@ public class CreateRepo {
         });
         System.out.println(ctx().request().getHeader("Host")+System.getProperty("user.home"));
         //ConfigManager manager = ConfigManager.create("git@localhost:gitolite-admin");
-        Repository adminrepo = new FileRepository("/home/hao/gitolite-admin/.git");
+        Repository adminrepo = new FileRepository(System.getProperty("user.home")+"/gitolite-admin"+"/.git");
         Git gitogit = new Git(adminrepo);
         ConfigManager manager = ConfigManager.create(System.getProperty("user.home")+"/gitolite-admin");
         Config config = manager.get();
@@ -50,7 +50,7 @@ public class CreateRepo {
         String reponame=lecture.courseName+"_"+user.userHash;
         nl.minicom.gitolite.manager.models.Repository repository = config.ensureRepositoryExists(lecture.courseName+"_"+user.userHash);
         repository.setPermission(repouser, Permission.ALL);
-        repository.setPermission(admin,Permission.READ_ONLY);
+        //repository.setPermission(admin, Permission.READ_ONLY);
 
         Logger.warn("size"+user.sshs.size());
         if(!user.sshs.isEmpty()){
@@ -78,7 +78,7 @@ public class CreateRepo {
         });
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(lecture.semester,user);
         String reponame=lecture.courseName+"_"+user.userHash;
-        Repository adminrepo = new FileRepository("/home/hao/gitolite-admin/.git");
+        Repository adminrepo = new FileRepository(System.getProperty("user.home")+"/gitolite-admin"+"/.git");
         Git gitogit = new Git(adminrepo);
         ConfigManager manager = ConfigManager.create(System.getProperty("user.home")+"/gitolite-admin");
         Config config = manager.get();

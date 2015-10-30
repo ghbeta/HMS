@@ -142,25 +142,26 @@ public class Lecturehome extends Controller {
     }
 
     public static String lastUpdateStatus(Semesteruser semesteruser,Lecture lecture){
-        String serverhost=request().getHeader("Host");
-        String reponame=lecture.courseName+"_"+semesteruser.userHash;
-        String gitpath= "git@"+ hostparser(serverhost)+":"+reponame+".git";
-        SshSessionFactory.setInstance(new JschConfigSessionFactory() {
-            @Override
-            protected void configure(OpenSshConfig.Host host, Session session) {
-                session.setConfig("StrictHostKeyChecking", "no");
-            }
-        });
-       try{
-        Collection<Ref> refs = Git.lsRemoteRepository().setHeads(true).setTags(true).setRemote(gitpath).call();
-           for (Ref ref : refs) {
-               Logger.debug("Ref: " + ref);
-           }
-       return "read success";
-           }
-       catch(Exception e){
-           return e.getMessage();
-       }
+//        String serverhost=request().getHeader("Host");
+//        String reponame=lecture.courseName+"_"+semesteruser.userHash;
+//        String gitpath= "git@"+ hostparser(serverhost)+":"+reponame+".git";
+//        SshSessionFactory.setInstance(new JschConfigSessionFactory() {
+//            @Override
+//            protected void configure(OpenSshConfig.Host host, Session session) {
+//                session.setConfig("StrictHostKeyChecking", "no");
+//            }
+//        });
+//       try{
+//        Collection<Ref> refs = Git.lsRemoteRepository().setHeads(true).setTags(true).setRemote(gitpath).call();
+//           for (Ref ref : refs) {
+//               System.out.println("Ref: " + ref);
+//           }
+//       return "read success";
+//           }
+//       catch(Exception e){
+//           return e.getMessage();
+//       }
+        return "nothing";
     }
 
 }
