@@ -8,6 +8,7 @@ import org.eclipse.jgit.lib.*;
 import org.eclipse.jgit.transport.JschConfigSessionFactory;
 import org.eclipse.jgit.transport.OpenSshConfig;
 import org.eclipse.jgit.transport.SshSessionFactory;
+import play.Logger;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -16,6 +17,7 @@ import utils.CreateRepo;
 import views.html.lectures.user.lecturehome;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import static utils.CreateRepo.hostparser;
 
@@ -142,15 +144,23 @@ public class Lecturehome extends Controller {
     public static String lastUpdateStatus(Semesteruser semesteruser,Lecture lecture){
         String serverhost=request().getHeader("Host");
         String reponame=lecture.courseName+"_"+semesteruser.id;
-        String gitpath= "git address: git@"+ hostparser(serverhost)+":"+reponame+".git";
+        String gitpath= "git@"+ hostparser(serverhost)+":"+reponame+".git";
         SshSessionFactory.setInstance(new JschConfigSessionFactory() {
             @Override
             protected void configure(OpenSshConfig.Host host, Session session) {
                 session.setConfig("StrictHostKeyChecking", "no");
             }
         });
-
-        Git usergit = Git.cloneRepository().;
+       try{
+        Collection<Ref> refs = Git.lsRemoteRepository().setHeads(true).setTags(true).setRemote(gitpath).call();
+           for (Ref ref : refs) {
+               Logger.debug("Ref: " + ref);
+           }
+       return "read success";
+           }
+       catch(Exception e){
+           return "read fail";
+       }
     }
 
 }

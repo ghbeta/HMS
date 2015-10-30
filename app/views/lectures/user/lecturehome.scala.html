@@ -127,8 +127,6 @@
                 <form action="@controllers.lectures.user.routes.Lecturehome.addRemoteRepotoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" method="post">@Messages("lecture.home.homework.remote.noexist") <button class="btn btn-success pull-right" type="submit">@Messages("lecture.remote.generate")</button></form>
               }
 
-
-
                 <table class="table table-striped custab">
                   <thead>
                     <tr>
@@ -148,25 +146,7 @@
                       <td>last commit</td>
                       <td>@currentassignment.deadline</td>
                     </tr>
-                    <div class="modal fade" id="@currentassignment.id" tabindex="-1" role="dialog" aria-labelledby="@currentassignment.id" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel">@Messages("Assignment.handin")</h4>
-                          </div>
-                          <div class="modal-body">
-                            <form action="#some action for this form final mark for the semester homeworks" method="post">
-                              <div class="form-group">
-                                <label>@Messages("Assignment.commit")</label>
-                                <textarea class="form-control"  name="addtionalinfo" rows="10"></textarea>
-                              </div>
-                              <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("lecture.form.close")</button>
-                              <button type="submit" class="btn btn-primary pull-right">@Messages("lecture.form.change")</button>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+
                   }
                 </table>
 
