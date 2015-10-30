@@ -47,7 +47,7 @@ public class CreateRepo {
         nl.minicom.gitolite.manager.models.User admin=config.getUser("admin");
 
 
-        String reponame=lecture.courseName+"_"+user.id;
+        String reponame=lecture.courseName+"_"+user.userHash;
         nl.minicom.gitolite.manager.models.Repository repository = config.ensureRepositoryExists(lecture.courseName+"_"+user.id);
         repository.setPermission(repouser, Permission.ALL);
         repository.setPermission(admin,Permission.READ_ONLY);
