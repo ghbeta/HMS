@@ -143,7 +143,7 @@ public class Lecturehome extends Controller {
 
     public static String lastUpdateStatus(Semesteruser semesteruser,Lecture lecture){
         String serverhost=request().getHeader("Host");
-        String reponame=lecture.courseName+"_"+semesteruser.id;
+        String reponame=lecture.courseName+"_"+semesteruser.userHash;
         String gitpath= "git@"+ hostparser(serverhost)+":"+reponame+".git";
         SshSessionFactory.setInstance(new JschConfigSessionFactory() {
             @Override

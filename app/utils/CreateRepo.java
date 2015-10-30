@@ -48,7 +48,7 @@ public class CreateRepo {
 
 
         String reponame=lecture.courseName+"_"+user.userHash;
-        nl.minicom.gitolite.manager.models.Repository repository = config.ensureRepositoryExists(lecture.courseName+"_"+user.id);
+        nl.minicom.gitolite.manager.models.Repository repository = config.ensureRepositoryExists(lecture.courseName+"_"+user.userHash);
         repository.setPermission(repouser, Permission.ALL);
         repository.setPermission(admin,Permission.READ_ONLY);
 
@@ -77,7 +77,7 @@ public class CreateRepo {
             }
         });
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(lecture.semester,user);
-        String reponame=lecture.courseName+"_"+user.id;
+        String reponame=lecture.courseName+"_"+user.userHash;
         Repository adminrepo = new FileRepository("/home/hao/gitolite-admin/.git");
         Git gitogit = new Git(adminrepo);
         ConfigManager manager = ConfigManager.create(System.getProperty("user.home")+"/gitolite-admin");
