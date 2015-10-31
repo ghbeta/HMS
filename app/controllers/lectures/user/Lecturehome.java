@@ -146,7 +146,7 @@ public class Lecturehome extends Controller {
 
     public static String lastUpdateStatus(Semesteruser semesteruser,Lecture lecture){
         String serverhost=request().getHeader("Host");
-        String reponame=lecture.courseName+"_"+"2076105f6efe7c11e285add95f514b9a";//semesteruser.userHash;
+        String reponame=lecture.courseName+"_"+semesteruser.userHash;
         //todo correct this place do not forget
         String gitpath= "git@"+ hostparser(serverhost)+":"+reponame+".git";
         String result="";
