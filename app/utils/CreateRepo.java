@@ -13,6 +13,7 @@ import nl.minicom.gitolite.manager.exceptions.ServiceUnavailable;
 import nl.minicom.gitolite.manager.models.Config;
 import nl.minicom.gitolite.manager.models.ConfigManager;
 import nl.minicom.gitolite.manager.models.Permission;
+import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.*;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
@@ -22,6 +23,7 @@ import org.eclipse.jgit.transport.OpenSshConfig;
 import org.eclipse.jgit.transport.SshSessionFactory;
 import play.Logger;
 
+import java.io.File;
 import java.io.IOException;
 
 import static play.mvc.Controller.ctx;
@@ -93,6 +95,7 @@ public class CreateRepo {
             gitogit.push().call();
             Repo repo=Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture);
             try{
+                FileUtils.deleteDirectory(new File(repo.repofilepath));
             repo.delete(lecture.semester);
             return true;}
             catch (Exception e){
@@ -126,4 +129,6 @@ public class CreateRepo {
     public static String reponame(Lecture lecture,Semesteruser semesteruser){
         return lecture.courseName+"_"+semesteruser.userHash;
     }
+
+
 }
