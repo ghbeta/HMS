@@ -22,7 +22,7 @@ public class Abstractuser extends Model {
     @Formats.NonEmpty
     @Column(unique = true)
     public String email;
-    
+
     @Column(unique = true)
     public String id;
 

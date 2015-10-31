@@ -18,6 +18,12 @@ public class Repo extends Model {
     @Constraints.Required
     public String repopath;
 
+    public void setRepofilepath(String reponame) {
+        this.repofilepath = System.getProperty("user.home")+"/repositories/"+reponame+".git";
+    }
+
+    public String repofilepath;
+
     @ManyToOne//(cascade= CascadeType.ALL)
     //@JoinColumn
     public Semesteruser owner;

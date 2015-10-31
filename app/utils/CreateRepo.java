@@ -39,11 +39,10 @@ public class CreateRepo {
         });
         System.out.println(ctx().request().getHeader("Host")+System.getProperty("user.home"));
         //ConfigManager manager = ConfigManager.create("git@localhost:gitolite-admin");
-        Repository adminrepo = new FileRepository(System.getProperty("user.home")+"/gitolite-admin"+"/.git");
+        Repository adminrepo = new FileRepository(adminrepofilepath());
         Git gitogit = new Git(adminrepo);
-        ConfigManager manager = ConfigManager.create(System.getProperty("user.home")+"/gitolite-admin");
+        ConfigManager manager = ConfigManager.create(configrepopath());
 
-        //TODO try run play instance under the user git, we may not need pull and push,and can access the repo as local(enable jgit function)
         Config config = manager.get();
         nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(user.userHash);
         nl.minicom.gitolite.manager.models.User admin=config.getUser("admin");
@@ -80,9 +79,9 @@ public class CreateRepo {
         });
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(lecture.semester,user);
         String reponame=lecture.courseName+"_"+user.userHash;
-        Repository adminrepo = new FileRepository(System.getProperty("user.home")+"/gitolite-admin"+"/.git");
+        Repository adminrepo = new FileRepository(adminrepofilepath());
         Git gitogit = new Git(adminrepo);
-        ConfigManager manager = ConfigManager.create(System.getProperty("user.home")+"/gitolite-admin");
+        ConfigManager manager = ConfigManager.create(configrepopath());
         //ConfigManager manager = ConfigManager.create("git@localhost:gitolite-admin");
         Config config = manager.get();
         nl.minicom.gitolite.manager.models.Repository repotodelete = config.getRepository(reponame);
@@ -110,8 +109,21 @@ public class CreateRepo {
          }else{
              return serverhost;
          }
+    }
 
+    public static String userrepofilepath(String reponame){
+        return System.getProperty("user.home")+"/repositories/"+reponame+".git";
+    }
 
+    public static String adminrepofilepath(){
+        return System.getProperty("user.home")+"/gitolite-admin"+"/.git";
+    }
 
+    public static String configrepopath(){
+        return System.getProperty("user.home")+"/gitolite-admin";
+    }
+
+    public static String reponame(Lecture lecture,Semesteruser semesteruser){
+        return lecture.courseName+"_"+semesteruser.userHash;
     }
 }

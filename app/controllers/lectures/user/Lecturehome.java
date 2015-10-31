@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.util.Collection;
 
 import static utils.CreateRepo.hostparser;
+import static utils.CreateRepo.reponame;
+import static utils.CreateRepo.userrepofilepath;
 
 /**
  * Created by Hao on 2015/10/15.
@@ -92,6 +94,7 @@ public class Lecturehome extends Controller {
                     newrepo.owner=semesteruser;
                     newrepo.repopath=repopath;
                     newrepo.semester=lecture.semester;
+                    newrepo.setRepofilepath(reponame(lecture,semesteruser));
                     newrepo.save(lecture.semester);
                     //semesteruser.repos.add(newrepo);
                     //semesteruser.update(lecture.semester);
@@ -132,14 +135,14 @@ public class Lecturehome extends Controller {
                 CreateRepo.deleteRepo(currentuser,lecture,request().getHeader("Host"));
                 return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
             }catch (Exception e){
-                flash("danger", Messages.get("lecture.adduser.fail"));
+                flash("danger", Messages.get("lecture.deleteuser.fail"));
                 return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, semester, lecture.courseName));
             }
 
         }
         else
         {
-            flash("danger", Messages.get("lecture.adduser.fail"));
+            flash("danger", Messages.get("lecture.deleteuser.fail"));
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, semester, lecture.courseName));
         }
     }
@@ -158,8 +161,8 @@ public class Lecturehome extends Controller {
         });
        try{
 
-           System.out.println(System.getProperty("user.home")+"/repositories/"+reponame+".git");
-           Repository repository=new FileRepository(System.getProperty("user.home")+"/repositories/"+reponame+".git");
+           System.out.println(userrepofilepath(reponame));
+           Repository repository=new FileRepository(userrepofilepath(reponame));
            Ref head = repository.getRef("refs/heads/master");
 
            try (RevWalk walk = new RevWalk(repository)) {
