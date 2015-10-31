@@ -22,7 +22,7 @@ public class Abstractuser extends Model {
     @Formats.NonEmpty
     @Column(unique = true)
     public String email;
-
+    
     @Column(unique = true)
     public String id;
 
@@ -32,7 +32,7 @@ public class Abstractuser extends Model {
     public String roles;
 
     public String confirmationToken;
-    
+
     @Constraints.Required
     @Formats.NonEmpty
     public String passwordHash;
