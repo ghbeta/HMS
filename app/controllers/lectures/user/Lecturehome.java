@@ -4,6 +4,7 @@ import Permission.Securedstudents;
 import com.jcraft.jsch.Session;
 import models.*;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.*;
 import org.eclipse.jgit.transport.JschConfigSessionFactory;
 import org.eclipse.jgit.transport.OpenSshConfig;
@@ -143,7 +144,7 @@ public class Lecturehome extends Controller {
 
     public static String lastUpdateStatus(Semesteruser semesteruser,Lecture lecture){
         String serverhost=request().getHeader("Host");
-        String reponame=lecture.courseName+"_"+"a6d14de05d7b2c3cf4fae7ae14cfa7f3";//semesteruser.userHash;
+        String reponame=lecture.courseName+"_"+semesteruser.userHash;
         //todo correct this place do not forget
         String gitpath= "git@"+ hostparser(serverhost)+":"+reponame+".git";
         String result="";
@@ -154,13 +155,16 @@ public class Lecturehome extends Controller {
             }
         });
        try{
-        Collection<Ref> refs = Git.lsRemoteRepository().setHeads(true).setTags(true).setRemote(gitpath).call();
+//        Collection<Ref> refs = Git.lsRemoteRepository().setHeads(true).setTags(true).setRemote(gitpath).call();
+//
+//           for (Ref ref : refs) {
+//               System.out.println("Ref: " + ref);
+//               result = result.concat(ref.toString());
+//           }
+           Repository repository=new FileRepository(System.getProperty("user.home")+"/"+reponame+"/.git");
+           Ref head = repository.getRef("refs/heads/master");
 
-           for (Ref ref : refs) {
-               System.out.println("Ref: " + ref);
-               result = result.concat(ref.toString());
-           }
-       return result;
+       return "head"+head;
            }
        catch(Exception e){
            return e.getMessage();

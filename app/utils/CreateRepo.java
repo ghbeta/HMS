@@ -38,10 +38,10 @@ public class CreateRepo {
             }
         });
         System.out.println(ctx().request().getHeader("Host")+System.getProperty("user.home"));
-        ConfigManager manager = ConfigManager.create("git@localhost:gitolite-admin");
-        //Repository adminrepo = new FileRepository(System.getProperty("user.home")+"/gitolite-admin"+"/.git");
-        //Git gitogit = new Git(adminrepo);
-        //ConfigManager manager = ConfigManager.create(System.getProperty("user.home")+"/gitolite-admin");
+        //ConfigManager manager = ConfigManager.create("git@localhost:gitolite-admin");
+        Repository adminrepo = new FileRepository(System.getProperty("user.home")+"/gitolite-admin"+"/.git");
+        Git gitogit = new Git(adminrepo);
+        ConfigManager manager = ConfigManager.create(System.getProperty("user.home")+"/gitolite-admin");
 
         //TODO try run play instance under the user git, we may not need pull and push,and can access the repo as local(enable jgit function)
         Config config = manager.get();
@@ -62,8 +62,8 @@ public class CreateRepo {
 
             }
             manager.applyAsync(config);
-            //gitogit.pull().call();
-           // gitogit.push().call();
+            gitogit.pull().call();
+            gitogit.push().call();
             return "git address: git@"+ hostparser(serverhost)+":"+reponame+".git";
         }
         else{
@@ -80,18 +80,18 @@ public class CreateRepo {
         });
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(lecture.semester,user);
         String reponame=lecture.courseName+"_"+user.userHash;
-        //Repository adminrepo = new FileRepository(System.getProperty("user.home")+"/gitolite-admin"+"/.git");
-        //Git gitogit = new Git(adminrepo);
-        //ConfigManager manager = ConfigManager.create(System.getProperty("user.home")+"/gitolite-admin");
-        ConfigManager manager = ConfigManager.create("git@localhost:gitolite-admin");
+        Repository adminrepo = new FileRepository(System.getProperty("user.home")+"/gitolite-admin"+"/.git");
+        Git gitogit = new Git(adminrepo);
+        ConfigManager manager = ConfigManager.create(System.getProperty("user.home")+"/gitolite-admin");
+        //ConfigManager manager = ConfigManager.create("git@localhost:gitolite-admin");
         Config config = manager.get();
         nl.minicom.gitolite.manager.models.Repository repotodelete = config.getRepository(reponame);
 
         if(config.removeRepository(repotodelete)){
             Logger.warn("start delete repo");
             manager.applyAsync(config);
-            //gitogit.pull().call();
-            //gitogit.push().call();
+            gitogit.pull().call();
+            gitogit.push().call();
             Repo repo=Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture);
             try{
             repo.delete(lecture.semester);
