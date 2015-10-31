@@ -95,7 +95,14 @@ public class CreateRepo {
             gitogit.push().call();
             Repo repo=Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture);
             try{
-                FileUtils.deleteDirectory(new File(repo.repofilepath));
+                System.out.println(repo.repofilepath);
+                //FileUtils.deleteDirectory(new File(repo.repofilepath).d);
+                File repofile=new File(repo.repofilepath);
+
+                    System.out.println("starting delete filesystem");
+                   boolean success= FileUtils.deleteQuietly(repofile);
+                System.out.println(success);
+
             repo.delete(lecture.semester);
             return true;}
             catch (Exception e){
