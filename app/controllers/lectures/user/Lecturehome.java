@@ -6,6 +6,8 @@ import models.*;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.*;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.transport.JschConfigSessionFactory;
 import org.eclipse.jgit.transport.OpenSshConfig;
 import org.eclipse.jgit.transport.SshSessionFactory;
@@ -144,7 +146,7 @@ public class Lecturehome extends Controller {
 
     public static String lastUpdateStatus(Semesteruser semesteruser,Lecture lecture){
         String serverhost=request().getHeader("Host");
-        String reponame=lecture.courseName+"_"+semesteruser.userHash;
+        String reponame=lecture.courseName+"_"+"2076105f6efe7c11e285add95f514b9a";//semesteruser.userHash;
         //todo correct this place do not forget
         String gitpath= "git@"+ hostparser(serverhost)+":"+reponame+".git";
         String result="";
@@ -155,17 +157,21 @@ public class Lecturehome extends Controller {
             }
         });
        try{
-//        Collection<Ref> refs = Git.lsRemoteRepository().setHeads(true).setTags(true).setRemote(gitpath).call();
-//
-//           for (Ref ref : refs) {
-//               System.out.println("Ref: " + ref);
-//               result = result.concat(ref.toString());
-//           }
-           Repository repository=new FileRepository(System.getProperty("user.home")+"/"+reponame+"/.git");
+
+           System.out.println(System.getProperty("user.home")+"/repositories/"+reponame+".git");
+           Repository repository=new FileRepository(System.getProperty("user.home")+"/repositories/"+reponame+".git");
            Ref head = repository.getRef("refs/heads/master");
 
-       return "head"+head;
-           }
+           try (RevWalk walk = new RevWalk(repository)) {
+               RevCommit commit = walk.parseCommit(head.getObjectId());
+
+               System.out.println("Commit-Message: " + commit.getFullMessage());
+
+               walk.dispose();
+
+
+       return "Commit-Message: " + commit.getFullMessage();
+           }}
        catch(Exception e){
            return e.getMessage();
        }
