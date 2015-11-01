@@ -59,7 +59,7 @@
                     <td>@currentassignment.numberofexercise</td>
                     <td>@currentassignment.addtionalinfo</td>
                     <td  class="text-center">
-                    @if(currentassignment.isExpired()){<a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.handin")"><i class="fa fa-pencil-square-o"></i></a>
+                    @if(currentassignment.isExpired){<a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.handin")"><i class="fa fa-pencil-square-o"></i></a>
                       <a title="delete" href="#change the hand in controller"><i class="fa fa-times"></i></a>}
                     </td>
                     <td>uploaded or not uploaded</td>
@@ -72,15 +72,15 @@
                           <h4 class="modal-title" id="myModalLabel">@Messages("Assignment.handin")</h4>
                         </div>
                         <div class="modal-body">
-                          <form action="#some action for this form" method="post" enctype="multipart/form-data">
+                          <form action="@controllers.lectures.user.routes.Lecturehome.handinhomework(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)" method="post" enctype="multipart/form-data">
 
                             <div class="form-group">
                               <label>@Messages("lecture.action.upload")</label>
-                              <input type="file" name="uploadfile">
+                              <input type="file" name="homeworkfile">
                             </div>
                             <div class="form-group">
                               <label>@Messages("Assignment.commit")</label>
-                              <textarea class="form-control"  name="addtionalinfo" rows="10"></textarea>
+                              <textarea class="form-control"  name="commit" rows="10"></textarea>
                             </div>
                             <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("lecture.form.close")</button>
                             <button type="submit" class="btn btn-primary pull-right">@Messages("lecture.form.change")</button>

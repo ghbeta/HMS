@@ -47,7 +47,7 @@ GET         /students/:user/:semester/:lecture                    controllers.le
 GET         /students/:user/:semester/:lecture/delete             controllers.lectures.user.Lecturehome.deleteSemesteruserfromlecture(user:String,semester:String,lecture:String)
 GET         /students/:user/:semester/:lecture/add                controllers.lectures.user.Lecturehome.addSemesterusertoLecture(user:String,semester:String,lecture:String)
 #Generate Lecture remote repo for students afterwards(after entering lecture)
-POST       /students/:user/:semester/:lecture/addrepo                                controllers.lectures.user.Lecturehome.addRemoteRepotoLecture(user:String,semester:String,lecture:String)
+POST        /students/:user/:semester/:lecture/addrepo            controllers.lectures.user.Lecturehome.addRemoteRepotoLecture(user:String,semester:String,lecture:String)
 #Modify the Lecture content description(Teacher)
 POST        /admin/:user/:semester/:lecture/description           controllers.lectures.admin.Lecturehome.modifydescription(user:String,semester:String,lecture:String)
 #Modify the Lecture content terms(Teacher)
@@ -59,6 +59,8 @@ POST        /admin/:semester/:lecture/mod_assignment              controllers.le
 GET         /admin/:semester/:lecture/:assignment/delete          controllers.lectures.admin.Lecturehome.deleteAssignment(lecture:String,assignment:String,semester:String)
 #Generate Lecture home page for students
 GET         /usr/:user/:semester/:lecture                         controllers.lectures.user.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
+#Hand in Homework(Students)
+POST       /usr/:user/:semester/:lecture/handin            controllers.lectures.user.Lecturehome.handinhomework(assignmentid:String,user:String,semester:String,lecture:String)
 #About static page
 GET         /about                                                controllers.About.index()
 #File service (hosted file on host server)

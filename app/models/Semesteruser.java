@@ -80,9 +80,9 @@ public class Semesteruser extends Abstractuser {
         return currentServer(database).find(Semesteruser.class).where().eq("id",id).findUnique();
     }
 
-    public static List<Semesteruser> findByAssignemtnandLecture(Assignment assignment,Lecture lecture,String database){
-        return currentServer(database).find(Semesteruser.class).fetch("lectures").where().eq("id",lecture.courseName).where().eq("id",assignment.id).findList();
-    }
+//    public static List<Semesteruser> findByAssignemtnandLecture(Assignment assignment,Lecture lecture,String database){
+//        return currentServer(database).find(Semesteruser.class).fetch("lectures").fetch("assignments").where().eq("lectures.id",lecture.courseName).eq("assignments.id",assignment.id).findList();
+//    }
 
     public static List<Semesteruser> findSemesteruserbyLecture(String database,Lecture lecture){
         return currentServer(database).find(Semesteruser.class).fetch("lectures").where().eq("courseName",lecture.courseName).findList();

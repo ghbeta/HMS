@@ -151,6 +151,7 @@ public class Lecturehome extends Controller {
                 path = uploadpath("assignment", semester, lecture)+"/"+filename;
                 assignment.uploadfile=path;
                 assignment.filename=filename;
+                assignment.semester=semester;
                 currentlecture.assignments.add(assignment);
                 currentlecture.update(semester);
                 flash("success", Messages.get("Lecture.assignment.create"));

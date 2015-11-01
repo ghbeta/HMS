@@ -74,8 +74,9 @@ public class Assignment extends Model {
         return ishandin;
     }
 
-    public int getNumberofHandinStudents(Assignment assignment,Lecture lecture,String database){
-        return Semesteruser.findByAssignemtnandLecture(assignment,lecture,database).size();
+    public List<Assignment> getHandinAssignmentofLecture(Assignment assignment,Lecture lecture,String database){
+
+        return getServer(database).find(Assignment.class).where().eq("id",assignment.id).eq("ishandin",true).eq("lecture.courseName",lecture.courseName).findList();
     }
 //
     public static Assignment findById(String database,String id){

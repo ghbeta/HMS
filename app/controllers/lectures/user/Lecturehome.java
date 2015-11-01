@@ -3,29 +3,45 @@ package controllers.lectures.user;
 import Permission.Securedstudents;
 import com.jcraft.jsch.Session;
 import models.*;
+import org.apache.commons.io.FileUtils;
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.*;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.transport.JschConfigSessionFactory;
 import org.eclipse.jgit.transport.OpenSshConfig;
+import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.SshSessionFactory;
 import play.Logger;
+import play.data.DynamicForm;
+import play.data.Form;
 import play.i18n.Messages;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 import utils.RepoManager;
 import views.html.lectures.user.lecturehome;
+import play.mvc.Http.MultipartFormData;
+import play.mvc.Http.MultipartFormData.FilePart;
+import java.io.File;
+import java.util.Date;
 
 import static utils.RepoManager.hostparser;
 import static utils.RepoManager.reponame;
 import static utils.RepoManager.userrepofilepath;
+import static utils.UploadPath.uploadpath;
 
 /**
  * Created by Hao on 2015/10/15.
  */
 public class Lecturehome extends Controller {
+
+
+
+
+
     @Security.Authenticated(Securedstudents.class)
     public static Result generatelecturehome(String user, String semester,String lecture){
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
@@ -177,6 +193,61 @@ public class Lecturehome extends Controller {
        catch(Exception e){
            return e.getMessage();
        }
+
+    }
+
+    public static Result handinhomework(String assignmentid,String user,String semester,String lecturename){
+        Assignment assignment=Assignment.findById(semester,assignmentid);
+        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
+        Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
+        DynamicForm handinform = Form.form().bindFromRequest();
+        String commit="";
+        if(handinform.get("commit")==null||handinform.get("commit").isEmpty()||handinform.get("commit").equals("")){
+            commit  =Messages.get("lecture.uploadsolution")+assignment.title;
+        }else{
+            commit = handinform.get("commit");
+        }
+
+        try{
+            MultipartFormData body = request().body().asMultipartFormData();
+            FilePart homeworkfile = body.getFile("homeworkfile");
+            if (homeworkfile != null) {
+                String fileName = homeworkfile.getFilename();
+                Logger.debug("uploaded homework:"+fileName);
+                File file = homeworkfile.getFile();
+
+                Repo repo=Repo.findRepoByLectureAndOwner(assignment.semester,semesteruser,assignment.lecture);
+                File localPath = File.createTempFile(reponame(assignment.lecture, semesteruser), "");
+                localPath.delete();
+
+                Logger.debug("Cloning from "+repo.repofilepath+"to"+localPath);
+                Git git = Git.cloneRepository()
+                        .setURI(repo.repofilepath)
+                        .setDirectory(localPath)
+                        .call();
+                Logger.debug("create local repo: "+git.getRepository().getDirectory());
+                FileUtils.moveFile(file, new File(localPath, fileName));
+                git.add().addFilepattern(fileName).call();
+                Logger.debug("add file finish"+fileName);
+                git.commit().setMessage(commit).setAuthor(semesteruser.lastname,semesteruser.email).call();
+                Logger.warn("start pushing");
+                RefSpec refSpec = new RefSpec("master");
+                git.push().setRemote("origin").setRefSpecs(refSpec).call();
+                git.getRepository().close();
+                assignment.handin=new Date();
+                assignment.setishandin();
+                assignment.update(semester);
+
+                return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
+            } else {
+                flash("error", Messages.get("Lecture.assignment.uploadfail"));
+                return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
+            }
+        }catch(Exception e){
+            e.getMessage();
+            flash("error", Messages.get("Lecture.assignment.uploadfail"));
+            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
+        }
 
     }
 

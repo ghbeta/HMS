@@ -109,6 +109,7 @@ lecture.home.des=Lecture Description
 lecture.home.terms= Lecture Terms
 lecture.home.homeworks=Homeworks
 lecture.home.expired= This Lecture is closed, you can not sign up right now
+lecture.uploadsolution=upload solution for
 lecture.numberofassignments=Total number of Assignments:
 lecture.atleast=at least
 lecture.validinfo=valid assignments are required to hand in.

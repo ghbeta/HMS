@@ -72,7 +72,7 @@
                 <a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.modify")"><i class="fa fa-pencil-square-o"></i></a>
                 <a title="@Messages("delete.assignment")" href="@controllers.lectures.admin.routes.Lecturehome.deleteAssignment(lecture.courseName,currentassignment.title,lecture.semester)"><i class="fa fa-times"></i></a>
               </td>
-              <td>@currentassignment.getNumberofHandinStudents(currentassignment,lecture,lecture.semester)/@currentassignment.students.size()</td>
+              <td>@currentassignment.getHandinAssignmentofLecture(currentassignment,lecture,lecture.semester).size()/@currentassignment.students.size()</td>
               <td>@currentassignment.deadline</td>
             </tr>
             <div class="modal fade" id="@currentassignment.id" tabindex="-1" role="dialog" aria-labelledby="@currentassignment.id" aria-hidden="true">
@@ -155,7 +155,7 @@
                   <a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.modify")"><i class="fa fa-pencil-square-o"></i></a>
                   <a title="@Messages("delete.assignment")" href="@controllers.lectures.admin.routes.Lecturehome.deleteAssignment(lecture.courseName,currentassignment.title,lecture.semester)"><i class="fa fa-times"></i></a>
                 </td>
-                <td>@currentassignment.getNumberofHandinStudents(currentassignment,lecture,lecture.semester)/@currentassignment.students.size()</td>
+                <td>@currentassignment.getHandinAssignmentofLecture(currentassignment,lecture,lecture.semester).size()/@currentassignment.students.size()</td>
                 <td>@currentassignment.deadline</td>
               </tr>
               <div class="modal fade" id="@currentassignment.id" tabindex="-1" role="dialog" aria-labelledby="@currentassignment.id" aria-hidden="true">
@@ -212,7 +212,7 @@
               <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="a@assignment.title">
                   <a role="button" data-toggle="collapse" data-parent="#assignmentlist" href="#@assignment.title" aria-expanded="true" aria-controls="@assignment.title">
-                    @assignment.title <span class="badge pull-right">@assignment.getNumberofHandinStudents(assignment, lecture, lecture.semester)
+                    @assignment.title <span class="badge pull-right">@assignment.getHandinAssignmentofLecture(assignment, lecture, lecture.semester).size()
                     /@assignment.students.size()</span>
                   </a>
                 </div>
