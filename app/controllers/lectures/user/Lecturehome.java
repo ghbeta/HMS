@@ -53,7 +53,7 @@ public class Lecturehome extends Controller {
         try{
 
 
-        Logger.debug("Generate RemoteRepo afterwards:"+request().getHeader("Host")+System.getProperty("user.home"));
+        Logger.debug("Generate RemoteRepo afterwards:" + request().getHeader("Host") + System.getProperty("user.home"));
        String repopath=CreateRepo.createRemoteRepo(user,lecture,request().getHeader("Host"));
        if(repopath!=null){
 
@@ -62,6 +62,7 @@ public class Lecturehome extends Controller {
            newrepo.owner=semesteruser;
            newrepo.repopath=repopath;
            newrepo.semester=lecture.semester;
+           newrepo.setRepofilepath(reponame(lecture,semesteruser));
            newrepo.save(lecture.semester);
            //semesteruser.repos.add(newrepo);
            //semesteruser.update(lecture.semester);
