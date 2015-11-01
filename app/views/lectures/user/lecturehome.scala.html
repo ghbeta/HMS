@@ -1,6 +1,7 @@
 @(user:User)(semesteruser: Semesteruser)(lecture: Lecture)
 @dashboard.dashboard(user){
   <div class="col-md-8 well well-sm">
+    <div class="text-center">@wflash()</div>
     <ul class="nav nav-tabs">
       <li class="active"><a href="#home" data-toggle="tab">@Messages("lecture.home.admin")</a></li>
       <li><a href="#forum" data-toggle="tab">@Messages("lecture.home.forum")</a></li>

@@ -3,7 +3,6 @@ package controllers.lectures.user;
 import Permission.Securedstudents;
 import com.jcraft.jsch.Session;
 import models.*;
-import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.*;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -16,15 +15,12 @@ import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import utils.CreateRepo;
+import utils.RepoManager;
 import views.html.lectures.user.lecturehome;
 
-import java.io.IOException;
-import java.util.Collection;
-
-import static utils.CreateRepo.hostparser;
-import static utils.CreateRepo.reponame;
-import static utils.CreateRepo.userrepofilepath;
+import static utils.RepoManager.hostparser;
+import static utils.RepoManager.reponame;
+import static utils.RepoManager.userrepofilepath;
 
 /**
  * Created by Hao on 2015/10/15.
@@ -54,7 +50,7 @@ public class Lecturehome extends Controller {
 
 
         Logger.debug("Generate RemoteRepo afterwards:" + request().getHeader("Host") + System.getProperty("user.home"));
-       String repopath=CreateRepo.createRemoteRepo(user,lecture,request().getHeader("Host"));
+       String repopath= RepoManager.createRemoteRepo(user, lecture, request().getHeader("Host"));
        if(repopath!=null){
 
            Repo newrepo = new Repo();
@@ -86,10 +82,11 @@ public class Lecturehome extends Controller {
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
         if(Lecture.addSemesterusertoLecture(semester, semesteruser, lecture)){
             if(semesteruser.roles.equals(UserRoll.Students.toString())){
-            semesteruser.assignments.addAll(lecture.assignments);
+                if(!semesteruser.assignments.containsAll(lecture.assignments)){
+            semesteruser.assignments.addAll(lecture.assignments);}
                 semesteruser.update(semester);
             try{
-                String repopath=CreateRepo.createRemoteRepo(currentuser,lecture,request().getHeader("Host"));
+                String repopath= RepoManager.createRemoteRepo(currentuser, lecture, request().getHeader("Host"));
                 if(repopath!=null){
                     Repo newrepo = new Repo();
                     newrepo.course=lecture;
@@ -134,7 +131,7 @@ public class Lecturehome extends Controller {
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
         if(Lecture.deleteSemesteruserfromLecture(semester, semesteruser, lecture)){
             try{
-                CreateRepo.deleteRepo(currentuser,lecture,request().getHeader("Host"));
+                RepoManager.deleteRepo(currentuser, lecture, request().getHeader("Host"));
                 return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
             }catch (Exception e){
                 flash("danger", Messages.get("lecture.deleteuser.fail"));

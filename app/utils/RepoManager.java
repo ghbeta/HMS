@@ -31,7 +31,7 @@ import static play.mvc.Controller.ctx;
 /**
  * Created by Hao on 2015/10/28.
  */
-public class CreateRepo {
+public class RepoManager {
     public static String createRemoteRepo(User user, Lecture lecture,String serverhost) throws ServiceUnavailable, IOException, GitException, ModificationException, GitAPIException {
         SshSessionFactory.setInstance(new JschConfigSessionFactory() {
             @Override
@@ -95,7 +95,7 @@ public class CreateRepo {
             gitogit.push().call();
             Repo repo=Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture);
             try{
-                Logger.debug("repo file system path:"+repo.repofilepath);
+                Logger.debug("repo file system path:" + repo.repofilepath);
                 //FileUtils.deleteDirectory(new File(repo.repofilepath).d);
                 File repofile=new File(repo.repofilepath);
 
