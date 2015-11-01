@@ -57,9 +57,11 @@ body {
 table {
     table-layout: fixed;
     word-wrap: break-word;
+
+}
+textarea {
     white-space: nowrap;
 }
-
 .textfont{
     font-weight:bold;
 }
