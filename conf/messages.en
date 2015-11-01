@@ -90,6 +90,7 @@ lecture.form.close=Close
 lecture.form.modterms=Change the terms of the lecture
 lecture.home.terms.remote= At the end of this semester you have to hand in a semester project using the git repo in this lecture
 lecture.home.homework.remote= The description of the semester project can be found here, when it is available
+lecture.home.homework.remote.admin=You can upload the semester homework here
 lecture.home.homework.remote.exist=You already create a remote repo, use this repo to manage your semester project
 lecture.home.homework.remote.noexist=Something wrong is with your remote repo,generate again
 lecture.remote.generate= Generate

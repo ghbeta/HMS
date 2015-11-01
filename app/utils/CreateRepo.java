@@ -39,7 +39,7 @@ public class CreateRepo {
                 session.setConfig("StrictHostKeyChecking", "no");
             }
         });
-        System.out.println(ctx().request().getHeader("Host")+System.getProperty("user.home"));
+        Logger.debug("admin repo path"+ctx().request().getHeader("Host")+System.getProperty("user.home"));
         //ConfigManager manager = ConfigManager.create("git@localhost:gitolite-admin");
         Repository adminrepo = new FileRepository(adminrepofilepath());
         Git gitogit = new Git(adminrepo);
@@ -95,13 +95,13 @@ public class CreateRepo {
             gitogit.push().call();
             Repo repo=Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture);
             try{
-                System.out.println(repo.repofilepath);
+                Logger.debug(repo.repofilepath);
                 //FileUtils.deleteDirectory(new File(repo.repofilepath).d);
                 File repofile=new File(repo.repofilepath);
 
-                    System.out.println("starting delete filesystem");
+                    Logger.debug("starting delete filesystem");
                    boolean success= FileUtils.deleteQuietly(repofile);
-                System.out.println(success);
+                Logger.debug("delete success?="+success);
 
             repo.delete(lecture.semester);
             return true;}

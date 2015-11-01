@@ -53,7 +53,7 @@ public class Lecturehome extends Controller {
         try{
 
 
-        //System.out.println(request().getHeader("Host")+System.getProperty("user.home"));
+        Logger.debug("Generate RemoteRepo afterwards:"+request().getHeader("Host")+System.getProperty("user.home"));
        String repopath=CreateRepo.createRemoteRepo(user,lecture,request().getHeader("Host"));
        if(repopath!=null){
 
@@ -86,6 +86,7 @@ public class Lecturehome extends Controller {
         if(Lecture.addSemesterusertoLecture(semester, semesteruser, lecture)){
             if(semesteruser.roles.equals(UserRoll.Students.toString())){
             semesteruser.assignments.addAll(lecture.assignments);
+                semesteruser.update(semester);
             try{
                 String repopath=CreateRepo.createRemoteRepo(currentuser,lecture,request().getHeader("Host"));
                 if(repopath!=null){
