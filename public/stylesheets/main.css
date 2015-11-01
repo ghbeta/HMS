@@ -57,6 +57,7 @@ body {
 table {
     table-layout: fixed;
     word-wrap: break-word;
+    white-space: nowrap;
 }
 
 .textfont{
