@@ -35,7 +35,7 @@ public class ModifySSH extends Controller{
         User user = User.findByEmail(request().username(),"global");
         SSH ssh= new SSH();
             ssh.title=sshform.get().title;
-            ssh.ssh=sshform.get().ssh;
+            ssh.ssh=sshform.get().ssh.replace("\n","");
 
 
         user.sshs.add(ssh);
