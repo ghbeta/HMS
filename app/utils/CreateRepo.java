@@ -95,7 +95,7 @@ public class CreateRepo {
             gitogit.push().call();
             Repo repo=Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture);
             try{
-                Logger.debug(repo.repofilepath);
+                Logger.debug("repo file system path:"+repo.repofilepath);
                 //FileUtils.deleteDirectory(new File(repo.repofilepath).d);
                 File repofile=new File(repo.repofilepath);
 

@@ -90,6 +90,8 @@ else{
     public static boolean deleteSemesteruserfromLecture(String database, Semesteruser user, Lecture currentlecture){
         if(currentlecture.attendent.contains(user)){
             currentlecture.attendent.remove(user);
+            user.assignments.removeAll(currentlecture.assignments);
+            user.update(database);
             currentlecture.update(database);
             return true;
         }
