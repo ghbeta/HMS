@@ -148,6 +148,8 @@ public class Lecturehome extends Controller {
         if(Lecture.deleteSemesteruserfromLecture(semester, semesteruser, lecture)){
             try{
                 RepoManager.deleteRepo(currentuser, lecture, request().getHeader("Host"));
+                semesteruser.assignments.removeAll(lecture.assignments);
+                semesteruser.update(semester);//todo test here
                 return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
             }catch (Exception e){
                 flash("danger", Messages.get("lecture.deleteuser.fail"));
@@ -165,7 +167,6 @@ public class Lecturehome extends Controller {
     public static String lastUpdateStatus(Semesteruser semesteruser,Lecture lecture){
         String serverhost=request().getHeader("Host");
         String reponame=lecture.courseName+"_"+semesteruser.userHash;
-        //todo correct this place do not forget
         String gitpath= "git@"+ hostparser(serverhost)+":"+reponame+".git";
         String result="";
         SshSessionFactory.setInstance(new JschConfigSessionFactory() {
