@@ -5,6 +5,7 @@ import com.jcraft.jsch.Session;
 import models.*;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.*;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -250,6 +251,34 @@ public class Lecturehome extends Controller {
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
         }
 
+    }
+
+    public static Result reverthandinhomework(String assignmentid,String user,String semester,String lecturename){
+        Assignment assignment=Assignment.findById(semester,assignmentid);
+        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
+        Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
+
+
+
+        try {
+            Repo repo=Repo.findRepoByLectureAndOwner(assignment.semester,semesteruser,assignment.lecture);
+            File localPath = File.createTempFile(reponame(assignment.lecture, semesteruser), "");
+            localPath.delete();
+            Logger.debug("Cloning from "+repo.repofilepath+"to"+localPath);
+            Git git = Git.cloneRepository()
+                    .setURI(repo.repofilepath)
+                    .setDirectory(localPath)
+                    .call();
+            Ref head = git.getRepository().getRef("refs/heads/master");
+            Logger.debug("revert last commit");
+            git.revert().include(head).call();
+            flash("success",Messages.get("Lecture.assignment.revertsuccess"));
+            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
+        } catch (Exception e) {
+            e.getMessage();
+            flash("error", Messages.get("Lecture.assignment.revertfail"));
+            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
+        }
     }
 
 }
