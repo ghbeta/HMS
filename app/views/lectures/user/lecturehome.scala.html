@@ -181,6 +181,20 @@
                   }
                 </table>
 
+                <table class="table table-striped custab">
+                  <thead>
+                    <tr>
+                      <td>@Messages("assginment.validhandin.sum")</td>
+                      <td>@Messages("assginment.optional.sum")</td>
+                      <td>@Messages("totalperformance")</td>
+                    </tr>
+                  </thead>
+                    <tr>
+                      <td>@Assignment.getValidHandinOfStudentsinLecture(lecture.semester,lecture,semesteruser).size()/@lecture.requriednumberofvalidassignment</td>
+                      <td>@Assignment.getOptionalAssignmentofStudentsinLecture(lecture.semester,lecture,semesteruser)/@lecture.optionalassignments</td>
+                      <td>@lecture.performance</td>
+                    </tr>
+                </table>
                 <a class="btn btn-danger pull-right" href="@controllers.lectures.user.routes.Lecturehome.deleteSemesteruserfromlecture(semesteruser.lastname,lecture.semester,lecture.courseName)">@Messages("lecture.leave")</a>
 
               } else{

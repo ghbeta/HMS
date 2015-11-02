@@ -29,6 +29,8 @@ public class Assignment extends Model {
 
     public float totalpoints;
 
+    public float totalearndpoints;
+
     public String uploadfile;
 
     public String filename;
@@ -41,6 +43,8 @@ public class Assignment extends Model {
 
     public boolean ishandin;
 
+    public boolean isvalid;
+
     @Formats.DateTime(pattern = "yyyy-MM-dd")
     public Date deadline;
 
@@ -48,6 +52,8 @@ public class Assignment extends Model {
 
 
     public String semester;
+
+    public boolean isoptional;
 
     @Version
     private Long version;
@@ -81,8 +87,13 @@ public class Assignment extends Model {
         }
     }
 
+    public void setIsvalid(){
+        float percentage=totalearndpoints/totalpoints;
+       isvalid= percentage>=lecture.requiredpercentfovalidassignment;
+    }
+
     public float gettotalearndpoint(){
-        float totalearndpoints=0.0f;
+        totalearndpoints=0.0f;
         for(int i=0;i<exercises.size();i++){
             totalearndpoints=totalearndpoints+exercises.get(i).earndpoints;
         }
@@ -93,6 +104,28 @@ public class Assignment extends Model {
     public List<Assignment> getHandinAssignmentofLecture(Assignment assignment,Lecture lecture,String database){
 
         return getServer(database).find(Assignment.class).where().eq("id",assignment.id).eq("ishandin",true).eq("lecture.courseName",lecture.courseName).findList();
+    }
+
+    public static List<Assignment> getValidHandinOfStudentsinLecture(String database,Lecture lecture,Semesteruser semesteruser){
+        List<Assignment> allvalidhandin= getServer(database).find(Assignment.class).where().eq("isvalid",true).eq("lecture.courseName",lecture.courseName).findList();
+        Iterator<Assignment> iterator=allvalidhandin.iterator();
+        while(iterator.hasNext()){
+            if(!iterator.next().students.contains(semesteruser)){
+               iterator.remove();
+            }
+        }
+        return allvalidhandin;
+    }
+
+    public static List<Assignment> getOptionalAssignmentofStudentsinLecture(String database,Lecture lecture,Semesteruser semesteruser){
+        List<Assignment> alloptionalhandin= getServer(database).find(Assignment.class).where().eq("isoptional",true).eq("lecture.courseName",lecture.courseName).findList();
+        Iterator<Assignment> iterator=alloptionalhandin.iterator();
+        while(iterator.hasNext()){
+            if(!iterator.next().students.contains(semesteruser)){
+                iterator.remove();
+            }
+        }
+        return alloptionalhandin;
     }
 //
     public static Assignment findById(String database,String id){

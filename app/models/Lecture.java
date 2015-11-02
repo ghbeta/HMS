@@ -43,6 +43,7 @@ public class Lecture extends Model {
 
     public float minimumPercentageForExamination;
 
+    public float performance;
     public String semester;
 
     @OneToOne
@@ -73,6 +74,26 @@ public class Lecture extends Model {
         else{
             return attendent.contains(user);
         }
+    }
+
+    public void setPerformance(String semester,Lecture lecture,Semesteruser semesteruser){
+        List<Assignment> optional =Assignment.getOptionalAssignmentofStudentsinLecture(semester,lecture,semesteruser);
+        List<Assignment> required= Assignment.getValidHandinOfStudentsinLecture(semester,lecture,semesteruser);
+        float totalpoints=0f;
+        float getpoints=0f;
+        for(int i=0;i<assignments.size();i++){
+            totalpoints=totalpoints+assignments.get(i).totalpoints;
+        }
+
+        for(int i =0;i<optional.size();i++){
+            getpoints=getpoints+optional.get(i).gettotalearndpoint();
+        }
+
+        for(int i=0;i<required.size();i++){
+            getpoints=getpoints+required.get(i).gettotalearndpoint();
+        }
+
+        performance=getpoints/totalpoints;
     }
 
     public static boolean addSemesterusertoLecture(String database, Semesteruser user, Lecture currentlecture){
