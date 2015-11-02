@@ -188,9 +188,12 @@ public class Lecturehome extends Controller {
                System.out.println("Commit-Message: " + commit.getFullMessage());
 
                walk.dispose();
+      if(commit.getFullMessage().isEmpty()||commit.getFullMessage()==null){
+          return Messages.get("Localrepo.status.none");
+      }
+               else{
 
-
-       return "Commit-Message: " + commit.getFullMessage();
+       return "Commit-Message: " + commit.getFullMessage();}
            }}
        catch(Exception e){
            return e.getMessage();
