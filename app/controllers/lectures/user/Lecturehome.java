@@ -283,7 +283,7 @@ public class Lecturehome extends Controller {
             Logger.debug("revert last commit");
             git.revert().include(commit).call();
             RefSpec refSpec = new RefSpec("master");
-            //git.push().setRemote("origin").setRefSpecs(refSpec).call();
+            git.push().setRemote("origin").setRefSpecs(refSpec).call();
             git.getRepository().close();
             flash("success",Messages.get("Lecture.assignment.revertsuccess"));
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
