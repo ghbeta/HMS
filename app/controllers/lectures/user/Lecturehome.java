@@ -212,7 +212,7 @@ public class Lecturehome extends Controller {
         }else{
             commit = handinform.get("commit");
         }
-
+        Logger.warn("commit message is "+commit);
         try{
             MultipartFormData body = request().body().asMultipartFormData();
             FilePart homeworkfile = body.getFile("homeworkfile");
@@ -225,12 +225,17 @@ public class Lecturehome extends Controller {
                 File localPath = File.createTempFile(reponame(assignment.lecture, semesteruser), "");
                 localPath.delete();
 
+
                 Logger.debug("Cloning from "+repo.repofilepath+"to"+localPath);
                 Git git = Git.cloneRepository()
                         .setURI(repo.repofilepath)
                         .setDirectory(localPath)
                         .call();
                 Logger.debug("create local repo: "+git.getRepository().getDirectory());
+                File precheck = new File(localPath, fileName);
+                if(precheck.exists()){
+                    precheck.delete();
+                }
                 FileUtils.moveFile(file, new File(localPath, fileName));
                 git.add().addFilepattern(fileName).call();
                 Logger.debug("add file finish"+fileName);
@@ -245,12 +250,12 @@ public class Lecturehome extends Controller {
 
                 return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
             } else {
-                flash("error", Messages.get("Lecture.assignment.uploadfail"));
+                flash("danger", Messages.get("Lecture.assignment.uploadfail"));
                 return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
             }
         }catch(Exception e){
-            e.getMessage();
-            flash("error", Messages.get("Lecture.assignment.uploadfail"));
+            Logger.warn("uploadnewhomework exception: "+e.getMessage());
+            flash("danger", Messages.get("Lecture.assignment.uploadfail"));
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
         }
 
@@ -273,13 +278,18 @@ public class Lecturehome extends Controller {
                     .setDirectory(localPath)
                     .call();
             Ref head = git.getRepository().getRef("refs/heads/master");
+            RevWalk walk=new RevWalk(git.getRepository());
+            RevCommit commit = walk.parseCommit(head.getObjectId());
             Logger.debug("revert last commit");
-            git.revert().include(head).call();
+            git.revert().include(commit).call();
+            RefSpec refSpec = new RefSpec("master");
+            //git.push().setRemote("origin").setRefSpecs(refSpec).call();
+            git.getRepository().close();
             flash("success",Messages.get("Lecture.assignment.revertsuccess"));
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
         } catch (Exception e) {
-            e.getMessage();
-            flash("error", Messages.get("Lecture.assignment.revertfail"));
+            Logger.warn("Exceptione revert commit"+e.getMessage());
+            flash("danger", Messages.get("Lecture.assignment.revertfail"));
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
         }
     }

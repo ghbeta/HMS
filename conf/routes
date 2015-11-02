@@ -60,7 +60,9 @@ GET         /admin/:semester/:lecture/:assignment/delete          controllers.le
 #Generate Lecture home page for students
 GET         /usr/:user/:semester/:lecture                         controllers.lectures.user.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
 #Hand in Homework(Students)
-POST       /usr/:user/:semester/:lecture/handin            controllers.lectures.user.Lecturehome.handinhomework(assignmentid:String,user:String,semester:String,lecture:String)
+POST        /usr/:user/:semester/:lecture/handin                  controllers.lectures.user.Lecturehome.handinhomework(assignmentid:String,user:String,semester:String,lecture:String)
+#Revert last handin homework
+GET        /usr/:user/:semester/:lecture/revert                  controllers.lectures.user.Lecturehome.reverthandinhomework(assignmentid:String,user:String,semester:String,lecture:String)
 #About static page
 GET         /about                                                controllers.About.index()
 #File service (hosted file on host server)

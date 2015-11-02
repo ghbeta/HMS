@@ -148,6 +148,10 @@ public class Lecturehome extends Controller {
             String path="";
             try {
                 //file.renameTo(new File("~/"+uploadpath("assignment",semester,lecture)));
+                File precheck=new File("files/"+uploadpath("assignment",semester,lecture), filename);
+                if(precheck.exists()){
+                    precheck.delete();
+                }
                 FileUtils.moveFile(file, new File("files/"+uploadpath("assignment",semester,lecture), filename));
                 path = uploadpath("assignment", semester, lecture)+"/"+filename;
                 assignment.uploadfile=path;
