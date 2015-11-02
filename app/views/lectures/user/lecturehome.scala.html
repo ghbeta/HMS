@@ -118,7 +118,7 @@
                 </thead>
                 <tr>
                   <td>@Assignment.getValidHandinOfStudentsinLecture(lecture.semester,lecture,semesteruser).size()/@lecture.requriednumberofvalidassignment</td>
-                  <td>@Assignment.getOptionalAssignmentofStudentsinLecture(lecture.semester,lecture,semesteruser)/@lecture.optionalassignments</td>
+                  <td>@Assignment.getOptionalAssignmentofStudentsinLecture(lecture.semester,lecture,semesteruser).size()/@lecture.optionalassignments</td>
                   <td>@lecture.performance</td>
                 </tr>
               </table>
