@@ -50,6 +50,7 @@
                     <th>@Messages("lecture.form.addionalinfo")</th>
                     <th  class="text-center">@Messages("assignment.action")</th>
                     <th>@Messages("assignment.status")</th>
+                    <th>@Messages("assginment.evaluation")</th>
                     <th>@Messages("assignment.expired")</th>
                   </tr>
                 </thead>
@@ -62,9 +63,11 @@
                     @if(currentassignment.isExpired){<a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.handin")"><i class="fa fa-pencil-square-o"></i></a>
                       <a title="delete" href="#change the hand in controller"><i class="fa fa-times"></i></a>}
                     </td>
-                    <td>uploaded or not uploaded</td>
+                    <td>@controllers.lectures.user.Lecturehome.lastUpdateStatus(semesteruser,lecture)</td>
+                    <td><a data-toggle="modal" data-target="#eval@currentassignment.id" title="@Messages("click.for.detail")">@currentassignment.gettotalearndpoint()/@currentassignment.totalpoints</a></td>
                     <td>@currentassignment.deadline</td>
                   </tr>
+                  @*modal for showing handin assginment*@
                   <div class="modal fade" id="@currentassignment.id" tabindex="-1" role="dialog" aria-labelledby="@currentassignment.id" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
@@ -85,6 +88,20 @@
                             <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("lecture.form.close")</button>
                             <button type="submit" class="btn btn-primary pull-right">@Messages("lecture.form.change")</button>
                           </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  @*modal for showing the assignment result*@
+                  <div class="modal fade" id="eval@currentassignment.id" tabindex="-1" role="dialog" aria-labelledby="@currentassignment.id" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title" id="myModalLabel">@Messages("Assignment.evaluation")</h4>
+                        </div>
+                        <div class="modal-body">
+                          show some results
                         </div>
                       </div>
                     </div>
@@ -135,6 +152,7 @@
                       <th>@Messages("assignment.exercise")</th>
                       <th>@Messages("lecture.form.addionalinfo")</th>
                       <th>@Messages("assignment.status.repo")</th>
+                      <th>@Messages("assginment.evaluation")</th>
                       <th>@Messages("assignment.expired")</th>
                     </tr>
                   </thead>
@@ -143,11 +161,23 @@
                       <td>@currentassignment.title@if(currentassignment.uploadfile!=null){<a href="@controllers.lectures.routes.Lecturehub.getFiles(currentassignment.uploadfile)"><i class="fa fa-download"></i></a>}</td>
                       <td>@currentassignment.numberofexercise</td>
                       <td>@currentassignment.addtionalinfo</td>
-
                       <td>@controllers.lectures.user.Lecturehome.lastUpdateStatus(semesteruser,lecture)</td>
+                      <td><a data-toggle="modal" data-target="#evalr@currentassignment.id" title="@Messages("click.for.detail")">@currentassignment.gettotalearndpoint()/@currentassignment.totalpoints</a></td>
                       <td>@currentassignment.deadline</td>
                     </tr>
-
+                    @*modal for showing the assignment result*@
+                    <div class="modal fade" id="evalr@currentassignment.id" tabindex="-1" role="dialog" aria-labelledby="@currentassignment.id" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">@Messages("Assignment.evaluation")</h4>
+                          </div>
+                          <div class="modal-body">
+                          show some results
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   }
                 </table>
 

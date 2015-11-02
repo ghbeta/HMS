@@ -27,7 +27,7 @@ public class Assignment extends Model {
 
     public int numberofexercise;
 
-    public int totalpoints;
+    public float totalpoints;
 
     public String uploadfile;
 
@@ -72,6 +72,22 @@ public class Assignment extends Model {
 
     public boolean getishandin(){
         return ishandin;
+    }
+
+    public void setTotalpoints(){
+        totalpoints=0f;
+        for(int i=0;i<exercises.size();i++){
+            totalpoints=totalpoints+exercises.get(i).totalpoints;
+        }
+    }
+
+    public float gettotalearndpoint(){
+        float totalearndpoints=0.0f;
+        for(int i=0;i<exercises.size();i++){
+            totalearndpoints=totalearndpoints+exercises.get(i).earndpoints;
+        }
+        return totalearndpoints;
+
     }
 
     public List<Assignment> getHandinAssignmentofLecture(Assignment assignment,Lecture lecture,String database){

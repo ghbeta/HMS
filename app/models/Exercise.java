@@ -19,9 +19,10 @@ public class Exercise extends Model {
 
     public String semester;
 
-    public float points;
+    public float totalpoints;
+    public float earndpoints;
 
-    public boolean evalueated;
+    public boolean evaluated;
 
     @Column(columnDefinition = "TEXT")
     public String comments;
