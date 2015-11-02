@@ -130,6 +130,7 @@ public class Lecturehome extends Controller {
             assignment.title=Messages.get("lecture.homework")+(currentlecture.assignments.size()+1);}
             else if(currentlecture.assignments.size()+1>currentlecture.totalassignment&&currentlecture.assignments.size()+1<=currentlecture.totalassignment+currentlecture.optionalassignments){
                 assignment.title=Messages.get("lecture.homework.optional")+(currentlecture.assignments.size()+1);
+                assignment.isoptional=true;
             }
 
         }
