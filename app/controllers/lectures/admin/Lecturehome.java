@@ -65,6 +65,8 @@ public class Lecturehome extends Controller {
 
         public String deletefile;
 
+        public String isoptional;
+
     }
 
     @Security.Authenticated(Securedteacher.class)
@@ -122,6 +124,12 @@ public class Lecturehome extends Controller {
         if(!assignmentformForm.hasErrors()){
         Assignment assignment=new Assignment();
         assignment.numberofexercise=assignmentformForm.get().numberofexercise;
+        if(assignmentformForm.get().isoptional==null){
+            assignment.isoptional=false;
+        }
+        if(assignmentformForm.get().isoptional.equals("true")){
+            assignment.isoptional=true;
+        }
         if(currentlecture.assignments.size()==0){
             assignment.title= Messages.get("lecture.homework")+1;
 

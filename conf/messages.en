@@ -55,6 +55,7 @@ assignment.delete= Assignment has been delete
 assginment.evaluation=Evaluation
 assginment.validhandin.sum=valid Handin/Total
 assginment.optional.sum=optional Handin/Total
+assignment.optional=Optional Assignment
 evaluation.username=Name
 evaluation.repo=Repository
 evaluation.access=Accessible
