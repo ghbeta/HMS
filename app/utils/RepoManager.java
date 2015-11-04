@@ -152,6 +152,8 @@ public class RepoManager {
         Config config = manager.get();
         nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(user.userHash);
         repouser.setKey(ssh.title, ssh.ssh);
+            gitogit.pull().call();
+            gitogit.push().call();
         return "success";}
         catch (Exception e){
             Logger.warn("exception at add ssh key to user "+e.getMessage());
@@ -176,6 +178,8 @@ public class RepoManager {
             Config config = manager.get();
             nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(user.userHash);
             repouser.removeKey(ssh.title);
+            gitogit.pull().call();
+            gitogit.push().call();
             return "success";}
         catch (Exception e){
             Logger.warn("exception at delete ssh key from user "+e.getMessage());
