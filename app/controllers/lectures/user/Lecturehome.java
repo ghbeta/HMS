@@ -77,6 +77,7 @@ public class Lecturehome extends Controller {
            newrepo.semester=lecture.semester;
            newrepo.setRepofilepath(reponame(lecture,semesteruser));
            newrepo.save(lecture.semester);
+           Logger.warn("new repo saved redirect");
            //semesteruser.repos.add(newrepo);
            //semesteruser.update(lecture.semester);
         return  redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,lecture.semester,lecture.courseName));}

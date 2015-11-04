@@ -64,7 +64,10 @@
                       <a title="revert last upload" href="@controllers.lectures.user.routes.Lecturehome.reverthandinhomework(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)"><i class="fa fa-times"></i></a>}
                     </td>
                     <td>@controllers.lectures.user.Lecturehome.lastUpdateStatus(semesteruser,lecture)</td>
-                    <td><a data-toggle="modal" data-target="#eval@currentassignment.id" title="@Messages("click.for.detail")">@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).earndpoints/@currentassignment.totalpoints</a></td>
+                    <td><a data-toggle="modal" data-target="#eval@currentassignment.id" title="@Messages("click.for.detail")">
+                    @if(Handin.
+                            getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).earndpoints==null){ 0 } else {Handin.
+                      getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).earndpoints}/@currentassignment.totalpoints</a></td>
                     <td>@currentassignment.deadline</td>
                   </tr>
                   @*modal for showing handin assginment*@
@@ -175,7 +178,8 @@
                       <td>@currentassignment.numberofexercise</td>
                       <td>@currentassignment.addtionalinfo</td>
                       <td>@controllers.lectures.user.Lecturehome.lastUpdateStatus(semesteruser,lecture)</td>
-                      <td><a data-toggle="modal" data-target="#evalr@currentassignment.id" title="@Messages("click.for.detail")">@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).earndpoints/@currentassignment.totalpoints</a></td>
+                      <td><a data-toggle="modal" data-target="#evalr@currentassignment.id" title="@Messages("click.for.detail")">@if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).earndpoints==null){0} else {
+                        Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).earndpoints}/@currentassignment.totalpoints</a></td>
                       <td>@currentassignment.deadline</td>
                     </tr>
                     @*modal for showing the assignment result*@
