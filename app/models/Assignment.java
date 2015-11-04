@@ -66,7 +66,7 @@ public class Assignment extends Model {
     public Lecture lecture;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "assignment")
-    List<Handin> handins;
+    public List<Handin> handins;
 
     public boolean isExpired(){
         Date date=new Date();

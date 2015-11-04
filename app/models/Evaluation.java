@@ -8,6 +8,8 @@ import static com.avaje.ebean.Ebean.getServer;
 /**
  * Created by Hao on 2015/11/4.
  */
+@Entity
+@Table(name = "evaluation")
 public class Evaluation extends Model {
 
     @Id
