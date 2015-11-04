@@ -22,13 +22,15 @@ public class Semesteruser extends Abstractuser {
     @ManyToMany(cascade= CascadeType.ALL)
     public List<Lecture> lectures;
 //
-    @ManyToMany(cascade = CascadeType.ALL)
-    public List<Assignment> assignments;
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    public List<Assignment> assignments;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy="student")
+    public List<Handin> handins;
 
     @ManyToMany(cascade = CascadeType.ALL,mappedBy = "students")
     public List<Exercise> handinexercises;
 //
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "owner")
+    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "owner")
     public List<Repo> repos;
 //
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "marker")
@@ -36,6 +38,13 @@ public class Semesteruser extends Abstractuser {
 //
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "sender")
     public List<Message> messages;
+
+
+
+    public Repo getRepoByLecture(Lecture lecture){
+        Repo repo=Repo.findRepoByLectureAndOwner(lecture.semester,this,lecture);
+        return repo;
+    }
 
 
     public static Semesteruser getSemesteruserfomrUser(String database,User user){

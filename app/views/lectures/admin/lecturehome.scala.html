@@ -218,7 +218,24 @@
                 </div>
                 <div id="@assignment.title" class="panel-collapse collapse" role="tabpanel" aria-labelledby="uncorrected">
                   <div class="panel-body">
-                    @*todo:add tables here based on the students name*@
+                    <table class="table table-striped custab">
+                      <thead>
+                        <tr>
+                          <th>@Messages("evaluation.username")</th>
+                          <th>@Messages("evaluation.repo")</th>
+                          <th>@Messages("evaluation.access")</th>
+                          <th>@Messages("evaluation.finish")</th>
+                          <th>@Messages("evaluation.add")</th>
+                        </tr>
+                      </thead>
+                      @for(stu<-assignment.students){
+                        <tr>
+                          <td>@stu.firstname @stu.lastname</td>
+                          <td>@stu.getRepoByLecture(lecture).repopath</td>
+                          <td>@stu.getRepoByLecture(lecture).owner.contains(semesteruser)</td>
+                        </tr>
+                      }
+                    </table>
                   </div>
                 </div>
               </div>

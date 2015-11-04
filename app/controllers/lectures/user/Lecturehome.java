@@ -72,7 +72,7 @@ public class Lecturehome extends Controller {
 
            Repo newrepo = new Repo();
            newrepo.course=lecture;
-           newrepo.owner=semesteruser;
+           newrepo.owner.add(semesteruser);
            newrepo.repopath=repopath;
            newrepo.semester=lecture.semester;
            newrepo.setRepofilepath(reponame(lecture,semesteruser));
@@ -107,7 +107,7 @@ public class Lecturehome extends Controller {
                 if(repopath!=null){
                     Repo newrepo = new Repo();
                     newrepo.course=lecture;
-                    newrepo.owner=semesteruser;
+                    newrepo.owner.add(semesteruser);
                     newrepo.repopath=repopath;
                     newrepo.semester=lecture.semester;
                     newrepo.setRepofilepath(reponame(lecture,semesteruser));

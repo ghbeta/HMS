@@ -4,6 +4,7 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import static com.avaje.ebean.Ebean.getServer;
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Hao on 2015/7/15.
@@ -24,9 +25,9 @@ public class Repo extends Model {
 
     public String repofilepath;
 
-    @ManyToOne//(cascade= CascadeType.ALL)
+    @ManyToMany(cascade= CascadeType.ALL)
     //@JoinColumn
-    public Semesteruser owner;
+    public List<Semesteruser> owner;
 
     @Version
     private Long version;

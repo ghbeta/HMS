@@ -29,26 +29,23 @@ public class Assignment extends Model {
 
     public float totalpoints;
 
-    public float totalearndpoints;
+
 
     public String uploadfile;
 
     public String filename;
 
-    @Column(columnDefinition = "TEXT")
-    public String comments;
+
 
     @Column(columnDefinition = "TEXT")
     public String addtionalinfo;
 
-    public boolean ishandin;
 
-    public boolean isvalid;
 
     @Formats.DateTime(pattern = "yyyy-MM-dd")
     public Date deadline;
 
-    public Date handin;
+
 
 
     public String semester;
@@ -58,8 +55,8 @@ public class Assignment extends Model {
     @Version
     private Long version;
 
-    @ManyToMany(cascade= CascadeType.ALL,mappedBy = "assignments")
-    public List<Semesteruser> students;
+//    @ManyToMany(cascade= CascadeType.ALL,mappedBy = "assignments")
+//    public List<Semesteruser> students;
 //
     @OneToMany(cascade= CascadeType.ALL,mappedBy = "assignment")
     public List<Exercise> exercises;
@@ -72,34 +69,13 @@ public class Assignment extends Model {
         Date date=new Date();
         return deadline!=null&&date.before(deadline);}
 
-    public void setishandin(){
-       ishandin=(deadline !=null&&handin.before(deadline));
-    }
 
-    public boolean getishandin(){
-        return ishandin;
-    }
 
-    public void setTotalpoints(){
-        totalpoints=0f;
-        for(int i=0;i<exercises.size();i++){
-            totalpoints=totalpoints+exercises.get(i).totalpoints;
-        }
-    }
 
-    public void setIsvalid(){
-        float percentage=totalearndpoints/totalpoints;
-       isvalid= percentage>=lecture.requiredpercentfovalidassignment;
-    }
 
-    public float gettotalearndpoint(){
-        totalearndpoints=0.0f;
-        for(int i=0;i<exercises.size();i++){
-            totalearndpoints=totalearndpoints+exercises.get(i).earndpoints;
-        }
-        return totalearndpoints;
 
-    }
+
+
 
     public List<Assignment> getHandinAssignmentofLecture(Assignment assignment,Lecture lecture,String database){
 
