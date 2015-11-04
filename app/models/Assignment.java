@@ -58,12 +58,15 @@ public class Assignment extends Model {
 //    @ManyToMany(cascade= CascadeType.ALL,mappedBy = "assignments")
 //    public List<Semesteruser> students;
 //
-    @OneToMany(cascade= CascadeType.ALL,mappedBy = "assignment")
-    public List<Exercise> exercises;
+//    @OneToMany(cascade= CascadeType.ALL,mappedBy = "assignment")
+//    public List<Exercise> exercises;
 
     @ManyToOne//(cascade= CascadeType.REMOVE)
     //@JoinColumn
     public Lecture lecture;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "assignment")
+    List<Handin> handins;
 
     public boolean isExpired(){
         Date date=new Date();
@@ -77,32 +80,32 @@ public class Assignment extends Model {
 
 
 
-    public List<Assignment> getHandinAssignmentofLecture(Assignment assignment,Lecture lecture,String database){
+//    public List<Assignment> getHandinAssignmentofLecture(Assignment assignment,Lecture lecture,String database){
+//
+//        return getServer(database).find(Assignment.class).where().eq("id",assignment.id).eq("ishandin",true).eq("lecture.courseName",lecture.courseName).findList();
+//    }
 
-        return getServer(database).find(Assignment.class).where().eq("id",assignment.id).eq("ishandin",true).eq("lecture.courseName",lecture.courseName).findList();
-    }
+//    public static List<Assignment> getValidHandinOfStudentsinLecture(String database,Lecture lecture,Semesteruser semesteruser){
+//        List<Assignment> allvalidhandin= getServer(database).find(Assignment.class).where().eq("isvalid",true).eq("lecture.courseName",lecture.courseName).findList();
+//        Iterator<Assignment> iterator=allvalidhandin.iterator();
+//        while(iterator.hasNext()){
+//            if(!iterator.next().students.contains(semesteruser)){
+//               iterator.remove();
+//            }
+//        }
+//        return allvalidhandin;
+//    }
 
-    public static List<Assignment> getValidHandinOfStudentsinLecture(String database,Lecture lecture,Semesteruser semesteruser){
-        List<Assignment> allvalidhandin= getServer(database).find(Assignment.class).where().eq("isvalid",true).eq("lecture.courseName",lecture.courseName).findList();
-        Iterator<Assignment> iterator=allvalidhandin.iterator();
-        while(iterator.hasNext()){
-            if(!iterator.next().students.contains(semesteruser)){
-               iterator.remove();
-            }
-        }
-        return allvalidhandin;
-    }
-
-    public static List<Assignment> getOptionalAssignmentofStudentsinLecture(String database,Lecture lecture,Semesteruser semesteruser){
-        List<Assignment> alloptionalhandin= getServer(database).find(Assignment.class).where().eq("isoptional",true).eq("lecture.courseName",lecture.courseName).findList();
-        Iterator<Assignment> iterator=alloptionalhandin.iterator();
-        while(iterator.hasNext()){
-            if(!iterator.next().students.contains(semesteruser)){
-                iterator.remove();
-            }
-        }
-        return alloptionalhandin;
-    }
+//    public static List<Assignment> getOptionalAssignmentofStudentsinLecture(String database,Lecture lecture,Semesteruser semesteruser){
+//        List<Assignment> alloptionalhandin= getServer(database).find(Assignment.class).where().eq("isoptional",true).eq("lecture.courseName",lecture.courseName).findList();
+//        Iterator<Assignment> iterator=alloptionalhandin.iterator();
+//        while(iterator.hasNext()){
+//            if(!iterator.next().students.contains(semesteruser)){
+//                iterator.remove();
+//            }
+//        }
+//        return alloptionalhandin;
+//    }
 //
     public static Assignment findById(String database,String id){
         return getServer(database).find(Assignment.class).where().eq("id",id).findUnique();

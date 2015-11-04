@@ -43,7 +43,7 @@ public class Lecture extends Model {
 
     public float minimumPercentageForExamination;
 
-    public float performance;
+    //public float performance;
     public String semester;
 
     @OneToOne
@@ -53,6 +53,9 @@ public class Lecture extends Model {
     @OrderColumn(name = "title")
     public List<Assignment> assignments;
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy="lecture")
+    public List<Handin> handins;
+
     @ManyToMany(cascade=CascadeType.ALL,mappedBy = "lectures")
     public List<Semesteruser> attendent;
 //
@@ -61,6 +64,9 @@ public class Lecture extends Model {
 //
     @OneToMany(cascade=CascadeType.ALL,mappedBy = "lecture")
     public List<Message> messages;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "lecture")
+    public List<Evaluation> evaluations;
 
     public boolean isExpired(){
         Date date=new Date();
@@ -76,25 +82,26 @@ public class Lecture extends Model {
         }
     }
 
-    public void setPerformance(String semester,Lecture lecture,Semesteruser semesteruser){
-        List<Assignment> optional =Assignment.getOptionalAssignmentofStudentsinLecture(semester,lecture,semesteruser);
-        List<Assignment> required= Assignment.getValidHandinOfStudentsinLecture(semester,lecture,semesteruser);
-        float totalpoints=0f;
-        float getpoints=0f;
-        for(int i=0;i<assignments.size();i++){
-            totalpoints=totalpoints+assignments.get(i).totalpoints;
-        }
 
-        for(int i =0;i<optional.size();i++){
-            getpoints=getpoints+optional.get(i).gettotalearndpoint();
-        }
-
-        for(int i=0;i<required.size();i++){
-            getpoints=getpoints+required.get(i).gettotalearndpoint();
-        }
-
-        performance=getpoints/totalpoints;
-    }
+//    public void setPerformance(String semester,Lecture lecture,Semesteruser semesteruser){
+//        List<Assignment> optional =Assignment.getOptionalAssignmentofStudentsinLecture(semester,lecture,semesteruser);
+//        List<Assignment> required= Assignment.getValidHandinOfStudentsinLecture(semester,lecture,semesteruser);
+//        float totalpoints=0f;
+//        float getpoints=0f;
+//        for(int i=0;i<assignments.size();i++){
+//            totalpoints=totalpoints+assignments.get(i).totalpoints;
+//        }
+//
+//        for(int i =0;i<optional.size();i++){
+//            getpoints=getpoints+optional.get(i).gettotalearndpoint();
+//        }
+//
+//        for(int i=0;i<required.size();i++){
+//            getpoints=getpoints+required.get(i).gettotalearndpoint();
+//        }
+//
+//        performance=getpoints/totalpoints;
+//    }
 
     public static boolean addSemesterusertoLecture(String database, Semesteruser user, Lecture currentlecture){
 
@@ -111,7 +118,9 @@ else{
     public static boolean deleteSemesteruserfromLecture(String database, Semesteruser user, Lecture currentlecture){
         if(currentlecture.attendent.contains(user)){
             currentlecture.attendent.remove(user);
-            user.assignments.removeAll(currentlecture.assignments);
+            //user.assignments.removeAll(currentlecture.assignments);
+            user.handins.removeAll(Handin.getAllHandinofStudentsinLecture(database,currentlecture,user));
+            user.evaluations.remove(Evaluation.findByLectureAndUser(database,currentlecture,user));
             user.update(database);
             currentlecture.update(database);
             return true;

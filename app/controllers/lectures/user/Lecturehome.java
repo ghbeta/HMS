@@ -99,8 +99,12 @@ public class Lecturehome extends Controller {
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
         if(Lecture.addSemesterusertoLecture(semester, semesteruser, lecture)){
             if(semesteruser.roles.equals(UserRoll.Students.toString())){
-                if(!semesteruser.assignments.containsAll(lecture.assignments)){
-            semesteruser.assignments.addAll(lecture.assignments);}
+//                if(!semesteruser.assignments.containsAll(lecture.assignments)){
+//            semesteruser.assignments.addAll(lecture.assignments);}
+                Evaluation eval= new Evaluation();
+                eval.lecture=lecture;
+                eval.student=semesteruser;
+                eval.save(semester);
                 semesteruser.update(semester);
             try{
                 String repopath= RepoManager.createRemoteRepo(currentuser, lecture, request().getHeader("Host"));
@@ -149,7 +153,9 @@ public class Lecturehome extends Controller {
         if(Lecture.deleteSemesteruserfromLecture(semester, semesteruser, lecture)){
             try{
                 RepoManager.deleteRepo(currentuser, lecture, request().getHeader("Host"));
-                semesteruser.assignments.removeAll(lecture.assignments);
+                Evaluation eval=Evaluation.findByLectureAndUser(semester, lecture, semesteruser);
+                eval.delete(semester);
+                //semesteruser.assignments.removeAll(lecture.assignments);
                 semesteruser.update(semester);//todo test here
                 return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
             }catch (Exception e){
@@ -203,6 +209,7 @@ public class Lecturehome extends Controller {
 
     public static Result handinhomework(String assignmentid,String user,String semester,String lecturename){
         Assignment assignment=Assignment.findById(semester,assignmentid);
+        Lecture lecture = Lecture.getlecturebyname(lecturename,semester);
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
         DynamicForm handinform = Form.form().bindFromRequest();
@@ -244,9 +251,20 @@ public class Lecturehome extends Controller {
                 RefSpec refSpec = new RefSpec("master");
                 git.push().setRemote("origin").setRefSpecs(refSpec).call();
                 git.getRepository().close();
-                assignment.handin=new Date();
-                assignment.setishandin();
-                assignment.update(semester);
+                Handin handin= new Handin();
+                handin.student=semesteruser;
+                handin.lecture=lecture;
+                handin.assignment=assignment;
+                for(int i=0;i<assignment.numberofexercise;i++){
+                    Exercise exercise = new Exercise();
+                    handin.exercises.add(exercise);
+
+                }
+                handin.handin=new Date();
+                handin.setishandin();
+                //assignment.handin=new Date();
+                //assignment.setishandin();
+                handin.update(semester);
 
                 return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
             } else {
@@ -265,7 +283,7 @@ public class Lecturehome extends Controller {
         Assignment assignment=Assignment.findById(semester,assignmentid);
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
-
+        Lecture lecture = Lecture.getlecturebyname(lecturename,semester);
 
 
         try {
@@ -285,6 +303,8 @@ public class Lecturehome extends Controller {
             RefSpec refSpec = new RefSpec("master");
             git.push().setRemote("origin").setRefSpecs(refSpec).call();
             git.getRepository().close();
+            Handin handin=Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment);
+            handin.delete(semester);
             flash("success",Messages.get("Lecture.assignment.revertsuccess"));
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
         } catch (Exception e) {

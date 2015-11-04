@@ -117,9 +117,9 @@
                   </tr>
                 </thead>
                 <tr>
-                  <td>@Assignment.getValidHandinOfStudentsinLecture(lecture.semester,lecture,semesteruser).size()/@lecture.requriednumberofvalidassignment</td>
-                  <td>@Assignment.getOptionalAssignmentofStudentsinLecture(lecture.semester,lecture,semesteruser).size()/@lecture.optionalassignments</td>
-                  <td>@lecture.performance</td>
+                  <td>@Handin.getValidHandinofstudentinlecture(lecture,semesteruser,lecture.semester).size()/@lecture.requriednumberofvalidassignment</td>
+                  <td>@Handin.getOptionalAssignmentofStudentsinLecture(lecture.semester,lecture,semesteruser).size()/@lecture.optionalassignments</td>
+                  <td>@Evaluation.findByLectureAndUser(lecture.semester,lecture,semesteruser).performance</td>
                 </tr>
               </table>
             <a class="btn btn-danger pull-right" href="@controllers.lectures.user.routes.Lecturehome.deleteSemesteruserfromlecture(semesteruser.lastname,lecture.semester,lecture.courseName)">@Messages("lecture.leave")</a>
@@ -175,7 +175,7 @@
                       <td>@currentassignment.numberofexercise</td>
                       <td>@currentassignment.addtionalinfo</td>
                       <td>@controllers.lectures.user.Lecturehome.lastUpdateStatus(semesteruser,lecture)</td>
-                      <td><a data-toggle="modal" data-target="#evalr@currentassignment.id" title="@Messages("click.for.detail")">@currentassignment.gettotalearndpoint()/@currentassignment.totalpoints</a></td>
+                      <td><a data-toggle="modal" data-target="#evalr@currentassignment.id" title="@Messages("click.for.detail")">@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment)/@currentassignment.totalpoints</a></td>
                       <td>@currentassignment.deadline</td>
                     </tr>
                     @*modal for showing the assignment result*@

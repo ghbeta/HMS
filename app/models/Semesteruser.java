@@ -27,18 +27,20 @@ public class Semesteruser extends Abstractuser {
     @OneToMany(cascade = CascadeType.ALL,mappedBy="student")
     public List<Handin> handins;
 
-    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "students")
-    public List<Exercise> handinexercises;
+//    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "students")
+//    public List<Exercise> handinexercises;
 //
     @ManyToMany(cascade = CascadeType.ALL,mappedBy = "owner")
     public List<Repo> repos;
 //
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "marker")
-    public List<Exercise> exercises;
+    public List<Handin> correctedhandins;
 //
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "sender")
     public List<Message> messages;
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "student")
+    public List<Evaluation> evaluations;
 
 
     public Repo getRepoByLecture(Lecture lecture){

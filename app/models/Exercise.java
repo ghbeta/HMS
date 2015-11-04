@@ -21,21 +21,21 @@ public class Exercise extends Model {
 
     public float totalpoints;
 
-    public float earndpoints
+    public float earndpoints;
 
     @Column(columnDefinition = "TEXT")
     public String comments;
 
-    @ManyToMany(cascade= CascadeType.ALL)
-    public List<Semesteruser> students;
+//    @ManyToMany(cascade= CascadeType.ALL)
+//    public List<Semesteruser> students;
+
+//    @ManyToOne//(cascade= CascadeType.ALL)
+//    //@JoinColumn(name="exercises")
+//    public Semesteruser marker;
 
     @ManyToOne//(cascade= CascadeType.ALL)
     //@JoinColumn(name="exercises")
-    public Semesteruser marker;
-
-    @ManyToOne//(cascade= CascadeType.ALL)
-    //@JoinColumn(name="exercises")
-    public Assignment assignment;
+    public Handin handin;
 
 
 }

@@ -2,22 +2,36 @@ package models;
 
 import play.db.ebean.Model;
 
-import javax.persistence.ManyToOne;
-import javax.persistence.Version;
+import javax.annotation.Generated;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-
+import static com.avaje.ebean.Ebean.getServer;
 /**
  * Created by Hao on 2015/11/4.
  */
 public class Handin extends Model {
+    @Id
+    @GeneratedValue
+    public String id;
 
     @ManyToOne
-    Semesteruser student;
+    public Semesteruser student;
 
-    Lecture lecture;
+    @ManyToOne
+    public Semesteruser marker;
 
-    Assignment assignment;
+    @ManyToOne
+    public Lecture lecture;
+
+    @ManyToOne
+    public Assignment assignment;
+
+//    @ManyToOne
+//    Evaluation evaluation;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "handin")
+    public List<Exercise> exercises;
 
     @Version
     private Long version;
@@ -58,4 +72,31 @@ public class Handin extends Model {
             earndpoints=earndpoints+exercises.get(i).earndpoints;
         }
     }
+
+    public static List<Handin> getHandinofassignmentinlecture(Assignment assignment,Lecture lecture,String semester){
+        return getServer(semester).find(Handin.class).where().eq("assignment.id",assignment.id).eq("lecture.courseName",lecture.courseName).findList();
+    }
+
+    public static List<Handin> getValidHandinofstudentinlecture(Lecture lecture,Semesteruser semesteruser,String semester){
+        return getServer(semester).find(Handin.class).where().eq("isvalid",true).eq("student.email",semesteruser.email).eq("lecture.courseName",lecture.courseName).findList();
+    }
+
+    public static List<Handin> getOptionalAssignmentofStudentsinLecture(String database,Lecture lecture,Semesteruser semesteruser){
+        return getServer(database).find(Handin.class).where().
+                eq("assginment.isoptional", true).
+                eq("student.email", semesteruser.email).
+                eq("lecture.courseName", lecture.courseName).findList();
+    }
+
+    public static List<Handin> getAllHandinofStudentsinLecture(String database,Lecture lecture,Semesteruser semesteruser){
+        return getServer(database).find(Handin.class).where().eq("student.email", semesteruser.email).
+                eq("lecture.courseName", lecture.courseName).findList();
+    }
+
+    public static Handin getHandinofassignmentofstudentinlecture(String database,Lecture lecture,Semesteruser semesteruser,Assignment assignment){
+        return getServer(database).find(Handin.class).where().eq("student.email",semesteruser.email)
+                .eq("lecture.courseName",lecture.courseName)
+                .eq("assignment.id",assignment.id).findUnique();
+    }
+
 }

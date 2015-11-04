@@ -72,7 +72,7 @@
                 <a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.modify")"><i class="fa fa-pencil-square-o"></i></a>
                 <a title="@Messages("delete.assignment")" href="@controllers.lectures.admin.routes.Lecturehome.deleteAssignment(lecture.courseName,currentassignment.title,lecture.semester)"><i class="fa fa-times"></i></a>
               </td>
-              <td>@currentassignment.getHandinAssignmentofLecture(currentassignment,lecture,lecture.semester).size()/@currentassignment.students.size()</td>
+              <td>@Handin.getHandinofassignmentinlecture(currentassignment,lecture,lecture.semester).size()/@Semesteruser.findAllstudentsByLecture(lecture.semester,lecture).size()</td>
               <td>@currentassignment.deadline</td>
             </tr>
             <div class="modal fade" id="@currentassignment.id" tabindex="-1" role="dialog" aria-labelledby="@currentassignment.id" aria-hidden="true">
@@ -155,7 +155,7 @@
                   <a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.modify")"><i class="fa fa-pencil-square-o"></i></a>
                   <a title="@Messages("delete.assignment")" href="@controllers.lectures.admin.routes.Lecturehome.deleteAssignment(lecture.courseName,currentassignment.title,lecture.semester)"><i class="fa fa-times"></i></a>
                 </td>
-                <td>@currentassignment.getHandinAssignmentofLecture(currentassignment,lecture,lecture.semester).size()/@currentassignment.students.size()</td>
+                <td>@Handin.getHandinofassignmentinlecture(currentassignment,lecture,lecture.semester).size()/@Semesteruser.findAllstudentsByLecture(lecture.semester,lecture).size()</td>
                 <td>@currentassignment.deadline</td>
               </tr>
               <div class="modal fade" id="@currentassignment.id" tabindex="-1" role="dialog" aria-labelledby="@currentassignment.id" aria-hidden="true">
@@ -212,8 +212,8 @@
               <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="a@assignment.title">
                   <a role="button" data-toggle="collapse" data-parent="#assignmentlist" href="#@assignment.title" aria-expanded="true" aria-controls="@assignment.title">
-                    @assignment.title <span class="badge pull-right">@assignment.getHandinAssignmentofLecture(assignment, lecture, lecture.semester).size()
-                    /@assignment.students.size()</span>
+                    @assignment.title <span class="badge pull-right">@Handin.getHandinofassignmentinlecture(assignment,lecture,lecture.semester).size()
+                    /@Semesteruser.findAllstudentsByLecture(lecture.semester,lecture).size()</span>
                   </a>
                 </div>
                 <div id="@assignment.title" class="panel-collapse collapse" role="tabpanel" aria-labelledby="uncorrected">
@@ -228,7 +228,7 @@
                           <th>@Messages("evaluation.add")</th>
                         </tr>
                       </thead>
-                      @for(stu<-assignment.students){
+                      @for(stu<-Semesteruser.findAllstudentsByLecture(lecture.semester,lecture)){
                         <tr>
                           <td>@stu.firstname @stu.lastname</td>
                           <td>@stu.getRepoByLecture(lecture).repopath</td>
