@@ -14,6 +14,7 @@ import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import utils.RepoManager;
 
 import java.math.BigInteger;
 import java.security.interfaces.RSAPublicKey;
@@ -37,12 +38,17 @@ public class ModifySSH extends Controller{
             ssh.title=sshform.get().title;
             ssh.ssh=sshform.get().ssh;
 
-
-        user.sshs.add(ssh);
-        user.update("global");
-
+            if(RepoManager.addSSHtoUser(user,ssh)!=null&&!user.sshs.contains(ssh)){
+                user.sshs.add(ssh);
+                user.update("global");
+                flash("success",Messages.get("ssh.addkey.success"));
+                return redirect(routes.Index.index());
+            }else{
+                flash("danger",Messages.get("ssh.addkey.fail"));
+                return redirect(routes.Index.index());
+            }
         //user.update("global");
-        return redirect(routes.Index.index());}
+        }
         else{
             flash("danger", Messages.get("ssh.form.empty"));
             return redirect(routes.Index.index());
@@ -52,11 +58,18 @@ public class ModifySSH extends Controller{
     public static Result deletessh(String sshid){
        User user = User.findByEmail(request().username(),"global");
         try{
-            Logger.info("i am here delte");
-            SSH.findById(sshid).delete("global");
+            SSH ssh= SSH.findById(sshid);
+            Logger.info("delete ssh key "+ssh.title);
+            ssh.delete("global");
+            if(RepoManager.deleteSSHfromUser(user,ssh)!=null){
         //user.sshs.remove(SSH.findById(sshid));
         //user.save("global");
+                flash("success",Messages.get("ssh.delete.success"));
         return redirect(routes.Index.index());}
+        else{
+                flash("danger",Messages.get("ssh.delete.fail"));
+                return redirect(routes.Index.index());
+            }}
         catch (Exception e){
             flash("danger",Messages.get("ssh.delete.fail"));
             return redirect(routes.Index.index());

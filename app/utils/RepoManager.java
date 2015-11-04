@@ -3,10 +3,7 @@ package utils;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
-import models.Lecture;
-import models.Repo;
-import models.Semesteruser;
-import models.User;
+import models.*;
 import nl.minicom.gitolite.manager.exceptions.GitException;
 import nl.minicom.gitolite.manager.exceptions.ModificationException;
 import nl.minicom.gitolite.manager.exceptions.ServiceUnavailable;
@@ -57,11 +54,12 @@ public class RepoManager {
 
         Logger.warn("size"+user.sshs.size());
         if(!user.sshs.isEmpty()){
-            for(int i=0;i<user.sshs.size();i++){
-                Logger.warn("add repo now");
-                repouser.setKey(user.sshs.get(i).title, user.sshs.get(i).ssh);
-
-            }
+//            for(int i=0;i<user.sshs.size();i++){
+//                Logger.warn("add repo now");
+//                repouser.setKey(user.sshs.get(i).title, user.sshs.get(i).ssh);
+//
+//            }
+            Logger.warn("add repo now");
             manager.applyAsync(config);
             gitogit.pull().call();
             gitogit.push().call();
@@ -137,5 +135,52 @@ public class RepoManager {
         return lecture.courseName+"_"+semesteruser.userHash;
     }
 
+    public static String addSSHtoUser(User user, SSH ssh){
+        SshSessionFactory.setInstance(new JschConfigSessionFactory() {
+            @Override
+            protected void configure(OpenSshConfig.Host host, Session session) {
+                session.setConfig("StrictHostKeyChecking", "no");
+            }
+        });
+        try{
+        Logger.debug("admin repo path"+ctx().request().getHeader("Host")+System.getProperty("user.home"));
+        //ConfigManager manager = ConfigManager.create("git@localhost:gitolite-admin");
+        Repository adminrepo = new FileRepository(adminrepofilepath());
+        Git gitogit = new Git(adminrepo);
+        ConfigManager manager = ConfigManager.create(configrepopath());
+
+        Config config = manager.get();
+        nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(user.userHash);
+        repouser.setKey(ssh.title, ssh.ssh);
+        return "success";}
+        catch (Exception e){
+            Logger.warn("exception at add ssh key to user "+e.getMessage());
+            return null;
+        }
+    }
+
+    public static String deleteSSHfromUser(User user,SSH ssh){
+        SshSessionFactory.setInstance(new JschConfigSessionFactory() {
+            @Override
+            protected void configure(OpenSshConfig.Host host, Session session) {
+                session.setConfig("StrictHostKeyChecking", "no");
+            }
+        });
+        try{
+            Logger.debug("admin repo path"+ctx().request().getHeader("Host")+System.getProperty("user.home"));
+            //ConfigManager manager = ConfigManager.create("git@localhost:gitolite-admin");
+            Repository adminrepo = new FileRepository(adminrepofilepath());
+            Git gitogit = new Git(adminrepo);
+            ConfigManager manager = ConfigManager.create(configrepopath());
+
+            Config config = manager.get();
+            nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(user.userHash);
+            repouser.removeKey(ssh.title);
+            return "success";}
+        catch (Exception e){
+            Logger.warn("exception at delete ssh key from user "+e.getMessage());
+            return null;
+        }
+    }
 
 }

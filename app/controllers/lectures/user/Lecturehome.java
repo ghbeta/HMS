@@ -81,7 +81,7 @@ public class Lecturehome extends Controller {
            //semesteruser.update(lecture.semester);
         return  redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,lecture.semester,lecture.courseName));}
             else{
-           flash("danger",Messages.get("repo.create.after.fail"));
+           flash("danger",Messages.get("repo.create.after.fail.nossh"));
            return  redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,lecture.semester,lecture.courseName));
        }
 
@@ -117,7 +117,7 @@ public class Lecturehome extends Controller {
                     //semesteruser.update(semester);
                     return  redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,lecture.semester,lecture.courseName));}
                 else{
-                    flash("danger",Messages.get("repo.create.after.fail"));
+                    flash("danger",Messages.get("repo.create.after.fail.nossh"));
                     return  redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,lecture.semester,lecture.courseName));
                 }
 
