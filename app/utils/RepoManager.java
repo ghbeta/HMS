@@ -152,6 +152,7 @@ public class RepoManager {
         Config config = manager.get();
         nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(user.userHash);
         repouser.setKey(ssh.title, ssh.ssh);
+            manager.applyAsync(config);
             gitogit.pull().call();
             gitogit.push().call();
         return "success";}
@@ -178,6 +179,7 @@ public class RepoManager {
             Config config = manager.get();
             nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(user.userHash);
             repouser.removeKey(ssh.title);
+            manager.applyAsync(config);
             gitogit.pull().call();
             gitogit.push().call();
             return "success";}
