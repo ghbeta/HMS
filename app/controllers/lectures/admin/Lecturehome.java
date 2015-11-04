@@ -127,9 +127,7 @@ public class Lecturehome extends Controller {
         if(assignmentformForm.get().isoptional==null){
             assignment.isoptional=false;
         }
-        if(assignmentformForm.get().isoptional.equals("true")){
-            assignment.isoptional=true;
-        }
+        else{assignment.isoptional=true;}
         if(currentlecture.assignments.size()==0){
             assignment.title= Messages.get("lecture.homework")+1;
 

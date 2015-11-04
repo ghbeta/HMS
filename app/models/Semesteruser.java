@@ -100,7 +100,7 @@ public class Semesteruser extends Abstractuser {
     }
 
     public static List<Semesteruser> findAllstudentsByLecture(String database,Lecture lecture){
-        return currentServer(database).find(Semesteruser.class).fetch("lectures").where().eq("id", lecture.courseName).where().eq("roles", UserRoll.Students.toString()).findList();
+        return currentServer(database).find(Semesteruser.class).where().eq("lectures.courseName", lecture.courseName).eq("roles", UserRoll.Students.toString()).findList();
     }
 //    public List<Semesteruser> getstudents(List<Semesteruser> all){
 //        Iterator<Semesteruser> s=all.iterator();

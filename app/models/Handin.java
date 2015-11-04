@@ -85,7 +85,7 @@ public class Handin extends Model {
 
     public static List<Handin> getOptionalAssignmentofStudentsinLecture(String database,Lecture lecture,Semesteruser semesteruser){
         return getServer(database).find(Handin.class).where().
-                eq("assginment.isoptional", true).
+                eq("assignment.isoptional", true).
                 eq("student.email", semesteruser.email).
                 eq("lecture.courseName", lecture.courseName).findList();
     }
