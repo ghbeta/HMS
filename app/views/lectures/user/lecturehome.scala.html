@@ -66,7 +66,7 @@
                     <td>@controllers.lectures.user.Lecturehome.lastUpdateStatus(semesteruser,lecture)</td>
                     <td><a data-toggle="modal" data-target="#eval@currentassignment.id" title="@Messages("click.for.detail")">
                     @if(Handin.
-                            getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).earndpoints==null){ 0 } else {Handin.
+                            getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment)==null){ 0 } else {Handin.
                       getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).earndpoints}/@currentassignment.totalpoints</a></td>
                     <td>@currentassignment.deadline</td>
                   </tr>
@@ -178,8 +178,8 @@
                       <td>@currentassignment.numberofexercise</td>
                       <td>@currentassignment.addtionalinfo</td>
                       <td>@controllers.lectures.user.Lecturehome.lastUpdateStatus(semesteruser,lecture)</td>
-                      <td><a data-toggle="modal" data-target="#evalr@currentassignment.id" title="@Messages("click.for.detail")">@if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).earndpoints==null){0} else {
-                        Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).earndpoints}/@currentassignment.totalpoints</a></td>
+                      <td><a data-toggle="modal" data-target="#evalr@currentassignment.id" title="@Messages("click.for.detail")">@if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment)!=null){Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).earndpoints} else {
+                         0}/@currentassignment.totalpoints</a></td>
                       <td>@currentassignment.deadline</td>
                     </tr>
                     @*modal for showing the assignment result*@
