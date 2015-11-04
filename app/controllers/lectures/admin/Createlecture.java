@@ -153,6 +153,8 @@ public class Createlecture extends Controller {
                 entity.add(Lecture.class);
                 entity.add(Message.class);
                 entity.add(Repo.class);
+                entity.add(Evaluation.class);
+                entity.add(Handin.class);
                 createServer(semester, entity);
             }
             Lecture lecture = new Lecture();
