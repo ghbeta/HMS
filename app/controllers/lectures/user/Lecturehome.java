@@ -218,6 +218,7 @@ public class Lecturehome extends Controller {
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
         DynamicForm handinform = Form.form().bindFromRequest();
         String commit="";
+        String des=assignment.title+"/";
         if(handinform.get("commit")==null||handinform.get("commit").isEmpty()||handinform.get("commit").equals("")){
             commit  =Messages.get("lecture.uploadsolution")+assignment.title;
         }else{
@@ -245,13 +246,14 @@ public class Lecturehome extends Controller {
                 //Logger.debug("create init commit");
                 //git.commit().setMessage("init commit").setAuthor(semesteruser.lastname,semesteruser.email).call();
                 Logger.debug("create local repo: "+git.getRepository().getDirectory());
+                String subfolder=assignment.title;
                 File precheck = new File(localPath, fileName);
                 if(precheck.exists()){
                     precheck.delete();
                 }
-                FileUtils.moveFile(file, new File(localPath, fileName));
-                git.add().addFilepattern(fileName).call();
-                Logger.debug("add file finish"+fileName);
+                FileUtils.moveFile(file, new File(localPath, des+fileName));
+                git.add().addFilepattern(des+fileName).call();
+                Logger.debug("add file finish"+des+fileName);
                 git.commit().setMessage(commit).setAuthor(semesteruser.lastname,semesteruser.email).call();
                 Logger.warn("start pushing");
                 RefSpec refSpec = new RefSpec("master");
@@ -293,42 +295,42 @@ public class Lecturehome extends Controller {
 
     }
 
-//    public static Result reverthandinhomework(String assignmentid,String user,String semester,String lecturename){
-//        Assignment assignment=Assignment.findById(semester,assignmentid);
-//        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
-//        Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
-//        Lecture lecture = Lecture.getlecturebyname(lecturename,semester);
-//
-//
-//        try {
-//            Repo repo=Repo.findRepoByLectureAndOwner(assignment.semester,semesteruser,assignment.lecture);
-//            File localPath = File.createTempFile(reponame(assignment.lecture, semesteruser), "");
-//            localPath.delete();
-//            Logger.debug("Cloning from "+repo.repofilepath+"to"+localPath);
-//            Git git = Git.cloneRepository()
-//                    .setURI(repo.repofilepath)
-//                    .setDirectory(localPath)
-//                    .call();
-//            Ref head = git.getRepository().getRef("refs/heads/master");
-//            RevWalk walk=new RevWalk(git.getRepository());
-//            RevCommit commit = walk.parseCommit(head.getObjectId());
-//            Logger.debug("revert last commit");
-//            git.revert().include(commit).call();
-//            RefSpec refSpec = new RefSpec("master");
-//            git.push().setRemote("origin").setRefSpecs(refSpec).call();
-//            git.getRepository().close();
-//            Handin handin=Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment);
-//            if(handin!=null){
-//            handin.handin=new Date();
-//            handin.setishandin();
-//            handin.update(semester);}
-//            flash("success",Messages.get("Lecture.assignment.revertsuccess"));
-//            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
-//        } catch (Exception e) {
-//            Logger.warn("Exceptione revert commit"+e.getMessage());
-//            flash("danger", Messages.get("Lecture.assignment.revertfail"));
-//            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
-//        }
-//    }
+    public static Result reverthandinhomework(String assignmentid,String user,String semester,String lecturename){
+        Assignment assignment=Assignment.findById(semester,assignmentid);
+        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
+        Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
+        Lecture lecture = Lecture.getlecturebyname(lecturename,semester);
+
+
+        try {
+            Repo repo=Repo.findRepoByLectureAndOwner(assignment.semester,semesteruser,assignment.lecture);
+            File localPath = File.createTempFile(reponame(assignment.lecture, semesteruser), "");
+            localPath.delete();
+            Logger.debug("Cloning from "+repo.repofilepath+"to"+localPath);
+            Git git = Git.cloneRepository()
+                    .setURI(repo.repofilepath)
+                    .setDirectory(localPath)
+                    .call();
+            Ref head = git.getRepository().getRef("refs/heads/master");
+            RevWalk walk=new RevWalk(git.getRepository());
+            RevCommit commit = walk.parseCommit(head.getObjectId());
+            Logger.debug("revert last commit");
+            git.revert().include(commit).call();
+            RefSpec refSpec = new RefSpec("master");
+            git.push().setRemote("origin").setRefSpecs(refSpec).call();
+            git.getRepository().close();
+            Handin handin=Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment);
+            if(handin!=null){
+            handin.handin=new Date();
+            handin.setishandin();
+            handin.update(semester);}
+            flash("success",Messages.get("Lecture.assignment.revertsuccess"));
+            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
+        } catch (Exception e) {
+            Logger.warn("Exceptione revert commit"+e.getMessage());
+            flash("danger", Messages.get("Lecture.assignment.revertfail"));
+            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
+        }
+    }
 
 }

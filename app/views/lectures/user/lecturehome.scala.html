@@ -67,7 +67,7 @@
                     <td>@currentassignment.addtionalinfo</td>
                     <td  class="text-center">
                     @if(currentassignment.isExpired){<a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.handin")"><i class="fa fa-pencil-square-o"></i></a>
-                      @*<a title="revert last upload" href="@controllers.lectures.user.routes.Lecturehome.reverthandinhomework(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)"><i class="fa fa-times"></i></a>}*@
+                      <a title="revert last upload" href="@controllers.lectures.user.routes.Lecturehome.reverthandinhomework(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)"><i class="fa fa-times"></i></a>}
                     </td>
                     <td>@controllers.lectures.user.Lecturehome.lastUpdateStatus(semesteruser,lecture)</td>
                     <td><a data-toggle="modal" data-target="#eval@currentassignment.id" title="@Messages("click.for.detail")">
