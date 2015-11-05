@@ -27,6 +27,7 @@ import views.html.lectures.user.lecturehome;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -276,11 +277,18 @@ public class Lecturehome extends Controller {
                 handin.student=semesteruser;
                 handin.lecture=lecture;
                 handin.assignment=assignment;
+                handin.exercises=new ArrayList<Exercise>();
                 for(int i=0;i<assignment.numberofexercise;i++){
                     Exercise exercise = new Exercise();
+                    exercise.title=Messages.get("exercise.title")+(i+1);
+                    exercise.semester=semester;
+                    //exercise.handin=handin;
+                    //exercise.save(semester);
+                    //exercises.add(exercise);
                     handin.exercises.add(exercise);
-
+                    exercise.handin=handin;
                 }
+
                 handin.handin=new Date();
                 handin.setishandin();
                 //assignment.handin=new Date();
