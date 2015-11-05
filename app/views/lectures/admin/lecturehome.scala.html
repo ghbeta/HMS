@@ -271,27 +271,23 @@
                                   <h4 class="modal-title" id="myModalLabel">@Messages("homework.evaluation")</h4>
                                 </div>
                                 <div class="modal-body">
-        ...                     <form id="exerciseForm" action="submit()">
+                             <form id="exerciseForm" action="submit()">
                                 @if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment)!=null){
-                                  @Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).exercises.get(0).title}
-                                @* @for((exercise,index)<-Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).exercises.zipWithIndex){*@
-                                  @*<div class="form-inline">*@
-                                    @*<div class="form-group">*@
-                                      @*<label>@Messages("ex.title")</label>*@
-                                      @*<input type="text" class="form-control" name="title">*@
-                                    @*</div>*@
-                                    @*<div class="form-group">*@
-                                      @*<label>@Messages("gain")</label>*@
-                                      @*<input type="number" step="0.01" class="form-control" name="exercise[@index].totalpoints">*@
-                                    @*</div>*@
-                                    @*<div class="form-group">*@
-                                      @*<label>@Messages("total")</label>*@
-                                      @*<input type="number" step="0.01" class="form-control" name="exercise[@index].earndpoints">*@
-                                    @*</div>*@
-                                  @*</div>*@
-                                  @*<textarea class="form-control" rows="3" placeholder="@Messages("comment")" name="exercise[@index].comments"></textarea>*@
-
-                                @*}*@
+                                 @for((exercise,index)<-Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).exercises.zipWithIndex){
+                                  <div class="form-inline">
+                                   @exercise.title
+                                  <div class="form-group">
+                                      <label>@Messages("gain")</label>
+                                      <input type="number" step="0.01" class="form-control" name="exercise[@index].totalpoints">
+                                    </div>
+                                    <div class="form-group">
+                                     <label>@Messages("total")</label>
+                                    <input type="number" step="0.01" class="form-control" name="exercise[@index].earndpoints">
+                                    </div>
+                                  </div>
+                                 <textarea class="form-control" rows="3" placeholder="@Messages("comment")" name="exercise[@index].comments"></textarea>
+                               }
+                                }
                                  <pre><code id="testArea">
                                  </code></pre>
                                 <input type="submit" class="btn btn-primary">

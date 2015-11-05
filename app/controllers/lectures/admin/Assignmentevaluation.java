@@ -32,6 +32,7 @@ public class Assignmentevaluation extends Controller {
     @Security.Authenticated(Securedassistant.class)
     public static boolean grandaccess(Semesteruser currentadmin,Semesteruser student, Lecture lecture) {
         User admincredential= User.findByEmail(ctx().session().get("email"),"global");
+        Repo studentrepo=student.getRepoByLecture(lecture);
         SshSessionFactory.setInstance(new JschConfigSessionFactory() {
             @Override
             protected void configure(OpenSshConfig.Host host, Session session) {
@@ -40,7 +41,7 @@ public class Assignmentevaluation extends Controller {
         });
         Logger.debug("admin repo path" + ctx().request().getHeader("Host") + System.getProperty("user.home"));
         //ConfigManager manager = ConfigManager.create("git@localhost:gitolite-admin");
-        if(!admincredential.sshs.isEmpty()) {
+        if(!admincredential.sshs.isEmpty()&&!studentrepo.owner.contains(currentadmin)) {
             try {
                 Repository adminrepo = new FileRepository(adminrepofilepath());
                 Git gitogit = new Git(adminrepo);
@@ -56,7 +57,8 @@ public class Assignmentevaluation extends Controller {
                 manager.applyAsync(config);
                 gitogit.pull().call();
                 gitogit.push().call();
-                student.getRepoByLecture(lecture).owner.add(currentadmin);
+                studentrepo.owner.add(currentadmin);
+                studentrepo.update(lecture.semester);
                 Logger.warn("grand success");
                 return true;
             } catch (Exception e) {
