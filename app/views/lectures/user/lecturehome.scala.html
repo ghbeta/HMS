@@ -43,7 +43,7 @@
             <br>
             @if(lecture.attendent.contains(semesteruser)){
               @if(Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture)!=null&&semesteruser.roles.equals(UserRoll.Students.toString)){
-                @Messages("lecture.home.homework.local.exist")
+                <div class="textfont">@Messages("lecture.home.homework.local.exist")</div>
               }else{
                 <form action="@controllers.lectures.user.routes.Lecturehome.addRemoteRepotoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" method="post"><div class="alert alert-warning" role="alert">@Messages("lecture.home.homework.local.noexist") </div><button class="btn btn-success pull-right" type="submit">@Messages("lecture.remote.generate")</button></form>
               }
@@ -67,7 +67,7 @@
                     <td>@currentassignment.addtionalinfo</td>
                     <td  class="text-center">
                     @if(currentassignment.isExpired){<a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.handin")"><i class="fa fa-pencil-square-o"></i></a>
-                      <a title="revert last upload" href="@controllers.lectures.user.routes.Lecturehome.reverthandinhomework(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)"><i class="fa fa-times"></i></a>}
+                      @*<a title="revert last upload" href="@controllers.lectures.user.routes.Lecturehome.reverthandinhomework(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)"><i class="fa fa-times"></i></a>}*@
                     </td>
                     <td>@controllers.lectures.user.Lecturehome.lastUpdateStatus(semesteruser,lecture)</td>
                     <td><a data-toggle="modal" data-target="#eval@currentassignment.id" title="@Messages("click.for.detail")">
