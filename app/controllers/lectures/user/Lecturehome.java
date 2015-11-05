@@ -28,6 +28,7 @@ import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 import static utils.RepoManager.hostparser;
 import static utils.RepoManager.reponame;
@@ -156,6 +157,8 @@ public class Lecturehome extends Controller {
                 RepoManager.deleteRepo(currentuser, lecture, request().getHeader("Host"));
                 Evaluation eval=Evaluation.findByLectureAndUser(semester, lecture, semesteruser);
                 eval.delete(semester);
+                List<Handin> handins=Handin.getAllHandinofStudentsinLecture(semester,lecture,semesteruser);
+                semesteruser.handins.removeAll(handins);
 //                if(semesteruser.repos.size()==0){
 //                 RepoManager.deleteUserfromServer(currentuser);
 //                }

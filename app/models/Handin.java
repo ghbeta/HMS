@@ -48,6 +48,8 @@ public class Handin extends Model {
 
     public boolean isvalid;
 
+    public boolean isevaluated;
+
     public void setishandin(){
         ishandin=(assignment.deadline !=null&&handin.before(assignment.deadline));
     }
