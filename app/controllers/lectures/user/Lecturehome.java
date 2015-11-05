@@ -312,12 +312,7 @@ public class Lecturehome extends Controller {
                     .call();
             Logger.debug("create local repo: "+git.getRepository().getDirectory());
             String subfolder=assignment.title;
-//            File precheck = new File(localPath, des+fileName);
-//            if(precheck.exists()){
-//                precheck.delete();
-//            }
-//            FileUtils.moveFile(file, new File(localPath, des+fileName));
-            //git.add().addFilepattern(des+fileName).call();
+
             Logger.debug("delete folder"+subfolder);
             git.rm().addFilepattern(subfolder).call();
             git.commit().setMessage(commit).setAuthor(semesteruser.lastname,semesteruser.email).call();
