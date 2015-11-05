@@ -152,7 +152,6 @@ public class Lecturehome extends Controller {
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
         Lecture lecture=Lecture.getlecturebyname(lecturename,semester);
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
-        if(Lecture.deleteSemesteruserfromLecture(semester, semesteruser, lecture)){
             try{
                 RepoManager.deleteRepo(currentuser, lecture, request().getHeader("Host"));
                 Evaluation eval=Evaluation.findByLectureAndUser(semester, lecture, semesteruser);
@@ -164,18 +163,21 @@ public class Lecturehome extends Controller {
 //                }
                 //semesteruser.assignments.removeAll(lecture.assignments);
                 semesteruser.update(semester);//todo test here
-                return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
+                //return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
+                if(Lecture.deleteSemesteruserfromLecture(semester, semesteruser, lecture))
+                {
+                    return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
+                }
+                else
+                {
+                    flash("danger", Messages.get("lecture.deleteuser.fail"));
+                    return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, semester, lecture.courseName));
+                }
             }catch (Exception e){
                 flash("danger", Messages.get("lecture.deleteuser.fail"));
                 return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, semester, lecture.courseName));
             }
 
-        }
-        else
-        {
-            flash("danger", Messages.get("lecture.deleteuser.fail"));
-            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, semester, lecture.courseName));
-        }
     }
 
     public static String lastUpdateStatus(Semesteruser semesteruser,Lecture lecture){
