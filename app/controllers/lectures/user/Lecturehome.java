@@ -246,7 +246,6 @@ public class Lecturehome extends Controller {
                 //Logger.debug("create init commit");
                 //git.commit().setMessage("init commit").setAuthor(semesteruser.lastname,semesteruser.email).call();
                 Logger.debug("create local repo: "+git.getRepository().getDirectory());
-                String subfolder=assignment.title;
                 File precheck = new File(localPath, des+fileName);
                 if(precheck.exists()){
                     precheck.delete();
@@ -300,7 +299,7 @@ public class Lecturehome extends Controller {
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
         Lecture lecture = Lecture.getlecturebyname(lecturename,semester);
-
+        String commit="delete last upload of "+assignment.title;
 
         try {
             Repo repo=Repo.findRepoByLectureAndOwner(assignment.semester,semesteruser,assignment.lecture);
@@ -311,19 +310,25 @@ public class Lecturehome extends Controller {
                     .setURI(repo.repofilepath)
                     .setDirectory(localPath)
                     .call();
-            Ref head = git.getRepository().getRef("refs/heads/master");
-            RevWalk walk=new RevWalk(git.getRepository());
-            RevCommit commit = walk.parseCommit(head.getObjectId());
-            Logger.debug("revert last commit");
-            git.revert().include(commit).call();
+            Logger.debug("create local repo: "+git.getRepository().getDirectory());
+            String subfolder=assignment.title;
+//            File precheck = new File(localPath, des+fileName);
+//            if(precheck.exists()){
+//                precheck.delete();
+//            }
+//            FileUtils.moveFile(file, new File(localPath, des+fileName));
+            //git.add().addFilepattern(des+fileName).call();
+            //Logger.debug("add file finish"+des+fileName);
+            git.rm().addFilepattern(subfolder).call();
+            git.commit().setMessage(commit).setAuthor(semesteruser.lastname,semesteruser.email).call();
+            Logger.warn("start pushing delete files");
+
             RefSpec refSpec = new RefSpec("master");
             git.push().setRemote("origin").setRefSpecs(refSpec).call();
             git.getRepository().close();
             Handin handin=Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment);
             if(handin!=null){
-            handin.handin=new Date();
-            handin.setishandin();
-            handin.update(semester);}
+            handin.delete();}
             flash("success",Messages.get("Lecture.assignment.revertsuccess"));
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
         } catch (Exception e) {
