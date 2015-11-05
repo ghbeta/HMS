@@ -277,7 +277,7 @@ public class Lecturehome extends Controller {
                 handin.student=semesteruser;
                 handin.lecture=lecture;
                 handin.assignment=assignment;
-                handin.exercises=new ArrayList<Exercise>();
+                //handin.exercises=new ArrayList<Exercise>();
                 for(int i=0;i<assignment.numberofexercise;i++){
                     Exercise exercise = new Exercise();
                     exercise.title=Messages.get("exercise.title")+(i+1);
@@ -286,7 +286,7 @@ public class Lecturehome extends Controller {
                     //exercise.save(semester);
                     //exercises.add(exercise);
                     handin.exercises.add(exercise);
-                    exercise.handin=handin;
+                    //exercise.handin=handin;
                 }
 
                 handin.handin=new Date();
