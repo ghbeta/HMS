@@ -255,6 +255,13 @@ public class Lecturehome extends Controller {
                 RefSpec refSpec = new RefSpec("master");
                 git.push().setRemote("origin").setRefSpecs(refSpec).call();
                 git.getRepository().close();
+                Logger.warn("start create handin");
+                if(Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment)!=null){
+                    Handin handin=Handin.getHandinofassignmentofstudentinlecture(semester, lecture, semesteruser, assignment);
+                    handin.handin=new Date();
+                    handin.setishandin();
+                    handin.update(semester);
+                }else{
                 Handin handin= new Handin();
                 handin.student=semesteruser;
                 handin.lecture=lecture;
@@ -268,8 +275,9 @@ public class Lecturehome extends Controller {
                 handin.setishandin();
                 //assignment.handin=new Date();
                 //assignment.setishandin();
-                handin.update(semester);
-
+                //handin.
+                handin.save(semester);}
+                Logger.warn("create handin success");
                 return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
             } else {
                 flash("danger", Messages.get("Lecture.assignment.uploadfail"));
@@ -308,7 +316,10 @@ public class Lecturehome extends Controller {
             git.push().setRemote("origin").setRefSpecs(refSpec).call();
             git.getRepository().close();
             Handin handin=Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment);
-            handin.delete(semester);
+            if(handin!=null){
+            handin.handin=new Date();
+            handin.setishandin();
+            handin.update(semester);}
             flash("success",Messages.get("Lecture.assignment.revertsuccess"));
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
         } catch (Exception e) {

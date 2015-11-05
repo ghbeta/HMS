@@ -62,10 +62,11 @@ public class ModifySSH extends Controller{
             Logger.info("delete ssh key "+ssh.title);
             ssh.delete("global");
             if(RepoManager.deleteSSHfromUser(user,ssh)!=null){
-        //user.sshs.remove(SSH.findById(sshid));
-        //user.save("global");
                 flash("success",Messages.get("ssh.delete.success"));
-        return redirect(routes.Index.index());}
+
+
+             return redirect(routes.Index.index());
+            }
         else{
                 flash("danger",Messages.get("ssh.delete.fail"));
                 return redirect(routes.Index.index());
