@@ -318,7 +318,7 @@ public class Lecturehome extends Controller {
 //            }
 //            FileUtils.moveFile(file, new File(localPath, des+fileName));
             //git.add().addFilepattern(des+fileName).call();
-            //Logger.debug("add file finish"+des+fileName);
+            Logger.debug("delete folder"+subfolder);
             git.rm().addFilepattern(subfolder).call();
             git.commit().setMessage(commit).setAuthor(semesteruser.lastname,semesteruser.email).call();
             Logger.warn("start pushing delete files");
@@ -328,7 +328,7 @@ public class Lecturehome extends Controller {
             git.getRepository().close();
             Handin handin=Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment);
             if(handin!=null){
-            handin.delete();}
+            handin.delete(semester);}
             flash("success",Messages.get("Lecture.assignment.revertsuccess"));
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
         } catch (Exception e) {
