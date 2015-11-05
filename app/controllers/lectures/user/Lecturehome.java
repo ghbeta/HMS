@@ -163,10 +163,7 @@ public class Lecturehome extends Controller {
                 while(iter.hasNext()){
                     iter.next().delete(semester);
                 }
-//                if(semesteruser.repos.size()==0){
-//                 RepoManager.deleteUserfromServer(currentuser);
-//                }
-                //semesteruser.assignments.removeAll(lecture.assignments);
+
                 semesteruser.update(semester);//todo test here
                 //return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
                 if(Lecture.deleteSemesteruserfromLecture(semester, semesteruser, lecture))
