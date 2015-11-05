@@ -189,36 +189,36 @@ public class RepoManager {
         }
     }
 
-    public static String deleteUserfromServer(User user){
-        SshSessionFactory.setInstance(new JschConfigSessionFactory() {
-            @Override
-            protected void configure(OpenSshConfig.Host host, Session session) {
-                session.setConfig("StrictHostKeyChecking", "no");
-            }
-        });
-        try{
-            Logger.debug("admin repo path"+ctx().request().getHeader("Host")+System.getProperty("user.home"));
-            //ConfigManager manager = ConfigManager.create("git@localhost:gitolite-admin");
-            Repository adminrepo = new FileRepository(adminrepofilepath());
-            Git gitogit = new Git(adminrepo);
-            ConfigManager manager = ConfigManager.create(configrepopath());
-
-            Config config = manager.get();
-
-            nl.minicom.gitolite.manager.models.User repouser=config.getUser(user.userHash);
-            if(repouser!=null){
-                config.removeUser(repouser);
-                manager.applyAsync(config);
-                gitogit.pull().call();
-                gitogit.push().call();
-                return "success";
-            }
-            return "success";
-            }
-        catch (Exception e){
-            Logger.warn("exception at delete user from server "+e.getMessage());
-            return null;
-        }
-    }
+//    public static String deleteUserfromServer(User user){
+//        SshSessionFactory.setInstance(new JschConfigSessionFactory() {
+//            @Override
+//            protected void configure(OpenSshConfig.Host host, Session session) {
+//                session.setConfig("StrictHostKeyChecking", "no");
+//            }
+//        });
+//        try{
+//            Logger.debug("admin repo path"+ctx().request().getHeader("Host")+System.getProperty("user.home"));
+//            //ConfigManager manager = ConfigManager.create("git@localhost:gitolite-admin");
+//            Repository adminrepo = new FileRepository(adminrepofilepath());
+//            Git gitogit = new Git(adminrepo);
+//            ConfigManager manager = ConfigManager.create(configrepopath());
+//
+//            Config config = manager.get();
+//
+//            nl.minicom.gitolite.manager.models.User repouser=config.getUser(user.userHash);
+//            if(repouser!=null){
+//                config.removeUser(repouser);
+//                manager.applyAsync(config);
+//                gitogit.pull().call();
+//                gitogit.push().call();
+//                return "success";
+//            }
+//            return "success";
+//            }
+//        catch (Exception e){
+//            Logger.warn("exception at delete user from server "+e.getMessage());
+//            return null;
+//        }
+//    }
 
 }

@@ -156,9 +156,9 @@ public class Lecturehome extends Controller {
                 RepoManager.deleteRepo(currentuser, lecture, request().getHeader("Host"));
                 Evaluation eval=Evaluation.findByLectureAndUser(semester, lecture, semesteruser);
                 eval.delete(semester);
-                if(semesteruser.repos.size()==0){
-                 RepoManager.deleteUserfromServer(currentuser);
-                }
+//                if(semesteruser.repos.size()==0){
+//                 RepoManager.deleteUserfromServer(currentuser);
+//                }
                 //semesteruser.assignments.removeAll(lecture.assignments);
                 semesteruser.update(semester);//todo test here
                 return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
