@@ -247,7 +247,7 @@ public class Lecturehome extends Controller {
                 //git.commit().setMessage("init commit").setAuthor(semesteruser.lastname,semesteruser.email).call();
                 Logger.debug("create local repo: "+git.getRepository().getDirectory());
                 String subfolder=assignment.title;
-                File precheck = new File(localPath, fileName);
+                File precheck = new File(localPath, des+fileName);
                 if(precheck.exists()){
                     precheck.delete();
                 }
