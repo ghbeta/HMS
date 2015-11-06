@@ -226,6 +226,7 @@
                           <th>@Messages("evaluation.repo")</th>
                           <th>@Messages("evaluation.access")</th>
                           <th>@Messages("evaluation.finish")</th>
+                          <th>@Messages("evaluation.done")</th>
                         </tr>
                       </thead>
                       @for(stu<-Semesteruser.findAllstudentsByLecture(lecture.semester,lecture)){
@@ -274,16 +275,22 @@
                              <form id="@assignment.title@stu.userHash" action="javascript:submit('@assignment.title@stu.userHash','@lecture.semester','@lecture.courseName','@assignment.id','@stu.email')">
                                 @if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment)!=null){
                                  @for((exercise,index)<-Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).exercises.zipWithIndex){
-                                   <div class="label label-info">@exercise.title</div>
+                                   <div class="label label-info center-block">@exercise.title</div>
                                    <div class="row">
-                                  <div class="form-group col-xs-6">
-                                      <input type="number"  step="0.01" class="form-control" name="exercise[@index].totalpoints" placeholder="@Messages("gain")" value="@exercise.totalpoints">
+                                     <div class="col-xs-1">
+                                     <label>@Messages("gain")</label>
+                                     </div>
+                                  <div class="form-group col-xs-5">
+                                      <input type="number"  step="0.01" class="form-control" name="exercise[@index].earndpoints"  value="@exercise.earndpoints">
                                     </div>
-                                    <div class="form-group col-xs-6">
-                                    <input type="number"  step="0.01" class="form-control" name="exercise[@index].earndpoints" placeholder="@Messages("total")" value="@exercise.earndpoints">
+                                     <div class="col-xs-1">
+                                     <label>@Messages("total")</label>
+                                       </div>
+                                    <div class="form-group col-xs-5">
+                                    <input type="number"  step="0.01" class="form-control" name="exercise[@index].totalpoints"  value="@exercise.totalpoints">
                                     </div>
                                      <div class="col-xs-12">
-                                  <textarea class="form-control"  rows="3" placeholder="@Messages("comment")" name="exercise[@index].comments" value="@exercise.comments"></textarea>
+                                  <textarea class="form-control"  rows="3" placeholder="@Messages("comment")" name="exercise[@index].comments" >@exercise.comments</textarea>
                                      </div>
                                    </div>
                                    <hr>
@@ -296,7 +303,9 @@
                             </div>
                           </div>
 
-
+                        <td>@if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment)!=null){
+                          @Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).isevaluated
+                        }else{false]</td>
                         </tr>
                       }
                     </table>

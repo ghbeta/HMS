@@ -61,6 +61,7 @@ evaluation.repo=Repository
 evaluation.access=Accessible
 evaluation.finish=Add Evaluation
 evaluation.add=Add Evaluation
+evaluation.done=Evaluated
 homework.evaluation=Homework Evaluation
 gain=Gain
 total=Total

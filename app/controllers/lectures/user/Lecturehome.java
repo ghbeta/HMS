@@ -291,6 +291,7 @@ public class Lecturehome extends Controller {
 
                 handin.handin=new Date();
                 handin.setishandin();
+                handin.isevaluated=false;
                 //assignment.handin=new Date();
                 //assignment.setishandin();
                 //handin.

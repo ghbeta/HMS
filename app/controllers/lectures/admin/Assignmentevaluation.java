@@ -86,27 +86,39 @@ public class Assignmentevaluation extends Controller {
         int i=0;
         int j=0;
         while(iter.hasNext()) {
-            if (i / 3 == 0) {
+            if (i%3 == 0) {
               j=j+1;
-                Logger.warn("add exercise number "+(j-1)+" totalpoints "+iter.next().findPath("value").floatValue());
-                currenthandin.exercises.get(j-1).totalpoints=iter.next().findPath("value").floatValue();
-            }
+               // i=i+1;
+                //Logger.warn("add exercise number "+(j-1)+" totalpoints "+iter.next().findPath("value").textValue());
+                currenthandin.exercises.get(j-1).earndpoints= Float.parseFloat(iter.next().findPath("value").textValue());
 
-            if(i/3==1){
-                Logger.warn("add exercise number "+(j-1)+" earndpoints "+iter.next().findPath("value").floatValue());
-                currenthandin.exercises.get(j-1).earndpoints=iter.next().findPath("value").floatValue();
-            }
 
-            if(i/3==2){
-                Logger.warn("add exercise number "+(j-1)+" comments "+iter.next().findPath("value").textValue());
+            }
+//
+            if(i%3==1){
+                //i=i+1;
+                //Logger.warn("add exercise number "+(j-1)+" earndpoints "+iter.next().findPath("value").floatValue());
+                currenthandin.exercises.get(j-1).totalpoints= Float.parseFloat(iter.next().findPath("value").textValue());
+            }
+//
+            if(i%3==2){
+                //i=i+1;
+                //Logger.warn("add exercise number "+(j-1)+" comments "+iter.next().findPath("value").textValue());
                 currenthandin.exercises.get(j-1).comments=iter.next().findPath("value").textValue();
-                currenthandin.exercises.get(j-1).update(semester);
+                //currenthandin.exercises.get(j-1).update(semester);
             }
-        i++;
-
+//        i++;
+//
+//          System.out.println(i%3);
+           i++;
+           //Logger.warn(""+i);
             //Logger.warn("passed json data " + iter.next().findPath("value").textValue());
         }
         currenthandin.marker=marker;
+        currenthandin.isevaluated=true;
+        currenthandin.setEarndpoints();
+        currenthandin.setTotalpoints();
+        currenthandin.setIsvalid();
         currenthandin.update(semester);
         return ok(json.toString());
     }
