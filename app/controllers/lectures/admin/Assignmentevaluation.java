@@ -78,6 +78,7 @@ public class Assignmentevaluation extends Controller {
     public static Result addevaluation(String semester,String lecturename,String assignment,String student){
         JsonNode json = request().body().asJson();
         Lecture currentlecture=Lecture.getlecturebyname(lecturename,semester);
+        Semesteruser marker=Semesteruser.findByEmail(ctx().session().get("email"),semester);
         Semesteruser students=Semesteruser.findByEmail(student, semester);
         Assignment currentassignment=Assignment.findById(semester,assignment);
         Handin currenthandin=Handin.getHandinofassignmentofstudentinlecture(semester,currentlecture,students,currentassignment);
@@ -105,6 +106,8 @@ public class Assignmentevaluation extends Controller {
 
             //Logger.warn("passed json data " + iter.next().findPath("value").textValue());
         }
+        currenthandin.marker=marker;
+        currenthandin.update(semester);
         return ok(json.toString());
     }
 }
