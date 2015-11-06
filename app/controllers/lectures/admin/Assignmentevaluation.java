@@ -87,14 +87,17 @@ public class Assignmentevaluation extends Controller {
         while(iter.hasNext()) {
             if (i / 3 == 0) {
               j=j+1;
+                Logger.warn("add exercise number "+(j-1)+" totalpoints "+iter.next().findPath("value").floatValue());
                 currenthandin.exercises.get(j-1).totalpoints=iter.next().findPath("value").floatValue();
             }
 
             if(i/3==1){
+                Logger.warn("add exercise number "+(j-1)+" earndpoints "+iter.next().findPath("value").floatValue());
                 currenthandin.exercises.get(j-1).earndpoints=iter.next().findPath("value").floatValue();
             }
 
             if(i/3==2){
+                Logger.warn("add exercise number "+(j-1)+" comments "+iter.next().findPath("value").textValue());
                 currenthandin.exercises.get(j-1).comments=iter.next().findPath("value").textValue();
                 currenthandin.exercises.get(j-1).update(semester);
             }
