@@ -1,9 +1,13 @@
 /**
  * Created by Hao on 2015/11/5.
  */
-function test()
+function submit()
 {
-    var formData = form2js('exerciseForm', '.',true);
+    //var idofform="'"+formid+"'";
+    //console.log(idofform);
+    var formData = form2js('testForm', '.',true);
 
-    document.getElementById('testArea').innerHTML = JSON.stringify(formData);
+    console.log("click");
+    console.log(JSON.stringify(formData));
+    //document.getElementById('testArea').innerHTML = JSON.stringify(formData);
 }
