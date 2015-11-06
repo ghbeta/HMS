@@ -254,7 +254,7 @@
                           </td>
                           <td>@if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment)!=null){
                             @if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).isevaluated){
-                              @Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).earndpoints/@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).totalpoints
+                              <a data-toggle="modal" data-target="#@assignment.id@stu.id">@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).earndpoints/@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).totalpoints</a>
                             }else{
                               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#@assignment.id@stu.id">
                                 @Messages("evaluation.add")
@@ -295,7 +295,7 @@
                                    </div>
                                    <hr>
                                }
-                                  <input type="submit">
+                                    <input class="btn btn-primary" type="submit">
                                 }
                                 </form>
                                 </div>
@@ -305,7 +305,7 @@
 
                         <td>@if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment)!=null){
                           @Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).isevaluated
-                        }else{false]</td>
+                        }else{false}</td>
                         </tr>
                       }
                     </table>
