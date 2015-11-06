@@ -1,10 +1,8 @@
 package controllers.lectures.admin;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.jcraft.jsch.Session;
-import models.Lecture;
-import models.Repo;
-import models.Semesteruser;
-import models.User;
+import models.*;
 import nl.minicom.gitolite.manager.models.Config;
 import nl.minicom.gitolite.manager.models.ConfigManager;
 import nl.minicom.gitolite.manager.models.Permission;
@@ -15,11 +13,14 @@ import org.eclipse.jgit.transport.JschConfigSessionFactory;
 import org.eclipse.jgit.transport.OpenSshConfig;
 import org.eclipse.jgit.transport.SshSessionFactory;
 import play.Logger;
+import play.libs.Json;
+import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import Permission.Securedassistant;
 import java.io.IOException;
+import java.util.Iterator;
 
 import static utils.RepoManager.adminrepofilepath;
 import static utils.RepoManager.configrepopath;
@@ -70,5 +71,37 @@ public class Assignmentevaluation extends Controller {
             return false;
         }
 
+    }
+
+    @BodyParser.Of(BodyParser.Json.class)
+    @Security.Authenticated(Securedassistant.class)
+    public static Result addevaluation(String semester,String lecturename,String assignment,String student){
+        JsonNode json = request().body().asJson();
+        Lecture currentlecture=Lecture.getlecturebyname(lecturename,semester);
+        Semesteruser students=Semesteruser.findByEmail(student, semester);
+        Assignment currentassignment=Assignment.findById(semester,assignment);
+        Handin currenthandin=Handin.getHandinofassignmentofstudentinlecture(semester,currentlecture,students,currentassignment);
+        Iterator<JsonNode> iter=json.elements();
+        int i=0;
+        int j=0;
+        while(iter.hasNext()) {
+            if (i / 3 == 0) {
+              j=j+1;
+                currenthandin.exercises.get(j-1).totalpoints=iter.next().findPath("value").floatValue();
+            }
+
+            if(i/3==1){
+                currenthandin.exercises.get(j-1).earndpoints=iter.next().findPath("value").floatValue();
+            }
+
+            if(i/3==2){
+                currenthandin.exercises.get(j-1).comments=iter.next().findPath("value").textValue();
+                currenthandin.exercises.get(j-1).update(semester);
+            }
+        i++;
+
+            //Logger.warn("passed json data " + iter.next().findPath("value").textValue());
+        }
+        return ok(json.toString());
     }
 }

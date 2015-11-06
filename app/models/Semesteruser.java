@@ -87,6 +87,10 @@ public class Semesteruser extends Abstractuser {
         return currentServer(database).find(Semesteruser.class).where().eq("email", email).findUnique();
     }
 
+    public static Semesteruser findByUserhash(String userhash,String database){
+        return currentServer(database).find(Semesteruser.class).where().eq("userHash", userhash).findUnique();
+    }
+
     public static Semesteruser findById(String id,String database){
         return currentServer(database).find(Semesteruser.class).where().eq("id",id).findUnique();
     }

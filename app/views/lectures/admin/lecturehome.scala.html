@@ -268,23 +268,25 @@
                               <div class="modal-content">
                                 <div class="modal-header">
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                  <h4 class="modal-title" id="myModalLabel">@Messages("homework.evaluation")</h4>
+                                  <h4 class="modal-title" id="myModalLabel">@Messages("homework.evaluation")_@stu.lastname"_"@assignment.title</h4>
                                 </div>
                                 <div class="modal-body">
-                             <form id="@assignment.title@stu.userHash" action="javascript:submit('@assignment.title@stu.userHash')">
+                             <form id="@assignment.title@stu.userHash" action="javascript:submit('@assignment.title@stu.userHash','@lecture.semester','@lecture.courseName','@assignment.id','@stu.email')">
                                 @if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment)!=null){
                                  @for((exercise,index)<-Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).exercises.zipWithIndex){
-                                      @exercise.title
-                                  <div class="form-group">
-                                      <label>@Messages("gain")</label>
-                                      <input type="number"  step="0.01" class="form-control" name="exercise[@index].totalpoints">
+                                   <div class="label label-info">@exercise.title</div>
+                                   <div class="row">
+                                  <div class="form-group col-xs-6">
+                                      <input type="number"  step="0.01" class="form-control" name="exercise[@index].totalpoints" placeholder="@Messages("gain")" value="@exercise.totalpoints">
                                     </div>
-                                    <div class="form-group">
-                                     <label>@Messages("total")</label>
-                                    <input type="number"  step="0.01" class="form-control" name="exercise[@index].earndpoints">
+                                    <div class="form-group col-xs-6">
+                                    <input type="number"  step="0.01" class="form-control" name="exercise[@index].earndpoints" placeholder="@Messages("total")" value="@exercise.earndpoints">
                                     </div>
-                                  <textarea class="form-control"  rows="3" placeholder="@Messages("comment")" name="exercise[@index].comments"></textarea>
-
+                                     <div class="col-xs-12">
+                                  <textarea class="form-control"  rows="3" placeholder="@Messages("comment")" name="exercise[@index].comments" value="@exercise.comments"></textarea>
+                                     </div>
+                                   </div>
+                                   <hr>
                                }
                                   <input type="submit">
                                 }
