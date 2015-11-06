@@ -1,13 +1,13 @@
 /**
  * Created by Hao on 2015/11/5.
  */
-function submit()
+function submit(formid)
 {
-    //var idofform="'"+formid+"'";
-    //console.log(idofform);
-    var formData = form2js('testForm', '.',true);
-
-    console.log("click");
+    var idofform="'"+"form"+"."+formid+"'";
+    console.log(idofform);
+    //var formData = form2js('testForm', '.',true);
+    var formData = $("#"+formid).serializeArray();
     console.log(JSON.stringify(formData));
+    //console.log(JSON.stringify(form));
     //document.getElementById('testArea').innerHTML = JSON.stringify(formData);
 }
