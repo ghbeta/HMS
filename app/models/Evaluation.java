@@ -1,5 +1,6 @@
 package models;
 
+import play.Logger;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
@@ -35,16 +36,21 @@ public class Evaluation extends Model {
         float getpoints=0f;
         for(int i=0;i<lecture.assignments.size();i++){
             totalpoints=totalpoints+lecture.assignments.get(i).totalpoints;
+            Logger.warn("totalpoints "+totalpoints);
         }
 
         for(int i =0;i<optional.size();i++){
             getpoints=getpoints+optional.get(i).earndpoints;
+            Logger.warn("earndpoints " +getpoints);
         }
 
         for(int i=0;i<required.size();i++){
             getpoints=getpoints+required.get(i).earndpoints;
+            Logger.warn("earndpoints " +getpoints);
         }
 
+        Logger.warn("totalpoints "+totalpoints);
+        Logger.warn("earndpoints " +getpoints);
         performance=getpoints/totalpoints;
     }
 
