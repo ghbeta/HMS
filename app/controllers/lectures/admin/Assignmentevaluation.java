@@ -82,6 +82,7 @@ public class Assignmentevaluation extends Controller {
         Semesteruser students=Semesteruser.findByEmail(student, semester);
         Assignment currentassignment=Assignment.findById(semester,assignment);
         Handin currenthandin=Handin.getHandinofassignmentofstudentinlecture(semester,currentlecture,students,currentassignment);
+        Evaluation eval=Evaluation.findByLectureAndUser(semester, currentlecture, students);
         Iterator<JsonNode> iter=json.elements();
         int i=0;
         int j=0;
@@ -120,6 +121,8 @@ public class Assignmentevaluation extends Controller {
         currenthandin.setTotalpoints();
         currenthandin.setIsvalid();
         currenthandin.update(semester);
+        eval.setPerformance(semester,currentlecture,students);
+        eval.update(semester);
         return ok(json.toString());
     }
 }
