@@ -58,6 +58,8 @@ public class Lecturehome extends Controller {
 
         public File uploadfile;
 
+        public float totalpoints;
+
         @Column(columnDefinition = "TEXT")
         public String addtionalinfo;
 

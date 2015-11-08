@@ -82,6 +82,7 @@ lecture.singup=Join
 lecture.adduser.fail=Can not add you to this lecture
 deadline=Deadline
 Number.exercise=Amount of exercise
+Number.totalpoints=Total Points
 Lecture.assignment.uploadfail=File Upload failed
 Lecture.assignment.create=Assignment is created
 Lecture.assignment.path=Delete current uploaded File:
