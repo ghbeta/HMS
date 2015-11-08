@@ -7,6 +7,7 @@ import models.*;
 import play.Logger;
 import play.Play;
 import play.data.Form;
+import play.data.validation.Constraints;
 import play.i18n.Messages;
 import play.mvc.*;
 import views.html.lectures.admin.lecturehome;
@@ -58,6 +59,7 @@ public class Lecturehome extends Controller {
 
         public File uploadfile;
 
+        @Constraints.Required
         public float totalpoints;
 
         @Column(columnDefinition = "TEXT")
@@ -142,6 +144,7 @@ public class Lecturehome extends Controller {
             }
 
         }
+        assignment.totalpoints=assignmentformForm.get().totalpoints;
         assignment.addtionalinfo=assignmentformForm.get().addtionalinfo;
         assignment.deadline=assignmentformForm.get().deadline;
         MultipartFormData body= request().body().asMultipartFormData();
@@ -198,10 +201,12 @@ public class Lecturehome extends Controller {
         Semesteruser currentsemesteruser=Semesteruser.getSemesteruserfomrUser(semester, currentuser);
         Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
         Form<Assignmentform> assignmentformForm=Form.form(Assignmentform.class).bindFromRequest();
+        if(!assignmentformForm.hasErrors()){
         Assignment assignment=Assignment.findById(semester,assignmentid);
         assignment.numberofexercise=assignmentformForm.get().numberofexercise;
         assignment.addtionalinfo=assignmentformForm.get().addtionalinfo;
         assignment.deadline=assignmentformForm.get().deadline;
+        assignment.totalpoints=assignmentformForm.get().totalpoints;
         FilePart filePart=null;
        try{
         MultipartFormData body= request().body().asMultipartFormData();
@@ -237,6 +242,11 @@ public class Lecturehome extends Controller {
         else {
             assignment.update(semester);
             flash("success", Messages.get("Lecture.assignment.create"));
+            return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
+        }}
+        else{
+            Logger.warn("modify assignment form has errors");
+            flash("danger", Messages.get("Lecture.assignment.modify.fail"));
             return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
         }
     }

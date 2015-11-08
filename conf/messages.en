@@ -88,6 +88,7 @@ Lecture.assignment.create=Assignment is created
 Lecture.assignment.path=Delete current uploaded File:
 Lecture.assignment.revertfail=Revert Operation failed
 Lecture.assignment.revertsuccess=Revert Operation success,pls upload a new version
+Lecture.assignment.modify.fail=Lecture Form does not fill completly
 lectures.success=Success
 lectures.danger=Something is Wrong
 lectures.none = You do not seem to subscribe any Lectures in this semester
