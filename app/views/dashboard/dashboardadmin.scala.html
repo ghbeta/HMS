@@ -1,5 +1,19 @@
-@(user:User)
+@(user:User)(content:Html)
 
 @main(user){
-  hiho
+  <div class="container-fluid">
+    <div class="row">
+      <div class="media  col-md-12">
+        <div class="media-left">
+          <a href="http://www.uni-kassel.de">
+            <img class="media-object" src="/assets/images/unik.png">
+          </a>
+          <br>
+        </div>
+      </div>
+
+
+    @content
+    </div>
+  </div>
 }

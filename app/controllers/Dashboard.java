@@ -8,7 +8,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 import views.html.dashboard.dashboardadmin;
 import views.html.dashboard.index;
-
+import views.html.dashboard.indexadmin;
 
 
 public class Dashboard extends Controller {
@@ -18,5 +18,5 @@ public class Dashboard extends Controller {
     }
 
     @Security.Authenticated(Securedadmin.class)
-    public static Result admindashboard(){return ok(dashboardadmin.render(User.findByEmail(request().username(),"global")));}
+    public static Result admindashboard(){return ok(indexadmin.render(User.findByEmail(request().username(), "global")));}
 }
