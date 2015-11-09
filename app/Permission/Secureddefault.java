@@ -24,7 +24,7 @@ public class Secureddefault extends Security.Authenticator {
                     || current.roles.equals(UserRoll.Students.toString())
                     || current.roles.equals(UserRoll.Assistants.toString())
                     || current.roles.equals(UserRoll.Teachers.toString())
-                    || current.roles.equals(UserRoll.SystemAdmin.toString())) {
+                    ) {
                 Logger.warn("authorized user is allowed");
                 return ctx.session().get("email");
             } else {

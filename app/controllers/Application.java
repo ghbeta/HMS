@@ -1,6 +1,7 @@
 package controllers;
 
 import models.User;
+import models.UserRoll;
 import utils.AppException;
 import play.Logger;
 import play.data.Form;
@@ -29,6 +30,10 @@ public class Application extends Controller {
 
     public static Result GO_DASHBOARD = redirect(
             controllers.routes.Dashboard.index()
+    );
+
+    public static Result GO_ADMIN = redirect(
+           controllers.routes.Dashboard.admindashboard()
     );
 
     /**
@@ -150,7 +155,10 @@ public class Application extends Controller {
                 user.dateLastlogin=new Date();
                 user.save("global");
             }
-            return GO_DASHBOARD;
+            if(user.roles.equals(UserRoll.SystemAdmin.toString())){
+                return GO_ADMIN;
+            }else{
+            return GO_DASHBOARD;}
         }
     }
 
