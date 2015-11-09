@@ -6,8 +6,10 @@
 GET         /                                                                controllers.Application.index()
 GET         /dashboard                                                       controllers.Dashboard.index()
 #System Admin
-GET        /dashboard/admin                                                  controllers.Dashboard.admindashboard()
-GET        /usermanage/admin                                                 controllers.system.SystemControll.usermanagement()
+GET         /dashboard/admin                                                 controllers.Dashboard.admindashboard()
+GET         /usermanage/admin                                                controllers.system.SystemControll.usermanagementinit()
+POST        /usermanage/admin                                                controllers.system.SystemControll.usermanagement()
+POST       /usermanage/changerole/admin                                      controllers.system.SystemControll.changeuserrole()
 POST        /login                                                           controllers.Application.authenticate()
 GET         /logout                                                          controllers.Application.logout()
 

@@ -62,6 +62,14 @@ public class User extends Abstractuser{
         return currentServer(database).find(User.class).where().eq("id",id).findUnique();
     }
 
+    public static List<User> findByName(String lastname,String firstname,String database){
+        return currentServer(database).find(User.class).where().eq("lastname",lastname).eq("firstname",firstname).findList();
+    }
+
+    public static List<User> findAll(String database){
+        return currentServer(database).find(User.class).findList();
+    }
+
 //    /**
 //     * Retrieve a user from a fullname.
 //     *

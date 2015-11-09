@@ -7,38 +7,64 @@
       <h1>@Messages("change.userroll")</h1>
     </div>
 @if(userlist==null){
-   <div class="row col-md-6">
+   <div class="row col-md-12">
      <label>@Messages("Search.Type")</label>
      <select id="searchtype" class="form-control">
        <option value="0">@Messages("type.all")</option>
        <option value="1"  selected="selected">@Messages("type.name")</option>
        <option value="2">@Messages("type.id")</option>
      </select>
-     <form id="searchForm1">
+     <form action="@controllers.system.routes.SystemControll.usermanagement()" id="searchForm0" method="post">
+       <input class="btn btn-success" type="submit">
+     </form>
+     <form action="@controllers.system.routes.SystemControll.usermanagement()" id="searchForm1" method="post">
        <div class="form-group">
          <label>@Messages("signup.label.firstname")</label>
          <input type="text" class="form-control" name="firstname">
        </div>
        <div class="form-group">
          <label>@Messages("signup.label.lastname")</label>
-         <input type="text" class="form-control" name="lasename">
+         <input type="text" class="form-control" name="lastname">
        </div>
+       <input type="submit" class="btn btn-primary">
      </form>
 
-     <form id="searchForm2">
+     <form action="@controllers.system.routes.SystemControll.usermanagement()" id="searchForm2" method="post">
        <div class="form-group">
          <label>@Messages("search.id")</label>
          <input type="text" class="form-control" name="id">
        </div>
+       <input type="submit" class="btn btn-primary">
      </form>
    </div>
 }else{
-  <div class="row">
-    <select id="searchresult" class="form-control">
+  <div class="row col-md-12">
+    <table class="table table-striped custab">
+      <thead>
+        <tr>
+          <th>@Messages("user.id")</th>
+          <th>@Messages("user.lastname")</th>
+          <th>@Messages("user.firstname")</th>
+          <th>@Messages("user.email")</th>
+          <th>@Messages("currentroll")</th>
+          <th>@Messages("changeto")</th>
+        </tr>
+      </thead>
       @for((selectuser,index)<-userlist.zipWithIndex){
-        <option value=index></option>
+        <tr>
+          <td>@selectuser.id</td>
+          <td>@selectuser.lastname</td>
+          <td>@selectuser.firstname</td>
+          <td>@selectuser.email</td>
+          <td>@selectuser.roles</td>
+          <td><select onchange="changerole('@selectuser.email','@selectuser.id')" id='@selectuser.id' class="form-control">
+            <option value=@UserRoll.Students.toString>@UserRoll.Students.toString</option>
+            <option value=@UserRoll.Assistants.toString>@UserRoll.Assistants.toString</option>
+            <option value=@UserRoll.Teachers.toString>@UserRoll.Teachers.toString</option>
+          </select></td>
+        </tr>
       }
-    </select>
+    </table>
   </div>
 }
 
