@@ -4,6 +4,7 @@ import org.h2.tools.Server;
 import play.*;
 import play.Application;
 import play.api.PlayException;
+import utils.CreateAdmin;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -22,7 +23,7 @@ public class Global extends GlobalSettings{
     public void onStart(Application application) {
         super.onStart(application);
         Logger.info("Application started....");
-        List<Class> entity=new ArrayList<Class>();
+        List<Class> entity = new ArrayList<Class>();
         entity.add(User.class);
         entity.add(Token.class);
         entity.add(Semester.class);
@@ -39,7 +40,7 @@ public class Global extends GlobalSettings{
         entity1.add(Handin.class);
 
         try {
-            Server h2server= Server.createTcpServer("-tcpAllowOthers");
+            Server h2server = Server.createTcpServer("-tcpAllowOthers");
             h2server.start();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,19 +57,21 @@ public class Global extends GlobalSettings{
 //
 //        }
         createServer("global", entity);
-        List<Semester> database=null;
-        try{
-        database=Semester.getallsemester();}
-        catch (Exception e){
-            database=null;
-        }
-        if(database!=null){
-            for(int i=0;i<database.size();i++){
-                createServer(database.get(i).semester,entity1);
+        if (CreateAdmin.createadmin()) {
+            List<Semester> database = null;
+            try {
+                database = Semester.getallsemester();
+            } catch (Exception e) {
+                database = null;
             }
+            if (database != null) {
+                for (int i = 0; i < database.size(); i++) {
+                    createServer(database.get(i).semester, entity1);
+                }
+            }
+            //createServer("SS2016", entity1);
+            //createServer("WS2016", entity1);
         }
-        //createServer("SS2016", entity1);
-        //createServer("WS2016", entity1);
     }
 }
 

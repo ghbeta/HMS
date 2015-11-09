@@ -13,6 +13,7 @@ libraryDependencies ++= Seq(
   "org.mindrot" % "jbcrypt" % "0.3m",
   "com.typesafe.play.plugins" %% "play-plugins-mailer" % "2.3.1",
   "commons-io" % "commons-io" % "2.4",
+  "commons-validator" % "commons-validator" % "1.4.1",
   javaWs,
   filters
 )
