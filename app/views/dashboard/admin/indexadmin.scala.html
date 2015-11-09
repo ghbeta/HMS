@@ -1,6 +1,6 @@
 @(user: User)
 
-@dashboardadmin(user) {
+@views.html.dashboard.admin.dashboardadmin(user) {
     <div class="well media col-md-6 col-md-offset-1">
         <div class="pull-left">
             <img class="media-object" src="http://www.gravatar.com/avatar/@user.userHash"/>
@@ -8,8 +8,6 @@
         <div class="media-body">
             <h2 class="media-heading">@user.firstname @user.lastname</h2>
             <ul>
-                <li>Matrikel Number: @user.id</li>
-                <li>Lastname: @user.firstname</li>
                 <li>User Group: @user.roles.toString()</li>
                 <li>User created on: @user.dateCreation</li>
                 <li>User last login: @user.dateLastlogin</li>

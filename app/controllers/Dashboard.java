@@ -6,9 +6,9 @@ import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import views.html.dashboard.dashboardadmin;
+import views.html.dashboard.admin.dashboardadmin;
 import views.html.dashboard.index;
-import views.html.dashboard.indexadmin;
+import views.html.dashboard.admin.indexadmin;
 
 
 public class Dashboard extends Controller {
