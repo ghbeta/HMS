@@ -37,7 +37,9 @@ public class Securedteacher extends Security.Authenticator{
 
     @Override
     public Result onUnauthorized(Http.Context ctx) {
-            return ok(forbidden.render());
+        Logger.info(ctx.session().get("email"));
+        User current=User.findByEmail(ctx.session().get("email"), "global");
+            return ok(forbidden.render(current));
 
             }
 }

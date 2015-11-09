@@ -8,9 +8,10 @@ import play.mvc.Result;
 import play.mvc.Security;
 import views.html.forbidden;
 
-
-public class Secureddefault extends Security.Authenticator {
-
+/**
+ * Created by Hao on 2015/11/9.
+ */
+public class Securedadmin extends Security.Authenticator{
     @Override
     public String getUsername(Http.Context ctx) {
         Logger.info(ctx.session().get("email"));
@@ -20,11 +21,7 @@ public class Secureddefault extends Security.Authenticator {
             if (current.roles == null) {
                 current.roles = "";
             }
-            if (current.roles.equals(UserRoll.Defaultuser.toString())
-                    || current.roles.equals(UserRoll.Students.toString())
-                    || current.roles.equals(UserRoll.Assistants.toString())
-                    || current.roles.equals(UserRoll.Teachers.toString())
-                    || current.roles.equals(UserRoll.SystemAdmin.toString())) {
+            if (current.roles.equals(UserRoll.SystemAdmin.toString())) {
                 Logger.warn("authorized user is allowed");
                 return ctx.session().get("email");
             } else {
@@ -34,7 +31,7 @@ public class Secureddefault extends Security.Authenticator {
             return null;
         }
 
-//        return ctx.session().get("roles");
+        //        return ctx.session().get("roles");
 
     }
 

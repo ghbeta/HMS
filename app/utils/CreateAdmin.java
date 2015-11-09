@@ -3,7 +3,6 @@ package utils;
 import models.User;
 import models.UserRoll;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.validator.routines.EmailValidator;
 import play.Logger;
 
 import java.io.File;
