@@ -23,10 +23,13 @@
           </div>
           <div id="myProfile" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
             <div class="list-group">
+              <a href="@controllers.routes.Dashboard.admindashboard()" class="list-group-item">
+                @Messages("dashboard.home")
+              </a>
               <a href="@controllers.system.routes.SystemControll.usermanagementinit()" class="list-group-item">
               @Messages("dashboard.admin.user")
               </a>
-              <a href="@controllers.account.settings.routes.Index.index()" class="list-group-item">
+              <a href="@controllers.system.routes.SystemControll.databasemanagementinit()" class="list-group-item">
               @Messages("dashboard.admin.database")
               </a>
             </div>

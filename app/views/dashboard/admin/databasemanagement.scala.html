@@ -1,0 +1,30 @@
+@(user:User)(databases:List[Semester])
+
+@dashboard.admin.dashboardadmin(user){
+  <div class="well well-sm col-md-6 col-md-offset-1">
+    <div class="page-header">
+      <h1>@Messages("change.database")</h1>
+    </div>
+    @if(databases!=null){
+      <div class="alert alert-warning">@Messages("database.warn")</div>
+      <div class="row col-md-12">
+        <table class="table table-striped custab">
+          <thead>
+            <tr>
+              <th>@Messages("databasename")</th>
+              <th>@Messages("action")</th>
+            </tr>
+          </thead>
+          @for((database,index)<-databases.zipWithIndex){
+            <tr>
+              <td>@database.getSemester()</td>
+              <td><button id="@database.getSemester()" onclick="disconnectdatabase('@database.getSemester','@database.getSemester()')" class="btn btn-danger">@Messages("disconnect")</button></td>
+            </tr>
+          }
+        </table>
+      </div>
+    }else{
+      <div class="alert alert-info">@Messages("no.database")</div>
+    }
+  </div>
+}

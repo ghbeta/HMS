@@ -8,8 +8,10 @@ GET         /dashboard                                                       con
 #System Admin
 GET         /dashboard/admin                                                 controllers.Dashboard.admindashboard()
 GET         /usermanage/admin                                                controllers.system.SystemControll.usermanagementinit()
+GET         /databasemanage/admin                                            controllers.system.SystemControll.databasemanagementinit()
+POST       /databasemanage/admin                                            controllers.system.SystemControll.databasemanagement()
 POST        /usermanage/admin                                                controllers.system.SystemControll.usermanagement()
-POST       /usermanage/changerole/admin                                      controllers.system.SystemControll.changeuserrole()
+POST        /usermanage/changerole/admin                                     controllers.system.SystemControll.changeuserrole()
 POST        /login                                                           controllers.Application.authenticate()
 GET         /logout                                                          controllers.Application.logout()
 

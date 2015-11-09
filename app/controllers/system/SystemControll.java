@@ -2,6 +2,7 @@ package controllers.system;
 
 import Permission.Securedadmin;
 import com.fasterxml.jackson.databind.JsonNode;
+import models.Semester;
 import models.User;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -10,6 +11,7 @@ import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import views.html.dashboard.admin.databasemanagement;
 import views.html.dashboard.admin.usermanagement;
 
 import java.util.ArrayList;
@@ -63,4 +65,19 @@ public class SystemControll extends Controller {
        return badRequest(Messages.get("change.role.fail"));
     }
 
+    @BodyParser.Of(BodyParser.Json.class)
+    @Security.Authenticated(Securedadmin.class)
+    public static Result databasemanagement(){
+
+        JsonNode json = request().body().asJson();
+        Semester semester=Semester.findsemester(json.asText());
+        semester.delete("global");
+        return ok("database delete successful");
+    }
+
+    @Security.Authenticated(Securedadmin.class)
+    public static Result databasemanagementinit(){
+        List<Semester> semesters=Semester.getallsemester();
+        return ok(databasemanagement.render(User.findByEmail(request().username(), "global"),semesters));
+    }
 }

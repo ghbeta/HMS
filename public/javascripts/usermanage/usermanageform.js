@@ -45,3 +45,20 @@ function changerole(email,selectid){
     xhr.send(senddata);
 }
 
+function disconnectdatabase(semester,buttonid){
+    var senddata=JSON.stringify(semester);
+    var posturl="/databasemanage/admin";
+    console.log(senddata);
+    var button=document.getElementById(buttonid);
+    var xhr= new XMLHttpRequest();
+    xhr.open('POST',posturl);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            alert(xhr.responseText);
+            button.disabled=true;
+        }
+    }
+    xhr.send(senddata);
+
+}
