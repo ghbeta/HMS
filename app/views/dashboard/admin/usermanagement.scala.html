@@ -1,0 +1,52 @@
+@(user:User)(userlist:List[User])
+
+@dashboard.admin.dashboardadmin(user){
+
+  <div class="well well-sm col-md-6">
+    <div class="page-header">
+      <h1>@Messages("change.userroll")</h1>
+    </div>
+@if(userlist==null){
+   <div class="row col-md-6">
+     <label>@Messages("Search.Type")</label>
+     <select id="searchtype" class="form-control">
+       <option value="0">@Messages("type.all")</option>
+       <option value="1"  selected="selected">@Messages("type.name")</option>
+       <option value="2">@Messages("type.id")</option>
+     </select>
+     <form id="searchForm1">
+       <div class="form-group">
+         <label>@Messages("signup.label.firstname")</label>
+         <input type="text" class="form-control" name="firstname">
+       </div>
+       <div class="form-group">
+         <label>@Messages("signup.label.lastname")</label>
+         <input type="text" class="form-control" name="lasename">
+       </div>
+     </form>
+
+     <form id="searchForm2">
+       <div class="form-group">
+         <label>@Messages("search.id")</label>
+         <input type="text" class="form-control" name="id">
+       </div>
+     </form>
+   </div>
+}else{
+  <div class="row">
+    <select id="searchresult" class="form-control">
+      @for((selectuser,index)<-userlist.zipWithIndex){
+        <option value=index></option>
+      }
+    </select>
+  </div>
+}
+
+
+
+  </div>
+
+
+
+
+}

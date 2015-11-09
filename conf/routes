@@ -5,9 +5,9 @@
 # Home page
 GET         /                                                                controllers.Application.index()
 GET         /dashboard                                                       controllers.Dashboard.index()
-
+#System Admin
 GET        /dashboard/admin                                                  controllers.Dashboard.admindashboard()
-
+GET        /usermanage/admin                                                 controllers.system.SystemControll.usermanagement()
 POST        /login                                                           controllers.Application.authenticate()
 GET         /logout                                                          controllers.Application.logout()
 
