@@ -328,7 +328,41 @@
 
       </div>
       <div class="tab-pane" id="forum">
-        forum
+        <div class="page-header">
+          <h1>@Messages("forum.header")</h1><small>@Messages("forum.note")</small>
+        </div>
+        <div class="row col-md-12">
+          <button class="btn btn-success">@Messages("forum.create")</button>
+          <div class="btn-group">
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              @Messages("forum.action") <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#">@Messages("thread.all")</a></li>
+              <li><a href="#">@Messages("thread.my")</a></li>
+              <li><a href="#">@Messages("post.my")</a></li>
+            </ul>
+          </div>
+        </div>
+        <table class="table table-striped custab">
+          <thead>
+            <tr>
+              <th>@Messages("thread.creator")</th>
+              <th>@Messages("thread.title")</th>
+              <th>@Messages("thread.reply")</th>
+              <th>@Messages("thread.lastchange")</th>
+            </tr>
+          </thead>
+          @for(thread<-lecture.threads){
+          <tr>
+            <td><div class="pull-left">
+              <img class="media-object" src="http://www.gravatar.com/avatar/@user.userHash"/>
+            </div> @thread.creator.firstname @thread.creator.lastname</td>
+            <td>@thread.title</td>
+            <td>@thread.replyposts.size()</td>
+            <td>ddd</td>
+          </tr>}
+        </table>
       </div>
     </div>
   </div>
