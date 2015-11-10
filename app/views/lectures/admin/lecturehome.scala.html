@@ -1,4 +1,4 @@
-@(user:User)(semesteruser: Semesteruser)(lecture: Lecture)(mythreads:List[Thread])(myposts:List[Post])
+@(user:User)(semesteruser: Semesteruser)(lecture: Lecture)
 
 @dashboard.dashboard(user){
   <div class="col-md-8 well well-sm">
@@ -327,8 +327,8 @@
           </div>
 
       </div>
-      <div class="tab-pane" id="forum">Secondo sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
-        Aliquam in felis sit amet augue.
+      <div class="tab-pane" id="forum">
+        @views.html.lectures.lectureforum(user,semesteruser,lecture)
       </div>
     </div>
   </div>

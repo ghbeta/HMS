@@ -1,4 +1,4 @@
-@(user:User)(semesteruser: Semesteruser)(lecture: Lecture)(mythreads:List[Thread])(myposts:List[Post])
+@(user:User)(semesteruser: Semesteruser)(lecture: Lecture)
 @dashboard.dashboard(user){
   <div class="col-md-8 well well-sm">
     <div class="text-center">@wflash()</div>
@@ -191,6 +191,7 @@
                       <th>@Messages("assignment.exercise")</th>
                       <th>@Messages("lecture.form.addionalinfo")</th>
                       <th>@Messages("assignment.status.repo")</th>
+                      <th  class="text-center">@Messages("assignment.action")</th>
                       <th>@Messages("assginment.evaluation")</th>
                       <th>@Messages("assignment.expired")</th>
                     </tr>
@@ -201,6 +202,10 @@
                       <td>@currentassignment.numberofexercise</td>
                       <td>@currentassignment.addtionalinfo</td>
                       <td>@controllers.lectures.user.Lecturehome.lastUpdateStatus(semesteruser,lecture)</td>
+                      <td  class="text-center">
+                      @if(currentassignment.isExpired){<a href="@controllers.lectures.user.routes.Lecturehome.handinhomeworkremote(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)" title="@Messages("Assignment.handin")"><i class="fa fa-pencil-square-o"></i></a>
+                        <a title="revert last upload" href="@controllers.lectures.user.routes.Lecturehome.reverthandinhomeworkremote(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)"><i class="fa fa-times"></i></a>}
+                      </td>
                       <td><a data-toggle="modal" data-target="#evalr@currentassignment.id" title="@Messages("click.for.detail")">
                         @if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment)!=null){
                         @Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).earndpoints/@currentassignment.totalpoints}else{
@@ -215,7 +220,17 @@
                             <h4 class="modal-title" id="myModalLabel">@Messages("Assignment.evaluation")</h4>
                           </div>
                           <div class="modal-body">
-                          show some results
+                          @if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment)!=null){
+                            @for(exercise<-Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).exercises){
+                              <div class="row">
+                                <div class="lable label-info text-center">@exercise.title</div>
+                                <div class="col-xs-2"><label>@Messages("gain")</label>@exercise.earndpoints</div>
+                                <div class="col-xs-2"><label>@Messages("total")</label>@exercise.totalpoints</div>
+                                <blockquote class="col-xs-12"><p>@exercise.comments</p><footer>@Messages("comment")</footer></blockquote>
+                              </div>
+                            }
+
+                          }else{<span class="alert alert-warning">@Messages("nohandin")</span>}
                           </div>
                         </div>
                       </div>
@@ -241,7 +256,7 @@
         }
       </div>
       <div class="tab-pane" id="forum">
-        there is a forum
+      @views.html.lectures.lectureforum(user,semesteruser,lecture)
       </div>
     </div>
 

@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name="post")
-public class Post extends Model {
+public class ForumPost extends Model {
     @Id
     @GeneratedValue
     public String id;
@@ -26,7 +26,7 @@ public class Post extends Model {
     public Date creattime;
 
     @ManyToOne
-    public Thread parent;
+    public ForumThread parent;
 
     @ManyToOne
     public Semesteruser creator;

@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "thread")
-public class Thread extends Model {
+public class ForumThread extends Model {
     @Id
     @GeneratedValue
     public String id;
@@ -36,5 +36,5 @@ public class Thread extends Model {
     public Semesteruser creator;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "parent")
-    public List<Post> replyposts;
+    public List<ForumPost> replyposts;
 }

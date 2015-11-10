@@ -9,7 +9,7 @@ GET         /dashboard                                                       con
 GET         /dashboard/admin                                                 controllers.Dashboard.admindashboard()
 GET         /usermanage/admin                                                controllers.system.SystemControll.usermanagementinit()
 GET         /databasemanage/admin                                            controllers.system.SystemControll.databasemanagementinit()
-POST       /databasemanage/admin                                            controllers.system.SystemControll.databasemanagement()
+POST        /databasemanage/admin                                            controllers.system.SystemControll.databasemanagement()
 POST        /usermanage/admin                                                controllers.system.SystemControll.usermanagement()
 POST        /usermanage/changerole/admin                                     controllers.system.SystemControll.changeuserrole()
 POST        /login                                                           controllers.Application.authenticate()
@@ -69,8 +69,10 @@ POST        /admin/:semester/:lecture/:assignment/:student/evaluation        con
 GET         /usr/:user/:semester/:lecture                                    controllers.lectures.user.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
 #Hand in Homework(Students)
 POST        /usr/:user/:semester/:lecture/handin                             controllers.lectures.user.Lecturehome.handinhomework(assignmentid:String,user:String,semester:String,lecture:String)
+GET        /usr/:user/:semester/:lecture/remote/handin                      controllers.lectures.user.Lecturehome.handinhomeworkremote(assignmentid:String,user:String,semester:String,lecture:String)
 #Revert last handin homework
 GET         /usr/:user/:semester/:lecture/revert                             controllers.lectures.user.Lecturehome.reverthandinhomework(assignmentid:String,user:String,semester:String,lecture:String)
+GET         /usr/:user/:semester/:lecture/remote/revert                             controllers.lectures.user.Lecturehome.reverthandinhomeworkremote(assignmentid:String,user:String,semester:String,lecture:String)
 #About static page
 GET         /about                                                           controllers.About.index()
 #File service (hosted file on host server)

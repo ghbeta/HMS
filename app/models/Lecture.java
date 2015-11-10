@@ -1,16 +1,11 @@
 package models;
 
-import com.avaje.ebean.*;
-import com.avaje.ebean.Query;
-import org.joda.time.DateTime;
 import play.data.format.Formats;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import static com.avaje.ebean.Ebean.getServer;
 
@@ -69,10 +64,10 @@ public class Lecture extends Model {
     public List<Evaluation> evaluations;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "lecture")
-    public List<Thread> threads;
+    public List<ForumThread> threads;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "lecture")
-    public List<Post> posts;
+    public List<ForumPost> posts;
 
     public boolean isExpired(){
         Date date=new Date();

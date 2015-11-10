@@ -4,9 +4,7 @@ import play.data.format.Formats;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Hao on 2015/10/8.
@@ -43,10 +41,10 @@ public class Semesteruser extends Abstractuser {
     public List<Evaluation> evaluations;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "creator")
-    public List<Thread> threads;
+    public List<ForumThread> threads;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "creator")
-    public List<Post> posts;
+    public List<ForumPost> posts;
 
 
     public Repo getRepoByLecture(Lecture lecture){
