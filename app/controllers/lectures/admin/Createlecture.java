@@ -152,6 +152,8 @@ public class Createlecture extends Controller {
                 entity.add(Repo.class);
                 entity.add(Evaluation.class);
                 entity.add(Handin.class);
+                entity.add(ForumPost.class);
+                entity.add(ForumThread.class);
                 createServer(semester, entity);
                 Semester addsemester = new Semester();
                 addsemester.semester = semester;
@@ -223,9 +225,6 @@ public class Createlecture extends Controller {
             User globaluser=User.findByEmail(ctx().session().get("email"),"global");
 
             if (Semester.findsemester(semester) == null) {
-                Semester addsemester = new Semester();
-                addsemester.semester = semester;
-                addsemester.save("global");
                 List<Class> entity = new ArrayList<Class>();
                 entity.add(Semesteruser.class);
                 entity.add(Assignment.class);
@@ -233,7 +232,14 @@ public class Createlecture extends Controller {
                 entity.add(Lecture.class);
                 entity.add(Message.class);
                 entity.add(Repo.class);
+                entity.add(Evaluation.class);
+                entity.add(Handin.class);
+                entity.add(ForumPost.class);
+                entity.add(ForumThread.class);
                 createServer(semester, entity);
+                Semester addsemester = new Semester();
+                addsemester.semester = semester;
+                addsemester.save("global");
             }
             Lecture lecture = new Lecture();
             lecture.semester = semester;
