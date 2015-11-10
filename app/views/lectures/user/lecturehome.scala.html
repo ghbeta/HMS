@@ -1,4 +1,4 @@
-@(user:User)(semesteruser: Semesteruser)(lecture: Lecture)
+@(user:User)(semesteruser: Semesteruser)(lecture: Lecture)(mythreads:List[Thread])(myposts:List[Post])
 @dashboard.dashboard(user){
   <div class="col-md-8 well well-sm">
     <div class="text-center">@wflash()</div>

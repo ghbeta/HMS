@@ -68,6 +68,12 @@ public class Lecture extends Model {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "lecture")
     public List<Evaluation> evaluations;
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "lecture")
+    public List<Thread> threads;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "lecture")
+    public List<Post> posts;
+
     public boolean isExpired(){
         Date date=new Date();
         return closingdate!=null&&date.before(closingdate);

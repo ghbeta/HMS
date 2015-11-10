@@ -42,6 +42,12 @@ public class Semesteruser extends Abstractuser {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "student")
     public List<Evaluation> evaluations;
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "creator")
+    public List<Thread> threads;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "creator")
+    public List<Post> posts;
+
 
     public Repo getRepoByLecture(Lecture lecture){
         Repo repo=Repo.findRepoByLectureAndOwner(lecture.semester,this,lecture);
