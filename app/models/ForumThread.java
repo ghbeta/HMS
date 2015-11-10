@@ -1,11 +1,14 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import play.data.format.Formats;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
+import static com.avaje.ebean.Ebean.getServer;
 
 /**
  * Created by Hao on 2015/11/10.
@@ -37,4 +40,8 @@ public class ForumThread extends Model {
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "parent")
     public List<ForumPost> replyposts;
+
+    public static List<ForumThread> findByLecture(String semester,Lecture lecture){
+        return getServer(semester).find(ForumThread.class).where().eq("lecture.courseName",lecture.courseName).findList();
+    }
 }

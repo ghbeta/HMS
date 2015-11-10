@@ -28,6 +28,9 @@ public class ForumPost extends Model {
     @ManyToOne
     public ForumThread parent;
 
+    @Version
+    private Long version;
+
     @ManyToOne
     public Semesteruser creator;
 

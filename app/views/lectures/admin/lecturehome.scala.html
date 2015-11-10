@@ -327,12 +327,12 @@
           </div>
 
       </div>
-      <div class="tab-pane" id="forum">
+      <div ng-app="forumapp" ng-controller="forumcontroller" class="tab-pane" id="forum">
         <div class="page-header">
           <h1>@Messages("forum.header")</h1><small>@Messages("forum.note")</small>
         </div>
         <div class="row col-md-12">
-          <button class="btn btn-success">@Messages("forum.create")</button>
+          <button ng-click="section(1)" class="btn btn-success">@Messages("forum.create")</button>
           <div class="btn-group">
             <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               @Messages("forum.action") <span class="caret"></span>
@@ -343,26 +343,33 @@
               <li><a href="#">@Messages("post.my")</a></li>
             </ul>
           </div>
+          <hr>
+          <form  id="createthreadform" ng-show="showsection(1)" class="form-horizontal">
+            <input name="title" type="text" class="form-control" placeholder="@Messages("thread.title")"><br>
+            <textarea name="content" class="form-control" rows="5" placeholder="@Messages("content")"></textarea><br>
+            <input class="btn btn-primary" type="submit" ng-click="newthread('@lecture.semester','@semesteruser.id','@lecture.courseName')">
+          </form>
+          <table ng-show="showsection(2)" class="table table-striped custab">
+            <thead>
+              <tr>
+                <th>@Messages("thread.creator")</th>
+                <th>@Messages("thread.title")</th>
+                <th>@Messages("thread.reply")</th>
+                <th>@Messages("thread.lastchange")</th>
+              </tr>
+            </thead>
+            @for(thread<-lecture.threads){
+              <tr>
+                <td><div class="pull-left">
+                  <img class="media-object" src="http://www.gravatar.com/avatar/@user.userHash"/>
+                </div> @thread.creator.firstname @thread.creator.lastname</td>
+                <td>@thread.title</td>
+                <td>@thread.replyposts.size()</td>
+                <td>ddd</td>
+              </tr>}
+          </table>
         </div>
-        <table class="table table-striped custab">
-          <thead>
-            <tr>
-              <th>@Messages("thread.creator")</th>
-              <th>@Messages("thread.title")</th>
-              <th>@Messages("thread.reply")</th>
-              <th>@Messages("thread.lastchange")</th>
-            </tr>
-          </thead>
-          @for(thread<-lecture.threads){
-          <tr>
-            <td><div class="pull-left">
-              <img class="media-object" src="http://www.gravatar.com/avatar/@user.userHash"/>
-            </div> @thread.creator.firstname @thread.creator.lastname</td>
-            <td>@thread.title</td>
-            <td>@thread.replyposts.size()</td>
-            <td>ddd</td>
-          </tr>}
-        </table>
+
       </div>
     </div>
   </div>
