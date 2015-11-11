@@ -344,10 +344,10 @@
             </ul>
           </div>
           <hr>
-          <form  action="@controllers.lectures.routes.Lectureforum.createthread(user.lastname,lecture.semester,lecture.courseName)#forum" method="post" id="createthreadform" ng-show="showsection(1)" class="form-horizontal">
-            <input name="title" type="text" class="form-control" placeholder="@Messages("thread.title")"><br>
-            <textarea name="content" class="form-control" rows="5" placeholder="@Messages("content")"></textarea><br>
-            <input class="btn btn-primary" type="submit">
+          <form  action="@controllers.lectures.routes.Lectureforum.createthread(user.lastname,lecture.semester,lecture.courseName)#forum" method="post" id="createthreadform" name="createthreadform" ng-show="showsection(1)" class="form-horizontal">
+            <input name="title" ng-model="title" required type="text" class="form-control" placeholder="@Messages("thread.title")"><br>
+            <textarea name="content" ng-model="content" required class="form-control" rows="5" placeholder="@Messages("content")"></textarea><br>
+            <input ng-disabled="!(createthreadform.title.$dirty && createthreadform.content.$dirty)" class="btn btn-primary" type="submit">
           </form>
           <table ng-show="showsection(2)" class="table table-striped custab">
             <thead>
