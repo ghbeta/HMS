@@ -76,7 +76,7 @@ GET         /usr/:user/:semester/:lecture/remote/revert                      con
 #Forum routes
 POST        /:semester/:lecturename/forum/newthread                          controllers.lectures.Lectureforum.createthread(user:String,semester:String,lecturename:String)
 GET         /:semester/:lecturename/forum/show/:thread                       controllers.lectures.Lectureforum.getthread(semester:String,lecturename:String,thread:String)
-#POST        /admin/:user/:semester/:lecture                                   controllers.lectures.Lectureforum.createthread(user:String,semester:String,lecture:String)
+POST       /:semester/:lecturename/forum/show/:thread/newpost                controllers.lectures.Lectureforum.createpost(semester:String,lecturename:String,thread:String)
 #About static page
 GET         /about                                                           controllers.About.index()
 #File service (hosted file on host server)

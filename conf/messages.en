@@ -185,6 +185,7 @@ forum.thread.content=Content
 forum.action=Forum Filter
 thread.all=All Thread
 thread.my=My Thread
+thread.starter=Original Poster
 post.my=My Post
 content=Content
 thread.creator=Creator

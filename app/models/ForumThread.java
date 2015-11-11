@@ -32,6 +32,13 @@ public class ForumThread extends Model {
     @Formats.DateTime(pattern = "yyyy-MM-dd")
     public Date lastupdate;
 
+
+    public void setLastupdatetimestamp() {
+        this.lastupdatetimestamp = System.currentTimeMillis();
+    }
+
+    public Long lastupdatetimestamp;
+
     @Version
     private Long version;
 

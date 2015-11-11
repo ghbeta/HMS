@@ -51,6 +51,7 @@ public class Lectureforum extends Controller{
             forumThread.lecture = currentlecture;
             forumThread.creattime = new Date();
             forumThread.lastupdate=new Date();
+            forumThread.setLastupdatetimestamp();
             forumThread.save(semester);
             //ObjectMapper mapper=new ObjectMapper();
             //return ok(mapper.writeValueAsString(currentlecture.threads));
@@ -84,6 +85,28 @@ public class Lectureforum extends Controller{
              //return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehomeforum(currentuser.lastname, semester, currentlecture.courseName,threadid));
         }else{
             return ok(views.html.lectures.user.lecturehome.render(user1, currentuser, currentlecture, thread));
+        }
+    }
+
+    public static Result createpost(String semester,String lecturename,String threadid){
+        User user1=User.findByEmail(ctx().session().get("email"),"global");
+        Semesteruser currentuser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
+        Lecture currentlecture=Lecture.getlecturebyname(lecturename,semester);
+        ForumThread thread=ForumThread.findById(semester,threadid);
+        try{
+        DynamicForm postform= Form.form().bindFromRequest();
+            ForumPost post=new ForumPost();
+            post.content=postform.get("postcontent");
+            post.creator=currentuser;
+            post.creattime=new Date();
+            post.lecture=currentlecture;
+            post.parent=thread;
+            post.setTimestamp();
+            post.save(semester);
+        return redirect(routes.Lectureforum.getthread(semester,lecturename,threadid));}
+        catch(Exception e){
+            Logger.warn(e.getMessage());
+            return redirect(routes.Lectureforum.getthread(semester,lecturename,threadid));
         }
     }
 }

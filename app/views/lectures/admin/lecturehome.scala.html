@@ -349,7 +349,7 @@
             <textarea name="content" ng-model="content" required class="form-control" rows="5" placeholder="@Messages("content")"></textarea><br>
             <input ng-disabled="!(createthreadform.title.$dirty && createthreadform.content.$dirty)" class="btn btn-primary" type="submit">
           </form>
-
+          @if(thread==null){
           <table ng-show="showsection(2)" class="table table-striped custab">
             <thead>
               <tr>
@@ -361,15 +361,52 @@
             </thead>
             @for(thread<-lecture.threads){
               <tr>
-                <td>@thread.title</td>
+                <td><a href="@controllers.lectures.routes.Lectureforum.getthread(lecture.semester,lecture.courseName,thread.id)#forum">@thread.title</a></td>
                 <td><div class="pull-left">
                   <img class="media-object" src="http://www.gravatar.com/avatar/@user.userHash" height="20" width="20">
                 </div> @thread.creator.firstname @thread.creator.lastname</td>
                 <td>@thread.replyposts.size()</td>
-                <td>ddd</td>
+                <td>@thread.lastupdate</td>
               </tr>}
-          </table>
-
+          </table>}
+          <div ng-show="showsection(2)">
+          @if(thread!=null){
+            <div class="well">
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img class="media-object" src="http://www.gravatar.com/avatar/@thread.creator.userHash" height="20" width="20">
+                </a>
+                <div class="media-body">
+                  <h4 class="media-heading">@thread.creator.firstname @thread.creator.lastname<span class="label label-info">@Messages("thread.starter")</span></h4>
+                  <p>@thread.content</p>
+                  <ul class="list-inline list-unstyled">
+                    <li><span><i class="glyphicon glyphicon-calendar"></i>@thread.creattime</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div><hr>
+            @for(post<-thread.replyposts){
+            <div class="well">
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img class="media-object" src="http://www.gravatar.com/avatar/@post.creator.userHash" height="20" width="20">
+                </a>
+                <div class="media-body">
+                  <h4 class="media-heading">@post.creator.firstname @post.creator.lastname</h4>
+                  <p>@post.content</p>
+                  <ul class="list-inline list-unstyled">
+                    <li><span><i class="glyphicon glyphicon-calendar"></i>@post.creattime</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div><hr>
+              }
+            <form action="@controllers.lectures.routes.Lectureforum.createpost(lecture.semester,lecture.courseName,thread.id)#forum" method="post" class="form-horizontal">
+              <textarea class="form-control" name="postcontent" rows="5"></textarea><br>
+              <input type="submit" class="btn btn-primary pull-right">
+            </form>
+          }
+          </div>
         </div>
 
       </div>

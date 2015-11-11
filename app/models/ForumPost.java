@@ -25,6 +25,14 @@ public class ForumPost extends Model {
     @Formats.DateTime(pattern = "yyyy-MM-dd")
     public Date creattime;
 
+    public void setTimestamp() {
+        this.timestamp = System.currentTimeMillis();
+    }
+
+    public long timestamp;
+
+
+
     @ManyToOne
     public ForumThread parent;
 
