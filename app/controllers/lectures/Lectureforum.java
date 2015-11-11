@@ -60,8 +60,8 @@ public class Lectureforum extends Controller{
 //            String resultjson=jsonContext.toJsonString(results);
 //            Logger.warn("json result "+resultjson);
             if(currentuser.roles.equals(UserRoll.Assistants.toString())||currentuser.roles.equals(UserRoll.Teachers.toString())){
-                return ok(views.html.lectures.admin.lecturehome.render(user1, currentuser, currentlecture, null));
-           // return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname, semester, currentlecture.courseName));
+                //return ok(views.html.lectures.admin.lecturehome.render(user1, currentuser, currentlecture, null));
+             return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname, semester, currentlecture.courseName));
             }
             else{
                 return redirect(controllers.lectures.user.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
@@ -81,7 +81,7 @@ public class Lectureforum extends Controller{
         ForumThread thread=ForumThread.findById(semester,threadid);
         if(currentuser.roles.equals(UserRoll.Assistants.toString())||currentuser.roles.equals(UserRoll.Teachers.toString())){
             return ok(views.html.lectures.admin.lecturehome.render(user1, currentuser, currentlecture, thread));
-            // return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname, semester, currentlecture.courseName));
+             //return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehomeforum(currentuser.lastname, semester, currentlecture.courseName,threadid));
         }else{
             return ok(views.html.lectures.user.lecturehome.render(user1, currentuser, currentlecture, thread));
         }

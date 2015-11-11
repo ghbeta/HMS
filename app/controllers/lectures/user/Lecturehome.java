@@ -62,6 +62,9 @@ public class Lecturehome extends Controller {
         }
 
     }
+
+
+    @Security.Authenticated(Securedstudents.class)
     public static Result addRemoteRepotoLecture(String user1,String semester,String lecturename){
         Semesteruser semesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
         Lecture lecture=Lecture.getlecturebyname(lecturename,semester);

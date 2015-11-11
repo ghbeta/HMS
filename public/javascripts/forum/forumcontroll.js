@@ -3,9 +3,6 @@
  */
 var section=2;
 
-function getthreads(semesteruserid,lectureid,type){
-
-}
 
 function getposts(semesteruserid,lectureid){
 
