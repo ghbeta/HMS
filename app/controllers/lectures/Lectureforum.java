@@ -26,6 +26,20 @@ import java.util.List;
 public class Lectureforum extends Controller{
 
     @Security.Authenticated(Securedstudents.class)
+    public static Result forumredirect(String semester,String lecturename){
+        Semesteruser currentuser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
+        Lecture currentlecture=Lecture.getlecturebyname(lecturename,semester);
+        //User user1=User.findByEmail(ctx().session().get("email"),"global");
+        if(currentuser.roles.equals(UserRoll.Assistants.toString())||currentuser.roles.equals(UserRoll.Teachers.toString())){
+            //return ok(views.html.lectures.admin.lecturehome.render(user1, currentuser, currentlecture, null));
+            return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname, semester, currentlecture.courseName));
+        }
+        else{
+            return redirect(controllers.lectures.user.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
+        }
+    }
+
+    @Security.Authenticated(Securedstudents.class)
     public static Result createthread(String user,String semester,String lecturename){
         JsonNode json = request().body().asJson();
         User user1=User.findByEmail(ctx().session().get("email"),"global");
@@ -80,14 +94,31 @@ public class Lectureforum extends Controller{
         Semesteruser currentuser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
         Lecture currentlecture=Lecture.getlecturebyname(lecturename,semester);
         ForumThread thread=ForumThread.findById(semester,threadid);
+        List<ForumThread> allthreads=ForumThread.findByLecture(semester,currentlecture);
         if(currentuser.roles.equals(UserRoll.Assistants.toString())||currentuser.roles.equals(UserRoll.Teachers.toString())){
-            return ok(views.html.lectures.admin.lecturehome.render(user1, currentuser, currentlecture, thread));
+            return ok(views.html.lectures.admin.lecturehome.render(user1, currentuser, currentlecture, thread,allthreads));
              //return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehomeforum(currentuser.lastname, semester, currentlecture.courseName,threadid));
         }else{
-            return ok(views.html.lectures.user.lecturehome.render(user1, currentuser, currentlecture, thread));
+            return ok(views.html.lectures.user.lecturehome.render(user1, currentuser, currentlecture, thread,allthreads));
         }
     }
 
+    @Security.Authenticated(Securedstudents.class)
+    public static Result getmythreads(String semester,String lecturename){
+        User user1=User.findByEmail(ctx().session().get("email"),"global");
+        Semesteruser currentuser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
+        Lecture currentlecture=Lecture.getlecturebyname(lecturename,semester);
+        List<ForumThread> mythreads=ForumThread.findByLectureByStudent(semester,currentlecture,currentuser);
+        if(currentuser.roles.equals(UserRoll.Assistants.toString())||currentuser.roles.equals(UserRoll.Teachers.toString())){
+            return ok(views.html.lectures.admin.lecturehome.render(user1, currentuser, currentlecture,null,mythreads));
+            //return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehomeforum(currentuser.lastname, semester, currentlecture.courseName,threadid));
+        }else{
+            return ok(views.html.lectures.user.lecturehome.render(user1, currentuser, currentlecture, null,mythreads));
+        }
+    }
+
+
+    @Security.Authenticated(Securedstudents.class)
     public static Result createpost(String semester,String lecturename,String threadid){
         User user1=User.findByEmail(ctx().session().get("email"),"global");
         Semesteruser currentuser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
@@ -101,12 +132,15 @@ public class Lectureforum extends Controller{
             post.creattime=new Date();
             post.lecture=currentlecture;
             post.parent=thread;
+            thread.lastupdate=new Date();
+            thread.setLastupdatetimestamp();
             post.setTimestamp();
             post.save(semester);
+            thread.update(semester);
         return redirect(routes.Lectureforum.getthread(semester,lecturename,threadid));}
         catch(Exception e){
             Logger.warn(e.getMessage());
-            return redirect(routes.Lectureforum.getthread(semester,lecturename,threadid));
+            return redirect(routes.Lectureforum.getthread(semester, lecturename, threadid));
         }
     }
 }

@@ -1,4 +1,4 @@
-@(user:User)(semesteruser: Semesteruser)(lecture: Lecture)(thread:ForumThread)
+@(user:User)(semesteruser: Semesteruser)(lecture: Lecture)(thread:ForumThread)(threadlist:List[ForumThread])
 
 @dashboard.dashboard(user){
   <div class="col-md-8 well well-sm">
@@ -338,9 +338,8 @@
               @Messages("forum.action") <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-              <li><a href="#">@Messages("thread.all")</a></li>
-              <li><a href="#">@Messages("thread.my")</a></li>
-              <li><a href="#">@Messages("post.my")</a></li>
+              <li><a href="@controllers.lectures.routes.Lectureforum.forumredirect(lecture.semester,lecture.courseName)#forum">@Messages("thread.all")</a></li>
+              <li><a href="@controllers.lectures.routes.Lectureforum.getmythreads(lecture.semester,lecture.courseName)#forum">@Messages("thread.my")</a></li>
             </ul>
           </div>
           <hr>
@@ -359,7 +358,8 @@
                 <th>@Messages("thread.lastchange")</th>
               </tr>
             </thead>
-            @for(thread<-lecture.threads){
+            @if(threadlist==null){
+            @for(thread<-ForumThread.findByLecture(lecture.semester,lecture)){
               <tr>
                 <td><a href="@controllers.lectures.routes.Lectureforum.getthread(lecture.semester,lecture.courseName,thread.id)#forum">@thread.title</a></td>
                 <td><div class="pull-left">
@@ -367,8 +367,22 @@
                 </div> @thread.creator.firstname @thread.creator.lastname</td>
                 <td>@thread.replyposts.size()</td>
                 <td>@thread.lastupdate</td>
-              </tr>}
-          </table>}
+              </tr>}}
+
+            @if(threadlist!=null){
+              @for(thread<-threadlist){
+                <tr>
+                  <td><a href="@controllers.lectures.routes.Lectureforum.getthread(lecture.semester,lecture.courseName,thread.id)#forum">@thread.title</a></td>
+                  <td><div class="pull-left">
+                    <img class="media-object" src="http://www.gravatar.com/avatar/@user.userHash" height="20" width="20">
+                  </div> @thread.creator.firstname @thread.creator.lastname</td>
+                  <td>@thread.replyposts.size()</td>
+                  <td>@thread.lastupdate</td>
+                </tr>}
+            }
+          </table>
+          }
+
           <div ng-show="showsection(2)">
           @if(thread!=null){
             <div class="well">

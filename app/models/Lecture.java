@@ -64,11 +64,9 @@ public class Lecture extends Model {
     public List<Evaluation> evaluations;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "lecture")
-    @OrderBy("lastupdatetimestamp desc")
     public List<ForumThread> threads;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "lecture")
-    @OrderBy("timestamp asc")
     public List<ForumPost> posts;
 
     public boolean isExpired(){
