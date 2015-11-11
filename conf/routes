@@ -74,7 +74,8 @@ GET         /usr/:user/:semester/:lecture/remote/handin                      con
 GET         /usr/:user/:semester/:lecture/revert                             controllers.lectures.user.Lecturehome.reverthandinhomework(assignmentid:String,user:String,semester:String,lecture:String)
 GET         /usr/:user/:semester/:lecture/remote/revert                      controllers.lectures.user.Lecturehome.reverthandinhomeworkremote(assignmentid:String,user:String,semester:String,lecture:String)
 #Forum routes
-POST       /:semester/:lecturename/forum/newthread                               controllers.lectures.Lectureforum.createthread(semester:String,lecturename:String)
+POST        /:semester/:lecturename/forum/newthread                          controllers.lectures.Lectureforum.createthread(user:String,semester:String,lecturename:String)
+#POST        /admin/:user/:semester/:lecture                                   controllers.lectures.Lectureforum.createthread(user:String,semester:String,lecture:String)
 #About static page
 GET         /about                                                           controllers.About.index()
 #File service (hosted file on host server)
