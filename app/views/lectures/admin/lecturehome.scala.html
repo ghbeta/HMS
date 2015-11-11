@@ -391,10 +391,14 @@
                   <img class="media-object" src="http://www.gravatar.com/avatar/@thread.creator.userHash" height="20" width="20">
                 </a>
                 <div class="media-body">
-                  <h4 class="media-heading">@thread.creator.firstname @thread.creator.lastname<span class="label label-info">@Messages("thread.starter")</span></h4>
+                  <h4 class="media-heading">@thread.title</h4>
                   <p>@thread.content</p>
                   <ul class="list-inline list-unstyled">
                     <li><span><i class="glyphicon glyphicon-calendar"></i>@thread.creattime</span></li>
+                    <li>|</li>
+                    <li><span><i class="glyphicon glyphicon-user"></i>@thread.creator.firstname @thread.creator.lastname</span></li>
+                    <li>|</li>
+                    <li><span class="label label-info">@Messages("thread.starter")</span></li>
                   </ul>
                 </div>
               </div>
