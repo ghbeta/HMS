@@ -29,6 +29,9 @@ public class ForumThread extends Model {
     @Formats.DateTime(pattern = "yyyy-MM-dd")
     public Date creattime;
 
+    @Formats.DateTime(pattern = "yyyy-MM-dd")
+    public Date lastupdate;
+
     @Version
     private Long version;
 
@@ -43,5 +46,9 @@ public class ForumThread extends Model {
 
     public static List<ForumThread> findByLecture(String semester,Lecture lecture){
         return getServer(semester).find(ForumThread.class).where().eq("lecture.courseName",lecture.courseName).findList();
+    }
+
+    public static ForumThread findById(String semester,String id){
+        return getServer(semester).find(ForumThread.class).where().eq("id",id).findUnique();
     }
 }

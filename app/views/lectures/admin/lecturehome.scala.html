@@ -1,4 +1,4 @@
-@(user:User)(semesteruser: Semesteruser)(lecture: Lecture)(thread:Thread)
+@(user:User)(semesteruser: Semesteruser)(lecture: Lecture)(thread:ForumThread)
 
 @dashboard.dashboard(user){
   <div class="col-md-8 well well-sm">
@@ -352,18 +352,18 @@
           <table ng-show="showsection(2)" class="table table-striped custab">
             <thead>
               <tr>
-                <th>@Messages("thread.creator")</th>
                 <th>@Messages("thread.title")</th>
+                <th>@Messages("thread.creator")</th>
                 <th>@Messages("thread.reply")</th>
                 <th>@Messages("thread.lastchange")</th>
               </tr>
             </thead>
             @for(thread<-lecture.threads){
               <tr>
+                <td>@thread.title</td>
                 <td><div class="pull-left">
                   <img class="media-object" src="http://www.gravatar.com/avatar/@user.userHash" height="20" width="20">
                 </div> @thread.creator.firstname @thread.creator.lastname</td>
-                <td>@thread.title</td>
                 <td>@thread.replyposts.size()</td>
                 <td>ddd</td>
               </tr>}

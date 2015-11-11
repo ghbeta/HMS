@@ -50,6 +50,7 @@ public class Lectureforum extends Controller{
             forumThread.creator = currentuser;
             forumThread.lecture = currentlecture;
             forumThread.creattime = new Date();
+            forumThread.lastupdate=new Date();
             forumThread.save(semester);
             //ObjectMapper mapper=new ObjectMapper();
             //return ok(mapper.writeValueAsString(currentlecture.threads));
@@ -59,7 +60,7 @@ public class Lectureforum extends Controller{
 //            String resultjson=jsonContext.toJsonString(results);
 //            Logger.warn("json result "+resultjson);
             if(currentuser.roles.equals(UserRoll.Assistants.toString())||currentuser.roles.equals(UserRoll.Teachers.toString())){
-                return ok(views.html.lectures.admin.lecturehome.render(user1,currentuser,currentlecture,null));
+                return ok(views.html.lectures.admin.lecturehome.render(user1, currentuser, currentlecture, null));
            // return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname, semester, currentlecture.courseName));
             }
             else{
@@ -70,5 +71,19 @@ public class Lectureforum extends Controller{
             return badRequest();
         }
 
+    }
+
+    @Security.Authenticated(Securedstudents.class)
+    public static Result getthread(String semester,String lecturename,String threadid){
+        User user1=User.findByEmail(ctx().session().get("email"),"global");
+        Semesteruser currentuser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
+        Lecture currentlecture=Lecture.getlecturebyname(lecturename,semester);
+        ForumThread thread=ForumThread.findById(semester,threadid);
+        if(currentuser.roles.equals(UserRoll.Assistants.toString())||currentuser.roles.equals(UserRoll.Teachers.toString())){
+            return ok(views.html.lectures.admin.lecturehome.render(user1, currentuser, currentlecture, thread));
+            // return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname, semester, currentlecture.courseName));
+        }else{
+            return ok(views.html.lectures.user.lecturehome.render(user1, currentuser, currentlecture, thread));
+        }
     }
 }
