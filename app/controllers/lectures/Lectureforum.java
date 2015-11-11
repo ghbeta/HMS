@@ -6,10 +6,7 @@ import com.avaje.ebean.text.json.JsonContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import controllers.lectures.user.*;
-import models.ForumThread;
-import models.Lecture;
-import models.Semesteruser;
-import models.UserRoll;
+import models.*;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -31,6 +28,7 @@ public class Lectureforum extends Controller{
     @Security.Authenticated(Securedstudents.class)
     public static Result createthread(String user,String semester,String lecturename){
         JsonNode json = request().body().asJson();
+        User user1=User.findByEmail(ctx().session().get("email"),"global");
         Semesteruser currentuser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
         Lecture currentlecture=Lecture.getlecturebyname(lecturename,semester);
         DynamicForm threadform= Form.form().bindFromRequest();
@@ -61,7 +59,9 @@ public class Lectureforum extends Controller{
 //            String resultjson=jsonContext.toJsonString(results);
 //            Logger.warn("json result "+resultjson);
             if(currentuser.roles.equals(UserRoll.Assistants.toString())||currentuser.roles.equals(UserRoll.Teachers.toString())){
-            return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname, semester, currentlecture.courseName));}
+                return ok(views.html.lectures.admin.lecturehome.render(user1,currentuser,currentlecture,null));
+           // return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname, semester, currentlecture.courseName));
+            }
             else{
                 return redirect(controllers.lectures.user.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
             }
