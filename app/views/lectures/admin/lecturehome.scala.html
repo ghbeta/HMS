@@ -1,4 +1,4 @@
-@(user:User)(semesteruser: Semesteruser)(lecture: Lecture)
+@(user:User)(semesteruser: Semesteruser)(lecture: Lecture)(thread:Thread)
 
 @dashboard.dashboard(user){
   <div class="col-md-8 well well-sm">
@@ -361,7 +361,7 @@
             @for(thread<-lecture.threads){
               <tr>
                 <td><div class="pull-left">
-                  <img class="media-object" src="http://www.gravatar.com/avatar/@user.userHash"/>
+                  <img class="media-object" src="http://www.gravatar.com/avatar/@user.userHash" height="20" width="20">
                 </div> @thread.creator.firstname @thread.creator.lastname</td>
                 <td>@thread.title</td>
                 <td>@thread.replyposts.size()</td>

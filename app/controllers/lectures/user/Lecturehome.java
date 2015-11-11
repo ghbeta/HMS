@@ -54,7 +54,7 @@ public class Lecturehome extends Controller {
 
 
         if(selectedlecture.isExpired()){
-        return ok(lecturehome.render(currentuser, currentsemesteruser, selectedlecture));}
+        return ok(lecturehome.render(currentuser, currentsemesteruser, selectedlecture,null));}
         else
         {
             flash("danger", Messages.get("lecture.home.expired"));

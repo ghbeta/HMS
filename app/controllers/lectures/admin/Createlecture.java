@@ -215,7 +215,7 @@ public class Createlecture extends Controller {
                 return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(globaluser.lastname, semester, lecture.courseName));
             } catch (Exception e) {
                 flash("danger", Messages.get("lecture.create.fail"));
-                return badRequest(lecturehome.render(globaluser, semesteruser, lecture));
+                return badRequest(lecturehome.render(globaluser, semesteruser, lecture,null));
             }
 
         }
@@ -274,7 +274,7 @@ public class Createlecture extends Controller {
                 return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(globaluser.lastname, semester, lecture.courseName));
             } catch (Exception e) {
                 flash("danger", Messages.get("lecture.create.fail"));
-                return badRequest(lecturehome.render(globaluser, semesteruser, lecture));
+                return badRequest(lecturehome.render(globaluser, semesteruser, lecture,null));
             }
         }
         else{
