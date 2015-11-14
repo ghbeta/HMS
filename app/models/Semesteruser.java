@@ -122,5 +122,8 @@ public class Semesteruser extends Abstractuser {
 //        //return currentServer(database).find(Semesteruser.class).fetch("lectures").where().eq("courseName",lecture.courseName).where().eq("roles",UserRoll.Students.toString()).findList();
 //    }
 
+    public static List<Semesteruser> findworkerByLecture(String database,Lecture lecture){
+        return currentServer(database).find(Semesteruser.class).where().eq("lecture.courseName",lecture.courseName).ne("roles",UserRoll.Students.toString()).findList();
+    }
 
 }

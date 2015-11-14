@@ -125,6 +125,7 @@ lecture.home.correction=Homework Correction
 lecture.correction.notdone=Uncorrected homework
 lecture.correction.done=Corrected homework
 lecutres.correction.none=There is no homework yet
+lecture.contact=Contact:
 lecture.form.year=Year:
 lecture.form.title=Lecture Name:
 lecture.form.repo=Use Lecture Repo as Local
