@@ -89,6 +89,33 @@ public class Lecturehome extends Controller {
 
     }
 
+    @Security.Authenticated(Securedteacherorassistance.class)
+    public static Result addSemesterusertoLecture(String user,String semester,String lecturename){
+        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
+        Lecture lecture=Lecture.getlecturebyname(lecturename,semester);
+        Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
+        if(Lecture.addSemesterusertoLecture(semester, semesteruser, lecture)){
+            semesteruser.update(semester);
+            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
+        }else{
+            flash("danger",Messages.get("lecture.adduser.fail"));
+            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
+        }
+    }
+
+    public static Result deleteSemesteruserfromlecture(String user,String semester,String lecturename){
+        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
+        Lecture lecture=Lecture.getlecturebyname(lecturename,semester);
+        Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
+        if(Lecture.deleteSemesteruserfromLecture(semester,semesteruser,lecture)){
+            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
+        }else{
+            flash("danger", Messages.get("lecture.deleteuser.fail"));
+            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
+        }
+    }
+
+
     @Security.Authenticated(Securedteacher.class)
     public static Result modifydescription(String user, String semester,String lecture){
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");

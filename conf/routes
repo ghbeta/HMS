@@ -48,6 +48,8 @@ GET         /createlecture                                                   con
 POST        /createlecture                                                   controllers.lectures.admin.Createlecture.createlecture()
 #Generate Lecture home page for teacher or assistance
 GET         /admin/:user/:semester/:lecture                                  controllers.lectures.admin.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
+GET         /admin/:user/:semester/:lecture/add                              controllers.lectures.admin.Lecturehome.addSemesterusertoLecture(user:String,semester:String,lecture:String)
+GET         /admin/:user/:semester/:lecture/delete                           controllers.lectures.admin.Lecturehome.deleteSemesteruserfromlecture(user:String,semester:String,lecture:String)
 #Generate lecture home page for students
 GET         /students/:user/:semester/:lecture                               controllers.lectures.user.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
 GET         /students/:user/:semester/:lecture/delete                        controllers.lectures.user.Lecturehome.deleteSemesteruserfromlecture(user:String,semester:String,lecture:String)
