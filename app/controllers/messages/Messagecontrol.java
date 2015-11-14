@@ -37,7 +37,8 @@ public class Messagecontrol extends Controller {
       message.sender=u1;
       message.conversation=conversation;
       message.messagebody=content;
-      message.save(semester);
+      //message.save(semester);
+      conversation.messages.add(message);
       conversation.save(semester);
           flash("success",Messages.get("messages.send"));
           if(u1.roles.equals(UserRoll.Teachers.toString())||u1.roles.equals(UserRoll.Assistants.toString())){
