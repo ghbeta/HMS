@@ -18,8 +18,9 @@
             <span class="label label-warning">@Messages("lecture.closingdate")@lecture.closingdate</span>
             <hr>
             @lecture.desription
-            <span class="label label-primary">@Messages("lecture.contact")</span>
+            <hr>
             <ul class="list-inline list-unstyled">
+              <li><span class="label label-primary">@Messages("lecture.contact")</span></li>
             @for(admin<-Semesteruser.findworkerByLecture(lecture.semester,lecture)){
               <li><span><i class="glyphicon glyphicon-user"></i>@admin.firstname @admin.lastname</span></li>
               <li> </li>
@@ -263,6 +264,7 @@
         }
       </div>
       <div ng-app="forumapp" ng-controller="forumcontroller" class="tab-pane" id="forum">
+      @if(lecture.attendent.contains(semesteruser)){
         <div class="page-header">
           <h1>@Messages("forum.header")</h1><small>@Messages("forum.note")</small>
         </div>
@@ -360,8 +362,9 @@
             </form>
           }
           </div>
-        </div>
-
+        </div>}else{
+        <div class="alert alert-info">@Messages("lecture.singin.other")</div>
+      }
       </div>
     </div>
 

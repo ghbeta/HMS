@@ -101,6 +101,7 @@ repo.create.after.fail.nossh=You need to setup a ssh publick key first
 lecture.action.upload=Upload Assignment
 lecture.form.addionalinfo=Additional information
 lecture.singin= You need to sign up for this lecture to see the homeworks
+lecture.singin.other=You need to sign up for this lecture to use the functions
 lecture.singup=Join
 lecture.adduser.fail=Can not add you to this lecture
 deadline=Deadline

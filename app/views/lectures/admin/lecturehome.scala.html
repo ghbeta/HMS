@@ -24,8 +24,9 @@
           <span class="label label-warning">@Messages("lecture.closingdate")@lecture.closingdate</span>
           <hr>
           @lecture.desription
-          <span class="label label-primary">@Messages("lecture.contact")</span>
+          <hr>
           <ul class="list-inline list-unstyled">
+            <li><span class="label label-primary">@Messages("lecture.contact")</span></li>
             @for(admin<-Semesteruser.findworkerByLecture(lecture.semester,lecture)){
               <li><span><i class="glyphicon glyphicon-user"></i>@admin.firstname @admin.lastname</span></li>
               <li> </li>
@@ -59,6 +60,7 @@
         <div class="panel-body">
         @Messages("lecture.home.homework")
         </div>
+        @if(lecture.attendent.contains(semesteruser)){
         <table class="table table-striped custab">
           <thead>
             <tr>
@@ -126,7 +128,12 @@
               </div>
             </div>
           }
-        </table>
+        </table>}else{
+          <div class="alert alert-danger text-center">@Messages("lecture.singin")
+            <br>
+            <a class="btn btn-success text-center" href="@controllers.lectures.admin.routes.Lecturehome.addSemesterusertoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" type="submit" >@Messages("lecture.join")</a>
+          </div>
+        }
       </div>
       } else {
         <div class="panel panel-default">
@@ -146,6 +153,7 @@
           <div class="panel-body">
           @Messages("lecture.home.homework.remote.admin")
           </div>
+          @if(lecture.attendent.contains(semesteruser)){
           <table class="table table-striped custab">
             <thead>
               <tr>
@@ -213,14 +221,19 @@
                 </div>
               </div>
             }
-          </table>
+          </table>}else{
+            <div class="alert alert-danger text-center">@Messages("lecture.singin")
+              <br>
+              <a class="btn btn-success text-center" href="@controllers.lectures.admin.routes.Lecturehome.addSemesterusertoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" type="submit" >@Messages("lecture.join")</a>
+            </div>
+          }
         </div>
 
       }
     </div>
       <br>
       <div class="tab-pane" id="editor">
-
+      @if(lecture.attendent.contains(semesteruser)){
           <div class="panel-group" id="homeworkcorrectionlist" role="tablist" aria-multiselectable="true">
           @if(lecture.assignments.size() > 0) {
             @for(assignment <- lecture.assignments) {
@@ -332,9 +345,12 @@
             <div class="alert alert-info">@Messages("lecutres.correction.none")</div>
           }
           </div>
-
+      }else{
+        <div class="alert alert-info">@Messages("lecture.singin.other")</div>
+      }
       </div>
       <div ng-app="forumapp" ng-controller="forumcontroller" class="tab-pane" id="forum">
+      @if(lecture.attendent.contains(semesteruser)){
         <div class="page-header">
           <h1>@Messages("forum.header")</h1><small>@Messages("forum.note")</small>
         </div>
@@ -432,8 +448,9 @@
             </form>
           }
           </div>
-        </div>
-
+        </div>}else{
+        <div class="alert alert-info">@Messages("lecture.singin.other")</div>
+      }
       </div>
     </div>
   </div>

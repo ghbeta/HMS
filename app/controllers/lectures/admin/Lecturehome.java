@@ -108,6 +108,7 @@ public class Lecturehome extends Controller {
         Lecture lecture=Lecture.getlecturebyname(lecturename,semester);
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
         if(Lecture.deleteSemesteruserfromLecture(semester,semesteruser,lecture)){
+            semesteruser.update(semester);
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,semester,lecture.courseName));
         }else{
             flash("danger", Messages.get("lecture.deleteuser.fail"));
