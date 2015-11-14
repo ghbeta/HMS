@@ -22,8 +22,33 @@
             <ul class="list-inline list-unstyled">
               <li><span class="label label-primary">@Messages("lecture.contact")</span></li>
             @for(admin<-Semesteruser.findworkerByLecture(lecture.semester,lecture)){
-              <li><span><i class="glyphicon glyphicon-user"></i><a>@admin.firstname @admin.lastname</a></span></li>
+              <li><span><i class="glyphicon glyphicon-user"></i><a href="#" data-toggle="modal" data-target="#message@admin.userHash">@admin.firstname @admin.lastname</a></span></li>
               <li> </li>
+                <!-- message Modal -->
+              <div class="modal fade" id="message@admin.userHash" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">@Messages("sendto") @admin.firstname @admin.lastname</h4>
+                    </div>
+                    <div class="modal-body">
+                      <form action="@controllers.messages.routes.Messagecontrol.addConversation(lecture.semester,admin.email,lecture.courseName)#home" method="post" class="form-horizontal">
+                        <div class="form-group">
+                          <label class="control-label" for="textarea">@Messages("message.content")</label>
+                          <div>
+                            <textarea required class="form-control" name="content" rows="5"></textarea>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <input type="submit" class="btn btn-success pull-right">
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
             }
             </ul>
           </div>
