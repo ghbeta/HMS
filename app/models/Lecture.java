@@ -69,6 +69,9 @@ public class Lecture extends Model {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "lecture")
     public List<ForumPost> posts;
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "lecture")
+    public List<Conversation> conversations;
+
     public boolean isExpired(){
         Date date=new Date();
         return closingdate!=null&&date.before(closingdate);

@@ -154,6 +154,7 @@ public class Createlecture extends Controller {
                 entity.add(Handin.class);
                 entity.add(ForumPost.class);
                 entity.add(ForumThread.class);
+                entity.add(Conversation.class);
                 createServer(semester, entity);
                 Semester addsemester = new Semester();
                 addsemester.semester = semester;
@@ -236,6 +237,7 @@ public class Createlecture extends Controller {
                 entity.add(Handin.class);
                 entity.add(ForumPost.class);
                 entity.add(ForumThread.class);
+                entity.add(Conversation.class);
                 createServer(semester, entity);
                 Semester addsemester = new Semester();
                 addsemester.semester = semester;

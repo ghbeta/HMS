@@ -28,12 +28,14 @@ public class Message extends Model {
     @Formats.DateTime(pattern = "dd.MM.yyyy hh:mm:ss")
     public org.joda.time.DateTime date;
 
-    @ManyToOne//(cascade= CascadeType.ALL)
-    public Message parent;
-    @OneToMany(cascade= CascadeType.ALL,mappedBy = "parent")
-    public List<Message> answers;
+//    @ManyToOne//(cascade= CascadeType.ALL)
+//    public Message parent;
+//    @OneToMany(cascade= CascadeType.ALL,mappedBy = "parent")
+//    public List<Message> answers;
 
 
+    @ManyToOne
+    public Conversation conversation;
 
 
 

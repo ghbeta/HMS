@@ -40,6 +40,7 @@ public class Global extends GlobalSettings{
         entity1.add(Handin.class);
         entity1.add(ForumThread.class);
         entity1.add(ForumPost.class);
+        entity1.add(Conversation.class);
 
         try {
             Server h2server = Server.createTcpServer("-tcpAllowOthers");
