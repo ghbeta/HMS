@@ -123,7 +123,7 @@ public class Semesteruser extends Abstractuser {
 //    }
 
     public static List<Semesteruser> findworkerByLecture(String database,Lecture lecture){
-        return currentServer(database).find(Semesteruser.class).where().eq("lecture.courseName",lecture.courseName).ne("roles",UserRoll.Students.toString()).findList();
+        return currentServer(database).find(Semesteruser.class).where().eq("lectures.courseName",lecture.courseName).ne("roles",UserRoll.Students.toString()).findList();
     }
 
 }

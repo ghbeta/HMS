@@ -2,6 +2,7 @@ package controllers.lectures.admin;
 
 import Permission.Securedassistant;
 import Permission.Securedteacher;
+import Permission.Securedteacherorassistance;
 import controllers.Assets;
 import models.*;
 import play.Logger;
@@ -73,7 +74,7 @@ public class Lecturehome extends Controller {
 
     }
 
-    @Security.Authenticated(Securedteacher.class)
+    @Security.Authenticated(Securedteacherorassistance.class)
     public static Result generatelecturehome(String user, String semester,String lecture){
        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
        Semesteruser currentsemesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
