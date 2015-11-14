@@ -1,5 +1,6 @@
 package models;
 
+import org.joda.time.DateTime;
 import play.data.format.Formats;
 import play.db.ebean.Model;
 
@@ -27,6 +28,14 @@ public class Message extends Model {
 
     @Formats.DateTime(pattern = "dd.MM.yyyy hh:mm:ss")
     public org.joda.time.DateTime date;
+
+    public void setTimestamp() {
+        this.date=new DateTime();
+        this.timestamp = System.currentTimeMillis();
+    }
+
+    public Long timestamp;
+
 
 //    @ManyToOne//(cascade= CascadeType.ALL)
 //    public Message parent;

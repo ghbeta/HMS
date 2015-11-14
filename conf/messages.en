@@ -207,6 +207,10 @@ Error.add.user.lecture=add you to this lecture Fail!
 Error.add.user.repo= can not give you a repo right now!
 repo.create.after.fail= Repo creation failed pls try again
 
+sendto=Send Message To
+message.content=Content
+messages.send=Message sended
+message.sendfail=Message send failed
 account.not.validated.check.mail=Account not validated. Check your emails.
 account.successfully.validated=Account successfully validated
 account.settings.email.successful=Email successfully validated ({0})

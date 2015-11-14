@@ -34,7 +34,8 @@ public class Conversation extends Model {
 
     public static Conversation getConversation(String semester,Semesteruser user1,Semesteruser user2,Lecture lecture){
         return getServer(semester).find(Conversation.class).where().or(Expr.and(Expr.eq("user1.email",user1.email),Expr.eq("user2.email",user2.email)),
-                                                                       Expr.and(Expr.eq("user1.email",user2.email),Expr.eq("user2.email",user1.email))).findUnique();
+                                                                       Expr.and(Expr.eq("user1.email",user2.email),Expr.eq("user2.email",user1.email))).
+                eq("lecture.courseName",lecture.courseName).findUnique();
     }
 
 }
