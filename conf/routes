@@ -82,7 +82,8 @@ GET         /:semester/:lecturename/forum/allthread                          con
 GET         /:semester/:lecturename/forum/mythread                           controllers.lectures.Lectureforum.getmythreads(semester:String,lecturename:String)
 POST        /:semester/:lecturename/forum/show/:thread/newpost               controllers.lectures.Lectureforum.createpost(semester:String,lecturename:String,thread:String)
 #Message routes
-POST        /:semester/:lecturename/:touser/newconversation                    controllers.messages.Messagecontrol.addConversation(semester:String,touser:String,lecturename:String)
+POST        /:semester/:lecturename/:touser/newconversation                  controllers.messages.Messagecontrol.addConversation(semester:String,touser:String,lecturename:String)
+GET         /messages                                                        controllers.messages.Messagecontrol.generateMessagehome()
 #About static page
 GET         /about                                                           controllers.About.index()
 #File service (hosted file on host server)

@@ -60,14 +60,14 @@
         <div class="panel panel-default">
           <div class="panel-heading" role="tab" id="headingThree">
             <h4 class="panel-title">
-              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#homeworks" aria-expanded="true" aria-controls="collapseThree">
-                Reserve
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#message" aria-expanded="true" aria-controls="collapseThree">
+                @Messages("message.home")
               </a>
             </h4>
           </div>
-          <div id="homeworks" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
-            <div class="panel-body">
-             reserve
+          <div id="message" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+            <div class="list-group">
+             <a href="@controllers.messages.routes.Messagecontrol.generateMessagehome()" class="list-group-item">@Messages("message.my")</a>
             </div>
           </div>
         </div>

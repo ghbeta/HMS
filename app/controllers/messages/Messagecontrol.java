@@ -19,6 +19,16 @@ import play.mvc.WebSocket;
 public class Messagecontrol extends Controller {
 
   @Security.Authenticated(Securedstudents.class)
+  public static Result generateMessagehome(){
+      User user=User.findByEmail(ctx().session().get("email"),"global");
+      return ok(views.html.messagesystem.messagecontainer.render(user));
+  }
+
+
+
+
+
+  @Security.Authenticated(Securedstudents.class)
   public static Result addConversation(String semester,String user2,String lecturename){
       Semesteruser u1=Semesteruser.findByEmail(ctx().session().get("email"),semester);//always message creator
       Semesteruser u2=Semesteruser.findByEmail(user2,semester);
@@ -47,7 +57,7 @@ public class Messagecontrol extends Controller {
       conversation.save(semester);
       message.conversation=conversation;
       message.update(semester);
-          flash("success",Messages.get("messages.send"));
+          flash("success", Messages.get("messages.send"));
           if(u1.roles.equals(UserRoll.Teachers.toString())||u1.roles.equals(UserRoll.Assistants.toString())){
               return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(u1.lastname, semester, lecture.courseName));}
           else{
