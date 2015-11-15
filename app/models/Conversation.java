@@ -1,6 +1,9 @@
 package models;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
+import com.avaje.ebean.ExpressionFactory;
+import play.Logger;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
@@ -35,8 +38,9 @@ public class Conversation extends Model {
 
 
     public static Conversation getConversation(String semester,Semesteruser user1,Semesteruser user2){
-        return getServer(semester).find(Conversation.class).where().or(Expr.and(Expr.eq("user1.email", user1.email), Expr.eq("user2.email", user2.email)),
-                Expr.and(Expr.eq("user1.email", user2.email), Expr.eq("user2.email", user1.email))).findUnique();
+        ExpressionFactory expr=Ebean.getServer(semester).getExpressionFactory();
+        return getServer(semester).find(Conversation.class).where().or(expr.and(expr.eq("user1.email", user1.email), expr.eq("user2.email", user2.email)),expr.and(expr.eq("user1.email", user2.email), expr.eq("user2.email", user1.email))).findUnique();
+        //return getServer(semester).find(Conversation.class).where().eq("user1.email",user1.email).findUnique();
     }
 
 }

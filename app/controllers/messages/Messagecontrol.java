@@ -38,12 +38,15 @@ public class Messagecontrol extends Controller {
       //conversation.lecture=lecture;
       conversation.user1=u1;
       conversation.user2=u2;
-      message.conversation=conversation;
-      message.update(semester);
+      //message.conversation=conversation;
+      //message.update(semester);
      // message.lecture=lecture;
       //message.save(semester);
       conversation.messages.add(message);
+      //message.update(semester);
       conversation.save(semester);
+      message.conversation=conversation;
+      message.update(semester);
           flash("success",Messages.get("messages.send"));
           if(u1.roles.equals(UserRoll.Teachers.toString())||u1.roles.equals(UserRoll.Assistants.toString())){
               return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(u1.lastname, semester, lecture.courseName));}
