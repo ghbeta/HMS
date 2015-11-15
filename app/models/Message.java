@@ -10,6 +10,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.avaje.ebean.Ebean.getServer;
+
 /**
  * Created by Hao on 2015/10/9.
  */
@@ -57,4 +59,7 @@ public class Message extends Model {
     @ManyToOne//(cascade= CascadeType.ALL)
     public Semesteruser sender;
 
+    public static List<Message> findAllByConversation(String semester,Conversation conversation){
+        return getServer(semester).find(Message.class).where().eq("conversation.id",conversation.id).orderBy("timestamp,timestamp desc").findList();
+    }
 }
