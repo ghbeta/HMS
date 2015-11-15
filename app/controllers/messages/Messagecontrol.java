@@ -25,15 +25,17 @@ public class Messagecontrol extends Controller {
       Lecture lecture=Lecture.getlecturebyname(lecturename,semester);
       DynamicForm messageform= Form.form().bindFromRequest();
       String content=messageform.get("content");
+      Conversation conversation=null;
+
       try{
       Message message=new Message();
-      Conversation conversation=new Conversation();
-      conversation.lecture=lecture;
+      conversation=new Conversation();
+      //conversation.lecture=lecture;
       conversation.user1=u1;
       conversation.user2=u2;
       message.setTimestamp();
       message.semester=semester;
-      message.lecture=lecture;
+     // message.lecture=lecture;
       message.sender=u1;
       message.conversation=conversation;
       message.messagebody=content;

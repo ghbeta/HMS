@@ -5,6 +5,7 @@ import play.data.format.Formats;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,10 +28,10 @@ public class Message extends Model {
     public String semester;
 
     @Formats.DateTime(pattern = "dd.MM.yyyy hh:mm:ss")
-    public org.joda.time.DateTime date;
+    public Date date;
 
     public void setTimestamp() {
-        this.date=new DateTime();
+        this.date=new Date();
         this.timestamp = System.currentTimeMillis();
     }
 
@@ -48,8 +49,8 @@ public class Message extends Model {
 
 
 
-    @ManyToOne//(cascade= CascadeType.ALL)
-    public Lecture lecture;
+//    @ManyToOne//(cascade= CascadeType.ALL)
+//    public Lecture lecture;
 //
 
 //

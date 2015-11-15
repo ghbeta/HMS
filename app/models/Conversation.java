@@ -27,17 +27,16 @@ public class Conversation extends Model {
     @OneToOne
     public Semesteruser user2;
 
-    @ManyToOne
-    public Lecture lecture;
+//    @ManyToOne
+//    public Lecture lecture;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "conversation")
     public List<Message> messages;
 
 
-    public static Conversation getConversation(String semester,Semesteruser user1,Semesteruser user2,Lecture lecture){
+    public static Conversation getConversation(String semester,Semesteruser user1,Semesteruser user2){
         return getServer(semester).find(Conversation.class).where().or(Expr.and(Expr.eq("user1.email", user1.email), Expr.eq("user2.email", user2.email)),
-                Expr.and(Expr.eq("user1.email", user2.email), Expr.eq("user2.email", user1.email))).
-                eq("lecture.courseName", lecture.courseName).findUnique();
+                Expr.and(Expr.eq("user1.email", user2.email), Expr.eq("user2.email", user1.email))).findUnique();
     }
 
 }

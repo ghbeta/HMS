@@ -57,8 +57,8 @@ public class Lecture extends Model {
     @OneToMany(cascade=CascadeType.ALL,mappedBy = "course")
     public List<Repo> repos;
 //
-    @OneToMany(cascade=CascadeType.ALL,mappedBy = "lecture")
-    public List<Message> messages;
+//    @OneToMany(cascade=CascadeType.ALL,mappedBy = "lecture")
+//    public List<Message> messages;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "lecture")
     public List<Evaluation> evaluations;
@@ -69,8 +69,8 @@ public class Lecture extends Model {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "lecture")
     public List<ForumPost> posts;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "lecture")
-    public List<Conversation> conversations;
+//    @OneToMany(cascade = CascadeType.ALL,mappedBy = "lecture")
+//    public List<Conversation> conversations;
 
     public boolean isExpired(){
         Date date=new Date();
