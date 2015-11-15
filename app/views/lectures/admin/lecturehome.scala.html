@@ -28,7 +28,7 @@
           <ul class="list-inline list-unstyled">
             <li><span class="label label-primary">@Messages("lecture.contact")</span></li>
             @for(admin<-Semesteruser.findworkerByLecture(lecture.semester,lecture)){
-              <li><span><img class="media-object" src="http://www.gravatar.com/avatar/@admin.userHash" height="20" width="20"><a @if(!semesteruser.userHash.equals(admin.userHash)){href="#" data-toggle="modal" data-target="#message@admin.userHash"}>@admin.firstname @admin.lastname</a></span></li>
+              <li><span><i class="fa fa-user"></i><a @if(!semesteruser.userHash.equals(admin.userHash)){href="#" data-toggle="modal" data-target="#message@admin.userHash"}>@admin.firstname @admin.lastname</a></span></li>
               <li> </li>
 
                 <!-- message Modal -->
