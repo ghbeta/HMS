@@ -1,6 +1,9 @@
 package controllers.messages;
 
 import Permission.Securedstudents;
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.text.json.JsonContext;
+import com.fasterxml.jackson.databind.JsonNode;
 import models.*;
 import play.Logger;
 import play.api.libs.json.Json;
@@ -8,10 +11,9 @@ import play.data.DynamicForm;
 import play.data.Form;
 import play.i18n.Messages;
 import play.libs.F;
-import play.mvc.Controller;
-import play.mvc.Result;
-import play.mvc.Security;
-import play.mvc.WebSocket;
+import play.mvc.*;
+
+import java.util.List;
 
 /**
  * Created by Hao on 2015/11/14.
@@ -24,6 +26,23 @@ public class Messagecontrol extends Controller {
       return ok(views.html.messagesystem.messagecontainer.render(user));
   }
 
+
+  @BodyParser.Of(BodyParser.Json.class)
+  @Security.Authenticated(Securedstudents.class)
+  public static Result semesterrequest(String semester){
+      JsonNode jsonsemester = request().body().asJson();
+      Logger.warn("semester is "+jsonsemester.asText());
+      Semesteruser currentuser=Semesteruser.findByEmail(ctx().session().get("email"),jsonsemester.asText());
+      if(currentuser!=null){
+      List<Conversation> conversations=Conversation.getConversationByOneuser(jsonsemester.asText(),currentuser);
+          JsonContext json= Ebean.getServer(jsonsemester.asText()).createJsonContext();
+          String jsonoutput=json.toJsonString(conversations);
+      return ok(jsonoutput);}
+      else{
+          return badRequest();
+      }
+
+  }
 
 
 
@@ -53,6 +72,7 @@ public class Messagecontrol extends Controller {
      // message.lecture=lecture;
       //message.save(semester);
       conversation.messages.add(message);
+      conversation.semester=semester;
       //message.update(semester);
       conversation.save(semester);
       message.conversation=conversation;

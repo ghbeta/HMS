@@ -30,6 +30,8 @@ public class Conversation extends Model {
     @OneToOne
     public Semesteruser user2;
 
+    public String semester;
+
 //    @ManyToOne
 //    public Lecture lecture;
 
@@ -41,6 +43,11 @@ public class Conversation extends Model {
         ExpressionFactory expr=Ebean.getServer(semester).getExpressionFactory();
         return getServer(semester).find(Conversation.class).where().or(expr.and(expr.eq("user1.email", user1.email), expr.eq("user2.email", user2.email)),expr.and(expr.eq("user1.email", user2.email), expr.eq("user2.email", user1.email))).findUnique();
         //return getServer(semester).find(Conversation.class).where().eq("user1.email",user1.email).findUnique();
+    }
+
+    public static List<Conversation> getConversationByOneuser(String semester,Semesteruser user){
+        ExpressionFactory expr=Ebean.getServer(semester).getExpressionFactory();
+        return getServer(semester).find(Conversation.class).where().or(expr.eq("user1.email",user.email),expr.eq("user2.email",user.email)).findList();
     }
 
 }

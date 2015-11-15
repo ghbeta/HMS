@@ -4,7 +4,13 @@
   <div class="row">
     <div class="col-lg-3">
       <div class="btn-panel btn-panel-conversation">
-        <a href="" class="btn  col-lg-6 send-message-btn " role="button"><i class="fa fa-search"></i>@Messages("message.filter")</a>
+        <a type="button" class="btn  send-message-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+          <i class="fa fa-filter"></i>@Messages("message.filter")<span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          @for(semester<-Semester.getallsemester()){
+          <li><a href="#" onclick="filter('@semester.getSemester')">@semester.getSemester</a></li>}
+        </ul>
       </div>
     </div>
   </div>
@@ -39,10 +45,7 @@
       </div>
 
       <div class="send-wrap ">
-
         <textarea class="form-control send-message" rows="3" placeholder="Write a reply..."></textarea>
-
-
       </div>
       <div class="btn-panel">
         <a href="" class=" col-lg-4 text-right btn   send-message-btn pull-right" role="button"><i class="fa fa-plus"></i>@Messages("message.send")</a>
