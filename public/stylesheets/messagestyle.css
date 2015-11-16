@@ -17,7 +17,8 @@
 {
     box-shadow: 0 0 3px #ddd;
     padding:0;
-
+    max-height: 500px;
+    overflow: auto;
 }
 .msg
 {

@@ -7,7 +7,9 @@ var semester1="";
 var username={};
 var currentconvid="";
 
-var app = angular.module('messages',[]);
+var app = angular.module('messages',[
+    'luegg.directives'
+]);
 app.controller('messagecontroller',function($scope,$http){
     $scope.newmessage="";
 

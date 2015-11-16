@@ -31,7 +31,7 @@
       @*for schleife*@
     </div>
 
-    <div class="message-wrap col-lg-8">
+    <div class="message-wrap col-lg-8" scroll-glue>
 
       <div ng-repeat="msg in allmessages">
       <div class="msg-wrap" ng-init="sender(msg.sender.email)">
@@ -48,6 +48,8 @@
         @*for schleife*@
       </div>
       </div>
+    </div>
+    <div class="message-wrap col-lg-8 col-lg-offset-3">
       <div class="send-wrap ">
         <textarea class="form-control send-message" rows="3" placeholder="Write a reply..." ng-model="newmessage"></textarea>
       </div>
