@@ -73,33 +73,33 @@ app.controller('messagecontroller',function($scope,$http,$websocket){
 
 
 
-    $scope.filter=function filter(semester){
-        semester1=semester;
-        var posturl="/messages/"+semester;
-        $http({method: 'GET',
-               url:posturl,
-               headers:{'Content-Type':'text/plain'}}).success(function(response){
-
-            $scope.talks=response;
-            console.log(response);
-        })
-    };
+    //$scope.filter=function filter(semester){
+    //    semester1=semester;
+    //    var posturl="/messages/"+semester;
+    //    $http({method: 'GET',
+    //           url:posturl,
+    //           headers:{'Content-Type':'text/plain'}}).success(function(response){
+    //
+    //        $scope.talks=response;
+    //        console.log(response);
+    //    })
+    //};
     $scope.username=username.fullname;
 
-    $scope.chatcontent=function showcontent(convid){
-        currentconvid=convid;
-      var posturl="/conversation/"+semester1+"/"+convid;
-        console.log(posturl);
-
-        $http({method: 'GET',
-            url:posturl,
-            headers:{'Content-Type':'text/plain'}}).success(function(response){
-            $scope.allmessages=response;
-            //return $scope.otheruser.lastname;
-            console.log(response);
-        })
-
-    };
+    //$scope.chatcontent=function showcontent(convid){
+    //    currentconvid=convid;
+    //  var posturl="/conversation/"+semester1+"/"+convid;
+    //    console.log(posturl);
+    //
+    //    $http({method: 'GET',
+    //        url:posturl,
+    //        headers:{'Content-Type':'text/plain'}}).success(function(response){
+    //        $scope.allmessages=response;
+    //        //return $scope.otheruser.lastname;
+    //        console.log(response);
+    //    })
+    //
+    //};
 
     //$scope.msgsender={};
     //$scope.sender=function getsender(senderemail){
@@ -118,24 +118,24 @@ app.controller('messagecontroller',function($scope,$http,$websocket){
     //};
 
 
-    $scope.reply=function sendmessage(){
-          var data= JSON.stringify({
-                  content:$scope.newmessage
-              });
-
-        console.log("reply data "+data);
-        var posturl="/conversation/"+semester1+"/"+currentconvid+"/newmessage";
-        console.log("create new reply"+posturl);
-        $http({method: 'POST',
-            url:posturl,
-            data:data,
-            headers:{'Content-Type':'application/json'}}).success(function(response){
-            $scope.allmessages=response;
-            //return $scope.otheruser.lastname;
-            console.log(response);
-            $scope.newmessage="";
-        })
-    }
+    //$scope.reply=function sendmessage(){
+    //      var data= JSON.stringify({
+    //              content:$scope.newmessage
+    //          });
+    //
+    //    console.log("reply data "+data);
+    //    var posturl="/conversation/"+semester1+"/"+currentconvid+"/newmessage";
+    //    console.log("create new reply"+posturl);
+    //    $http({method: 'POST',
+    //        url:posturl,
+    //        data:data,
+    //        headers:{'Content-Type':'application/json'}}).success(function(response){
+    //        $scope.allmessages=response;
+    //        //return $scope.otheruser.lastname;
+    //        console.log(response);
+    //        $scope.newmessage="";
+    //    })
+    //}
 
     $scope.participant=function participant(selfemail,user1,user2){
         var resultemail="";

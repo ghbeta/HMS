@@ -84,9 +84,9 @@ POST        /:semester/:lecturename/forum/show/:thread/newpost               con
 #Message routes
 POST        /:semester/:lecturename/:touser/newconversation                  controllers.messages.Messagecontrol.addConversation(semester:String,touser:String,lecturename:String)
 GET         /messages                                                        controllers.messages.Messagecontrol.generateMessagehome()
-GET         /messages/:semester                                              controllers.messages.Messagecontrol.semesterrequest(semester:String)
-GET         /conversation/:semester/:convid                                  controllers.messages.Messagecontrol.contentrequest(semester:String,convid:String)
-POST        /conversation/:semester/:convid/newmessage                       controllers.messages.Messagecontrol.addmessage(semester:String,convid:String)
+#GET         /messages/:semester                                              controllers.messages.Messagecontrol.semesterrequest(semester:String)
+#GET         /conversation/:semester/:convid                                  controllers.messages.Messagecontrol.contentrequest(semester:String,convid:String)
+#POST        /conversation/:semester/:convid/newmessage                       controllers.messages.Messagecontrol.addmessage(semester:String,convid:String)
 GET          /websocket                                                      controllers.messages.Messagecontrol.socket()
 #About static page
 GET         /about                                                           controllers.About.index()
