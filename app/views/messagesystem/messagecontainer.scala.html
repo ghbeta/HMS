@@ -9,7 +9,7 @@
         </a>
         <ul class="dropdown-menu">
           @for(semester<-Semester.getallsemester()){
-          <li><a href="#" ng-click="filter('@semester.getSemester')">@semester.getSemester</a></li>}
+          <li><a href="#" ng-click="socketfilter('@semester.getSemester','@user.email')">@semester.getSemester</a></li>}
         </ul>
       </div>
     </div>

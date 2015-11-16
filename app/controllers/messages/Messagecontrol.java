@@ -16,9 +16,11 @@ import play.i18n.Messages;
 import play.libs.F;
 import play.libs.Json;
 import play.mvc.*;
+import utils.Chatsocket;
 
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import static play.libs.Json.toJson;
@@ -54,7 +56,7 @@ public class Messagecontrol extends Controller {
 
     @Security.Authenticated(Securedstudents.class)
     @BodyParser.Of(BodyParser.Json.class)
-    public static Result contentreques(String semester,String conversationid){
+    public static Result contentrequest(String semester,String conversationid){
          Conversation conversation=Conversation.getConversationById(semester, conversationid);
          List<Message> messages=Message.findAllByConversation(semester,conversation);
         if(messages!=null){
@@ -114,6 +116,14 @@ public class Messagecontrol extends Controller {
 //    }
 
 
+  @Security.Authenticated(Securedstudents.class)
+  @BodyParser.Of(BodyParser.Json.class)
+  public static WebSocket<String> socket(){
+      return WebSocket.whenReady((in,out)->{
+
+          Chatsocket.start(in,out);
+      });
+  }
 
   @Security.Authenticated(Securedstudents.class)
   public static Result addConversation(String semester,String user2,String lecturename){

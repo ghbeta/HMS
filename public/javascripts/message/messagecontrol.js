@@ -8,10 +8,53 @@ var username={};
 var currentconvid="";
 
 var app = angular.module('messages',[
+    'ngWebsocket',
     'luegg.directives'
 ]);
-app.controller('messagecontroller',function($scope,$http){
+app.controller('messagecontroller',function($scope,$http,$websocket){
     $scope.newmessage="";
+
+    $scope.socketfilter=function socketfilter(semester,userid){
+        var url="ws://"+location.host+"/websocket";
+        console.log(url);
+        var ws = $websocket.$new(url);
+        ws.$on('$open', function () {
+            console.log('Oh my gosh, websocket is really open! Fukken awesome!');
+
+            //ws.$emit('ping', 'hi listening websocket server'); // send a message to the websocket server
+            var data={
+                semester:semester,
+                email:userid
+            }
+            //var data = {
+            //    level: 1,
+            //    text: 'ngWebsocket rocks!',
+            //    array: ['one', 'two', 'three'],
+            //    nested: {
+            //        level: 2,
+            //        deeper: [{
+            //            hell: 'yeah'
+            //        }, {
+            //            so: 'good'
+            //        }]
+            //    }
+            //};
+            //
+            ws.$emit('allconversations', data);
+        })
+        .$on('allconversations',function(data){
+            console.log("allconversations");
+                $scope.talks=JSON.parse(data);
+                $scope.$digest();
+            console.log(JSON.parse(data));
+        })
+    }
+
+
+
+
+
+
 
     $scope.filter=function filter(semester){
         semester1=semester;
