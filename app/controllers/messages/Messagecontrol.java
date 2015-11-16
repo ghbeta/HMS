@@ -3,17 +3,24 @@ package controllers.messages;
 import Permission.Securedstudents;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.text.json.JsonContext;
+import com.avaje.ebean.text.json.JsonWriteOptions;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.*;
 import play.Logger;
-import play.api.libs.json.Json;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.i18n.Messages;
 import play.libs.F;
+import play.libs.Json;
 import play.mvc.*;
 
+
 import java.util.List;
+
+import static play.libs.Json.toJson;
 
 /**
  * Created by Hao on 2015/11/14.
@@ -27,16 +34,16 @@ public class Messagecontrol extends Controller {
   }
 
 
-  @BodyParser.Of(BodyParser.Json.class)
   @Security.Authenticated(Securedstudents.class)
-  public static Result semesterrequest(String semester){
-      JsonNode jsonsemester = request().body().asJson();
-      Logger.warn("semester is "+jsonsemester.asText());
-      Semesteruser currentuser=Semesteruser.findByEmail(ctx().session().get("email"),jsonsemester.asText());
+  @BodyParser.Of(BodyParser.Json.class)
+  public static Result semesterrequest(String semester) throws JsonProcessingException {
+      Logger.warn("semester is "+semester);
+      Semesteruser currentuser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
       if(currentuser!=null){
-      List<Conversation> conversations=Conversation.getConversationByOneuser(jsonsemester.asText(),currentuser);
-          JsonContext json= Ebean.getServer(jsonsemester.asText()).createJsonContext();
+      List<Conversation> conversations=Conversation.getConversationByOneuser(semester,currentuser);
+          JsonContext json= Ebean.getServer(semester).createJsonContext();
           String jsonoutput=json.toJsonString(conversations);
+          Logger.warn(jsonoutput);
       return ok(jsonoutput);}
       else{
           return badRequest();
@@ -44,6 +51,20 @@ public class Messagecontrol extends Controller {
 
   }
 
+    @Security.Authenticated(Securedstudents.class)
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result usernamerequest(String email,String semester){
+        Semesteruser user=Semesteruser.findByEmail(email,semester);
+        if(user!=null){
+            //List<Conversation> conversations=Conversation.getConversationByOneuser(semester,currentuser);
+            JsonContext json= Ebean.getServer(semester).createJsonContext();
+            String jsonoutput=json.toJsonString(user);
+            Logger.warn(jsonoutput);
+            return ok(jsonoutput);}
+        else{
+            return badRequest();
+        }
+    }
 
 
 
