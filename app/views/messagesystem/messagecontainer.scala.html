@@ -51,10 +51,10 @@
     </div>
     <div class="message-wrap col-lg-8 col-lg-offset-3">
       <div class="send-wrap ">
-        <textarea class="form-control send-message" rows="3" placeholder="Write a reply..." ng-model="newmessage"></textarea>
+        <textarea class="form-control send-message" rows="3" placeholder="@Messages("message.writereply")" ng-model="newmessage" required></textarea>
       </div>
-      <div class="btn-panel">
-        <a href="" class=" col-lg-4 text-right btn   send-message-btn pull-right" role="button" ng-click="reply()"><i class="fa fa-plus"></i>@Messages("message.send")</a>
+      <div>
+        <button href="" class=" btn btn-success pull-right" role="button" ng-click="reply()">@Messages("message.send")</button>
       </div>
     </div>
   </div>

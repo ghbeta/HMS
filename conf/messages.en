@@ -215,6 +215,7 @@ message.home=Message
 message.my=My Messages
 message.filter=Filter
 message.send=Send
+message.writereply=Write a reply...
 account.not.validated.check.mail=Account not validated. Check your emails.
 account.successfully.validated=Account successfully validated
 account.settings.email.successful=Email successfully validated ({0})
