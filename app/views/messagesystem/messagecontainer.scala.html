@@ -17,12 +17,12 @@
   <div class="row">
     <div class="conversation-wrap col-lg-3">
       <div ng-repeat="talk in talks">
-      <div class="media conversation">
+      <div class="media conversation" ng-init="otheruser=participant('@user.email',talk.user1,talk.user2)">
         <a class="pull-left" href="#">
           <img class="media-object" src="http://www.gravatar.com/avatar/{{otheruser.userHash}}" height="50" width="50">
         </a>
         <div class="media-body">
-          <h5 class="media-heading" ng-init="participant('@user.email',talk.user1.email,talk.user2.email)"><a href="#" ng-click="chatcontent(talk.id)">{{otheruser.firstname}} {{otheruser.lastname}}</a></h5>
+          <h5 class="media-heading"><a href="#" ng-click="chatcontent(talk.id)">{{otheruser.firstname}} {{otheruser.lastname}}</a></h5>
           <small><div class="label label-info">{{talk.semester}}</div></small>
         </div>
 
@@ -34,14 +34,14 @@
     <div class="message-wrap col-lg-8" scroll-glue>
 
       <div ng-repeat="msg in allmessages">
-      <div class="msg-wrap" ng-init="sender(msg.sender.email)">
+      <div class="msg-wrap">
         <div class="media msg">
           <a class="pull-left" href="#">
-            <img class="media-object" src="http://www.gravatar.com/avatar/{{msgsender.userHash}}" height="50" width="50">
+            <img class="media-object" src="http://www.gravatar.com/avatar/{{msg.sender.userHash}}" height="50" width="50">
           </a>
           <div class="media-body">
             <small class="pull-right time"><i class="fa fa-clock-o"></i>{{msg.date}}</small>
-            <h5 class="media-heading">{{msgsender.firstname}} {{ msgsender.lastname}}</h5>
+            <h5 class="media-heading">{{msg.sender.firstname}} {{ msg.sender.lastname}}</h5>
             <small class="col-lg-10">{{msg.messagebody}}</small>
           </div>
         </div>

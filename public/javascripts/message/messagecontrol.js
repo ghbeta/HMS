@@ -41,22 +41,26 @@ app.controller('messagecontroller',function($scope,$http){
 
     };
 
-    $scope.sender=function getsender(senderemail){
-        var posturl="/messages/"+semester1+"/"+senderemail;
-        console.log(posturl);
-        $http({method: 'GET',
-            url:posturl,
-            headers:{'Content-Type':'text/plain'}}).success(function(response){
-            $scope.msgsender=response;
-            //return $scope.otheruser.lastname;
-            console.log(response);
-        })
-    }
+    //$scope.msgsender={};
+    //$scope.sender=function getsender(senderemail){
+    //
+    //    var posturl="/messages/"+semester1+"/"+senderemail;
+    //    console.log(posturl);
+    //    $http({method: 'GET',
+    //        url:posturl,
+    //        headers:{'Content-Type':'text/plain'}}).success(function(response){
+    //
+    //        $scope.msgsender[senderemail]=response;
+    //        //return $scope.otheruser.lastname;
+    //
+    //    });
+    //
+    //};
 
     $scope.reply=function sendmessage(){
           var data= JSON.stringify({
                   content:$scope.newmessage
-              })
+              });
 
         console.log("reply data "+data);
         var posturl="/conversation/"+semester1+"/"+currentconvid+"/newmessage";
@@ -72,26 +76,28 @@ app.controller('messagecontroller',function($scope,$http){
         })
     }
 
-    $scope.participant=function participant(selfemail,user1email,user2email){
+    $scope.participant=function participant(selfemail,user1,user2){
         var resultemail="";
         var name="";
-        if(selfemail===user1email){
-            resultemail=user2email;
+        if(selfemail===user1.email){
+            //resultemail=user2email;
             //return user2email;
+            return user2;
         }
-        if(selfemail===user2email){
-            resultemail=user1email;
+        if(selfemail===user2.email){
+            //resultemail=user1email;
             //return user1email
+            return user1;
         }
         //console.log("WS2016");
-        var posturl="/messages/"+semester1+"/"+resultemail;
-        console.log(posturl);
-        $http({method: 'GET',
-            url:posturl,
-            headers:{'Content-Type':'text/plain'}}).success(function(response){
-            $scope.otheruser=response;
-            //return $scope.otheruser.lastname;
-            console.log(response);
-        })
+        //var posturl="/messages/"+semester1+"/"+resultemail;
+        //console.log(posturl);
+        //$http({method: 'GET',
+        //    url:posturl,
+        //    headers:{'Content-Type':'text/plain'}}).success(function(response){
+        //    $scope.otheruser=response;
+        //    //return $scope.otheruser.lastname;
+        //    console.log(response);
+        //})
     };
 })

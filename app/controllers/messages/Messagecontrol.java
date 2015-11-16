@@ -98,20 +98,20 @@ public class Messagecontrol extends Controller {
     }
 
 
-    @Security.Authenticated(Securedstudents.class)
-    @BodyParser.Of(BodyParser.Json.class)
-    public static Result usernamerequest(String email,String semester){
-        Semesteruser user=Semesteruser.findByEmail(email,semester);
-        if(user!=null){
-            //List<Conversation> conversations=Conversation.getConversationByOneuser(semester,currentuser);
-            JsonContext json= Ebean.getServer(semester).createJsonContext();
-            String jsonoutput=json.toJsonString(user);
-            Logger.warn(jsonoutput);
-            return ok(jsonoutput);}
-        else{
-            return badRequest();
-        }
-    }
+//    @Security.Authenticated(Securedstudents.class)
+//    @BodyParser.Of(BodyParser.Json.class)
+//    public static Result usernamerequest(String email,String semester){
+//        Semesteruser user=Semesteruser.findByEmail(email,semester);
+//        if(user!=null){
+//            //List<Conversation> conversations=Conversation.getConversationByOneuser(semester,currentuser);
+//            JsonContext json= Ebean.getServer(semester).createJsonContext();
+//            String jsonoutput=json.toJsonString(user);
+//            Logger.warn(jsonoutput);
+//            return ok(jsonoutput);}
+//        else{
+//            return badRequest();
+//        }
+//    }
 
 
 

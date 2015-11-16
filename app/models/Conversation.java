@@ -47,7 +47,7 @@ public class Conversation extends Model {
 
     public static List<Conversation> getConversationByOneuser(String semester,Semesteruser user){
         ExpressionFactory expr=Ebean.getServer(semester).getExpressionFactory();
-        return getServer(semester).find(Conversation.class).where().or(expr.eq("user1.email",user.email),expr.eq("user2.email",user.email)).findList();
+        return getServer(semester).find(Conversation.class).fetch("user1").fetch("user2").where().or(expr.eq("user1.email",user.email),expr.eq("user2.email",user.email)).findList();
     }
 
     public static Conversation getConversationById(String semester,String convid){
