@@ -5,6 +5,7 @@ import com.avaje.ebean.text.json.JsonContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Conversation;
+import models.Message;
 import models.Semesteruser;
 import play.Logger;
 import play.libs.F;
@@ -20,8 +21,8 @@ import java.util.List;
 public class Chatsocket {
 
     public static HashMap<String,WebSocket.Out<String>> connections = new HashMap<String, WebSocket.Out<String>>();
-    public static void start(WebSocket.In<String> in, WebSocket.Out<String> out){
-        //connections.put(userid1,out);
+    public static void start(String useremail,WebSocket.In<String> in, WebSocket.Out<String> out){
+        connections.put(useremail,out);
         //connections.put(userid2,out);
         in.onMessage(new F.Callback<String>() {
             @Override
@@ -31,9 +32,9 @@ public class Chatsocket {
                 if(inmsg.findPath("event").asText().equals("allconversations")){
 
                     JsonNode requestbody=inmsg.findPath("data");
-                    Logger.warn(requestbody.findPath("semester").asText());
+                    //Logger.warn(requestbody.findPath("semester").asText());
                     String semester=requestbody.findPath("semester").asText();
-                    Logger.warn(requestbody.findPath("email").asText());
+                    //Logger.warn(requestbody.findPath("email").asText());
                     String email=requestbody.findPath("email").asText();
                     Semesteruser currentuser=Semesteruser.findByEmail(email,semester);
                     if(currentuser!=null){
@@ -43,10 +44,28 @@ public class Chatsocket {
                         ObjectNode result = Json.newObject();
                         result.put("event","allconversations");
                         result.put("data",jsonoutput);
-                        Logger.warn(result.toString());
+                        //Logger.warn(result.toString());
                         //return ok(jsonoutput);
                         out.write(result.toString());
                         }
+                }
+
+                if(inmsg.findPath("event").asText().equals("chatcontent")){
+                    JsonNode requestbody=inmsg.findPath("data");
+                    String conversationid=requestbody.findPath("convid").asText();
+                    String semester=requestbody.findPath("semester").asText();
+                    //Logger.warn(requestbody.asText());
+                    Conversation conversation=Conversation.getConversationById(semester, conversationid);
+                    List<Message> messages=Message.findAllByConversation(semester,conversation);
+                    if(messages!=null){
+                        JsonContext json = Ebean.getServer(semester).createJsonContext();
+                        String jsonoutput=json.toJsonString(messages,true);
+                        ObjectNode result=Json.newObject();
+                        result.put("event","chatcontent");
+                        result.put("data",jsonoutput);
+                        Logger.warn("contentrequest "+jsonoutput);
+                        out.write(result.toString());
+                    }
                 }
 
             }

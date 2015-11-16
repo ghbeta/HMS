@@ -119,9 +119,10 @@ public class Messagecontrol extends Controller {
   @Security.Authenticated(Securedstudents.class)
   @BodyParser.Of(BodyParser.Json.class)
   public static WebSocket<String> socket(){
+      User currentuser=User.findByEmail(ctx().session().get("email"),"global");
       return WebSocket.whenReady((in,out)->{
 
-          Chatsocket.start(in,out);
+          Chatsocket.start(currentuser.email,in,out);
       });
   }
 
