@@ -22,7 +22,7 @@
           <img class="media-object" src="http://www.gravatar.com/avatar/{{otheruser.userHash}}" height="50" width="50">
         </a>
         <div class="media-body">
-          <h5 class="media-heading"><a href="#" ng-click="socketchatcontent(talk.id)">{{otheruser.firstname}} {{otheruser.lastname}}</a></h5>
+          <h5 class="media-heading"><a href="#" ng-click="socketchatcontent(talk.id,otheruser.email)">{{otheruser.firstname}} {{otheruser.lastname}}</a></h5>
           <small><div class="label label-info">{{talk.semester}}</div></small>
         </div>
 
@@ -54,7 +54,7 @@
         <textarea class="form-control send-message" rows="3" placeholder="@Messages("message.writereply")" ng-model="newmessage" required></textarea>
       </div>
       <div>
-        <button href="" class=" btn btn-success pull-right" role="button" ng-click="reply()">@Messages("message.send")</button>
+        <button href="" class=" btn btn-success pull-right" role="button" ng-click="socketreply()">@Messages("message.send")</button>
       </div>
     </div>
   </div>

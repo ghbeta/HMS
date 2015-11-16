@@ -12,6 +12,7 @@ import play.libs.F;
 import play.libs.Json;
 import play.mvc.WebSocket;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -63,8 +64,42 @@ public class Chatsocket {
                         ObjectNode result=Json.newObject();
                         result.put("event","chatcontent");
                         result.put("data",jsonoutput);
-                        Logger.warn("contentrequest "+jsonoutput);
+                        Logger.warn("contentrequest " + jsonoutput);
                         out.write(result.toString());
+                    }
+                }
+
+                if(inmsg.findPath("event").asText().equals("newmessage")){
+                    JsonNode requestbody=inmsg.findPath("data");
+                    String conversationid=requestbody.findPath("convid").asText();
+                    String semester=requestbody.findPath("semester").asText();
+                    String msgcontent=requestbody.findPath("content").asText();
+                    String other=requestbody.findPath("other").asText();
+                    Conversation conversation=Conversation.getConversationById(semester,conversationid);
+                    Semesteruser semesteruser=Semesteruser.findByEmail(useremail,semester);
+
+                    if(conversation!=null) {
+                        Message message = new Message();
+                        message.conversation=conversation;
+                        message.date=new Date();
+                        message.messagebody=msgcontent;
+                        message.semester=semester;
+                        message.sender=semesteruser;
+                        message.setTimestamp();
+                        message.save(semester);
+                        conversation.messages.add(message);
+                        conversation.update(semester);
+                        List<Message> allmessages=Message.findAllByConversation(semester,conversation);
+                        JsonContext jsonresult= Ebean.getServer(semester).createJsonContext();
+                        String jsonoutput=jsonresult.toJsonString(allmessages,true);
+                        ObjectNode result=Json.newObject();
+                        result.put("event","newmessage");
+                        result.put("data",jsonoutput);
+                        out.write(result.toString());
+
+                        connections.get(other).write(result.toString());
+                        //Logger.warn("after adding message "+jsonoutput);
+                        //return ok(jsonoutput);
                     }
                 }
 

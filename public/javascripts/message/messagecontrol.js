@@ -6,7 +6,7 @@ var convjson={};
 var semester1="";
 var username={};
 var currentconvid="";
-
+var otheruseremail="";
 var app = angular.module('messages',[
     'ngWebsocket',
     'luegg.directives'
@@ -37,7 +37,9 @@ app.controller('messagecontroller',function($scope,$http,$websocket){
         })
     };
 
-    $scope.socketchatcontent=function showcontent(convid){
+    $scope.socketchatcontent=function showcontent(convid,otheremail){
+        otheruseremail=otheremail;
+        currentconvid=convid;
         var request={
             convid:convid,
             semester:semester1
@@ -51,7 +53,23 @@ app.controller('messagecontroller',function($scope,$http,$websocket){
     };
 
 
+   $scope.socketreply=function addreply(){
+       var message={
+           semester:semester1,
+           convid:currentconvid,
+           content:$scope.newmessage,
+           other:otheruseremail
+       };
 
+      ws.$emit("newmessage",message);
+       ws.$on("newmessage",function(data){
+           $scope.allmessages=JSON.parse(data);
+           $scope.newmessage="";
+           $scope.$digest();
+           console.log(JSON.parse(data));
+       });
+
+   };
 
 
 
@@ -98,6 +116,7 @@ app.controller('messagecontroller',function($scope,$http,$websocket){
     //    });
     //
     //};
+
 
     $scope.reply=function sendmessage(){
           var data= JSON.stringify({
