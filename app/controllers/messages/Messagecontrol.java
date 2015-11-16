@@ -18,6 +18,7 @@ import play.libs.Json;
 import play.mvc.*;
 
 
+import java.util.Date;
 import java.util.List;
 
 import static play.libs.Json.toJson;
@@ -50,6 +51,52 @@ public class Messagecontrol extends Controller {
       }
 
   }
+
+    @Security.Authenticated(Securedstudents.class)
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result contentreques(String semester,String conversationid){
+         Conversation conversation=Conversation.getConversationById(semester, conversationid);
+         List<Message> messages=Message.findAllByConversation(semester,conversation);
+        if(messages!=null){
+        JsonContext json = Ebean.getServer(semester).createJsonContext();
+        String jsonoutput=json.toJsonString(messages,true);
+        Logger.warn("contentrequest "+jsonoutput);
+        return ok(jsonoutput);}
+        else{
+            return badRequest();
+        }
+
+    }
+
+    @Security.Authenticated(Securedstudents.class)
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result addmessage(String semester,String conversationid){
+        Conversation conversation=Conversation.getConversationById(semester,conversationid);
+        Semesteruser semesteruser=Semesteruser.findByEmail(ctx().session().get("email"),semester);
+        JsonNode json = request().body().asJson();
+        String msgcontent=json.findPath("content").textValue();
+        if(conversation!=null) {
+            Message message = new Message();
+            message.conversation=conversation;
+            message.date=new Date();
+            message.messagebody=msgcontent;
+            message.semester=semester;
+            message.sender=semesteruser;
+            message.setTimestamp();
+            message.save(semester);
+            conversation.messages.add(message);
+            conversation.update(semester);
+            List<Message> allmessages=Message.findAllByConversation(semester,conversation);
+            JsonContext jsonresult= Ebean.getServer(semester).createJsonContext();
+            String jsonoutput=jsonresult.toJsonString(allmessages,true);
+            Logger.warn("after adding message "+jsonoutput);
+            return ok(jsonoutput);
+        }else{
+            return badRequest();
+        }
+
+    }
+
 
     @Security.Authenticated(Securedstudents.class)
     @BodyParser.Of(BodyParser.Json.class)

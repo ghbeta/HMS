@@ -50,4 +50,7 @@ public class Conversation extends Model {
         return getServer(semester).find(Conversation.class).where().or(expr.eq("user1.email",user.email),expr.eq("user2.email",user.email)).findList();
     }
 
+    public static Conversation getConversationById(String semester,String convid){
+        return getServer(semester).find(Conversation.class).where().eq("id",convid).findUnique();
+    }
 }

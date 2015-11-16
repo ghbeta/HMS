@@ -5,75 +5,12 @@
 var convjson={};
 var semester1="";
 var username={};
-//function filter(semester){
-//    var posturl="/messages/"+semester;
-//    semester1=semester;
-//    var xhr= new XMLHttpRequest();
-//    xhr.open('POST',posturl);
-//    xhr.setRequestHeader('Content-Type', 'text/plain');
-//    xhr.onreadystatechange = function () {
-//        if (xhr.readyState == 4 && xhr.status == 200) {
-//            //alert(xhr.responseText);
-//            //convjson=angular.fromJson(xhr.responseText);
-//            setconvjson(xhr.responseText);
-//
-//            //threads=JSON.parse(xhr.responseText);
-//            //console.log(threads)
-//            //forum.scope.$apply()
-//            //$route.reload();
-//        }
-//    }
-//
-//    xhr.send();
-//
-//
-//}
-
-function setconvjson(json){
-    convjson.init=JSON.parse(json);
-    convjson.scope.$apply();
-
-
-}
-
-//function participant(selfemail,user1email,user2email){
-//    var resultemail="";
-//    var name="";
-//    if(selfemail===user1email){
-//        resultemail=user2email;
-//        //return user2email;
-//    }
-//    if(selfemail===user2email){
-//        resultemail=user1email;
-//        //return user1email
-//    }
-//    var posturl="/messages/"+semester1+"/"+resultemail;
-//    console.log(posturl);
-//
-//    //var xhr= new XMLHttpRequest();
-//    //xhr.open('POST',posturl);
-//    //xhr.setRequestHeader('Content-Type', 'text/plain');
-//    //xhr.onreadystatechange = function () {
-//    //    if (xhr.readyState == 4 && xhr.status == 200) {
-//    //        //alert(xhr.responseText);
-//    //        //convjson=angular.fromJson(xhr.responseText);
-//    //        var userobject= JSON.parse(xhr.responseText);
-//    //        name= userobject.firstname+" "+userobject.lastname;
-//    //        //convjson.scope.$apply();
-//    //        //threads=JSON.parse(xhr.responseText);
-//    //        //console.log(xhr.responseText)
-//    //        //forum.scope.$apply()
-//    //        //$route.reload();
-//    //    }
-//    //}
-//
-//    //xhr.send();
-//    console.log(name);
-//    return name;
-//}
+var currentconvid="";
 
 var app = angular.module('messages',[]);
 app.controller('messagecontroller',function($scope,$http){
+    $scope.newmessage="";
+
     $scope.filter=function filter(semester){
         semester1=semester;
         var posturl="/messages/"+semester;
@@ -86,9 +23,53 @@ app.controller('messagecontroller',function($scope,$http){
         })
     };
     $scope.username=username.fullname;
-    //$scope.talks=convjson;
-    //convjson.scope=$scope;
-    //console.log(convjson);
+
+    $scope.chatcontent=function showcontent(convid){
+        currentconvid=convid;
+      var posturl="/conversation/"+semester1+"/"+convid;
+        console.log(posturl);
+
+        $http({method: 'GET',
+            url:posturl,
+            headers:{'Content-Type':'text/plain'}}).success(function(response){
+            $scope.allmessages=response;
+            //return $scope.otheruser.lastname;
+            console.log(response);
+        })
+
+    };
+
+    $scope.sender=function getsender(senderemail){
+        var posturl="/messages/"+semester1+"/"+senderemail;
+        console.log(posturl);
+        $http({method: 'GET',
+            url:posturl,
+            headers:{'Content-Type':'text/plain'}}).success(function(response){
+            $scope.msgsender=response;
+            //return $scope.otheruser.lastname;
+            console.log(response);
+        })
+    }
+
+    $scope.reply=function sendmessage(){
+          var data= JSON.stringify({
+                  content:$scope.newmessage
+              })
+
+        console.log("reply data "+data);
+        var posturl="/conversation/"+semester1+"/"+currentconvid+"/newmessage";
+        console.log("create new reply"+posturl);
+        $http({method: 'POST',
+            url:posturl,
+            data:data,
+            headers:{'Content-Type':'application/json'}}).success(function(response){
+            $scope.allmessages=response;
+            //return $scope.otheruser.lastname;
+            console.log(response);
+            $scope.newmessage="";
+        })
+    }
+
     $scope.participant=function participant(selfemail,user1email,user2email){
         var resultemail="";
         var name="";
