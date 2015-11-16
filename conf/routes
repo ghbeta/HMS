@@ -84,8 +84,8 @@ POST        /:semester/:lecturename/forum/show/:thread/newpost               con
 #Message routes
 POST        /:semester/:lecturename/:touser/newconversation                  controllers.messages.Messagecontrol.addConversation(semester:String,touser:String,lecturename:String)
 GET         /messages                                                        controllers.messages.Messagecontrol.generateMessagehome()
-POST        /messages/:semester                                              controllers.messages.Messagecontrol.semesterrequest(semester:String)
-POST        /messages/:semester/:email                                       controllers.messages.Messagecontrol.usernamerequest(email:String,semester:String)
+GET        /messages/:semester                                              controllers.messages.Messagecontrol.semesterrequest(semester:String)
+GET        /messages/:semester/:email                                       controllers.messages.Messagecontrol.usernamerequest(email:String,semester:String)
 #About static page
 GET         /about                                                           controllers.About.index()
 #File service (hosted file on host server)

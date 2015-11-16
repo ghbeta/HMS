@@ -16,13 +16,14 @@
   </div>
   <div class="row">
     <div class="conversation-wrap col-lg-3">
-      <div ng-repeat="talk in talks.init">
+      <div ng-repeat="talk in talks">
       <div class="media conversation">
         <a class="pull-left" href="#">
           <img class="media-object" src="http://www.gravatar.com/avatar/" height="50" width="50">
         </a>
         <div class="media-body">
-          <h5 class="media-heading">{{participant('@user.email',talk.user1.email,talk.user2.email)}}</h5>
+
+          <h5 class="media-heading" ng-init="participant('@user.email',talk.user1.email,talk.user2.email)">{{otheruser.lastname}}</h5>
           <small>hello</small>
         </div>
 
