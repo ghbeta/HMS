@@ -60,6 +60,6 @@ public class Message extends Model {
     public Semesteruser sender;
 
     public static List<Message> findAllByConversation(String semester,Conversation conversation){
-        return getServer(semester).find(Message.class).where().eq("conversation.id",conversation.id).orderBy("timestamp,timestamp desc").findList();
+        return getServer(semester).find(Message.class).fetch("sender").where().eq("conversation.id",conversation.id).orderBy("timestamp,timestamp desc").findList();
     }
 }
