@@ -162,6 +162,7 @@ lecture.create.fail="Lecture can not be created pls try again later"
 lecture.deleteuser.fail=Delete user fail
 lecture.home.admin=Home
 lecture.home.homework= Homework collections
+lecture.home.performance=Lecture Performance
 lecture.home.forum=Forum
 lecture.home.des=Lecture Description
 lecture.home.terms= Lecture Terms
