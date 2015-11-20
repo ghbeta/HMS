@@ -212,7 +212,7 @@ dashboard.lecture=Lectures Management
 Error.add.user.lecture=add you to this lecture Fail!
 Error.add.user.repo= can not give you a repo right now!
 repo.create.after.fail= Repo creation failed pls try again
-
+repo.status=Repository Status
 sendto=Send Message To
 message.content=Content
 messages.send=Message sended
