@@ -47,7 +47,7 @@ public class ModifySSH extends Controller{
                 return redirect(routes.Index.index());}
                 catch(Exception e){
                     Logger.warn(e.getMessage());
-                    flash("danger",Messages.get("ssh.addkey.fail"));
+                    flash("danger",Messages.get("ssh.addkey.fail.exist"));
                     return redirect(routes.Index.index());
                 }
             }else{

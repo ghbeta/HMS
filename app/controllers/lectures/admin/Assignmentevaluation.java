@@ -123,6 +123,6 @@ public class Assignmentevaluation extends Controller {
         currenthandin.update(semester);
         eval.setPerformance(semester,currentlecture,students);
         eval.update(semester);
-        return ok(json.toString());
+        return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(marker.lastname,semester,currentlecture.courseName));
     }
 }

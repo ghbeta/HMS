@@ -271,28 +271,32 @@
           </div>
 
         }
-        <div class="panel panel-default">
-          <div class="panel-heading">@Messages("lecture.home.performance")</div>
-          <div class="panel-body">
-            <hr>
-            <table class="table table-striped custab">
-              <thead>
+        @if(lecture.attendent.contains(semesteruser)) {
+          <div class="panel panel-default">
+            <div class="panel-heading">@Messages("lecture.home.performance")</div>
+            <div class="panel-body">
+              <table class="table table-striped custab">
+                <thead>
+                  <tr>
+                    <th>@Messages("assginment.validhandin.sum")</th>
+                    <th>@Messages("assginment.optional.sum")</th>
+                    <th>@Messages("totalperformance")</th>
+                  </tr>
+                </thead>
                 <tr>
-                  <th>@Messages("assginment.validhandin.sum")</th>
-                  <th>@Messages("assginment.optional.sum")</th>
-                  <th>@Messages("totalperformance")</th>
+                  <td>@Handin.getValidHandinofstudentinlecture(lecture, semesteruser, lecture.semester).size()
+                    /@lecture.requriednumberofvalidassignment</td>
+                  <td>@Handin.getOptionalAssignmentofStudentsinLecture(lecture.semester, lecture, semesteruser).size()
+                    /@lecture.optionalassignments</td>
+                  <td>
+                  @if(Evaluation.findByLectureAndUser(lecture.semester, lecture, semesteruser) != null) {
+                    @Evaluation.findByLectureAndUser(lecture.semester, lecture, semesteruser).performance
+                  } else {0.0}</td>
                 </tr>
-              </thead>
-              <tr>
-                <td>@Handin.getValidHandinofstudentinlecture(lecture,semesteruser,lecture.semester).size()/@lecture.requriednumberofvalidassignment</td>
-                <td>@Handin.getOptionalAssignmentofStudentsinLecture(lecture.semester,lecture,semesteruser).size()/@lecture.optionalassignments</td>
-                <td>
-                @if(Evaluation.findByLectureAndUser(lecture.semester,lecture,semesteruser)!=null){
-                  @Evaluation.findByLectureAndUser(lecture.semester,lecture,semesteruser).performance}else{0.0}</td>
-              </tr>
-            </table>
+              </table>
+            </div>
           </div>
-          </div>
+        }
       </div>
       <div ng-app="forumapp" ng-controller="forumcontroller" class="tab-pane" id="forum">
       @if(lecture.attendent.contains(semesteruser)){

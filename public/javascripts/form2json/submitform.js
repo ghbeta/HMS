@@ -3,7 +3,7 @@
  */
 function submit(formid,semester,lecture,assignment,student)
 {
-    var posturl="/admin/"+semester+"/"+lecture+"/"+assignment+"/"+student+"/evaluation";
+    var posturl="/admin/"+semester+"/"+lecture+"/"+assignment+"/"+student+"/evaluation#editor";
     console.log(posturl);
     //var formData = form2js('testForm', '.',true);
     var formData = $("#"+formid).serializeArray();
@@ -15,7 +15,7 @@ function submit(formid,semester,lecture,assignment,student)
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            alert(xhr.responseText);
+            //alert(xhr.responseText);
         }
     }
     xhr.send(JSON.stringify(formData));

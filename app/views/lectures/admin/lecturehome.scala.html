@@ -256,6 +256,61 @@
         </div>
 
       }
+        @if(lecture.attendent.contains(semesteruser)) {
+          <div class="panel panel-default">
+            <div class="panel-heading">@Messages("lecture.home.performance")</div>
+            <div class="panel-body">
+              <table class="table table-striped custab">
+                <thead>
+                  <tr>
+                    <th>@Messages("lecture.students")</th>
+                    <th>@Messages("assginment.validhandin.sum")</th>
+                    <th>@Messages("assginment.optional.sum")</th>
+                    <th>@Messages("totalperformance")</th>
+                  </tr>
+                </thead>
+                @for(currentstu<-Semesteruser.findAllstudentsByLecture(lecture.semester,lecture)){
+                <tr>
+                  <td><a href="#" data-toggle="modal" data-target="#message@currentstu.userHash">@currentstu.lastname,@currentstu.firstname</a></td>
+                  <td>@Handin.getValidHandinofstudentinlecture(lecture, currentstu, lecture.semester).size()
+                    /@lecture.requriednumberofvalidassignment</td>
+                  <td>@Handin.getOptionalAssignmentofStudentsinLecture(lecture.semester, lecture, currentstu).size()
+                    /@lecture.optionalassignments</td>
+                  <td>
+                  @if(Evaluation.findByLectureAndUser(lecture.semester, lecture, currentstu) != null) {
+                    @Evaluation.findByLectureAndUser(lecture.semester, lecture, currentstu).performance
+                  } else {0.0}</td>
+                </tr>
+                    <!-- message Modal -->
+                  <div class="modal fade" id="message@currentstu.userHash" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title">@Messages("sendto") @currentstu.firstname @currentstu.lastname</h4>
+                        </div>
+                        <div class="modal-body">
+                          <form action="@controllers.messages.routes.Messagecontrol.addConversation(lecture.semester,currentstu.email,lecture.courseName)#home" method="post" class="form-horizontal">
+                            <div class="form-group">
+                              <label class="control-label" for="textarea">@Messages("message.content")</label>
+                              <div>
+                                <textarea required class="form-control" name="content" rows="5"></textarea>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <input type="submit" class="btn btn-success pull-right">
+                            </div>
+                          </form>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+              </table>
+            </div>
+          </div>
+        }
     </div>
       <br>
       <div class="tab-pane" id="editor">
@@ -289,7 +344,30 @@
                         }else{
                           class="danger"
                         }>
-                          <td>@stu.firstname @stu.lastname</td>
+                          <td><a href="#" data-toggle="modal" data-target="#amessage@stu.userHash">@stu.firstname @stu.lastname</a></td>
+                          <div class="modal fade" id="amessage@stu.userHash" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                  <h4 class="modal-title">@Messages("sendto") @stu.firstname @stu.lastname</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <form action="@controllers.messages.routes.Messagecontrol.addConversation(lecture.semester,stu.email,lecture.courseName)#editor" method="post" class="form-horizontal">
+                                    <div class="form-group">
+                                      <label class="control-label" for="textarea">@Messages("message.content")</label>
+                                      <div>
+                                        <textarea required class="form-control" name="content" rows="5"></textarea>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <input type="submit" class="btn btn-success pull-right">
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                           <td>
                             @if(stu.getRepoByLecture(lecture)!=null){
                           @stu.getRepoByLecture(lecture).repopath}
