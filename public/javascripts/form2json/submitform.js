@@ -20,3 +20,13 @@ function submit(formid,semester,lecture,assignment,student)
     }
     xhr.send(JSON.stringify(formData));
 }
+
+function copytoclip(text){
+
+    var gitadress = document.querySelector('.copytext');
+    var range = document.createRange();
+    range.selectNode(gitadress);
+    window.getSelection().addRange(range);
+    document.execCommand("copy");
+
+}

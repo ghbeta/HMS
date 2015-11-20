@@ -372,12 +372,12 @@
                           <td>
                             @if(stu.getRepoByLecture(lecture)!=null){
                               <div class="input-group">
-                                <input type="text" class="form-control" aria-label="..." value="@stu.getRepoByLecture(lecture).repopath" disabled="disabled">
+                                <input type="text" class="form-control copytext" aria-label="..." value="@stu.getRepoByLecture(lecture).repopath" disabled="disabled">
                                 <div class="input-group-btn">
                                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Messages("repo.eval.action") <span class="caret"></span></button>
                                   <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="#">@Messages("repo.address.copy")</a></li>
-                                    <li><a href="#">@Messages("repo.open.sourcetree")</a></li>
+                                    <li><a href="javascript:copytoclip();">@Messages("repo.address.copy")</a></li>
+                                    <li><a href="sourcetree://cloneRepo/@stu.getRepoByLecture(lecture).repopath">@Messages("repo.open.sourcetree")</a></li>
                                   </ul>
                                 </div><!-- /btn-group -->
                               </div><!-- /input-group -->
