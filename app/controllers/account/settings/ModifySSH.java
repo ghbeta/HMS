@@ -39,10 +39,17 @@ public class ModifySSH extends Controller{
             ssh.ssh=sshform.get().ssh;
 
             if(RepoManager.addSSHtoUser(user,ssh)!=null&&!user.sshs.contains(ssh)){
+
+                try{
                 user.sshs.add(ssh);
                 user.update("global");
                 flash("success",Messages.get("ssh.addkey.success"));
-                return redirect(routes.Index.index());
+                return redirect(routes.Index.index());}
+                catch(Exception e){
+                    Logger.warn(e.getMessage());
+                    flash("danger",Messages.get("ssh.addkey.fail"));
+                    return redirect(routes.Index.index());
+                }
             }else{
                 flash("danger",Messages.get("ssh.addkey.fail"));
                 return redirect(routes.Index.index());
