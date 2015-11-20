@@ -37,7 +37,7 @@
 
               @*<div class="alert alert-warning">@Messages("ssh.none")</div>*@
           @*}*@
-                  <form action="@controllers.account.settings.routes.ModifySSH.addssh()" method="post">
+                  <form action="@controllers.account.settings.routes.ModifySSH.addssh()#ssh" method="post">
                       <tr>
                           <td><input type="text" class="form-control" name="title" placeholder="@Messages("ssh.givename")"></td>
                           <td><textarea class="form-control" onchange="this.value=this.value.replace(/[\n\r](?!\w)/gi,'');" rows="5" name="ssh" placeholder="@Messages("ssh.copyssh")"></textarea></td>
