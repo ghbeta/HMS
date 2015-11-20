@@ -345,6 +345,7 @@
                           class="danger"
                         }>
                           <td><a href="#" data-toggle="modal" data-target="#amessage@stu.userHash">@stu.firstname @stu.lastname</a></td>
+                          @*modaly for create chat*@
                           <div class="modal fade" id="amessage@stu.userHash" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">
                               <div class="modal-content">
@@ -370,7 +371,17 @@
                           </div>
                           <td>
                             @if(stu.getRepoByLecture(lecture)!=null){
-                          @stu.getRepoByLecture(lecture).repopath}
+                              <div class="input-group">
+                                <input type="text" class="form-control" aria-label="..." value="@stu.getRepoByLecture(lecture).repopath" disabled="disabled">
+                                <div class="input-group-btn">
+                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Messages("repo.eval.action") <span class="caret"></span></button>
+                                  <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="#">@Messages("repo.address.copy")</a></li>
+                                    <li><a href="#">@Messages("repo.open.sourcetree")</a></li>
+                                  </ul>
+                                </div><!-- /btn-group -->
+                              </div><!-- /input-group -->
+                          }
                           </td>
                           <td>
                           @if(stu.getRepoByLecture(lecture)!=null){

@@ -63,7 +63,7 @@ public class RepoManager {
             manager.applyAsync(config);
             gitogit.pull().call();
             gitogit.push().call();
-            return "git address: git@"+ hostparser(serverhost)+":"+reponame+".git";
+            return "git@"+ hostparser(serverhost)+":"+reponame+".git";
         }
         else{
                 return null;
