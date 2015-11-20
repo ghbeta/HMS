@@ -77,7 +77,8 @@
             @if(lecture.attendent.contains(semesteruser)){
               @if(Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture)!=null&&semesteruser.roles.equals(UserRoll.Students.toString)){
                 <div class="textfont">@Messages("lecture.home.homework.local.exist")<br>
-                <div class="label label-success">@Messages("repo.last.status") @controllers.lectures.user.Lecturehome.lastUpdateStatus(semesteruser,lecture)</div>
+                <div class="label label-success">@Messages("repo.last.status")</div>
+                  <canvas onload="showcanvas('@semesteruser.email','@lecture.semester','@lecture.courseName','@semesteruser.userHash')" id="@semesteruser.userHash"></canvas>
                 </div>
               }else{
                 <form action="@controllers.lectures.user.routes.Lecturehome.addRemoteRepotoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" method="post"><div class="alert alert-warning" role="alert">@Messages("lecture.home.homework.local.noexist") </div><button class="btn btn-success pull-right" type="submit">@Messages("lecture.remote.generate")</button></form>
@@ -197,6 +198,7 @@
               @if(lecture.attendent.contains(semesteruser)){
               @if(Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture)!=null&&semesteruser.roles.equals(UserRoll.Students.toString)){
                 @Messages("lecture.home.homework.remote.exist")<br><p class="bg-info">@Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture).repopath</p>
+                @*git graph*@
               }else{
                 <form action="@controllers.lectures.user.routes.Lecturehome.addRemoteRepotoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" method="post"><div class="alert alert-warning" role="alert">@Messages("lecture.home.homework.remote.noexist") </div><button class="btn btn-success pull-right" type="submit">@Messages("lecture.remote.generate")</button></form>
               }
@@ -207,7 +209,6 @@
                       <th>@Messages("assignment.title")</th>
                       <th>@Messages("assignment.exercise")</th>
                       <th>@Messages("lecture.form.addionalinfo")</th>
-                      <th>@Messages("assignment.status.repo")</th>
                       <th  class="text-center">@Messages("assignment.action")</th>
                       <th>@Messages("assginment.evaluation")</th>
                       <th>@Messages("assignment.expired")</th>
@@ -218,7 +219,6 @@
                       <td>@currentassignment.title@if(currentassignment.uploadfile!=null){<a href="@controllers.lectures.routes.Lecturehub.getFiles(currentassignment.uploadfile)"><i class="fa fa-download"></i></a>}</td>
                       <td>@currentassignment.numberofexercise</td>
                       <td>@currentassignment.addtionalinfo</td>
-                      <td>@controllers.lectures.user.Lecturehome.lastUpdateStatus(semesteruser,lecture)</td>
                       <td  class="text-center">
                       @if(currentassignment.isExpired){<a href="@controllers.lectures.user.routes.Lecturehome.handinhomeworkremote(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)" title="@Messages("Assignment.handin")"><i class="fa fa-pencil-square-o"></i></a>
                         <a title="revert last upload" href="@controllers.lectures.user.routes.Lecturehome.reverthandinhomeworkremote(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)"><i class="fa fa-times"></i></a>}

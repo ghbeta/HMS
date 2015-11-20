@@ -89,7 +89,7 @@ GET         /messages                                                        con
 #POST        /conversation/:semester/:convid/newmessage                       controllers.messages.Messagecontrol.addmessage(semester:String,convid:String)
 GET         /websocket                                                       controllers.messages.Messagecontrol.socket()
 #get repo status
-GET        /:semester/:course/repostatus                                     controllers.lectures.user.Lecturehome.lastUpdateStatus(email:String,course:String,semester:String)
+GET        /:semester/:course/:email/repostatus                                     controllers.lectures.user.Lecturehome.lastUpdateStatus(email:String,course:String,semester:String)
 #About static page
 GET         /about                                                           controllers.About.index()
 #File service (hosted file on host server)
