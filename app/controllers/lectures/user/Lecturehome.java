@@ -216,17 +216,17 @@ public class Lecturehome extends Controller {
 ////       return "Commit-Message: " + commit.getFullMessage();}
 //           }}
                //List<Ref> branches=git.branchList().call();//branches
-               List<RevCommit> allcommit=new ArrayList<>();
+               List<String> allcommit=new ArrayList<>();
 
                    RevCommit commit=walk.parseCommit(head.getObjectId());
                    walk.markStart(commit);
                   for(RevCommit rev:walk){
-                      allcommit.add(rev);
+                      allcommit.add(rev.getFullMessage());
                   }
-
+                 walk.dispose();
                return ok(Json.toJson(allcommit));
            }catch(Exception e){
-               Logger.warn( e.getMessage());
+               Logger.warn("walking"+ e.getMessage());
                return badRequest();
            }
 

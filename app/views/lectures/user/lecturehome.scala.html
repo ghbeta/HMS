@@ -78,9 +78,12 @@
               @if(Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture)!=null&&semesteruser.roles.equals(UserRoll.Students.toString)){
                 <div class="textfont">@Messages("lecture.home.homework.local.exist")<br>
                 <div class="label label-success">@Messages("repo.last.status")</div>
-                  <canvas onload="showcanvas('@semesteruser.email','@lecture.semester','@lecture.courseName','@semesteruser.userHash')" id="@semesteruser.userHash"></canvas>
                 </div>
-              }else{
+                <canvas id="@semesteruser.userHash"></canvas>
+                <script type="text/javascript">
+                   showcanvas('@semesteruser.email','@lecture.semester','@lecture.courseName','@semesteruser.userHash');
+                  </script>
+                }else{
                 <form action="@controllers.lectures.user.routes.Lecturehome.addRemoteRepotoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" method="post"><div class="alert alert-warning" role="alert">@Messages("lecture.home.homework.local.noexist") </div><button class="btn btn-success pull-right" type="submit">@Messages("lecture.remote.generate")</button></form>
               }
 
