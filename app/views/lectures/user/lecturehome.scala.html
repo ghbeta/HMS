@@ -201,7 +201,11 @@
               @if(lecture.attendent.contains(semesteruser)){
               @if(Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture)!=null&&semesteruser.roles.equals(UserRoll.Students.toString)){
                 @Messages("lecture.home.homework.remote.exist")<br><p class="bg-info">@Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture).repopath</p>
-                @*git graph*@
+                <div class="label label-success col-md-12">@Messages("repo.last.status")</div>
+                <canvas id="@semesteruser.userHash"></canvas>
+                <script type="text/javascript">
+                   showcanvas('@semesteruser.email','@lecture.semester','@lecture.courseName','@semesteruser.userHash');
+                  </script>
               }else{
                 <form action="@controllers.lectures.user.routes.Lecturehome.addRemoteRepotoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" method="post"><div class="alert alert-warning" role="alert">@Messages("lecture.home.homework.remote.noexist") </div><button class="btn btn-success pull-right" type="submit">@Messages("lecture.remote.generate")</button></form>
               }

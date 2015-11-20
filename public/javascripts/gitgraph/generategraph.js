@@ -22,6 +22,15 @@ function showcanvas(useremail,semester,lecture,user){
                       message:textmessage
                   });
             }
+        }else{
+            var gitgraph = new GitGraph({
+                elementId:user,
+                template: "metro",
+                orientation: "horizontal",
+                mode: "compact"
+            });
+            var master=gitgraph.branch("master");
+            master.commit();
         }
     };
     xhr.send();
