@@ -18,19 +18,14 @@ import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.i18n.Messages;
-import play.mvc.Controller;
-import play.mvc.Http;
-import play.mvc.Result;
-import play.mvc.Security;
+import play.libs.Json;
+import play.mvc.*;
 import utils.RepoManager;
 import views.html.lectures.user.lecturehome;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import static utils.RepoManager.hostparser;
 import static utils.RepoManager.reponame;
@@ -187,7 +182,10 @@ public class Lecturehome extends Controller {
     }
 
     @Security.Authenticated(Securedstudents.class)
-    public static String lastUpdateStatus(Semesteruser semesteruser,Lecture lecture){
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result lastUpdateStatus(String owneremail,String course,String semester){
+        Lecture lecture=Lecture.getlecturebyname(course,semester);
+        Semesteruser semesteruser=Semesteruser.findByEmail(owneremail,semester);
         String serverhost=request().getHeader("Host");
         String reponame=lecture.courseName+"_"+semesteruser.userHash;
         String gitpath= "git@"+ hostparser(serverhost)+":"+reponame+".git";
@@ -204,21 +202,38 @@ public class Lecturehome extends Controller {
            Repository repository=new FileRepository(userrepofilepath(reponame));
            Ref head = repository.getRef("refs/heads/master");
 
-           try (RevWalk walk = new RevWalk(repository)) {
-               RevCommit commit = walk.parseCommit(head.getObjectId());
+           try (RevWalk walk=new RevWalk(repository)) {
+//               RevCommit commit = walk.parseCommit(head.getObjectId());
+//               walk.markStart(commit);
+//
+//               //System.out.println("Commit-Message: " + commit.getFullMessage());
+//               walk.dispose();
+////      if(commit.getFullMessage().isEmpty()||commit.getFullMessage()==null){
+////          return Messages.get("Localrepo.status.none");
+////      }
+////               else{
+////
+////       return "Commit-Message: " + commit.getFullMessage();}
+//           }}
+               //List<Ref> branches=git.branchList().call();//branches
+               List<RevCommit> allcommit=new ArrayList<>();
 
-               System.out.println("Commit-Message: " + commit.getFullMessage());
+                   RevCommit commit=walk.parseCommit(head.getObjectId());
+                   walk.markStart(commit);
+                  for(RevCommit rev:walk){
+                      allcommit.add(rev);
+                  }
 
-               walk.dispose();
-      if(commit.getFullMessage().isEmpty()||commit.getFullMessage()==null){
-          return Messages.get("Localrepo.status.none");
-      }
-               else{
+               return ok(Json.toJson(allcommit));
+           }catch(Exception e){
+               Logger.warn( e.getMessage());
+               return badRequest();
+           }
 
-       return "Commit-Message: " + commit.getFullMessage();}
-           }}
+           }
        catch(Exception e){
-           return e.getMessage();
+           Logger.warn( e.getMessage());
+           return badRequest();
        }
 
     }
