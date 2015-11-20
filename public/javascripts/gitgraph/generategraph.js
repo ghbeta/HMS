@@ -2,7 +2,7 @@
  * Created by Hao on 2015/11/20.
  */
 function showcanvas(useremail,semester,lecture,user){
-    var posturl="/"+semester+"/"+lecture+"/"+useremail+"/repostatus#home";
+    var posturl="/"+semester+"/"+lecture+"/"+useremail+"/repostatus";
     console.log(posturl);
     var xhr= new XMLHttpRequest();
     xhr.open('GET',posturl);

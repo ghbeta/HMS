@@ -450,6 +450,14 @@
                           @Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).isevaluated
                         }else{false}</td>
                         </tr>
+                        <tr>
+                          <td colspan="5">
+                            <canvas id="@stu.userHash"></canvas>
+                            <script type="text/javascript">
+                   showcanvas('@stu.email','@lecture.semester','@lecture.courseName','@stu.userHash');
+                  </script>
+                          </td>
+                        </tr>
                       }
                     </table>
                   </div>
