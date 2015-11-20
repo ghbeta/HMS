@@ -18,7 +18,9 @@ function showcanvas(useremail,semester,lecture,user){
             var master=gitgraph.branch("master");
             var commithistory=JSON.parse(xhr.responseText);
             for(textmessage in commithistory){
-                  master.commit();
+                  master.commit({
+                      message:textmessage
+                  });
             }
         }
     };

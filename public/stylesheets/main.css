@@ -63,3 +63,7 @@ table {
 .textfont{
     font-weight:bold;
 }
+
+canvas{
+    pointer-events: none;
+}
