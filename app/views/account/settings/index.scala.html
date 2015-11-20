@@ -15,7 +15,7 @@
              <h4 class="page-header">@Messages("need.ssh")<small>
              @Messages("need.ssh2")
              </small></h4>
-          @if(!user.sshs.isEmpty) {
+
               <table class="table table-striped custab col-md-6">
                   <thead>
                       <tr>
@@ -24,21 +24,30 @@
                           <th>@Messages("ssh.action")</th>
                       </tr>
                   </thead>
-                  @for(ssh <- user.sshs) {
-                      <tr>
-                          <td>@ssh.title</td>
-                          <td>@ssh.ssh</td>
-                          <td><form action="@controllers.account.settings.routes.ModifySSH.deletessh(ssh.id)" method="post"><button class="btn btn-danger" type="submit">@Messages("ssh.delete")</button></form></td>
-                      </tr>
+                  @if(!user.sshs.isEmpty) {
+                      @for(ssh <- user.sshs) {
+                          <tr>
+                              <td>@ssh.title</td>
+                              <td>@ssh.ssh</td>
+                              <td><form action="@controllers.account.settings.routes.ModifySSH.deletessh(ssh.id)" method="post"><button class="btn btn-danger" type="submit">@Messages("ssh.delete")</button></form></td>
+                          </tr>
+                      }
                   }
-              </table>
-          } else {
+          @*} else {*@
 
-              <div class="alert alert-warning">@Messages("ssh.none")</div>
-          }
-                <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#addSSH">
-                   @Messages("ssh.new")
-                </button>
+              @*<div class="alert alert-warning">@Messages("ssh.none")</div>*@
+          @*}*@
+                  <form action="@controllers.account.settings.routes.ModifySSH.addssh()" method="post">
+                      <tr>
+                          <td><input type="text" class="form-control" name="title" placeholder="@Messages("ssh.givename")"></td>
+                          <td><textarea class="form-control" onchange="this.value=this.value.replace(/[\n\r](?!\w)/gi,'');" rows="5" name="ssh" placeholder="@Messages("ssh.copyssh")"></textarea></td>
+                          <td><button type="submit" class="btn btn-primary" >@Messages("ssh.add")</button></td>
+                      </tr>
+                  </form>
+              </table>
+                @*<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#addSSH">*@
+                   @*"@Messages("ssh.new")*@
+                @*</button>*@
             </div>
             <div class="tab-pane fade" id = "email">
                 <form action="@controllers.account.settings.routes.Email.runEmail()" method="post">
