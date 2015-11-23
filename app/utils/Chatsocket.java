@@ -77,7 +77,6 @@ public class Chatsocket {
                     String other=requestbody.findPath("other").asText();
                     Conversation conversation=Conversation.getConversationById(semester,conversationid);
                     Semesteruser semesteruser=Semesteruser.findByEmail(useremail,semester);
-
                     if(conversation!=null) {
                         Message message = new Message();
                         message.conversation=conversation;
@@ -93,11 +92,13 @@ public class Chatsocket {
                         JsonContext jsonresult= Ebean.getServer(semester).createJsonContext();
                         String jsonoutput=jsonresult.toJsonString(allmessages,true);
                         ObjectNode result=Json.newObject();
+                        ObjectNode notification=Json.newObject();
                         result.put("event","newmessage");
                         result.put("data",jsonoutput);
                         out.write(result.toString());
-
-                        connections.get(other).write(result.toString());
+                        notification.put("event","noti");
+                        notification.put("data",semesteruser.lastname+","+semesteruser.firstname+";"+jsonoutput);
+                        connections.get(other).write(notification.toString());
                         //Logger.warn("after adding message "+jsonoutput);
                         //return ok(jsonoutput);
                     }

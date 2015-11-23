@@ -8,10 +8,14 @@ var username={};
 var currentconvid="";
 var otheruseremail="";
 var app = angular.module('messages',[
+    'ui-notification',
     'ngWebsocket',
     'luegg.directives'
 ]);
-app.controller('messagecontroller',function($scope,$http,$websocket){
+app.controller('messagecontroller',function($scope,$http,$websocket,Notification){
+    $scope.success=function(noti){
+        Notification.success(noti);
+    };
     $scope.newmessage="";
     var ws;
     $scope.socketfilter=function socketfilter(semester,userid){
@@ -25,7 +29,7 @@ app.controller('messagecontroller',function($scope,$http,$websocket){
             var data={
                 semester:semester,
                 email:userid
-            }
+            };
 
             ws.$emit('allconversations', data);
         })
@@ -34,7 +38,12 @@ app.controller('messagecontroller',function($scope,$http,$websocket){
                 $scope.talks=JSON.parse(data);
                 $scope.$digest();
             //console.log(JSON.parse(data));
-        })
+        }).$on("noti",function(data){
+            var namepart=data.split(";")[0];
+            //$scope.allmessages=JSON.parse(data.split(";")[1]);
+            //$scope.$digest();
+            $scope.success("you have a new message from "+namepart);
+        });
     };
 
     $scope.socketchatcontent=function showcontent(convid,otheremail){
@@ -66,7 +75,14 @@ app.controller('messagecontroller',function($scope,$http,$websocket){
            $scope.allmessages=JSON.parse(data);
            $scope.newmessage="";
            $scope.$digest();
+           //$scope.success("you have a new message");
            console.log(JSON.parse(data));
+       });
+       ws.$on("noti",function(data){
+          var namepart=data.split(";")[0];
+           $scope.allmessages=JSON.parse(data.split(";")[1]);
+           $scope.$digest();
+          // $scope.success("you have a new message from "+namepart);
        });
 
    };
