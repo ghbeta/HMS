@@ -24,25 +24,26 @@ app.controller('messagecontroller',function($scope,$http,$websocket,Notification
         console.log(url);
         ws = $websocket.$new(url);
         ws.$on('$open', function () {
-            console.log('Oh my gosh, websocket is really open! Fukken awesome!');
+            //console.log('Oh my gosh, websocket is really open! Fukken awesome!');
 
-            var data={
+            var initdata={
                 semester:semester,
                 email:userid
             };
 
-            ws.$emit('allconversations', data);
-        })
-        .$on('allconversations',function(data){
+            ws.$emit('allconversations', initdata);
+        });
+       ws .$on('allconversations',function(data){
             //console.log("allconversations");
                 $scope.talks=JSON.parse(data);
                 $scope.$digest();
             //console.log(JSON.parse(data));
-        }).$on("noti",function(data){
+        })
+            .$on("noti",function(data){
             var namepart=data.split(";")[0];
-            //$scope.allmessages=JSON.parse(data.split(";")[1]);
-            //$scope.$digest();
-            $scope.success("you have a new message from "+namepart);
+           // $scope.allmessages=JSON.parse(data.split(";")[1]);
+           //$scope.$digest();
+           $scope.success("you have a new message from "+namepart);
         });
     };
 
@@ -79,7 +80,7 @@ app.controller('messagecontroller',function($scope,$http,$websocket,Notification
            console.log(JSON.parse(data));
        });
        ws.$on("noti",function(data){
-          var namepart=data.split(";")[0];
+          //var namepart=data.split(";")[0];
            $scope.allmessages=JSON.parse(data.split(";")[1]);
            $scope.$digest();
           // $scope.success("you have a new message from "+namepart);

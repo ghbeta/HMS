@@ -23,6 +23,7 @@ function onMessage(evt){
     var msg=JSON.parse(evt.data);
     if(msg.event==="noti"){
         var namepart=msg.data.split(";")[0];
-        alert("new messages from" + namepart);
+        //alert("new messages from" + namepart);
+        $.notify("you have a new messages from " + namepart,"success");
     }
 }
