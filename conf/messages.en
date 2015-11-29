@@ -286,3 +286,7 @@ mail.reset.fail.message=You (or someone else) entered this email address when tr
 
 mail.reset.confirm.subject=HMS System - New password
 mail.reset.confirm.message=Hello, <br><br> Your password has been reset.
+mail.evaluation.done.subject=Your Homework has been evaluated!
+email.handin.message=Your handin of
+email.handin.on=on
+email.handin.isevaluated=is evaluated by

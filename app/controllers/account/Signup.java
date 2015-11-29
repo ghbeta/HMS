@@ -1,6 +1,7 @@
 package controllers.account;
 
 import controllers.Application;
+import models.Semesteruser;
 import models.User;
 import models.UserRoll;
 import utils.AppException;
@@ -128,6 +129,7 @@ public class Signup extends Controller {
         Mail.Envelop envelop = new Mail.Envelop(subject, message, user.email);
         Mail.sendMail(envelop);
     }
+
 
     /**
      * Valid an account with the url in the confirm mail.

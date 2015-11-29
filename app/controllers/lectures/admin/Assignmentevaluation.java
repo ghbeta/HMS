@@ -6,6 +6,7 @@ import models.*;
 import nl.minicom.gitolite.manager.models.Config;
 import nl.minicom.gitolite.manager.models.ConfigManager;
 import nl.minicom.gitolite.manager.models.Permission;
+import org.apache.commons.mail.EmailException;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Repository;
@@ -13,13 +14,17 @@ import org.eclipse.jgit.transport.JschConfigSessionFactory;
 import org.eclipse.jgit.transport.OpenSshConfig;
 import org.eclipse.jgit.transport.SshSessionFactory;
 import play.Logger;
+import play.i18n.Messages;
 import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import Permission.Securedassistant;
+import utils.Mail;
+
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Iterator;
 
 import static utils.RepoManager.adminrepofilepath;
@@ -123,6 +128,18 @@ public class Assignmentevaluation extends Controller {
         currenthandin.update(semester);
         eval.setPerformance(semester,currentlecture,students);
         eval.update(semester);
+        try {
+            sendMailForEvaluation(students,currenthandin);
+        } catch (Exception e) {
+            e.getMessage();
+        }
         return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(marker.lastname,semester,currentlecture.courseName));
+    }
+
+    private static void sendMailForEvaluation(Semesteruser semesteruser, Handin handin) throws EmailException,MalformedURLException {
+        String subject = Messages.get("mail.evaluation.done.subject");
+        String message= Messages.get("email.handin.message")+handin.assignment.title+" "+handin.lecture.courseName+Messages.get("email.handin.on")+handin.handin+Messages.get("email.handin.isevaluated")+handin.marker.lastname;
+        Mail.Envelop envelop = new Mail.Envelop(subject, message, semesteruser.email);
+        Mail.sendMail(envelop);
     }
 }
