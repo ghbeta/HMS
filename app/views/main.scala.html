@@ -42,7 +42,8 @@
                     </ul>
                 </div>
                 <div class="navbar-collapse collapse">
-                    @if(user == null) {@login()
+                    @if(user == null) {
+                        @login()
                     }else{
                     @logged(user)}
                 </div>
