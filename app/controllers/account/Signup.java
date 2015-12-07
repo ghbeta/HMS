@@ -81,6 +81,7 @@ public class Signup extends Controller {
             user.passwordHash = Hash.createPassword(register.inputPassword);
             user.confirmationToken = UUID.randomUUID().toString();
             user.setUserHash();
+            user.roles=UserRoll.Students.toString();
             user.save("global");
             sendMailAskForConfirmation(user);
             flash("success",Messages.get("signup.msg.created"));
