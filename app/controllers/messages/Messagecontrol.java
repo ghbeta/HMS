@@ -120,10 +120,20 @@ public class Messagecontrol extends Controller {
   @BodyParser.Of(BodyParser.Json.class)
   public static WebSocket<String> socket(){
       User currentuser=User.findByEmail(ctx().session().get("email"),"global");
-      return WebSocket.whenReady((in,out)->{
+      if(currentuser!=null) {
+          return WebSocket.whenReady((in, out) -> {
 
-          Chatsocket.start(currentuser.email,in,out);
-      });
+              Chatsocket.start(currentuser.email, in, out);
+          });
+      }
+      else
+      {
+          return WebSocket.whenReady((in,out)->{
+              ObjectNode result = Json.newObject();
+              result.put("event","connect to notification system");
+              out.write(result.toString());
+          });
+      }
   }
 
   @Security.Authenticated(Securedstudents.class)

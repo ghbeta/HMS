@@ -16,6 +16,7 @@ function connectws(){
 
 function onOpen(evt){
     console.log("connected");
+    console.log(evt.data);
 }
 
 function onMessage(evt){
