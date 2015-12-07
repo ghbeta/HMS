@@ -155,7 +155,7 @@ public class Signup extends Controller {
                 sendMailConfirmation(user);
                 flash("success", Messages.get("account.successfully.validated"));
                 user.dateCreation=new Date();
-                user.roles= UserRoll.Defaultuser.toString();
+                user.roles= UserRoll.Defaultuser.toString();//todo change here accordingly
                 user.save("global");
                 return ok(views.html.account.signup.confirm.render(user));
             } else {
