@@ -170,7 +170,7 @@ public class Messagecontrol extends Controller {
           if(u1.roles.equals(UserRoll.Teachers.toString())||u1.roles.equals(UserRoll.Assistants.toString())){
               return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(u1.lastname, semester, lecture.courseName));}
           else{
-              return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(u1.lastname, semester, lecture.courseName));
+              return redirect(controllers.lectures.user.routes.Lecturehome.generatelecturehome(u1.lastname, semester, lecture.courseName));
           }}
       catch(Exception e){
           Logger.warn(e.getMessage());
@@ -178,7 +178,7 @@ public class Messagecontrol extends Controller {
           if(u1.roles.equals(UserRoll.Teachers.toString())||u1.roles.equals(UserRoll.Assistants.toString())){
           return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(u1.lastname, semester, lecture.courseName));}
           else{
-              return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(u1.lastname, semester, lecture.courseName));
+              return redirect(controllers.lectures.user.routes.Lecturehome.generatelecturehome(u1.lastname, semester, lecture.courseName));
           }
       }}
       else{
@@ -190,7 +190,7 @@ public class Messagecontrol extends Controller {
           if(u1.roles.equals(UserRoll.Teachers.toString())||u1.roles.equals(UserRoll.Assistants.toString())){
               return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(u1.lastname, semester, lecture.courseName));}
           else{
-              return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(u1.lastname, semester, lecture.courseName));
+              return redirect(controllers.lectures.user.routes.Lecturehome.generatelecturehome(u1.lastname, semester, lecture.courseName));
           }
       }
   }
