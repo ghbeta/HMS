@@ -12,8 +12,9 @@ public class UploadPath {
 
     }
 
-//    public static String downloadpath(String type,String semester,String lecturename){
-//        String path= type+"/"+semester+"/"+lecturename+"/";
-//        return path;
-//    }
+   public static String localrepopullpath(String semester,String lecturename,String userid,String reponame){
+       String pathprefix= System.getProperty("user.home")+"/"+"data_dynamic";
+       String path=pathprefix+"/"+semester+"/"+lecturename+"/"+userid+"/"+reponame;
+       return path;
+   }
 }

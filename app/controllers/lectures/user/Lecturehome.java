@@ -30,6 +30,7 @@ import java.util.*;
 import static utils.RepoManager.hostparser;
 import static utils.RepoManager.reponame;
 import static utils.RepoManager.userrepofilepath;
+import static utils.UploadPath.localrepopullpath;
 import static utils.UploadPath.uploadpath;
 
 /**
@@ -275,10 +276,28 @@ public class Lecturehome extends Controller {
             //assignment.setishandin();
             //handin.
             handin.save(semester);}
+
+            Repo repo=Repo.findRepoByLectureAndOwner(assignment.semester,semesteruser,assignment.lecture);
+            File localPath = new File(localrepopullpath(semester,lecturename,currentuser.id,reponame(assignment.lecture, semesteruser)), "");
+            //localPath.delete();
+            if(localPath.exists()) {
+                FileUtils.forceDelete(localPath);
+            }
+
+            Logger.debug("Cloning from "+repo.repofilepath+"to"+localPath);
+            Git git = Git.cloneRepository()
+                    .setURI(repo.repofilepath)
+                    .setDirectory(localPath)
+                    .call();
+            //Logger.debug("create init commit");
+            //git.commit().setMessage("init commit").setAuthor(semesteruser.lastname,semesteruser.email).call();
+            Logger.debug("create local repo: "+git.getRepository().getDirectory());
+
         Logger.warn("create handin success");
         return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));}
         catch (Exception e){
             flash("danger", Messages.get("Lecture.assignment.uploadfail"));
+            Logger.warn(e.getMessage());
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
         }
     }
@@ -307,8 +326,9 @@ public class Lecturehome extends Controller {
                 File file = homeworkfile.getFile();
 
                 Repo repo=Repo.findRepoByLectureAndOwner(assignment.semester,semesteruser,assignment.lecture);
-                File localPath = File.createTempFile(reponame(assignment.lecture, semesteruser), "");
-                localPath.delete();
+                File localPath = new File(localrepopullpath(semester,lecturename,currentuser.id,reponame(assignment.lecture, semesteruser)), "");
+                //localPath.delete();
+                FileUtils.forceDelete(localPath);
 
 
                 Logger.debug("Cloning from "+repo.repofilepath+"to"+localPath);
@@ -321,7 +341,8 @@ public class Lecturehome extends Controller {
                 Logger.debug("create local repo: "+git.getRepository().getDirectory());
                 File precheck = new File(localPath, des+fileName);
                 if(precheck.exists()){
-                    precheck.delete();
+                    //precheck.delete();
+                    FileUtils.forceDelete(precheck);
                 }
                 FileUtils.moveFile(file, new File(localPath, des+fileName));
                 git.add().addFilepattern(des+fileName).call();
