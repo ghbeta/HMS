@@ -5,7 +5,9 @@ package utils;
  */
 public class UploadPath {
     public static String uploadpath(String type,String semester,String lecturename){
-        String path= type+"/"+semester+"/"+lecturename;
+        String pathprefix= System.getProperty("user.home")+"/"+"data_dynamic";
+
+        String path=pathprefix+"/"+semester+"/"+lecturename+"/"+type;
         return path;
 
     }
