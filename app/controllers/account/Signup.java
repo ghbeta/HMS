@@ -70,18 +70,20 @@ public class Signup extends Controller {
 
         try {
             User user = new User();
-            if(register.id.isEmpty()||register.id==null){
+            if(register.id==null||register.id.isEmpty()){
                 user.id= CreateExternalId.generateId();
+                user.roles=UserRoll.Defaultuser.toString();
             }
             else{
-            user.id=register.id;}
+            user.id=register.id;
+                user.roles=UserRoll.Students.toString();}
             user.email = register.email;
             user.lastname = register.lastname;
             user.firstname = register.firstname;
             user.passwordHash = Hash.createPassword(register.inputPassword);
             user.confirmationToken = UUID.randomUUID().toString();
             user.setUserHash();
-            user.roles=UserRoll.Students.toString();
+
             user.save("global");
             sendMailAskForConfirmation(user);
             flash("success",Messages.get("signup.msg.created"));
@@ -155,7 +157,7 @@ public class Signup extends Controller {
                 sendMailConfirmation(user);
                 flash("success", Messages.get("account.successfully.validated"));
                 user.dateCreation=new Date();
-                user.roles= UserRoll.Defaultuser.toString();//todo change here accordingly
+                //user.roles= UserRoll.Defaultuser.toString();//todo change here accordingly
                 user.save("global");
                 return ok(views.html.account.signup.confirm.render(user));
             } else {

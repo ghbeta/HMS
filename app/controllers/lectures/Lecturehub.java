@@ -77,7 +77,7 @@ public class Lecturehub extends Controller {
     @Security.Authenticated(Securedstudents.class)
     public static Result getFiles(String path){
         try{
-            return ok(new File("files/"+path));
+            return ok(new File(path));
 
         }catch (Exception e){
             flash("danger", Messages.get("file.notexist"));

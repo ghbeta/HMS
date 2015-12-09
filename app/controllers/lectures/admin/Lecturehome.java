@@ -194,6 +194,7 @@ public class Lecturehome extends Controller {
                 }
                 FileUtils.moveFile(file, new File(uploadpath("assignment",semester,lecture), filename));
                 path = uploadpath("assignment", semester, lecture)+"/"+filename;
+                Logger.debug("upload path "+path);
                 assignment.uploadfile=path;
                 assignment.filename=filename;
                 assignment.semester=semester;

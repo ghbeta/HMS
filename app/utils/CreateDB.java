@@ -30,14 +30,14 @@ public class CreateDB {
         postgresDb.setDriver("org.h2.Driver");
         postgresDb.setUsername("hms");
         postgresDb.setPassword("test");
-        postgresDb.setUrl("jdbc:h2:tcp://localhost/~/data_dynamic/"+name);
+        postgresDb.setUrl("jdbc:h2:tcp://localhost/~/data_dynamic/"+name+"/"+name);
         //postgresDb.setUrl("jdbc:h2:file:~/data_dynamic/"+name);
 //       // postgresDb.setHeartbeatSql("select count(*) from t_one");
 //        //postgresDb.loadSettings("global");
 
 //
         config.setDataSourceConfig(postgresDb);
-        Path p= Paths.get(System.getProperty("user.home"),"data_dynamic",name+".h2.db");
+        Path p= Paths.get(System.getProperty("user.home"),"data_dynamic",name,name+".h2.db");
         Logger.info(p.toString());
         File f = p.toFile();
 
