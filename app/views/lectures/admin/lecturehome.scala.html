@@ -100,7 +100,7 @@
           </thead>
           @for(currentassignment <- lecture.assignments){
             <tr>
-              <td>@currentassignment.title@if(currentassignment.uploadfile!=null){<a href="@controllers.lectures.routes.Lecturehub.getFiles(currentassignment.uploadfile)"><i class="fa fa-download"></i></a>}</td>
+              <td>@currentassignment.title@if(currentassignment.uploadfile!=null){<a href="@controllers.lectures.routes.Lecturehub.getFiles(lecture.semester,lecture.courseName,currentassignment.title)"><i class="fa fa-download"></i></a>}</td>
               <td>@currentassignment.numberofexercise</td>
               <td>@currentassignment.addtionalinfo</td>
               <td  class="text-center">
@@ -193,7 +193,7 @@
             </thead>
             @for(currentassignment <- lecture.assignments){
               <tr>
-                <td>@currentassignment.title@if(currentassignment.uploadfile!=null){<a href="@controllers.lectures.routes.Lecturehub.getFiles(currentassignment.uploadfile)"><i class="fa fa-download"></i></a>}</td>
+                <td>@currentassignment.title@if(currentassignment.uploadfile!=null){<a href="@controllers.lectures.routes.Lecturehub.getFiles(lecture.semester,lecture.courseName,currentassignment.title)"><i class="fa fa-download"></i></a>}</td>
                 <td>@currentassignment.numberofexercise</td>
                 <td>@currentassignment.addtionalinfo</td>
                 <td  class="text-center">

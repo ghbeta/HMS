@@ -75,9 +75,10 @@ public class Lecturehub extends Controller {
         }
     }
     @Security.Authenticated(Securedstudents.class)
-    public static Result getFiles(String path){
+    public static Result getFiles(String semester,String lecturename,String assignmenttitle){
         try{
-            return ok(new File(path));
+            Assignment mats=Assignment.findByLectureAndName(semester,lecturename,assignmenttitle);
+            return ok(new File(mats.uploadfile));
 
         }catch (Exception e){
             flash("danger", Messages.get("file.notexist"));
