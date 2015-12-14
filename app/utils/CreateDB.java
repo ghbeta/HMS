@@ -26,17 +26,17 @@ public class CreateDB {
         config.setName(name);
        //config.loadFromProperties();
 // Define DataSource parameters
-        DataSourceConfig postgresDb = new DataSourceConfig();
-        postgresDb.setDriver("org.h2.Driver");
-        postgresDb.setUsername("hms");
-        postgresDb.setPassword("test");
-        postgresDb.setUrl("jdbc:h2:tcp://localhost/~/data_dynamic/"+name+"/"+name);
+        DataSourceConfig h2Db = new DataSourceConfig();
+        h2Db.setDriver("org.h2.Driver");
+        h2Db.setUsername("hms");
+        h2Db.setPassword("test");
+        h2Db.setUrl("jdbc:h2:tcp://localhost/~/data_dynamic/" + name + "/" + name);
         //postgresDb.setUrl("jdbc:h2:file:~/data_dynamic/"+name);
 //       // postgresDb.setHeartbeatSql("select count(*) from t_one");
 //        //postgresDb.loadSettings("global");
 
 //
-        config.setDataSourceConfig(postgresDb);
+        config.setDataSourceConfig(h2Db);
         Path p= Paths.get(System.getProperty("user.home"),"data_dynamic",name,name+".h2.db");
         Logger.info(p.toString());
         File f = p.toFile();
