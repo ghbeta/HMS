@@ -31,22 +31,10 @@ public class Abstractuser extends Model {
 
     public String roles;
 
-    public String confirmationToken;
-
-    @Constraints.Required
-    @Formats.NonEmpty
-    public String passwordHash;
 
     public String userHash;
 
-    @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
-    public Date dateCreation;
 
-    @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
-    public Date dateLastlogin;
-
-    @Formats.NonEmpty
-    public Boolean validated = false;
 
 
 

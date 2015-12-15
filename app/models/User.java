@@ -23,6 +23,22 @@ import java.util.Set;
 public class User extends Abstractuser{
     public static final String DBServer="global";
 
+
+    public String confirmationToken;
+
+    @Constraints.Required
+    @Formats.NonEmpty
+    public String passwordHash;
+
+    @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
+    public Date dateCreation;
+
+    @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
+    public Date dateLastlogin;
+
+    @Formats.NonEmpty
+    public Boolean validated = false;
+
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "sshowner")
     public List<SSH> sshs;
 
