@@ -328,7 +328,9 @@ public class Lecturehome extends Controller {
                 Repo repo=Repo.findRepoByLectureAndOwner(assignment.semester,semesteruser,assignment.lecture);
                 File localPath = new File(localrepopullpath(semester,lecturename,currentuser.id,reponame(assignment.lecture, semesteruser)), "");
                 //localPath.delete();
-                FileUtils.forceDelete(localPath);
+                if(localPath.exists()) {
+                    FileUtils.forceDelete(localPath);
+                }
 
 
                 Logger.debug("Cloning from "+repo.repofilepath+"to"+localPath);
@@ -336,6 +338,7 @@ public class Lecturehome extends Controller {
                         .setURI(repo.repofilepath)
                         .setDirectory(localPath)
                         .call();
+
                 //Logger.debug("create init commit");
                 //git.commit().setMessage("init commit").setAuthor(semesteruser.lastname,semesteruser.email).call();
                 Logger.debug("create local repo: "+git.getRepository().getDirectory());
