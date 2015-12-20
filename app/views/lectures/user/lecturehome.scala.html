@@ -200,7 +200,17 @@
               <br>
               @if(lecture.attendent.contains(semesteruser)){
               @if(Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture)!=null&&semesteruser.roles.equals(UserRoll.Students.toString)){
-                @Messages("lecture.home.homework.remote.exist")<br><p class="bg-info">@Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture).repopath</p>
+                @Messages("lecture.home.homework.remote.exist")<br>
+                <div class="input-group">
+                  <input type="text" class="form-control copytext" aria-label="..." value="@Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture).repopath" disabled="disabled">
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Messages("repo.eval.action") <span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                      <li><a href="javascript:copytoclip();">@Messages("repo.address.copy")</a></li>
+                      <li><a href="sourcetree://cloneRepo/@Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture).repopath">@Messages("repo.open.sourcetree")</a></li>
+                    </ul>
+                  </div><!-- /btn-group -->
+                </div><!-- /input-group -->
                 <div class="label label-success col-md-12">@Messages("repo.last.status")</div>
                 <canvas id="@semesteruser.userHash"></canvas>
                 <script type="text/javascript">
