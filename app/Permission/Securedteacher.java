@@ -16,7 +16,7 @@ public class Securedteacher extends Security.Authenticator{
     public String getUsername(Http.Context ctx) {
             Logger.info(ctx.session().get("email"));
             User current=User.findByEmail(ctx.session().get("email"), "global");
-            Logger.debug("what is request in teacher:"+ctx.request().body().asText());
+
             //Logger.warn(current.roles);
         if(current!=null) {
             if (current.roles == null) {
