@@ -453,9 +453,9 @@
                         <tr>
                           <td colspan="5">
                             <div class="label label-success col-md-12">@Messages("repo.status")</div>
-                            <canvas id="@stu.userHash"></canvas>
+                            <canvas id="@stu.userHash@assignment.title"></canvas>
                             <script type="text/javascript">
-                   showcanvas('@stu.email','@lecture.semester','@lecture.courseName','@stu.userHash');
+                   showcanvas('@stu.email','@lecture.semester','@lecture.courseName','@stu.userHash@assignment.title');
                   </script>
                           </td>
                         </tr>
