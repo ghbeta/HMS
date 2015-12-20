@@ -64,7 +64,7 @@ POST        /admin/:user/:semester/:lecture/terms                            con
 POST        /admin/:user/:semester/:lecture/add_assignment                   controllers.lectures.admin.Lecturehome.addassignment(user:String,semester:String,lecture:String)
 #Modify assignment in lecture(Teacher)
 POST        /admin/:semester/:lecture/mod_assignment                         controllers.lectures.admin.Lecturehome.modifyassignment(assignmentid:String,semester:String,lecture:String)
-GET         /admin/:semester/:lecture/:assignment/delete                     controllers.lectures.admin.Lecturehome.deleteAssignment(lecture:String,assignment:String,semester:String)
+GET         /admin/:semester/:lecture/:assignment/delete_assignment          controllers.lectures.admin.Lecturehome.deleteAssignment(lecture:String,assignment:String,semester:String)
 #Add Evaluation to students of a assignment
 POST        /admin/:semester/:lecture/:assignment/:student/evaluation        controllers.lectures.admin.Assignmentevaluation.addevaluation(semester:String,lecture:String,assignment:String,student:String)
 #Generate Lecture home page for students

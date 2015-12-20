@@ -286,18 +286,19 @@ public class Lecturehome extends Controller {
     @Security.Authenticated(Securedteacher.class)
     public static Result deleteAssignment(String lecture,String assignment,String semester){
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
-        Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
+        //todo ifuser has upload something it can not be deleted anymore
         try{
+            Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
+
             Assignment currentassignment = Assignment.findByLectureAndName(semester,lecture,assignment);
-           Assignment.deleteAssignment(semester,currentassignment);
-            //Logger.warn(currentassignment.filename);
-            //Assignment.deleteAssignment(semester,currentassignment);
-            //Assignment.deleteAssignment(semester,currentassignment);
+            Assignment.deleteAssignment(semester,currentassignment);
+
             flash("success", Messages.get("assignment.delete"));
             return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
         }catch (Exception e){
             flash("danger",Messages.get("assignment.delete.fail"));
-            return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
+            return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,lecture));
         }
+
     }
 }

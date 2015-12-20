@@ -201,8 +201,8 @@
               @if(lecture.attendent.contains(semesteruser)){
               @if(Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture)!=null&&semesteruser.roles.equals(UserRoll.Students.toString)){
                 @Messages("lecture.home.homework.remote.exist")<br>
-                <div class="input-group">
-                  <input type="text" class="form-control copytext" aria-label="..." value="@Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture).repopath" disabled="disabled">
+                <div class="input-group col-md-4">
+                  <p><input type="text" class="form-control copytext" aria-label="..." value="@Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture).repopath" disabled="disabled"></p>
                   <div class="input-group-btn">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Messages("repo.eval.action") <span class="caret"></span></button>
                     <ul class="dropdown-menu dropdown-menu-right">
