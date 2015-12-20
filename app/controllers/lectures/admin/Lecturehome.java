@@ -159,20 +159,23 @@ public class Lecturehome extends Controller {
         assignment.numberofexercise=assignmentformForm.get().numberofexercise;
         if(assignmentformForm.get().isoptional==null){
             assignment.isoptional=false;
+            assignment.title=Messages.get("lecture.homework")+(currentlecture.assignments.size()+1);
         }
-        else{assignment.isoptional=true;}
-        if(currentlecture.assignments.size()==0){
-            assignment.title= Messages.get("lecture.homework")+1;
-
-        }else{
-            if(currentlecture.assignments.size()+1<=currentlecture.totalassignment){
-            assignment.title=Messages.get("lecture.homework")+(currentlecture.assignments.size()+1);}
-            else if(currentlecture.assignments.size()+1>currentlecture.totalassignment&&currentlecture.assignments.size()+1<=currentlecture.totalassignment+currentlecture.optionalassignments){
-                assignment.title=Messages.get("lecture.homework.optional")+(currentlecture.assignments.size()+1);
-                assignment.isoptional=true;
-            }
-
-        }
+        else{assignment.isoptional=true;
+            assignment.title=Messages.get("lecture.homework.optional")+(currentlecture.assignments.size()+1);}
+//        if(currentlecture.assignments.size()==0){
+//            assignment.title= Messages.get("lecture.homework")+1;
+//
+//        }else{
+//
+//            if(currentlecture.assignments.size()+1<=currentlecture.totalassignment){
+//            assignment.title=Messages.get("lecture.homework")+(currentlecture.assignments.size()+1);}
+//            else if(currentlecture.assignments.size()+1>currentlecture.totalassignment&&currentlecture.assignments.size()+1<=currentlecture.totalassignment+currentlecture.optionalassignments){
+//                assignment.title=Messages.get("lecture.homework.optional")+(currentlecture.assignments.size()+1);
+//                assignment.isoptional=true;
+//            }
+//
+//        }
         assignment.totalpoints=assignmentformForm.get().totalpoints;
         assignment.addtionalinfo=assignmentformForm.get().addtionalinfo;
         assignment.deadline=assignmentformForm.get().deadline;

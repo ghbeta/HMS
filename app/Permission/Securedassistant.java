@@ -17,6 +17,7 @@ public class Securedassistant extends Security.Authenticator{
         Logger.info(ctx.session().get("email"));
         User current=User.findByEmail(ctx.session().get("email"), "global");
 
+
         if(current!=null) {
             if (current.roles == null) {
                 current.roles = "";
