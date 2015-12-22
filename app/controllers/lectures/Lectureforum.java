@@ -96,10 +96,10 @@ public class Lectureforum extends Controller{
         ForumThread thread=ForumThread.findById(semester,threadid);
         List<ForumThread> allthreads=ForumThread.findByLecture(semester,currentlecture);
         if(currentuser.roles.equals(UserRoll.Assistants.toString())||currentuser.roles.equals(UserRoll.Teachers.toString())){
-            return redirect(views.html.lectures.admin.lecturehome.render(user1, currentuser, currentlecture, thread,allthreads));
+            return ok(views.html.lectures.admin.lecturehome.render(user1, currentuser, currentlecture, thread,allthreads));
              //return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehomeforum(currentuser.lastname, semester, currentlecture.courseName,threadid));
         }else{
-            return redirect(views.html.lectures.user.lecturehome.render(user1, currentuser, currentlecture, thread,allthreads));
+            return ok(views.html.lectures.user.lecturehome.render(user1, currentuser, currentlecture, thread,allthreads));
         }
     }
 
@@ -110,10 +110,10 @@ public class Lectureforum extends Controller{
         Lecture currentlecture=Lecture.getlecturebyname(lecturename,semester);
         List<ForumThread> mythreads=ForumThread.findByLectureByStudent(semester,currentlecture,currentuser);
         if(currentuser.roles.equals(UserRoll.Assistants.toString())||currentuser.roles.equals(UserRoll.Teachers.toString())){
-            return redirect(views.html.lectures.admin.lecturehome.render(user1, currentuser, currentlecture,null,mythreads));
+            return ok(views.html.lectures.admin.lecturehome.render(user1, currentuser, currentlecture,null,mythreads));
             //return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehomeforum(currentuser.lastname, semester, currentlecture.courseName,threadid));
         }else{
-            return redirect(views.html.lectures.user.lecturehome.render(user1, currentuser, currentlecture, null,mythreads));
+            return ok(views.html.lectures.user.lecturehome.render(user1, currentuser, currentlecture, null,mythreads));
         }
     }
 
