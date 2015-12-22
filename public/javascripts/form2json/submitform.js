@@ -35,6 +35,18 @@
 
 }(jQuery));
 
+$(document).ready(function () {
+    $('a').click(function() {
+        //store the id of the collapsible element
+        localStorage.setItem('collapseItem', $(this).attr('href'));
+    });
+
+    var collapseItem = localStorage.getItem('collapseItem');
+    if (collapseItem) {
+        $(collapseItem).collapse('show')
+    }
+})
+
 function submit(formid,semester,lecture,assignment,student)
 {
     var posturl="/admin/"+semester+"/"+lecture+"/"+assignment+"/"+student+"/evaluation#editor";
