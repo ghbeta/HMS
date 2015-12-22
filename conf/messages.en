@@ -183,6 +183,7 @@ lecture.validoptionalinfo=Number of Optional Assignments:
 lecutre.validoptionalinfo1=.(Hand in Optional Assignments can increased percentage of total points)
 lecture.join=Join
 lecture.leave= Leave
+lecture.handin.marker= Corrected By:
 forum.header=Lecture Forum
 forum.note=You can ask questions to lecture or assignment
 forum.create=Create New Thread
