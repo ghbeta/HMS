@@ -1,7 +1,6 @@
 /**
  * Created by Hao on 2015/11/5.
  */
-
 ;(function($){
 
     /**
@@ -12,10 +11,12 @@
     $.fn.scrollPosReaload = function(){
         if (localStorage) {
             var posReader = localStorage["posStorage"];
+
             if (posReader) {
                 $(window).scrollTop(posReader);
                 localStorage.removeItem("posStorage");
             }
+
             $(this).click(function(e) {
                 localStorage["posStorage"] = $(window).scrollTop();
             });
@@ -24,28 +25,31 @@
         }
 
         return false;
-    }
+    };
+
 
     /* ================================================== */
 
     $(document).ready(function() {
         // Feel free to set it for any element who trigger the reload
+
+        var collapseItem = localStorage.getItem('collapseItem');
+        if (collapseItem) {
+            $(collapseItem).collapse('show')
+            }
         $('select').scrollPosReaload();
+        $('a').click(function() {
+            //store the id of the collapsible element
+            if($(this).attr('href').indexOf("Assignment")){
+            localStorage.setItem('collapseItem', $(this).attr('href'));
+                console.log("click sth"+$(this).attr('href'));}
+
+        });
+
     });
 
 }(jQuery));
 
-$(document).ready(function () {
-    $('a').click(function() {
-        //store the id of the collapsible element
-        localStorage.setItem('collapseItem', $(this).attr('href'));
-    });
-
-    var collapseItem = localStorage.getItem('collapseItem');
-    if (collapseItem) {
-        $(collapseItem).collapse('show')
-    }
-})
 
 function submit(formid,semester,lecture,assignment,student)
 {
@@ -63,6 +67,8 @@ function submit(formid,semester,lecture,assignment,student)
         if (xhr.readyState == 4 && xhr.status == 200) {
             //alert(xhr.responseText);
             location.reload();
+
+
         }
     }
     xhr.send(JSON.stringify(formData));
