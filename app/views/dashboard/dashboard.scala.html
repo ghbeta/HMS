@@ -24,10 +24,10 @@
           </div>
           <div id="myProfile" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
             <div class="list-group">
-              <a href="@controllers.routes.Dashboard.index()" class="list-group-item">
+              <a href="@controllers.routes.Dashboard.index()" id="UserHome" class="list-group-item">
               @Messages("home")
               </a>
-              <a href="@controllers.account.settings.routes.Index.index()" class="list-group-item">
+              <a href="@controllers.account.settings.routes.Index.index()" id="UserSetting" class="list-group-item">
               @Messages("settings")
               </a>
             </div>

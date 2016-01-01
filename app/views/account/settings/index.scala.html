@@ -27,8 +27,8 @@
                   @if(!user.sshs.isEmpty) {
                       @for(ssh <- user.sshs) {
                           <tr>
-                              <td>@ssh.title</td>
-                              <td>@ssh.ssh</td>
+                              <td id="ssh_title">@ssh.title</td>
+                              <td id="ssh_value">@ssh.ssh</td>
                               <td><form action="@controllers.account.settings.routes.ModifySSH.deletessh(ssh.id)" method="post"><button class="btn btn-danger" type="submit">@Messages("ssh.delete")</button></form></td>
                           </tr>
                       }
@@ -39,9 +39,9 @@
           @*}*@
                   <form action="@controllers.account.settings.routes.ModifySSH.addssh()#ssh" method="post">
                       <tr>
-                          <td><input type="text" class="form-control" name="title" placeholder="@Messages("ssh.givename")"></td>
-                          <td><textarea class="form-control" onchange="this.value=this.value.replace(/[\n\r](?!\w)/gi,'');" rows="5" name="ssh" placeholder="@Messages("ssh.copyssh")"></textarea></td>
-                          <td><button type="submit" class="btn btn-primary" >@Messages("ssh.add")</button></td>
+                          <td><input type="text" class="form-control" name="title" id="SSHTitle" placeholder="@Messages("ssh.givename")"></td>
+                          <td><textarea class="form-control" onchange="this.value=this.value.replace(/[\n\r](?!\w)/gi,'');" rows="5" name="ssh" id="SSHValue" placeholder="@Messages("ssh.copyssh")"></textarea></td>
+                          <td><button type="submit" id="SSHButton" class="btn btn-primary" >@Messages("ssh.add")</button></td>
                       </tr>
                   </form>
               </table>

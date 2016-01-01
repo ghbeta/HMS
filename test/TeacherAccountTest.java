@@ -50,7 +50,7 @@ public class TeacherAccountTest extends FluentTest{
 //        Helpers.stop(testServer(9000));
 //    }
     @Test
-    public void first_testRegistration(){
+    public void a_testRegistration(){
        goTo("http://localhost:9000");
        fill("#SignUpEmail").with("123@123.com");
         fill("#SignUpLastname").with("123");
@@ -64,7 +64,7 @@ public class TeacherAccountTest extends FluentTest{
 
 
     @Test
-    public void second_testConfirmation(){
+    public void b_testConfirmation(){
         User teacher = User.findByEmail("123@123.com","global");
         assertThat(teacher.confirmationToken).isNotEmpty();
         teacher.roles= UserRoll.Teachers.toString();
@@ -75,6 +75,33 @@ public class TeacherAccountTest extends FluentTest{
         click("#DirectLogin");
         await().atMost(5, TimeUnit.SECONDS);
         assertThat(find("#UserGroup").getText()).isEqualTo("User Group: Teachers");
+//        click("#loggeddropdown");
+//        await().atMost(5, TimeUnit.SECONDS);
+//        click("#loggeduser");
+//        assertThat(find(".label-success").getText()).isEqualTo("You have been logged out");
+    }
+
+    public void testSignin(){
+        goTo("http://localhost:9000");
+        fill("#LoginEmail").with("123@123.com");
+        fill("#LoginPassword").with("123");
+        click("#LoginButton");
+        assertThat(find("#UserGroup").getText()).isEqualTo("User Group: Teachers");
+    }
+
+    @Test
+    public void c_testSSH(){
+        testSignin();
+        String ssh="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDo1t61PiEAjqqfp9vKd9AaDmrxbMPiLfe9dC/F3Dm5QtftjpFasj1IrFvlQE9UXlJafOIKCcKb8yGeXDa1oXBD79n/mixFwec6LTRW34A3eBHxXl4Kr05FRkZyFvuItpAMPDG+N3xR3kZDRUZvQo7gSFWjq4/qv9d1+BKcOLOFo12GDh1QZ2T7lPE7+CqonTqQnpjAKpCQaghTjH4xwSpFdgFiT7V35K4Uiks/pA4lTC8Vv+5W4PUM86cjCb3Pn2CVGi7ExihLAKw+Xc9ju8wlFdwSqiNDP3Sxnt7u4Ch3U44+VxZpWaJ3lSFxhTPKm8lFxZyyTi2kboagGZ1CBQXX Hao@HAO-PC";
+        //goTo("http://localhost:9000/");
+        await().atMost(5, TimeUnit.SECONDS);
+        click("#UserSetting");
+        fill("#SSHTitle").with("teacherSSH");
+        fill("#SSHValue").with(ssh);
+        click("#SSHButton");
+        await().atMost(5, TimeUnit.SECONDS);
+        assertThat(find("#ssh_title").getText()).isEqualTo("teacherSSH");
+        assertThat(find("#ssh_value").getText()).isEqualTo(ssh);
 
     }
 
