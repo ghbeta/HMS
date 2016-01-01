@@ -85,6 +85,10 @@ public class Token extends Model {
         User tokenuser=currentServer("global").find(User.class).where().eq("id",token.userId).findUnique();
         return tokenuser;
     }
+
+    public static Token findTokenByUserId(String userid,String database){
+        return currentServer(database).find(Token.class).where().eq("userId",userid).findUnique();
+    }
     /**
      * @return true if the reset token is too old to use, false otherwise.
      */
