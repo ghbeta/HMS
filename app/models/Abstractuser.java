@@ -18,13 +18,15 @@ import java.util.List;
 @MappedSuperclass
 public class Abstractuser extends Model {
     @Id
+    @Column(unique = true)
+    public String id;
+
+
     @Constraints.Required
     @Formats.NonEmpty
     @Column(unique = true)
     public String email;
 
-    @Column(unique = true)
-    public String id;
 
     public String firstname;
     public String lastname;

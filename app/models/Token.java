@@ -119,6 +119,7 @@ public class Token extends Model {
         token.userId = user.id;
         token.type = type;
         token.email = email;
+        token.dateCreation=new Date();
         token.save(database);
         return token;
     }

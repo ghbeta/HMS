@@ -78,7 +78,7 @@ public class Email extends Controller {
      * @return email page with flash error or success
      */
     public static Result validateEmail(String token) {
-        User user = User.findByEmail(request().username(),"global");
+        User user = User.findByEmail(ctx().session().get("email"), "global");
 
         if (token == null) {
             flash("danger", Messages.get("error.technical"));
@@ -98,12 +98,15 @@ public class Email extends Controller {
         }
 
         user.email = resetToken.email;
+        //user.changeEmail(resetToken.email,"global");
         user.save("global");
+
 
         session("email", resetToken.email);
 
         flash("success", Messages.get("account.settings.email.successful", user.email));
-
+        resetToken.delete("global");
         return ok(views.html.account.settings.emailValidate.render(user));
+        //return ok(views.html.dashboard.index.render(user));
     }
 }

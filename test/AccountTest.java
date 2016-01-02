@@ -23,7 +23,7 @@ import static play.test.Helpers.testServer;
  * Created by Hao on 2015/12/29.
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TeacherAccountTest extends FluentTest{
+public class AccountTest extends FluentTest{
     @BeforeClass
     public static void cleanenv(){
         Path p= Paths.get(System.getProperty("user.home"), "data_dynamic");
@@ -89,6 +89,7 @@ public class TeacherAccountTest extends FluentTest{
         assertThat(find("#UserGroup").getText()).isEqualTo("User Group: Teachers");
     }
 
+
     @Test
     public void c_testSSH(){
         testSignin();
@@ -103,6 +104,43 @@ public class TeacherAccountTest extends FluentTest{
         assertThat(find("#ssh_title").getText()).isEqualTo("teacherSSH");
         assertThat(find("#ssh_value").getText()).isEqualTo(ssh);
 
+    }
+    @Test
+    public void d_testResetEmailAndPassword(){
+        testSignin();
+        click("#UserSetting");
+        await().atMost(5, TimeUnit.SECONDS);
+        click("#UpdateEmail");
+        fill("#inputUpdateEmail").with("456@456.com");
+        click("#UpdateEmailButton");
+        await().atMost(5, TimeUnit.SECONDS);
+        User teacher = User.findByEmail("123@123.com","global");
+        Token token=Token.findTokenByUserId(teacher.id,"global");
+        String url="http://localhost:9000"+"/email/"+token.token;
+        goTo(url);
+        await().atMost(5, TimeUnit.SECONDS);
+        assertThat(find(".label-success").getText()).isEqualTo("Email successfully validated (456@456.com)");
+        click("#UpdatePassword");
+        click("#UpdatePasswordButton");
+        await().atMost(5, TimeUnit.SECONDS);
+        Token passwordtoken=Token.findTokenByUserId(teacher.id,"global");
+        String passwordreseturl="http://localhost:9000"+"/reset/"+passwordtoken.token;
+        goTo(passwordreseturl);
+        await().atMost(5, TimeUnit.SECONDS);
+        fill("#password1").with("456");
+        fill("#password2").with("456");
+        await().atMost(5, TimeUnit.SECONDS);
+        click("#passwordSubmit");
+        assertThat(find(".label-success").getText()).isEqualTo("Your password has been reset.");
+    }
+
+    @Test
+    public void e_testNewSignin(){
+        goTo("http://localhost:9000");
+        fill("#LoginEmail").with("456@456.com");
+        fill("#LoginPassword").with("456");
+        click("#LoginButton");
+        assertThat(find("#UserGroup").getText()).isEqualTo("User Group: Teachers");
     }
 
 
