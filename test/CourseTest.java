@@ -22,8 +22,8 @@ public class CourseTest extends FluentTest {
     public void a_createLocalCourse(){
         Signin();
         click("#CreateNewLecture");
-        await().atMost(5, TimeUnit.SECONDS);
-        click("option", withText("Yes"));
+        await().atMost(10, TimeUnit.SECONDS);
+        click("option", withText("WS"));
         fill("#CourseYear").with("2016");
         fill("#CourseName").with("LocalLectureTest");
         click("#CourseModes");
@@ -33,8 +33,15 @@ public class CourseTest extends FluentTest {
         fill("#percentage_validassignment").with("0.5");
         fill("#percentage_exam").with("0.5");
         fill("#number_validassignment").with("10");
-        fill("#closing_date").with("03/10/2016");
+        fill("#datepicker").with("03/10/2016");
+        fill("#course_description").with("test course under local mode");
+        click("#create_course_button");
+        await().atMost(5, TimeUnit.SECONDS);
+        assertThat(find(".label-success").getText()).isEqualTo("WS2016");
 
+    }
 
+    public void b_createAssignment(){
+        String url="http://localhost:9000/admin/123/WS2016/LocalLectureTest";
     }
 }
