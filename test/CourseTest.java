@@ -60,7 +60,7 @@ public class CourseTest extends FluentTest {
         fill("#percentage_validassignment").with("0.5");
         fill("#percentage_exam").with("0.5");
         fill("#number_validassignment").with("10");
-        fill("#datepicker").with("03/10/2016");
+        fill("#createlecture_closingdate").with("03/10/2016");
         fill("#course_description").with("test course under local mode");
         click("#create_course_button");
         await().atMost(5, TimeUnit.SECONDS);
@@ -77,7 +77,7 @@ public class CourseTest extends FluentTest {
         await().atMost(30, TimeUnit.SECONDS).until("#assignmentModal").areDisplayed();
         fill("#number_exercise").with("4");
         fill("#total_points").with("80");
-        fill("#datepicker").with("03/10/2016");
+        fill("#assignment_deadline").with("03/10/2016");
         fill("#upload_file").with(System.getProperty("user.home")+"/Assignment1.txt");
         fill("#additional_info").with("test adding new assignment");
         click("#submit_assignment");
@@ -92,7 +92,7 @@ public class CourseTest extends FluentTest {
         goTo(url);
         await().atMost(30,TimeUnit.SECONDS).until("#modify_assignment").isPresent();
         click("#modify_assignment");
-        await().atMost(30,TimeUnit.SECONDS).until("#1").areDisplayed();
+        await().atMost(30,TimeUnit.SECONDS).until("#modify1").areDisplayed();
         fill("#modify_assignment_deadline").with("03/09/2016");
         fill("#modify_assignment_info").with("test modify assignment");
         click("#submit_modify_assignment");

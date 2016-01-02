@@ -104,13 +104,13 @@
               <td>@currentassignment.numberofexercise</td>
               <td id="table_localinfo">@currentassignment.addtionalinfo</td>
               <td  class="text-center">
-                <a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.modify")" id="modify_assignment"><i class="fa fa-pencil-square-o"></i></a>
+                <a data-toggle="modal" data-target="#modify@currentassignment.id" title="@Messages("Assignment.modify")" id="modify_assignment"><i class="fa fa-pencil-square-o"></i></a>
                 <a title="@Messages("delete.assignment")" href="@controllers.lectures.admin.routes.Lecturehome.deleteAssignment(lecture.courseName,currentassignment.title,lecture.semester)" id="delete_assignment"><i class="fa fa-times"></i></a>
               </td>
               <td>@Handin.getHandinofassignmentinlecture(currentassignment,lecture,lecture.semester).size()/@Semesteruser.findAllstudentsByLecture(lecture.semester,lecture).size()</td>
               <td>@currentassignment.deadline</td>
             </tr>
-            <div class="modal fade" id="@currentassignment.id" tabindex="-1" role="dialog" aria-labelledby="@currentassignment.id" aria-hidden="true">
+            <div class="modal fade" id="modify@currentassignment.id" tabindex="-1" role="dialog" aria-labelledby="@currentassignment.id" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
