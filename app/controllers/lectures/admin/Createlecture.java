@@ -9,6 +9,7 @@ import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import utils.DateConverter;
 import views.html.lectures.admin.createlectureform;
 import views.html.lectures.admin.lecturehome;
 
@@ -16,6 +17,7 @@ import views.html.lectures.admin.lecturehome;
 import static play.data.Form.form;
 import static utils.CreateDB.createServer;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +40,7 @@ public class Createlecture extends Controller {
        public String localrepo;
 
        @Constraints.Required
-       public Date closingdate;
+       public String closingdate;
 
        public String description;
 
@@ -60,7 +62,7 @@ public class Createlecture extends Controller {
         public String localrepo;
 
         @Constraints.Required
-        public Date closingdate;
+        public String closingdate;
 
         @Constraints.Required
         public int totalassignment;
@@ -133,7 +135,7 @@ public class Createlecture extends Controller {
     }
 
     @Security.Authenticated(Securedteacher.class)
-    public static Result createlecture() {
+    public static Result createlecture() throws ParseException {
 
         Form<LectureRegister> createlectureForm = form(LectureRegister.class).bindFromRequest();
         Form<LectureRemoteRegeister> createlectureremoteForm=form(LectureRemoteRegeister.class).bindFromRequest();
@@ -184,7 +186,7 @@ public class Createlecture extends Controller {
                 lecture.minimumPercentageForExamination = createlectureForm.get().percentageforexam;
             }
 
-            lecture.closingdate = createlectureForm.get().closingdate;
+            lecture.closingdate = DateConverter.fromString(createlectureForm.get().closingdate);
 
 
             Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,globaluser);
@@ -260,7 +262,7 @@ public class Createlecture extends Controller {
                 lecture.minimumPercentageForExamination = 0;
             }
 
-            lecture.closingdate = createlectureremoteForm.get().closingdate;
+            lecture.closingdate = DateConverter.fromString(createlectureremoteForm.get().closingdate);
 
 
             Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,globaluser);
