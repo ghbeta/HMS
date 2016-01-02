@@ -79,7 +79,7 @@
       <hr>
       <div class="panel panel-default">
         <div class="panel-heading">@Messages("lecture.home.homeworks")
-          <button title="Create new homework" class="btn btn-link"  data-toggle="modal" data-target="#assignmentModal">
+          <button title="Create new homework" class="btn btn-link" data-toggle="modal" data-target="#assignmentModal" id="create_local_homework">
             <i class="fa fa-plus"></i>
           </button>
         </div>
@@ -102,10 +102,10 @@
             <tr>
               <td>@currentassignment.title@if(currentassignment.uploadfile!=null){<a href="@controllers.lectures.routes.Lecturehub.getFiles(lecture.semester,lecture.courseName,currentassignment.title)"><i class="fa fa-download"></i></a>}</td>
               <td>@currentassignment.numberofexercise</td>
-              <td>@currentassignment.addtionalinfo</td>
+              <td id="table_localinfo">@currentassignment.addtionalinfo</td>
               <td  class="text-center">
-                <a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.modify")"><i class="fa fa-pencil-square-o"></i></a>
-                <a title="@Messages("delete.assignment")" href="@controllers.lectures.admin.routes.Lecturehome.deleteAssignment(lecture.courseName,currentassignment.title,lecture.semester)"><i class="fa fa-times"></i></a>
+                <a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.modify")" id="modify_assignment"><i class="fa fa-pencil-square-o"></i></a>
+                <a title="@Messages("delete.assignment")" href="@controllers.lectures.admin.routes.Lecturehome.deleteAssignment(lecture.courseName,currentassignment.title,lecture.semester)" id="delete_assignment"><i class="fa fa-times"></i></a>
               </td>
               <td>@Handin.getHandinofassignmentinlecture(currentassignment,lecture,lecture.semester).size()/@Semesteruser.findAllstudentsByLecture(lecture.semester,lecture).size()</td>
               <td>@currentassignment.deadline</td>
@@ -129,7 +129,7 @@
                         </div>
                         <div class="col-xs-6">
                           <label>@Messages("deadline")</label>
-                          <input type="date" class="form-control" name="deadline" value="@currentassignment.deadline.format("yyyy-MM-dd")">
+                          <input type="text" class="form-control datepicker" name="deadline" value="@currentassignment.deadline.format("yyyy-MM-dd")" id="modify_assignment_deadline" >
                         </div>
                       </div>
 
@@ -144,10 +144,10 @@
                       @*todo:add more file also delte file*@
                       <div class="form-group">
                         <label>@Messages("lecture.form.addionalinfo")</label>
-                        <textarea class="form-control"  name="addtionalinfo" rows="10">@currentassignment.addtionalinfo</textarea>
+                        <textarea class="form-control"  name="addtionalinfo" rows="10" id="modify_assignment_info">@currentassignment.addtionalinfo</textarea>
                       </div>
                       <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("lecture.form.close")</button>
-                      <button type="submit" class="btn btn-primary pull-right">@Messages("lecture.form.change")</button>
+                      <button type="submit" class="btn btn-primary pull-right" id="submit_modify_assignment">@Messages("lecture.form.change")</button>
                     </form>
                   </div>
                 </div>
@@ -222,7 +222,7 @@
                           </div>
                           <div class="col-xs-6">
                             <label>@Messages("deadline")</label>
-                            <input type="date" class="form-control" name="deadline" value="@currentassignment.deadline.format("yyyy-MM-dd")">
+                            <input type="text" class="form-control" name="deadline" value="@currentassignment.deadline.format("yyyy-MM-dd")">
                           </div>
                         </div>
 
@@ -634,7 +634,7 @@
             </div>
             <div class="form-group">
               <label class="control-label">@Messages("lecture.form.closingdate")</label>
-              <input id="datetimepicker1" type="text" class="form-control" name="closingdate" value="@lecture.closingdate">
+              <input id="modify_closingdate_terms" type="text" class="form-control datepicker" name="closingdate" value="@lecture.closingdate" >
             </div>
 
             @if(!lecture.localrepo){
@@ -674,15 +674,15 @@
             <div class="row">
               <div class="col-xs-6">
                 <label>@Messages("Number.exercise")</label>
-                <input type="number" class="form-control" name="numberofexercise" >
+                <input type="number" class="form-control" name="numberofexercise" id="number_exercise" >
               </div>
               <div class="col-xs-6">
                 <label>@Messages("Number.totalpoints")</label>
-                <input type="number" class="form-control" name="totalpoints" >
+                <input type="number" class="form-control" name="totalpoints" id="total_points">
               </div>
               <div class="col-xs-6">
                 <label>@Messages("deadline")</label>
-                <input type="date" class="form-control" name="deadline">
+                <input type="text" class="form-control datepicker" id="assignment_deadline" name="deadline">
               </div>
             </div>
             <div class="checkbox">
@@ -693,14 +693,14 @@
             </div>
             <div class="form-group">
               <label>@Messages("lecture.action.upload")</label>
-              <input type="file" name="uploadfile">
+              <input type="file" id="upload_file" name="uploadfile">
             </div>
             <div class="form-group">
               <label>@Messages("lecture.form.addionalinfo")</label>
-              <textarea class="form-control"  name="addtionalinfo" rows="10"></textarea>
+              <textarea class="form-control" id="additional_info" name="addtionalinfo" rows="10"></textarea>
             </div>
             <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("lecture.form.close")</button>
-            <button type="submit" class="btn btn-primary pull-right">@Messages("lecture.form.change")</button>
+            <button type="submit" id="submit_assignment" class="btn btn-primary pull-right">@Messages("lecture.form.change")</button>
             </form>
         </div>
       </div>

@@ -11,6 +11,7 @@ import play.data.Form;
 import play.data.validation.Constraints;
 import play.i18n.Messages;
 import play.mvc.*;
+import utils.DateConverter;
 import views.html.lectures.admin.lecturehome;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -18,6 +19,7 @@ import javax.persistence.Column;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.text.ParseException;
 import java.util.Date;
 import org.apache.commons.io.FileUtils;
 import static utils.UploadPath.uploadpath;
@@ -36,7 +38,7 @@ public class Lecturehome extends Controller {
         public String localrepo;
 
 
-        public Date closingdate;
+        public String closingdate;
 
 
         public int totalassignment;
@@ -66,7 +68,7 @@ public class Lecturehome extends Controller {
         @Column(columnDefinition = "TEXT")
         public String addtionalinfo;
 
-        public Date deadline;
+        public String deadline;
 
         public String deletefile;
 
@@ -131,14 +133,14 @@ public class Lecturehome extends Controller {
     }
 
     @Security.Authenticated(Securedteacher.class)
-    public static Result modifyterms(String user, String semester,String lecture){
+    public static Result modifyterms(String user, String semester,String lecture) throws ParseException {
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
         Semesteruser currentsemesteruser=Semesteruser.getSemesteruserfomrUser(semester, currentuser);
         Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
         Form<Lecturetermform> lecturetermformForm=Form.form(Lecturetermform.class).bindFromRequest();
         //currentlecture.desription=descriptionformForm.get().modifieddescription;
         currentlecture.localrepo=lecturetermformForm.get().localrepo.equals("true");
-        currentlecture.closingdate=lecturetermformForm.get().closingdate;
+        currentlecture.closingdate=DateConverter.fromString(lecturetermformForm.get().closingdate);
         currentlecture.totalassignment=lecturetermformForm.get().totalassignment;
         currentlecture.optionalassignments=lecturetermformForm.get().optionalassigment;
         currentlecture.requriednumberofvalidassignment=lecturetermformForm.get().numberofvalidassignment;
@@ -149,7 +151,7 @@ public class Lecturehome extends Controller {
     }
 
     @Security.Authenticated(Securedteacher.class)
-    public static Result addassignment(String user,String semester,String lecture){
+    public static Result addassignment(String user,String semester,String lecture) throws ParseException {
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
         Semesteruser currentsemesteruser=Semesteruser.getSemesteruserfomrUser(semester, currentuser);
         Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
@@ -179,7 +181,7 @@ public class Lecturehome extends Controller {
 //        }
         assignment.totalpoints=assignmentformForm.get().totalpoints;
         assignment.addtionalinfo=assignmentformForm.get().addtionalinfo;
-        assignment.deadline=assignmentformForm.get().deadline;
+        assignment.deadline= DateConverter.fromString(assignmentformForm.get().deadline);
         MultipartFormData body= request().body().asMultipartFormData();
         FilePart filePart=body.getFile("uploadfile");
         String filename="";
@@ -230,7 +232,7 @@ public class Lecturehome extends Controller {
     }
 
     @Security.Authenticated(Securedteacher.class)
-    public static Result modifyassignment(String assignmentid,String semester,String lecture){
+    public static Result modifyassignment(String assignmentid,String semester,String lecture) throws ParseException {
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
         Semesteruser currentsemesteruser=Semesteruser.getSemesteruserfomrUser(semester, currentuser);
         Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
@@ -239,7 +241,7 @@ public class Lecturehome extends Controller {
         Assignment assignment=Assignment.findById(semester,assignmentid);
         assignment.numberofexercise=assignmentformForm.get().numberofexercise;
         assignment.addtionalinfo=assignmentformForm.get().addtionalinfo;
-        assignment.deadline=assignmentformForm.get().deadline;
+        assignment.deadline=DateConverter.fromString(assignmentformForm.get().deadline);
         assignment.totalpoints=assignmentformForm.get().totalpoints;
         FilePart filePart=null;
        try{
