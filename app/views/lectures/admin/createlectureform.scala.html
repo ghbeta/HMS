@@ -19,16 +19,16 @@
               </div>
             <div class="form-group">
                 <label class="control-label">@Messages("lecture.form.year")</label>
-                <input type="text" class="form-control " name="year" placeholder="2XXX">
+                <input type="text" class="form-control " id="CourseYear" name="year" placeholder="2XXX">
             </div>
 
             <div class="form-group">
                 <label class="control-label">@Messages("lecture.form.title")</label>
-                <input type="text" class="form-control" name="coursename">
+                <input type="text" class="form-control" id="CourseName" name="coursename">
             </div>
             <div class="checkbox">
                 <label class="control-label">
-                    <input type="checkbox" name="localrepo" value="true">
+                    <input type="checkbox" id="CourseModes" name="localrepo" value="true">
                     @Messages("lecture.form.repo")
                 </label>
             </div>
@@ -39,29 +39,29 @@
           <div class="form-inline">
             <div class="form-group">
                 <label class="control-label">@Messages("lecture.form.totalassignment")</label>
-                <input type="number" class="form-control" name="totalassignment" placeholder="12">
+                <input type="number" class="form-control" name="totalassignment" id="total_assignment" placeholder="12">
             </div>
             <div class="form-group">
                 <label class="control-label">@Messages("lecture.form.option")</label>
-                <input type="number" class="form-control" name="optionalassigment" placeholder="2">
+                <input type="number" class="form-control" name="optionalassigment" id="optional_assignment" placeholder="2">
             </div>
           </div>
         <br>
           <div class="form-inline">
             <div class="form-group">
                 <label class="control-label">@Messages("lecture.form.validhandin")</label>
-                <input type="number" step="0.01" class="form-control" name="percentageforvalidassignment" placeholder="0.5">
+                <input type="number" step="0.01" class="form-control" name="percentageforvalidassignment" id="percentage_validassignment" placeholder="0.5">
             </div>
             <div class="form-group">
                 <label class="control-label6">@Messages("lecture.form.validexam")</label>
-                <input type="number" step="0.01" class="form-control" name="percentageforexam" placeholder="0.5">
+                <input type="number" step="0.01" class="form-control" name="percentageforexam" id="percentage_exam" placeholder="0.5">
             </div>
          </div>
         <br>
          <div class="form-inline">
             <div class="form-group">
                 <label class="control-label">@Messages("lecture.form.totalvalid")</label>
-                <input type="number" class="form-control" name="numberofvalidassignment" placeholder="10">
+                <input type="number" class="form-control" name="numberofvalidassignment" id="number_validassignment" placeholder="10">
             </div>
         </div>
 
@@ -72,7 +72,7 @@
         <div class="show form-inline" id="remote">
             <div class="form-group">
                     <label class="control-label">@Messages("lecture.form.closingdate")</label>
-                    <input type="date" class="form-control" name="closingdate" placeholder="@Messages("lecture.form.date")">
+                    <input type="date" class="form-control" name="closingdate" id="closing_date" placeholder="@Messages("lecture.form.date")">
                 </div>
                     <br>
                 </div>

@@ -51,7 +51,7 @@
               @Messages("lectures.my")
               </a>
               @if(user.roles.toString.equals("Teachers")){
-              <a href="@controllers.lectures.admin.routes.Createlecture.createlectureform()" class="list-group-item">
+              <a href="@controllers.lectures.admin.routes.Createlecture.createlectureform()" id="CreateNewLecture" class="list-group-item">
               @Messages("lectures.new")
               </a>}
             </div>
