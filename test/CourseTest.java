@@ -99,4 +99,16 @@ public class CourseTest extends FluentTest {
         await().atMost(30,TimeUnit.SECONDS).until("#table_localinfo").isPresent();
         assertThat(find("#table_localinfo").getText()).isEqualTo("test modify assignment");
     }
+
+    @Test
+    public void d_modifyTerms(){
+        String url="http://localhost:9000/admin/123/WS2016/LocalLectureTest";
+        Signin();
+        goTo(url);
+        await().atMost(30,TimeUnit.SECONDS).until("#modify_terms").isPresent();
+        click("#modify_terms");
+        await().atMost(30,TimeUnit.SECONDS).until("#termsModal").areDisplayed();
+        fill("#modify_numbervalid").with("9");
+        click("#modify_terms_button");
+    }
 }

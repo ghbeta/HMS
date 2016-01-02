@@ -63,7 +63,7 @@
       @if(lecture.localrepo){
       <div class="panel panel-default">
         <div class="panel-heading">@Messages("lecture.home.terms")
-          <button class="btn btn-link"  data-toggle="modal" data-target="#termsModal">
+          <button class="btn btn-link"  data-toggle="modal" data-target="#termsModal" id="modify_terms">
             <i class="fa fa-pencil-square-o"></i>
           </button>
         </div>
@@ -197,13 +197,13 @@
                 <td>@currentassignment.numberofexercise</td>
                 <td>@currentassignment.addtionalinfo</td>
                 <td  class="text-center">
-                  <a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.modify")"><i class="fa fa-pencil-square-o"></i></a>
+                  <a data-toggle="modal" data-target="#modify@currentassignment.id" title="@Messages("Assignment.modify")"><i class="fa fa-pencil-square-o"></i></a>
                   <a title="@Messages("delete.assignment")" href="@controllers.lectures.admin.routes.Lecturehome.deleteAssignment(lecture.courseName,currentassignment.title,lecture.semester)"><i class="fa fa-times"></i></a>
                 </td>
                 <td>@Handin.getHandinofassignmentinlecture(currentassignment,lecture,lecture.semester).size()/@Semesteruser.findAllstudentsByLecture(lecture.semester,lecture).size()</td>
                 <td>@currentassignment.deadline</td>
               </tr>
-              <div class="modal fade" id="@currentassignment.id" tabindex="-1" role="dialog" aria-labelledby="@currentassignment.id" aria-hidden="true">
+              <div class="modal fade" id="modify@currentassignment.id" tabindex="-1" role="dialog" aria-labelledby="@currentassignment.id" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -630,7 +630,7 @@
 
             <div class="form-group">
               <label class="control-label">@Messages("lecture.form.totalvalid")</label>
-              <input type="number" class="form-control" name="numberofvalidassignment" value="@lecture.requriednumberofvalidassignment">
+              <input type="number" class="form-control" name="numberofvalidassignment" value="@lecture.requriednumberofvalidassignment" id="modify_numbervalid">
             </div>
             <div class="form-group">
               <label class="control-label">@Messages("lecture.form.closingdate")</label>
@@ -655,7 +655,7 @@
               </div>
             }
             <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("lecture.form.close")</button>
-            <button type="submit" class="btn btn-primary pull-right">@Messages("lecture.form.change")</button>
+            <button type="submit" class="btn btn-primary pull-right" id="modify_terms_button">@Messages("lecture.form.change")</button>
           </form>
         </div>
       </div>
