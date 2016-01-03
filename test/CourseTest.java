@@ -46,6 +46,20 @@ public class CourseTest extends FluentTest {
         click("#LoginButton");
         assertThat(find("#UserGroup").getText()).isEqualTo("User Group: Teachers");
     }
+
+    public void StudentSignin(){
+        goTo("http://localhost:9000");
+        fill("#LoginEmail").with("a@a.com");
+        fill("#LoginPassword").with("123");
+        click("#LoginButton");
+    }
+
+    public void AssistantSignin(){
+        goTo("http://localhost:9000");
+        fill("#LoginEmail").with("b@b.com");
+        fill("#LoginPassword").with("123");
+        click("#LoginButton");
+    }
     @Test
     public void a_createLocalCourse(){
         Signin();
@@ -124,5 +138,78 @@ public class CourseTest extends FluentTest {
         click("#submit_new_description");
         await().atMost(10,TimeUnit.SECONDS).until("#lecture_description").isPresent();
         assertThat(find("#lecture_description").getText()).isEqualTo("a new test description");
+    }
+
+    @Test
+    public void g_testForum(){
+        String url="http://localhost:9000/admin/123/WS2016/LocalLectureTest";
+        Signin();
+        goTo(url);
+        click("#tab_forum");
+        await().atMost(5,TimeUnit.SECONDS).until("#create_thread").isPresent();
+        click("#create_thread");
+        await().atMost(5,TimeUnit.SECONDS).until("#thread_title").isPresent();
+        fill("#thread_title").with("test thread");
+        fill("#thread_content").with("test thread content");
+        click("#thread_submit");
+        await().atMost(10,TimeUnit.SECONDS).until("#show_thread_title").areDisplayed();
+        click("#show_thread_title");
+        await().atMost(5,TimeUnit.SECONDS).until("#inside_thread").isPresent();
+        assertThat(find("#inside_thread").getText()).isEqualTo("test thread");
+        fill("#inside_reply").with("test reply");
+        click("#submit_inside_reply");
+        await().atMost(5,TimeUnit.SECONDS).until("#inside_success_reply").isPresent();
+        assertThat(find("#inside_success_reply").getText()).isEqualTo("test reply");
+    }
+
+    @Test
+    public void h_testAddStudent(){
+        String ssh="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8Cv4/YtLkjLZbIMtsRbp4sZOpG7aD4BHEvMLpsUMKfP+4MwIk9a0YBpHMfB+RHzDhN6UyG/ZKTmHbGnLTAQ2XxUXXfmSi8qHqOkTFsBokWz4MLWtoanIkZhoHM22csZVeESq7bYUVhqBrEVGUA5ys9xqG9om/Sm2w4zDGturHgMoZeRjO8lZ2WyAPTA+IJIpXJBJ+LwvY74RkW0CzP3Aoqszgu+XXtLjyRaJCuz3sSCoj6mqbxZAP2Vt7TXUoA3WFausd3Y6Lk8kJMZWR1M5N0hHRgu+OgJXlzV4ZlQVt6vj6mgMQ8gCpv/CAVw4PpMbomM1YjI1L8O9SurXUbrjp Administrator@china-9aa05637d";
+        goTo("http://localhost:9000/");
+        StudentSignin();
+        await().atMost(5, TimeUnit.SECONDS);
+        click("#UserSetting");
+        fill("#SSHTitle").with("studentSSH");
+        fill("#SSHValue").with(ssh);
+        click("#SSHButton");
+        await().atMost(5, TimeUnit.SECONDS);
+        click("#lecture_all");
+        await().atMost(5,TimeUnit.SECONDS).until("#semester_tab").isPresent();
+        click("#semester_tab");
+        await().atMost(5,TimeUnit.SECONDS).until("#student_lecture").areDisplayed();
+        click("#student_lecture");
+        await().atMost(5,TimeUnit.SECONDS).until("#locallecture_addstudent").isPresent();
+        click("#locallecture_addstudent");
+        await().atMost(10,TimeUnit.SECONDS).until("#student_homework_table").areDisplayed();
+        assertThat(findFirst("#student_homework_table").isDisplayed());
+
+    }
+
+    @Test
+    public void testStudentHandin(){
+        StudentSignin();
+        click("#lecture_my");
+        await().atMost(5,TimeUnit.SECONDS).until("#my_semester_tab").isPresent();
+        click("#my_semester_tab");
+        await().atMost(5,TimeUnit.SECONDS).until("#my_lecture_content").areDisplayed();
+        click("#my_lecture_content");
+        await().atMost(5,TimeUnit.SECONDS).until("#handin_homework").areDisplayed();
+        click("#handin_homework");
+        await().atMost(5,TimeUnit.SECONDS).until("#handin1").areDisplayed();
+    }
+
+    @Test
+    public void testStudentRevert(){
+
+    }
+    @Test
+    public void testDeleteStudent(){
+        String url="http://localhost:9000/students/Gao/WS2016/LocalLectureTest";
+        StudentSignin();
+        goTo(url);
+        await().atMost(5,TimeUnit.SECONDS).until("#locallecture_deletestudent").isPresent();
+        click("#locallecture_deletestudent");
+        await().atMost(5,TimeUnit.SECONDS).until("#locallecture_addstudent").areDisplayed();
+        assertThat(findFirst("#locallecture_addstudent").isDisplayed());
     }
 }

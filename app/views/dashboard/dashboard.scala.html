@@ -44,10 +44,10 @@
           </div>
           <div id="lectures" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
             <div class="list-group">
-              <a href="@controllers.lectures.routes.Lecturehub.allLectures()" class="list-group-item">
+              <a href="@controllers.lectures.routes.Lecturehub.allLectures()" class="list-group-item" id="lecture_all">
               @Messages("lectures.all")
               </a>
-              <a href="@controllers.lectures.routes.Lecturehub.myLectures()" class="list-group-item">
+              <a href="@controllers.lectures.routes.Lecturehub.myLectures()" class="list-group-item" id="lecture_my">
               @Messages("lectures.my")
               </a>
               @if(user.roles.toString.equals("Teachers")){

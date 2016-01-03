@@ -7,7 +7,7 @@
 
        <li><a href="#editor" data-toggle="tab">@Messages("lecture.home.correction")</a></li>
 
-      <li><a href="#forum" data-toggle="tab">@Messages("lecture.home.forum")</a></li>
+      <li><a href="#forum" data-toggle="tab" id="tab_forum">@Messages("lecture.home.forum")</a></li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="home">
@@ -479,7 +479,7 @@
           <h1>@Messages("forum.header")</h1><small>@Messages("forum.note")</small>
         </div>
         <div class="row col-md-12">
-          <button ng-click="section(1)" class="btn btn-success">@Messages("forum.create")</button>
+          <button ng-click="section(1)" class="btn btn-success" id="create_thread">@Messages("forum.create")</button>
           <div class="btn-group">
             <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               @Messages("forum.action") <span class="caret"></span>
@@ -491,9 +491,9 @@
           </div>
           <hr>
           <form  action="@controllers.lectures.routes.Lectureforum.createthread(user.lastname,lecture.semester,lecture.courseName)#forum" method="post" id="createthreadform" name="createthreadform" ng-show="showsection(1)" class="form-horizontal">
-            <input name="title" ng-model="title" required type="text" class="form-control" placeholder="@Messages("thread.title")"><br>
-            <textarea name="content" ng-model="content" required class="form-control" rows="5" placeholder="@Messages("content")"></textarea><br>
-            <input ng-disabled="!(createthreadform.title.$dirty && createthreadform.content.$dirty)" class="btn btn-primary" type="submit">
+            <input name="title" ng-model="title" required type="text" class="form-control" placeholder="@Messages("thread.title")" id="thread_title"><br>
+            <textarea name="content" ng-model="content" required class="form-control" rows="5" placeholder="@Messages("content")" id="thread_content"></textarea><br>
+            <input ng-disabled="!(createthreadform.title.$dirty && createthreadform.content.$dirty)" class="btn btn-primary" type="submit" id="thread_submit">
           </form>
           @if(thread==null){
           <table ng-show="showsection(2)" class="table table-striped custab">
@@ -508,7 +508,7 @@
             @if(threadlist==null){
             @for(thread<-ForumThread.findByLecture(lecture.semester,lecture)){
               <tr>
-                <td><a href="@controllers.lectures.routes.Lectureforum.getthread(lecture.semester,lecture.courseName,thread.id)#forum">@thread.title</a></td>
+                <td><a href="@controllers.lectures.routes.Lectureforum.getthread(lecture.semester,lecture.courseName,thread.id)#forum" id="show_thread_title">@thread.title</a></td>
                 <td><div class="pull-left">
                   <img class="media-object" src="http://www.gravatar.com/avatar/@user.userHash" height="20" width="20">
                 </div> @thread.creator.firstname @thread.creator.lastname</td>
@@ -519,7 +519,7 @@
             @if(threadlist!=null){
               @for(thread<-threadlist){
                 <tr>
-                  <td><a href="@controllers.lectures.routes.Lectureforum.getthread(lecture.semester,lecture.courseName,thread.id)#forum">@thread.title</a></td>
+                  <td><a href="@controllers.lectures.routes.Lectureforum.getthread(lecture.semester,lecture.courseName,thread.id)#forum" >@thread.title</a></td>
                   <td><div class="pull-left">
                     <img class="media-object" src="http://www.gravatar.com/avatar/@user.userHash" height="20" width="20">
                   </div> @thread.creator.firstname @thread.creator.lastname</td>
@@ -538,7 +538,7 @@
                   <img class="media-object" src="http://www.gravatar.com/avatar/@thread.creator.userHash" height="20" width="20">
                 </a>
                 <div class="media-body">
-                  <h4 class="media-heading">@thread.title</h4>
+                  <h4 class="media-heading" id="inside_thread">@thread.title</h4>
                   <p>@thread.content</p>
                   <ul class="list-inline list-unstyled">
                     <li><span><i class="glyphicon glyphicon-calendar"></i>@thread.creattime</span></li>
@@ -558,7 +558,7 @@
                 </a>
                 <div class="media-body">
                   <h4 class="media-heading">@post.creator.firstname @post.creator.lastname</h4>
-                  <p>@post.content</p>
+                  <p id="inside_success_reply">@post.content</p>
                   <ul class="list-inline list-unstyled">
                     <li><span><i class="glyphicon glyphicon-calendar"></i>@post.creattime</span></li>
                   </ul>
@@ -567,8 +567,8 @@
             </div><hr>
               }
             <form action="@controllers.lectures.routes.Lectureforum.createpost(lecture.semester,lecture.courseName,thread.id)#forum" method="post" class="form-horizontal">
-              <textarea class="form-control" name="postcontent" rows="5"></textarea><br>
-              <input type="submit" class="btn btn-primary pull-right">
+              <textarea class="form-control" name="postcontent" rows="5" id="inside_reply"></textarea><br>
+              <input type="submit" class="btn btn-primary pull-right" id="submit_inside_reply">
             </form>
           }
           </div>
@@ -634,7 +634,7 @@
             </div>
             <div class="form-group">
               <label class="control-label">@Messages("lecture.form.closingdate")</label>
-              <input id="modify_closingdate_terms" type="text" class="form-control datepicker" name="closingdate" value="@lecture.closingdate" >
+              <input id="modify_closingdate_terms" type="text" class="form-control datepicker" name="closingdate" value="@lecture.closingdate.format("MM/dd/yyyy")" >
             </div>
 
             @if(!lecture.localrepo){

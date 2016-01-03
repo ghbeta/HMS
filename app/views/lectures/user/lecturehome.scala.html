@@ -87,7 +87,7 @@
                 <form action="@controllers.lectures.user.routes.Lecturehome.addRemoteRepotoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" method="post"><div class="alert alert-warning" role="alert">@Messages("lecture.home.homework.local.noexist") </div><button class="btn btn-success pull-right" type="submit">@Messages("lecture.remote.generate")</button></form>
               }
 
-              <table class="table table-striped custab">
+              <table class="table table-striped custab" id="student_homework_table">
                 <thead>
                   <tr>
                     <th>@Messages("assignment.title")</th>
@@ -105,7 +105,7 @@
                     <td>@currentassignment.numberofexercise</td>
                     <td>@currentassignment.addtionalinfo</td>
                     <td  class="text-center">
-                    @if(currentassignment.isExpired){<a data-toggle="modal" data-target="#@currentassignment.id" title="@Messages("Assignment.handin")"><i class="fa fa-pencil-square-o"></i></a>
+                    @if(currentassignment.isExpired){<a data-toggle="modal" data-target="#handin@currentassignment.id" title="@Messages("Assignment.handin")" id="handin_homework"><i class="fa fa-pencil-square-o"></i></a>
                       <a title="revert last upload" href="@controllers.lectures.user.routes.Lecturehome.reverthandinhomework(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)"><i class="fa fa-times"></i></a>}
                     </td>
                     <td>@if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment)!=null){
@@ -118,7 +118,7 @@
                     <td>@currentassignment.deadline</td>
                   </tr>
                   @*modal for showing handin assginment*@
-                  <div class="modal fade" id="@currentassignment.id" tabindex="-1" role="dialog" aria-labelledby="@currentassignment.id" aria-hidden="true">
+                  <div class="modal fade" id="handin@currentassignment.id" tabindex="-1" role="dialog" aria-labelledby="@currentassignment.id" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -129,14 +129,14 @@
 
                             <div class="form-group">
                               <label>@Messages("lecture.action.upload")</label>
-                              <input type="file" name="homeworkfile">
+                              <input type="file" name="homeworkfile" id="homework_file">
                             </div>
                             <div class="form-group">
                               <label>@Messages("Assignment.commit")</label>
-                              <textarea class="form-control"  name="commit" rows="10"></textarea>
+                              <textarea class="form-control"  name="commit" rows="10" id="homework_commit"></textarea>
                             </div>
                             <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("lecture.form.close")</button>
-                            <button type="submit" class="btn btn-primary pull-right">@Messages("lecture.form.change")</button>
+                            <button type="submit" class="btn btn-primary pull-right" id="submit_homework">@Messages("lecture.form.change")</button>
                           </form>
                         </div>
                       </div>
@@ -169,13 +169,13 @@
                 }
               </table>
 
-            <a class="btn btn-danger pull-right" href="@controllers.lectures.user.routes.Lecturehome.deleteSemesteruserfromlecture(semesteruser.lastname,lecture.semester,lecture.courseName)">@Messages("lecture.leave")</a>
+            <a class="btn btn-danger pull-right" href="@controllers.lectures.user.routes.Lecturehome.deleteSemesteruserfromlecture(semesteruser.lastname,lecture.semester,lecture.courseName)" id="locallecture_deletestudent">@Messages("lecture.leave")</a>
 
             } else{
 
               <div class="alert alert-danger text-center">@Messages("lecture.singin")
                 <br>
-                <a class="btn btn-success text-center" href="@controllers.lectures.user.routes.Lecturehome.addSemesterusertoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" type="submit" >@Messages("lecture.join")</a>
+                <a class="btn btn-success text-center" href="@controllers.lectures.user.routes.Lecturehome.addSemesterusertoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" type="submit" id="locallecture_addstudent">@Messages("lecture.join")</a>
 
               </div>
               }

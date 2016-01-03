@@ -13,7 +13,7 @@
         <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="a@key">
           <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#semesterlist"  href="#@key" aria-expanded="false" aria-controls="@key">
+            <a role="button" data-toggle="collapse" data-parent="#semesterlist"  href="#@key" aria-expanded="false" aria-controls="@key" id="semester_tab">
             @key
             </a>
           </h4>
@@ -30,7 +30,7 @@
                 } else {
 
                   @if(user.roles.toString.equals(UserRoll.Students.toString)) {
-                    <a href="@controllers.lectures.user.routes.Lecturehome.generatelecturehome(user.lastname, key, lecture.courseName)" class="list-group-item">
+                    <a href="@controllers.lectures.user.routes.Lecturehome.generatelecturehome(user.lastname, key, lecture.courseName)" class="list-group-item" id="student_lecture">
                     @lecture.courseName
                     </a>
                   }
