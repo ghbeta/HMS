@@ -241,6 +241,7 @@ public class Lecturehome extends Controller {
         Assignment assignment=Assignment.findById(semester,assignmentid);
         assignment.numberofexercise=assignmentformForm.get().numberofexercise;
         assignment.addtionalinfo=assignmentformForm.get().addtionalinfo;
+        Logger.debug("date picker time string is "+assignmentformForm.get().deadline);
         assignment.deadline=DateConverter.fromString(assignmentformForm.get().deadline);
         assignment.totalpoints=assignmentformForm.get().totalpoints;
         FilePart filePart=null;

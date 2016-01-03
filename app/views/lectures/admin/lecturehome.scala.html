@@ -129,7 +129,7 @@
                         </div>
                         <div class="col-xs-6">
                           <label>@Messages("deadline")</label>
-                          <input type="text" class="form-control datepicker" name="deadline" value="@currentassignment.deadline.format("yyyy-MM-dd")" id="modify_assignment_deadline" >
+                          <input type="text" class="form-control datepicker" name="deadline" value="@currentassignment.deadline.format("MM/dd/yyyy")" id="modify_assignment_deadline" >
                         </div>
                       </div>
 
@@ -222,7 +222,7 @@
                           </div>
                           <div class="col-xs-6">
                             <label>@Messages("deadline")</label>
-                            <input type="text" class="form-control" name="deadline" value="@currentassignment.deadline.format("yyyy-MM-dd")">
+                            <input type="text" class="form-control datepicker" name="deadline" value="@currentassignment.deadline.format("MM/dd/yyyy")">
                           </div>
                         </div>
 
