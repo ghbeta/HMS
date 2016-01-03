@@ -106,11 +106,11 @@
                     <td>@currentassignment.addtionalinfo</td>
                     <td  class="text-center">
                     @if(currentassignment.isExpired){<a data-toggle="modal" data-target="#handin@currentassignment.id" title="@Messages("Assignment.handin")" id="handin_homework"><i class="fa fa-pencil-square-o"></i></a>
-                      <a title="revert last upload" href="@controllers.lectures.user.routes.Lecturehome.reverthandinhomework(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)"><i class="fa fa-times"></i></a>}
+                      <a title="revert last upload" href="@controllers.lectures.user.routes.Lecturehome.reverthandinhomework(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)" id="revert_handin"><i class="fa fa-times"></i></a>}
                     </td>
                     <td>@if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment)!=null){
-                      <div class="label label-success">@Messages("handin.ok")</div>
-                    }else{<div class="label label-danger">@Messages("handin.notok")</div>}</td>
+                      <div class="label label-success" id="handin_status">@Messages("handin.ok")</div>
+                    }else{<div class="label label-danger" id="handin_status_not">@Messages("handin.notok")</div>}</td>
                     <td><a data-toggle="modal" data-target="#eval@currentassignment.id" title="@Messages("click.for.detail")">
                      @if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment)!=null) {
                     @Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).earndpoints/@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).totalpoints
@@ -160,7 +160,7 @@
                                 <blockquote class="col-xs-12"><p>@exercise.comments</p><footer>@Messages("comment")</footer></blockquote>
                               </div>
                             }
-                           <p class="textfont">@Messages("lecture.handin.marker")@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).marker.lastname,@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).marker.firstname</p>
+                           <p class="textfont">@Messages("lecture.handin.marker")@if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).marker!=null){ @Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).marker.lastname,@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).marker.firstname}</p>
                         }else{<span class="alert alert-warning">@Messages("nohandin")</span>}
                         </div>
                       </div>
@@ -263,7 +263,7 @@
                                 <blockquote class="col-xs-12"><p>@exercise.comments</p><footer>@Messages("comment")</footer></blockquote>
                               </div>
                             }
-                            <p class="textfont">@Messages("lecture.handin.marker")@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).marker.lastname,@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).marker.firstname</p>
+                            <p class="textfont">@Messages("lecture.handin.marker")@if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).marker!=null){ @Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).marker.lastname,@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).marker.firstname}</p>
                           }else{<span class="alert alert-warning">@Messages("nohandin")</span>}
                           </div>
                         </div>

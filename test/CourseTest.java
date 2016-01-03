@@ -186,7 +186,7 @@ public class CourseTest extends FluentTest {
     }
 
     @Test
-    public void testStudentHandin(){
+    public void i_testStudentHandin(){
         StudentSignin();
         click("#lecture_my");
         await().atMost(5,TimeUnit.SECONDS).until("#my_semester_tab").isPresent();
@@ -196,14 +196,23 @@ public class CourseTest extends FluentTest {
         await().atMost(5,TimeUnit.SECONDS).until("#handin_homework").areDisplayed();
         click("#handin_homework");
         await().atMost(5,TimeUnit.SECONDS).until("#handin1").areDisplayed();
+        fill("#homework_file").with(System.getProperty("user.home")+"/Assignment1.txt");
+        fill("#homework_commit").with("test upload");
+        click("#submit_homework");
+        assertThat(find("#handin_status").getText()).isEqualTo("Handin exist");
     }
 
     @Test
-    public void testStudentRevert(){
-
+    public void j_testStudentRevert(){
+        String url="http://localhost:9000/students/Gao/WS2016/LocalLectureTest";
+        StudentSignin();
+        goTo(url);
+        click("#revert_handin");
+        await().atMost(5,TimeUnit.SECONDS).until("#handin_status_not").areDisplayed();
+        assertThat(find("#handin_status_not").getText()).isEqualTo("No Handin");
     }
     @Test
-    public void testDeleteStudent(){
+    public void k_testDeleteStudent(){
         String url="http://localhost:9000/students/Gao/WS2016/LocalLectureTest";
         StudentSignin();
         goTo(url);
