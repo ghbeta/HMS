@@ -14,7 +14,7 @@
       <br>
       <div class="panel panel-default">
         <div class="panel-heading">@Messages("lecture.home.des")
-          <button class="btn btn-link"  data-toggle="modal" data-target="#descriptionModal">
+          <button class="btn btn-link"  data-toggle="modal" data-target="#descriptionModal" id="modify_description">
             <i class="fa fa-pencil-square-o"></i>
           </button>
           <span class="label label-info pull-right">@lecture.courseName</span>
@@ -23,7 +23,7 @@
         <div class="panel-body">
           <span class="label label-warning">@Messages("lecture.closingdate")@lecture.closingdate</span>
           <hr>
-          @lecture.desription
+          <p id="lecture_description">@lecture.desription</p>
           <hr>
           <ul class="list-inline list-unstyled">
             <li><span class="label label-primary">@Messages("lecture.contact")</span></li>
@@ -590,10 +590,10 @@
           <form action="@controllers.lectures.admin.routes.Lecturehome.modifydescription(user.lastname,lecture.semester,lecture.courseName)" method="post">
             <div class="form-group">
               <label>@Messages("lecture.form.description")</label>
-              <textarea class="form-control"  name="modifieddescription" rows="10">@lecture.desription</textarea>
+              <textarea class="form-control"  name="modifieddescription" rows="10" id="add_description">@lecture.desription</textarea>
             </div>
             <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("lecture.form.close")</button>
-            <button type="submit" class="btn btn-primary pull-right">@Messages("lecture.form.change")</button>
+            <button type="submit" class="btn btn-primary pull-right" id="submit_new_description">@Messages("lecture.form.change")</button>
           </form>
         </div>
       </div>

@@ -8,10 +8,14 @@ import org.junit.*;
 import org.junit.runners.MethodSorters;
 import play.test.Helpers;
 import play.test.WithServer;
+import utils.AppException;
+import utils.Hash;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,6 +53,7 @@ public class AccountTest extends FluentTest{
 //    public void closeserver(){
 //        Helpers.stop(testServer(9000));
 //    }
+
     @Test
     public void a_testRegistration(){
        goTo("http://localhost:9000");
@@ -143,5 +148,33 @@ public class AccountTest extends FluentTest{
         assertThat(find("#UserGroup").getText()).isEqualTo("User Group: Teachers");
     }
 
+    @Test
+    public void f_testAddOtherUser() throws AppException {
+        User student = new User();
+        student.id="7788414";
+        student.email="a@a.com";
+        student.firstname="Hao";
+        student.lastname="Gao";
+        student.roles=UserRoll.Students.toString();
+        student.setUserHash();
+        student.passwordHash = Hash.createPassword("123");
+        student.dateCreation=new Date();
+        student.validated=true;
+        student.save("global");
+
+        User assistent = new User();
+        assistent.id="externa-b-c";
+        assistent.email="b@b.com";
+        assistent.firstname="Wei";
+        assistent.lastname="Deng";
+        assistent.roles=UserRoll.Assistants.toString();
+        assistent.setUserHash();
+        assistent.passwordHash=Hash.createPassword("123");
+        assistent.dateCreation=new Date();
+        assistent.validated=true;
+        assistent.save("global");
+        List<User> tests=User.findAll("global");
+        assertThat(tests).hasSize(4);
+    }
 
 }

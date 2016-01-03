@@ -1,3 +1,4 @@
+import models.User;
 import org.apache.commons.io.FileUtils;
 import org.fluentlenium.adapter.FluentTest;
 import org.junit.AfterClass;
@@ -110,5 +111,18 @@ public class CourseTest extends FluentTest {
         await().atMost(30,TimeUnit.SECONDS).until("#termsModal").areDisplayed();
         fill("#modify_numbervalid").with("9");
         click("#modify_terms_button");
+    }
+
+    @Test
+    public void f_modifyDescription(){
+        String url="http://localhost:9000/admin/123/WS2016/LocalLectureTest";
+        Signin();
+        goTo(url);
+        click("#modify_description");
+        await().atMost(10,TimeUnit.SECONDS).until("#descriptionModal").areDisplayed();
+        fill("#add_description").with("a new test description");
+        click("#submit_new_description");
+        await().atMost(10,TimeUnit.SECONDS).until("#lecture_description").isPresent();
+        assertThat(find("#lecture_description").getText()).isEqualTo("a new test description");
     }
 }
