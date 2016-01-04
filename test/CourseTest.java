@@ -37,6 +37,7 @@ public class CourseTest extends FluentTest {
     public static void deleteTestFile() throws IOException {
         Path p= Paths.get(System.getProperty("user.home"), "Assignment1.txt");
         FileUtils.forceDelete(p.toFile());
+        Helpers.stop(testServer(9000));
     }
 
     public void Signin(){
@@ -82,6 +83,20 @@ public class CourseTest extends FluentTest {
         assertThat(find(".label-success").getText()).isEqualTo("WS2016");
 
     }
+    @Test
+    public void a0_createRemoteCourse(){
+        Signin();
+        click("#CreateNewLecture");
+        await().atMost(10, TimeUnit.SECONDS);
+        click("option", withText("WS"));
+        fill("#CourseYear").with("2016");
+        fill("#CourseName").with("RemoteLectureTest");
+        fill("#createlecture_closingdate").with("03/10/2016");
+        fill("#course_description").with("test course under remote mode");
+        click("#create_course_button");
+        await().atMost(5, TimeUnit.SECONDS);
+        assertThat(find(".label-success").getText()).isEqualTo("WS2016");
+    }
 
     @Test
     public void b_createAssignment(){
@@ -100,6 +115,22 @@ public class CourseTest extends FluentTest {
         assertThat(find("#table_localinfo").getText()).isEqualTo("test adding new assignment");
     }
 
+    @Test
+    public void b0_createAssignmentRemote(){
+        String url="http://localhost:9000/admin/123/WS2016/RemoteLectureTest";
+        Signin();
+        goTo(url);
+        click("#create_local_homework");
+        await().atMost(30, TimeUnit.SECONDS).until("#assignmentModal").areDisplayed();
+        fill("#number_exercise").with("1");
+        fill("#total_points").with("20");
+        fill("#assignment_deadline").with("03/10/2016");
+        fill("#upload_file").with(System.getProperty("user.home")+"/Assignment1.txt");
+        fill("#additional_info").with("test adding new assignment");
+        click("#submit_assignment");
+        await().atMost(15, TimeUnit.SECONDS).until("#table_localinfo").isPresent();
+        assertThat(find("#table_remoteinfo").getText()).isEqualTo("test adding new assignment");
+    }
     @Test
     public void c_modifyAssignment(){
         String url="http://localhost:9000/admin/123/WS2016/LocalLectureTest";
@@ -163,7 +194,7 @@ public class CourseTest extends FluentTest {
     }
 
     @Test
-    public void h_testAddStudent(){
+    public void h_testAddStudentLocal(){
         String ssh="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8Cv4/YtLkjLZbIMtsRbp4sZOpG7aD4BHEvMLpsUMKfP+4MwIk9a0YBpHMfB+RHzDhN6UyG/ZKTmHbGnLTAQ2XxUXXfmSi8qHqOkTFsBokWz4MLWtoanIkZhoHM22csZVeESq7bYUVhqBrEVGUA5ys9xqG9om/Sm2w4zDGturHgMoZeRjO8lZ2WyAPTA+IJIpXJBJ+LwvY74RkW0CzP3Aoqszgu+XXtLjyRaJCuz3sSCoj6mqbxZAP2Vt7TXUoA3WFausd3Y6Lk8kJMZWR1M5N0hHRgu+OgJXlzV4ZlQVt6vj6mgMQ8gCpv/CAVw4PpMbomM1YjI1L8O9SurXUbrjp Administrator@china-9aa05637d";
         goTo("http://localhost:9000/");
         StudentSignin();
@@ -176,8 +207,8 @@ public class CourseTest extends FluentTest {
         click("#lecture_all");
         await().atMost(5,TimeUnit.SECONDS).until("#semester_tab").isPresent();
         click("#semester_tab");
-        await().atMost(5,TimeUnit.SECONDS).until("#student_lecture").areDisplayed();
-        click("#student_lecture");
+        await().atMost(5,TimeUnit.SECONDS).until("#student_lectureLocalLectureTest").areDisplayed();
+        click("#student_lectureLocalLectureTest");
         await().atMost(5,TimeUnit.SECONDS).until("#locallecture_addstudent").isPresent();
         click("#locallecture_addstudent");
         await().atMost(10,TimeUnit.SECONDS).until("#student_homework_table").areDisplayed();
@@ -186,13 +217,26 @@ public class CourseTest extends FluentTest {
     }
 
     @Test
+    public void h0_testAddStudentRemote(){
+        StudentSignin();
+        click("#lecture_all");
+        await().atMost(5,TimeUnit.SECONDS).until("#semester_tab").isPresent();
+        click("#semester_tab");
+        await().atMost(5,TimeUnit.SECONDS).until("#student_lectureRemoteLectureTest").areDisplayed();
+        click("#student_lectureRemoteLectureTest");
+        await().atMost(5,TimeUnit.SECONDS).until("#remotelecture_addstudent").isPresent();
+        click("#remotelecture_addstudent");
+        await().atMost(10,TimeUnit.SECONDS).until("#remote_student_homework_table").areDisplayed();
+        assertThat(findFirst("#remote_student_homework_table").isDisplayed());
+    }
+    @Test
     public void i_testStudentHandin(){
         StudentSignin();
         click("#lecture_my");
         await().atMost(5,TimeUnit.SECONDS).until("#my_semester_tab").isPresent();
         click("#my_semester_tab");
-        await().atMost(10,TimeUnit.SECONDS).until("#my_lecture_content").areDisplayed();
-        click("#my_lecture_content");
+        await().atMost(10,TimeUnit.SECONDS).until("#my_lecture_contentLocalLectureTest").areDisplayed();
+        click("#my_lecture_contentLocalLectureTest");
         await().atMost(15,TimeUnit.SECONDS).until("#handin_homework").areDisplayed();
         click("#handin_homework");
         await().atMost(5,TimeUnit.SECONDS).until("#handin1").areDisplayed();
@@ -203,6 +247,18 @@ public class CourseTest extends FluentTest {
     }
 
     @Test
+    public void i0_testStudentHandinRemote(){
+        StudentSignin();
+        click("#lecture_my");
+        await().atMost(5,TimeUnit.SECONDS).until("#my_semester_tab").isPresent();
+        click("#my_semester_tab");
+        await().atMost(10,TimeUnit.SECONDS).until("#my_lecture_contentRemoteLectureTest").areDisplayed();
+        click("#my_lecture_RemoteLocalLectureTest");
+        await().atMost(15,TimeUnit.SECONDS).until("#handin_homework_remote").areDisplayed();
+        click("#handin_homework_remote");
+        assertThat(find("#remote_handin_result").getText()).isEqualTo("0.0/20.0");
+    }
+    @Test
     public void j_testStudentRevert(){
         String url="http://localhost:9000/students/Gao/WS2016/LocalLectureTest";
         StudentSignin();
@@ -210,6 +266,14 @@ public class CourseTest extends FluentTest {
         click("#revert_handin");
         await().atMost(5,TimeUnit.SECONDS).until("#handin_status_not").areDisplayed();
         assertThat(find("#handin_status_not").getText()).isEqualTo("No Handin");
+    }
+    @Test
+    public void j0_testStudentRemoteRevert(){
+        String url="http://localhost:9000/students/Gao/WS2016/LocalLectureTest";
+        StudentSignin();
+        goTo(url);
+        click("revert_remote_handin");
+        assertThat(find("#remote_handin_result").getText()).isEqualTo("0/20.0");
     }
     @Test
     public void k_testEvaluation(){

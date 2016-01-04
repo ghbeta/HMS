@@ -220,7 +220,7 @@
                 <form action="@controllers.lectures.user.routes.Lecturehome.addRemoteRepotoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" method="post"><div class="alert alert-warning" role="alert">@Messages("lecture.home.homework.remote.noexist") </div><button class="btn btn-success pull-right" type="submit">@Messages("lecture.remote.generate")</button></form>
               }
 
-                <table class="table table-striped custab">
+                <table class="table table-striped custab" id="remote_student_homework_table">
                   <thead>
                     <tr>
                       <th>@Messages("assignment.title")</th>
@@ -237,10 +237,10 @@
                       <td>@currentassignment.numberofexercise</td>
                       <td>@currentassignment.addtionalinfo</td>
                       <td  class="text-center">
-                      @if(currentassignment.isExpired){<a href="@controllers.lectures.user.routes.Lecturehome.handinhomeworkremote(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)" title="@Messages("Assignment.handin")"><i class="fa fa-pencil-square-o"></i></a>
-                        <a title="revert last upload" href="@controllers.lectures.user.routes.Lecturehome.reverthandinhomeworkremote(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)"><i class="fa fa-times"></i></a>}
+                      @if(currentassignment.isExpired){<a href="@controllers.lectures.user.routes.Lecturehome.handinhomeworkremote(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)" title="@Messages("Assignment.handin")" id="handin_homework_remote"><i class="fa fa-pencil-square-o"></i></a>
+                        <a title="revert last upload" href="@controllers.lectures.user.routes.Lecturehome.reverthandinhomeworkremote(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)" id="revert_remote_handin"><i class="fa fa-times"></i></a>}
                       </td>
-                      <td><a data-toggle="modal" data-target="#evalr@currentassignment.id" title="@Messages("click.for.detail")">
+                      <td id="remote_handin_result"><a data-toggle="modal" data-target="#evalr@currentassignment.id" title="@Messages("click.for.detail")">
                         @if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment)!=null){
                         @Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).earndpoints/@currentassignment.totalpoints}else{
                           0/@currentassignment.totalpoints}</a></td>
@@ -279,7 +279,7 @@
 
                 <div class="alert alert-danger text-center">@Messages("lecture.singin")
                   <br>
-                  <a class="btn btn-success text-center" href="@controllers.lectures.user.routes.Lecturehome.addSemesterusertoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" type="submit" >@Messages("lecture.join")</a>
+                  <a class="btn btn-success text-center" href="@controllers.lectures.user.routes.Lecturehome.addSemesterusertoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" type="submit" id="remotelecture_addstudent">@Messages("lecture.join")</a>
 
                 </div>
               }

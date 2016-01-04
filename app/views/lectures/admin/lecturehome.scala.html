@@ -172,7 +172,7 @@
         <hr>
         <div class="panel panel-default">
           <div class="panel-heading">@Messages("lecture.home.homeworks")
-            <button title="Create new homework" class="btn btn-link"  data-toggle="modal" data-target="#assignmentModal">
+            <button title="Create new homework" class="btn btn-link"  data-toggle="modal" data-target="#assignmentModal" id="create_remote_homework">
               <i class="fa fa-plus"></i>
             </button>
           </div>
@@ -195,7 +195,7 @@
               <tr>
                 <td>@currentassignment.title@if(currentassignment.uploadfile!=null){<a href="@controllers.lectures.routes.Lecturehub.getFiles(lecture.semester,lecture.courseName,currentassignment.title)"><i class="fa fa-download"></i></a>}</td>
                 <td>@currentassignment.numberofexercise</td>
-                <td>@currentassignment.addtionalinfo</td>
+                <td id="table_remoteinfo">@currentassignment.addtionalinfo</td>
                 <td  class="text-center">
                   <a data-toggle="modal" data-target="#modify@currentassignment.id" title="@Messages("Assignment.modify")"><i class="fa fa-pencil-square-o"></i></a>
                   <a title="@Messages("delete.assignment")" href="@controllers.lectures.admin.routes.Lecturehome.deleteAssignment(lecture.courseName,currentassignment.title,lecture.semester)"><i class="fa fa-times"></i></a>

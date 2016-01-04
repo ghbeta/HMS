@@ -30,7 +30,7 @@
                 } else {
 
                   @if(user.roles.toString.equals(UserRoll.Students.toString)) {
-                    <a href="@controllers.lectures.user.routes.Lecturehome.generatelecturehome(user.lastname, key, lecture.courseName)" class="list-group-item" id="student_lecture">
+                    <a href="@controllers.lectures.user.routes.Lecturehome.generatelecturehome(user.lastname, key, lecture.courseName)" class="list-group-item" id="student_lecture@lecture.courseName">
                     @lecture.courseName
                     </a>
                   }
