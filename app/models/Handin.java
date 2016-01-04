@@ -54,9 +54,9 @@ public class Handin extends Model {
         ishandin=(assignment.deadline !=null&&handin.before(assignment.deadline));
     }
 
-    public boolean getishandin(){
-        return ishandin;
-    }
+//    public boolean getishandin(){
+//        return ishandin;
+//    }
 
     public void setIsvalid(){
         float percentage=earndpoints/assignment.totalpoints;

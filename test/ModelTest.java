@@ -84,6 +84,13 @@ public class ModelTest {
         return message;
     }
 
+    public Handin newHandin(){
+        Handin handin=new Handin();
+        handin.totalpoints=100f;
+        handin.save("WS2016");
+        return handin;
+    }
+
    @Test
    public void testUser() throws AppException {
        User student = new User();
@@ -161,5 +168,143 @@ public class ModelTest {
         conversation.save("WS2016");
         assertThat(Conversation.getConversationById("WS2016","1")).isNotNull();
 
+    }
+
+    @Test
+    public void testExercise(){
+        Exercise exercise=new Exercise();
+        exercise.title="title";
+        exercise.semester="WS2016";
+        exercise.totalpoints=100f;
+        exercise.earndpoints=80f;
+        exercise.comments="abc";
+        exercise.handin=newHandin();
+        exercise.save("WS2016");
+        assertThat(exercise.id).isEqualTo("1");
+    }
+
+    @Test
+    public void testForumPost(){
+        ForumPost forumPost=new ForumPost();
+        forumPost.title="a";
+        forumPost.content="b";
+        forumPost.creattime=new Date();
+        forumPost.setTimestamp();
+        ForumThread thread=new ForumThread();
+        thread.title="b";
+        thread.save("WS2016");
+        forumPost.parent=thread;
+        forumPost.creator=newSemesteruser();
+        forumPost.lecture=newLecture();
+        forumPost.save("WS2016");
+        assertThat(forumPost.id).isEqualTo("1");
+    }
+
+    @Test
+    public void testHandin(){
+        Handin handin = new Handin();
+        handin.student=newSemesteruser();
+        handin.marker=newSemesteruser("7788");
+        handin.lecture=newLecture();
+        Assignment assignment=new Assignment();
+        assignment.title="assignment1";
+        assignment.save("WS2016");
+        handin.assignment=assignment;
+        Exercise exercise=new Exercise();
+        exercise.title="title";
+        exercise.save("WS2016");
+        handin.exercises.add(exercise);
+        handin.totalpoints=10f;
+        handin.earndpoints=10f;
+        handin.handin=new Date();
+        handin.setishandin();
+        handin.setIsvalid();
+        handin.setTotalpoints();
+        handin.setEarndpoints();
+        handin.save("WS2016");
+        assertThat(Handin.getOptionalAssignmentofStudentsinLecture("WS2016",handin.lecture,handin.student)).hasSize(0);
+    }
+
+    @Test
+    public void testForumThread(){
+        ForumThread forumThread=new ForumThread();
+        forumThread.title="a";
+        forumThread.content="b";
+        forumThread.creattime=new Date();
+        forumThread.lastupdate=new Date();
+        forumThread.setLastupdatetimestamp();
+        forumThread.lecture=newLecture();
+        forumThread.creator=newSemesteruser();
+        ForumPost forumPost=new ForumPost();
+        forumPost.title="a";
+        forumPost.content="b";
+        forumPost.creattime=new Date();
+        forumPost.setTimestamp();
+        forumPost.save("WS2016");
+        forumThread.replyposts.add(forumPost);
+        forumThread.save("WS2016");
+        assertThat(ForumThread.findByLectureByStudent("WS2016",forumThread.lecture,forumThread.creator)).isNotNull();
+    }
+
+    @Test
+    public void testAssignment(){
+        Assignment assignment=new Assignment();
+        assignment.title="a";
+        assignment.numberofexercise=4;
+        assignment.totalpoints=80;
+        assignment.uploadfile="abc";
+        assignment.filename="1";
+        assignment.addtionalinfo="test";
+        assignment.deadline=new Date();
+        assignment.semester="WS2016";
+        assignment.isoptional=false;
+        assignment.lecture=newLecture();
+        Handin handin = new Handin();
+        handin.student=newSemesteruser();
+        handin.marker=newSemesteruser("7788");
+        handin.save("WS2016");
+        assignment.handins.add(handin);
+        assignment.isExpired();
+        assignment.save("WS2016");
+        assertThat(assignment.id).isEqualTo("1");
+    }
+
+    @Test
+    public void testSemesteruser(){
+        Semesteruser semesteruser=new Semesteruser();
+        semesteruser.semester="WS2016";
+        semesteruser.lectures.add(newLecture());
+        Handin handin=new Handin();
+        handin.earndpoints=50f;
+        handin.save("WS2016");
+        semesteruser.handins.add(handin);
+        Repo repo=new Repo();
+        repo.repopath="a";
+        repo.save("WS2016");
+        semesteruser.repos.add(repo);
+        semesteruser.correctedhandins.add(handin);
+        Message message=new Message();
+        message.date=new Date();
+        message.save("WS2016");
+        semesteruser.messages.add(message);
+        Evaluation evaluation=new Evaluation();
+        evaluation.performance=5f;
+        evaluation.save("WS2016");
+        ForumThread forumThread=new ForumThread();
+        forumThread.title="test";
+        forumThread.save("WS2016");
+        semesteruser.threads.add(forumThread);
+        ForumPost forumPost=new ForumPost();
+        forumPost.title="aa";
+        forumPost.save("WS2016");
+        semesteruser.posts.add(forumPost);
+        semesteruser.email="aa";
+        semesteruser.id="77884145555";
+        semesteruser.lastname="aa";
+        semesteruser.firstname="bb";
+        semesteruser.roles="sss";
+        semesteruser.userHash="666";
+        semesteruser.save("WS2016");
+        assertThat(semesteruser.id).isEqualTo("77884145555");
     }
 }
