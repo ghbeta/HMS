@@ -7,6 +7,7 @@ import org.fluentlenium.adapter.FluentTest;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 import play.test.Helpers;
+import play.test.TestServer;
 import play.test.WithServer;
 import utils.AppException;
 import utils.Hash;
@@ -28,7 +29,7 @@ import static play.test.Helpers.testServer;
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AccountTest extends FluentTest{
-
+    public static TestServer app=testServer(9000);
     @BeforeClass
     public static void cleanenv(){
         Path p= Paths.get(System.getProperty("user.home"), "data_dynamic");
@@ -42,7 +43,7 @@ public class AccountTest extends FluentTest{
             FileUtils.deleteQuietly(g);
         }
 
-        Helpers.start(testServer(9000));
+        Helpers.start(app);
     }
 
 //    @Before

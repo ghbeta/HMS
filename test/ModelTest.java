@@ -1,7 +1,11 @@
+import controllers.account.settings.ModifySSH;
+import controllers.account.settings.routes;
 import models.*;
 import org.apache.commons.io.FileUtils;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
+import play.mvc.Result;
+import play.test.FakeRequest;
 import play.test.Helpers;
 import play.test.TestServer;
 import utils.AppException;
@@ -13,7 +17,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import play.mvc.Result;
+import controllers.account.settings.ModifySSH;
+import static play.mvc.Http.Status.OK;
+import static play.test.Helpers.POST;
+import static play.test.Helpers.status;
 import static play.test.Helpers.testServer;
 import static utils.CreateDB.createServer;
 
@@ -306,5 +314,49 @@ public class ModelTest {
         semesteruser.userHash="666";
         semesteruser.save("WS2016");
         assertThat(semesteruser.id).isEqualTo("77884145555");
+    }
+    @Test
+    public void testLecture(){
+        Lecture lecture=new Lecture();
+        lecture.courseName="a";
+        lecture.desription="b";
+        lecture.localrepo=true;
+        lecture.closingdate=new Date();
+        lecture.closed=false;
+        lecture.totalassignment=10;
+        lecture.optionalassignments=2;
+        lecture.requriednumberofvalidassignment=5;
+        lecture.requiredpercentfovalidassignment=0.5f;
+        lecture.minimumPercentageForExamination=0.5f;
+        lecture.semester="WS2016";
+        lecture.lasteditor=newSemesteruser();
+        Assignment assignment=new Assignment();
+        assignment.addtionalinfo="ddddd";
+        assignment.save("WS2016");
+        lecture.assignments.add(assignment);
+        Handin handin=new Handin();
+        handin.earndpoints=50f;
+        handin.save("WS2016");
+        lecture.handins.add(handin);
+        lecture.attendent.add(newSemesteruser("999"));
+        Repo repo=new Repo();
+        repo.repopath="a";
+        repo.save("WS2016");
+        lecture.repos.add(repo);
+        Evaluation evaluation=new Evaluation();
+        evaluation.performance=5f;
+        evaluation.save("WS2016");
+        lecture.evaluations.add(evaluation);
+        ForumThread forumThread=new ForumThread();
+        forumThread.title="test";
+        forumThread.save("WS2016");
+        lecture.threads.add(forumThread);
+        ForumPost forumPost=new ForumPost();
+        forumPost.title="aa";
+        forumPost.save("WS2016");
+        lecture.posts.add(forumPost);
+        lecture.save("WS2016");
+        assertThat(Lecture.getlecturebyname("a","WS2016")).isNotNull();
+
     }
 }

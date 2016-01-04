@@ -77,14 +77,14 @@ public class Lecture extends Model {
         return closingdate!=null&&date.before(closingdate);
     }
 
-    public boolean isUsercontain(Semesteruser user){
-        if(user==null){
-            return false;
-        }
-        else{
-            return attendent.contains(user);
-        }
-    }
+//    public boolean isUsercontain(Semesteruser user){
+//        if(user==null){
+//            return false;
+//        }
+//        else{
+//            return attendent.contains(user);
+//        }
+//    }
 
 
 //    public void setPerformance(String semester,Lecture lecture,Semesteruser semesteruser){

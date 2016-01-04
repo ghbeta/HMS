@@ -37,7 +37,7 @@ public class CourseTest extends FluentTest {
     public static void deleteTestFile() throws IOException {
         Path p= Paths.get(System.getProperty("user.home"), "Assignment1.txt");
         FileUtils.forceDelete(p.toFile());
-
+        Helpers.stop(AccountTest.app);
     }
 
     public void Signin(){
