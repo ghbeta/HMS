@@ -207,7 +207,9 @@ public class CourseTest extends FluentTest {
         click("#lecture_all");
         await().atMost(5,TimeUnit.SECONDS).until("#semester_tab").isPresent();
         click("#semester_tab");
-        await().atMost(5,TimeUnit.SECONDS).until("#student_lectureLocalLectureTest").areEnabled();
+
+        await().atMost(5,TimeUnit.SECONDS).until("#student_lectureLocalLectureTest").areDisplayed();
+        await().untilPage().isLoaded();
         click("#student_lectureLocalLectureTest");
         await().atMost(5,TimeUnit.SECONDS).until("#locallecture_addstudent").isPresent();
         click("#locallecture_addstudent");
@@ -222,7 +224,9 @@ public class CourseTest extends FluentTest {
         click("#lecture_all");
         await().atMost(5,TimeUnit.SECONDS).until("#semester_tab").isPresent();
         click("#semester_tab");
-        await().atMost(5,TimeUnit.SECONDS).until("#student_lectureRemoteLectureTest").areEnabled();
+
+        await().atMost(5,TimeUnit.SECONDS).until("#student_lectureRemoteLectureTest").areDisplayed();
+        await().untilPage().isLoaded();
         click("#student_lectureRemoteLectureTest");
         await().atMost(5,TimeUnit.SECONDS).until("#remotelecture_addstudent").isPresent();
         click("#remotelecture_addstudent");
@@ -235,7 +239,9 @@ public class CourseTest extends FluentTest {
         click("#lecture_my");
         await().atMost(5,TimeUnit.SECONDS).until("#my_semester_tab").isPresent();
         click("#my_semester_tab");
-        await().atMost(10,TimeUnit.SECONDS).until("#my_lecture_contentLocalLectureTest").areEnabled();
+
+        await().atMost(10,TimeUnit.SECONDS).until("#my_lecture_contentLocalLectureTest").areDisplayed();
+        await().untilPage().isLoaded();
         click("#my_lecture_contentLocalLectureTest");
         await().atMost(15,TimeUnit.SECONDS).until("#handin_homework").areDisplayed();
         click("#handin_homework");
@@ -252,7 +258,9 @@ public class CourseTest extends FluentTest {
         click("#lecture_my");
         await().atMost(5,TimeUnit.SECONDS).until("#my_semester_tab").isPresent();
         click("#my_semester_tab");
-        await().atMost(10,TimeUnit.SECONDS).until("#my_lecture_contentRemoteLectureTest").areEnabled();
+
+        await().atMost(10,TimeUnit.SECONDS).until("#my_lecture_contentRemoteLectureTest").areDisplayed();
+        await().untilPage().isLoaded();
         click("#my_lecture_contentRemoteLectureTest");
         await().atMost(15,TimeUnit.SECONDS).until("#handin_homework_remote").areDisplayed();
         click("#handin_homework_remote");
@@ -309,7 +317,9 @@ public class CourseTest extends FluentTest {
         fill("#earndpoints3").with("10");
         fill("#totalpoints3").with("20");
         click("#submit_eval");
+
         await().atMost(5,TimeUnit.SECONDS).until("#open_assignment").areEnabled();
+        await().untilPage().isLoaded();
         click("#open_assignment");
         await().atMost(10,TimeUnit.SECONDS).until("#eval_result").areDisplayed();
         assertThat(find("#eval_result").getText()).isEqualTo("40.0/80.0");
