@@ -37,7 +37,7 @@ public class CourseTest extends FluentTest {
     public static void deleteTestFile() throws IOException {
         Path p= Paths.get(System.getProperty("user.home"), "Assignment1.txt");
         FileUtils.forceDelete(p.toFile());
-        Helpers.stop(testServer(9000));
+
     }
 
     public void Signin(){
@@ -222,9 +222,10 @@ public class CourseTest extends FluentTest {
     public void h_testAddStudentRemote(){
         StudentSignin();
         click("#lecture_all");
+        await().untilPage().isLoaded();
         await().atMost(5,TimeUnit.SECONDS).until("#semester_tab").isPresent();
         click("#semester_tab");
-
+        await().untilPage().isLoaded();
         await().atMost(5,TimeUnit.SECONDS).until("#student_lectureRemoteLectureTest").areDisplayed();
         await().untilPage().isLoaded();
         click("#student_lectureRemoteLectureTest");
@@ -318,9 +319,9 @@ public class CourseTest extends FluentTest {
         fill("#totalpoints3").with("20");
         click("#submit_eval");
 
-        await().atMost(5,TimeUnit.SECONDS).until("#open_assignment").areEnabled();
-        await().untilPage().isLoaded();
-        click("#open_assignment");
+//        await().atMost(5,TimeUnit.SECONDS).until("#open_assignment").areDisplayed();
+//        await().untilPage().isLoaded();
+//        click("#open_assignment");
         await().atMost(10,TimeUnit.SECONDS).until("#eval_result").areDisplayed();
         assertThat(find("#eval_result").getText()).isEqualTo("40.0/80.0");
 
