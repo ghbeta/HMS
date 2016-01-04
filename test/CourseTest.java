@@ -321,7 +321,9 @@ public class CourseTest extends FluentTest {
 
 //        await().atMost(5,TimeUnit.SECONDS).until("#open_assignment").areDisplayed();
         await().untilPage().isLoaded();
-        //click("#open_assignment");
+        click("#tab_correction");
+        await().atMost(5,TimeUnit.SECONDS).until("#open_assignment").isPresent();
+        click("#open_assignment");
         await().atMost(10,TimeUnit.SECONDS).until("#eval_result").areDisplayed();
         assertThat(find("#eval_result").getText()).isEqualTo("40.0/80.0");
 
@@ -367,4 +369,5 @@ public class CourseTest extends FluentTest {
         await().untilPage().isLoaded();
         assertThat(findFirst("small",withText("test reply")));
     }
+
 }

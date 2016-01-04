@@ -103,9 +103,9 @@ public class Semesteruser extends Abstractuser {
 //        return currentServer(database).find(Semesteruser.class).fetch("lectures").fetch("assignments").where().eq("lectures.id",lecture.courseName).eq("assignments.id",assignment.id).findList();
 //    }
 
-    public static List<Semesteruser> findSemesteruserbyLecture(String database,Lecture lecture){
-        return currentServer(database).find(Semesteruser.class).fetch("lectures").where().eq("courseName",lecture.courseName).findList();
-    }
+//    public static List<Semesteruser> findSemesteruserbyLecture(String database,Lecture lecture){
+//        return currentServer(database).find(Semesteruser.class).fetch("lectures").where().eq("courseName",lecture.courseName).findList();
+//    }
 
     public static List<Semesteruser> findAllstudentsByLecture(String database,Lecture lecture){
         return currentServer(database).find(Semesteruser.class).where().eq("lectures.courseName", lecture.courseName).eq("roles", UserRoll.Students.toString()).findList();
