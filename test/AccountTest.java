@@ -28,6 +28,7 @@ import static play.test.Helpers.testServer;
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AccountTest extends FluentTest{
+
     @BeforeClass
     public static void cleanenv(){
         Path p= Paths.get(System.getProperty("user.home"), "data_dynamic");
@@ -145,8 +146,9 @@ public class AccountTest extends FluentTest{
         click("#reset_home_password");
         await().until("#input_email_reset").areDisplayed();
         fill("#input_email_reset").with("456@456.com");
-        click("reset_password_button");
-        User teacher = User.findByEmail("123@123.com","global");
+        click("#reset_password_button");
+        await().untilPage().isLoaded();
+        User teacher = User.findByEmail("456@456.com","global");
         Token passwordtoken=Token.findTokenByUserId(teacher.id,"global");
         String passwordreseturl="http://localhost:9000"+"/reset/"+passwordtoken.token;
         goTo(passwordreseturl);

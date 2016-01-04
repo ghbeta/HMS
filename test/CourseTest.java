@@ -320,8 +320,8 @@ public class CourseTest extends FluentTest {
         click("#submit_eval");
 
 //        await().atMost(5,TimeUnit.SECONDS).until("#open_assignment").areDisplayed();
-//        await().untilPage().isLoaded();
-//        click("#open_assignment");
+        await().untilPage().isLoaded();
+        //click("#open_assignment");
         await().atMost(10,TimeUnit.SECONDS).until("#eval_result").areDisplayed();
         assertThat(find("#eval_result").getText()).isEqualTo("40.0/80.0");
 
@@ -350,7 +350,7 @@ public class CourseTest extends FluentTest {
         await().untilPage().isLoaded();
         click("#open_conversation");
         await().until("#messageb2d7d2d13aed54c2ed7feb538b382b42").areDisplayed();
-        fill("#message_content").with("test message");
+        fill("#message_content").with("test message again");
         click("#send_message_button");
         await().untilPage().isLoaded();
         click("#my_messages");
