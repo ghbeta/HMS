@@ -140,7 +140,26 @@ public class AccountTest extends FluentTest{
     }
 
     @Test
-    public void e_testNewSignin(){
+    public void e_testHomepageResetPassword(){
+        goTo("http://localhost:9000");
+        click("#reset_home_password");
+        await().until("#input_email_reset").areDisplayed();
+        fill("#input_email_reset").with("456@456.com");
+        click("reset_password_button");
+        User teacher = User.findByEmail("123@123.com","global");
+        Token passwordtoken=Token.findTokenByUserId(teacher.id,"global");
+        String passwordreseturl="http://localhost:9000"+"/reset/"+passwordtoken.token;
+        goTo(passwordreseturl);
+        await().atMost(5, TimeUnit.SECONDS);
+        fill("#password1").with("456");
+        fill("#password2").with("456");
+        await().atMost(5, TimeUnit.SECONDS);
+        click("#passwordSubmit");
+        assertThat(find(".label-success").getText()).isEqualTo("Your password has been reset.");
+    }
+
+
+    public void testNewSignin(){
         goTo("http://localhost:9000");
         fill("#LoginEmail").with("456@456.com");
         fill("#LoginPassword").with("456");

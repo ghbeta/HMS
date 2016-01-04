@@ -4,12 +4,12 @@
   <div class="row">
     <div class="col-lg-3">
       <div class="btn-panel btn-panel-conversation">
-        <a type="button" class="btn  send-message-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+        <a type="button" class="btn  send-message-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button" id="select_semester">
           <i class="fa fa-filter"></i>@Messages("message.filter")<span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
           @for(semester<-Semester.getallsemester()){
-          <li><a href="#" ng-click="socketfilter('@semester.getSemester','@user.email')">@semester.getSemester</a></li>}
+          <li><a href="#" ng-click="socketfilter('@semester.getSemester','@user.email')" id="target_semester">@semester.getSemester</a></li>}
         </ul>
       </div>
     </div>
@@ -22,7 +22,7 @@
           <img class="media-object" src="http://www.gravatar.com/avatar/{{otheruser.userHash}}" height="50" width="50">
         </a>
         <div class="media-body">
-          <h5 class="media-heading"><a href="#" ng-click="socketchatcontent(talk.id,otheruser.email)">{{otheruser.firstname}} {{otheruser.lastname}}</a></h5>
+          <h5 class="media-heading"><a href="#" ng-click="socketchatcontent(talk.id,otheruser.email)" id="chat_user">{{otheruser.firstname}} {{otheruser.lastname}}</a></h5>
           <small><div class="label label-info">{{talk.semester}}</div></small>
         </div>
 
@@ -51,10 +51,10 @@
     </div>
     <div class="message-wrap col-lg-8 col-lg-offset-3">
       <div class="send-wrap ">
-        <textarea class="form-control send-message" rows="3" placeholder="@Messages("message.writereply")" ng-model="newmessage" required></textarea>
+        <textarea class="form-control send-message" rows="3" placeholder="@Messages("message.writereply")" ng-model="newmessage" required id="message_reply_content"></textarea>
       </div>
       <div>
-        <button href="" class=" btn btn-success pull-right" role="button" ng-click="socketreply()">@Messages("message.send")</button>
+        <button href="" class=" btn btn-success pull-right" role="button" ng-click="socketreply()" id="message_reply_button">@Messages("message.send")</button>
       </div>
     </div>
   </div>

@@ -171,6 +171,7 @@ public class Reset extends Controller {
 
             // Send email saying that the password has just been changed.
             sendPasswordChanged(user);
+            resetToken.delete("global");
             flash("success", Messages.get("resetpassword.success"));
             return ok(views.html.account.reset.reset.render(current, token));
         } catch (AppException e) {

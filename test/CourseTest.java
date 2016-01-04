@@ -337,4 +337,34 @@ public class CourseTest extends FluentTest {
         await().atMost(5,TimeUnit.SECONDS).until("#locallecture_addstudent").areDisplayed();
         assertThat(findFirst("#locallecture_addstudent").isDisplayed());
     }
+
+    @Test
+    public void m_testMessage(){
+        String url="http://localhost:9000/students/Gao/WS2016/RemoteLectureTest";
+        StudentSignin();
+        goTo(url);
+        click("#open_conversation");
+        await().until("#messageb2d7d2d13aed54c2ed7feb538b382b42").areDisplayed();
+        fill("#message_content").with("test message");
+        click("#send_message_button");
+        await().untilPage().isLoaded();
+        click("#open_conversation");
+        await().until("#messageb2d7d2d13aed54c2ed7feb538b382b42").areDisplayed();
+        fill("#message_content").with("test message");
+        click("#send_message_button");
+        await().untilPage().isLoaded();
+        click("#my_messages");
+        await().untilPage().isLoaded();
+        click("#select_semester");
+        await().until("#target_semester").areDisplayed();
+        click("#target_semester");
+        await().until("#chat_user").areDisplayed();
+        await().untilPage().isLoaded();
+        click("#chat_user");
+        await().untilPage().isLoaded();
+        fill("#message_reply_content").with("test reply");
+        click("#message_reply_button");
+        await().untilPage().isLoaded();
+        assertThat(findFirst("small",withText("test reply")));
+    }
 }
