@@ -29,7 +29,7 @@
                           <tr>
                               <td id="ssh_title">@ssh.title</td>
                               <td id="ssh_value">@ssh.ssh</td>
-                              <td><form action="@controllers.account.settings.routes.ModifySSH.deletessh(ssh.id)" method="post"><button class="btn btn-danger" type="submit">@Messages("ssh.delete")</button></form></td>
+                              <td><form action="@controllers.account.settings.routes.ModifySSH.deletessh(ssh.id)" method="post"><button class="btn btn-danger" type="submit" id="ssh_delete">@Messages("ssh.delete")</button></form></td>
                           </tr>
                       }
                   }

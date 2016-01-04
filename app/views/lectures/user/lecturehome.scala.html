@@ -77,14 +77,14 @@
             @if(lecture.attendent.contains(semesteruser)){
               @if(Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture)!=null&&semesteruser.roles.equals(UserRoll.Students.toString)){
                 <div class="textfont">@Messages("lecture.home.homework.local.exist")<br>
-                <div class="label label-success">@Messages("repo.last.status")</div>
+                <div class="label label-success" id="repo_exist">@Messages("repo.last.status")</div>
                 </div>
                 <canvas id="@semesteruser.userHash"></canvas>
                 <script type="text/javascript">
                    showcanvas('@semesteruser.email','@lecture.semester','@lecture.courseName','@semesteruser.userHash');
                   </script>
                 }else{
-                <form action="@controllers.lectures.user.routes.Lecturehome.addRemoteRepotoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" method="post"><div class="alert alert-warning" role="alert">@Messages("lecture.home.homework.local.noexist") </div><button class="btn btn-success pull-right" type="submit">@Messages("lecture.remote.generate")</button></form>
+                <form action="@controllers.lectures.user.routes.Lecturehome.addRemoteRepotoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" method="post"><div class="alert alert-warning" role="alert">@Messages("lecture.home.homework.local.noexist") </div><button class="btn btn-success pull-right" type="submit" id="localrepo_generate">@Messages("lecture.remote.generate")</button></form>
               }
 
               <table class="table table-striped custab" id="student_homework_table">
