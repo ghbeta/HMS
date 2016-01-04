@@ -191,9 +191,9 @@ public class CourseTest extends FluentTest {
         click("#lecture_my");
         await().atMost(5,TimeUnit.SECONDS).until("#my_semester_tab").isPresent();
         click("#my_semester_tab");
-        await().atMost(5,TimeUnit.SECONDS).until("#my_lecture_content").areDisplayed();
+        await().atMost(10,TimeUnit.SECONDS).until("#my_lecture_content").areDisplayed();
         click("#my_lecture_content");
-        await().atMost(5,TimeUnit.SECONDS).until("#handin_homework").areDisplayed();
+        await().atMost(15,TimeUnit.SECONDS).until("#handin_homework").areDisplayed();
         click("#handin_homework");
         await().atMost(5,TimeUnit.SECONDS).until("#handin1").areDisplayed();
         fill("#homework_file").with(System.getProperty("user.home")+"/Assignment1.txt");
@@ -212,7 +212,48 @@ public class CourseTest extends FluentTest {
         assertThat(find("#handin_status_not").getText()).isEqualTo("No Handin");
     }
     @Test
-    public void k_testDeleteStudent(){
+    public void k_testEvaluation(){
+        String url="http://localhost:9000/students/Gao/WS2016/LocalLectureTest";
+        StudentSignin();
+        goTo(url);
+        await().atMost(15,TimeUnit.SECONDS).until("#handin_homework").areDisplayed();
+        click("#handin_homework");
+        await().atMost(5,TimeUnit.SECONDS).until("#handin1").areDisplayed();
+        fill("#homework_file").with(System.getProperty("user.home")+"/Assignment1.txt");
+        fill("#homework_commit").with("test upload");
+        click("#submit_homework");
+
+        click("#loggeddropdown");
+        await().atMost(5,TimeUnit.SECONDS).until("#loggeduser").areDisplayed();
+        click("#loggeduser");
+
+        String url1="http://localhost:9000/admin/123/WS2016/LocalLectureTest";
+        Signin();
+        goTo(url1);
+        click("#tab_correction");
+        await().atMost(5,TimeUnit.SECONDS).until("#open_assignment").isPresent();
+        click("#open_assignment");
+        await().atMost(5,TimeUnit.SECONDS).until("#add_eval_button").areDisplayed();
+        click("#add_eval_button");
+        await().atMost(5,TimeUnit.SECONDS).until("#eval17788414").areDisplayed();
+        fill("#earndpoints0").with("10");
+        fill("#totalpoints0").with("20");
+        fill("#earndpoints1").with("10");
+        fill("#totalpoints1").with("20");
+        fill("#earndpoints2").with("10");
+        fill("#totalpoints2").with("20");
+        fill("#earndpoints3").with("10");
+        fill("#totalpoints3").with("20");
+        click("#submit_eval");
+        //await().atMost(5,TimeUnit.SECONDS).until("#open_assignment").areDisplayed();
+        click("#open_assignment");
+        await().atMost(10,TimeUnit.SECONDS).until("#eval_result").areDisplayed();
+        assertThat(find("#eval_result").getText()).isEqualTo("40.0/80.0");
+
+
+    }
+    @Test
+    public void l_testDeleteStudent(){
         String url="http://localhost:9000/students/Gao/WS2016/LocalLectureTest";
         StudentSignin();
         goTo(url);
