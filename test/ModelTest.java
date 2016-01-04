@@ -19,10 +19,10 @@ import static utils.CreateDB.createServer;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ModelTest {
-    static TestServer model= testServer(9000);
+    TestServer model= testServer(9000);
 
     @Before
-    public static void cleanenv(){
+    public void cleanenv(){
         Path p= Paths.get(System.getProperty("user.home"), "data_dynamic");
         Path q=Paths.get(System.getProperty("user.home"),"HMS_Config");
         File f = p.toFile();
@@ -51,7 +51,7 @@ public class ModelTest {
     }
 
     @After
-    public static void closeserver(){
+    public void closeserver(){
         Helpers.stop(model);
     }
 

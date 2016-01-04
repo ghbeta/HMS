@@ -20,13 +20,13 @@ public class Semester extends Model {
     @Id
     public String semester;
 
-    public String getSemester() {
-        return semester;
-    }
-
-    public void setSemester(String semester) {
-        this.semester = semester;
-    }
+//    public String getSemester() {
+//        return semester;
+//    }
+//
+//    public void setSemester(String semester) {
+//        this.semester = semester;
+//    }
 
     public static Semester findsemester(String semester){
         return getServer("global").find(Semester.class).where().eq("semester",semester).findUnique();
