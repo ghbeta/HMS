@@ -1,3 +1,4 @@
+import play.Play._
 name := """HMS"""
 
 version := "1.0-SNAPSHOT"
@@ -28,3 +29,5 @@ resolvers ++= Seq(
   "Sonatype OSS Snasphots" at "http://oss.sonatype.org/content/repositories/snapshots",
   "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
 )
+
+compile in Test <<= PostCompile(Test)

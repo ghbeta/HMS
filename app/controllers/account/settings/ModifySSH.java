@@ -63,6 +63,7 @@ public class ModifySSH extends Controller{
     }
 
     public static Result deletessh(String sshid){
+        Logger.debug("sshid is "+sshid);
        User user = User.findByEmail(request().username(),"global");
         try{
             SSH ssh= SSH.findById(sshid);
