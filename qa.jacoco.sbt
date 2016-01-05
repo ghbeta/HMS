@@ -2,6 +2,7 @@ import de.johoop.jacoco4sbt._
 
 import JacocoPlugin._
 
+
 jacoco.settings
 
 parallelExecution      in jacoco.Config := false
