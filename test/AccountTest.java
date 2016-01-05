@@ -214,6 +214,7 @@ public class AccountTest extends FluentTest{
         assertThat(tests).hasSize(4);
     }
 
+    //-----------------start course setting---------------------------------------------
     public void Signin(){
         goTo("http://localhost:9000");
         fill("#LoginEmail").with("456@456.com");
