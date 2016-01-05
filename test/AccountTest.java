@@ -72,6 +72,12 @@ public class AccountTest extends FluentTest{
 //    }
 
     @Test
+    public void a0_testAbout(){
+        goTo("http://localhost:9000");
+        click("#about_page");
+        await().atMost(5,TimeUnit.SECONDS).until("#used_works").areDisplayed();
+    }
+    @Test
     public void a_testRegistration(){
        goTo("http://localhost:9000");
        fill("#SignUpEmail").with("123@123.com");

@@ -4,6 +4,7 @@ import Permission.Securedadmin;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.Semester;
 import models.User;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.i18n.Messages;
@@ -56,6 +57,7 @@ public class SystemControll extends Controller {
         JsonNode json = request().body().asJson();
         String email=json.findPath("email").asText();
         String role=json.findPath("role").asText();
+        Logger.debug("email is "+email+" target role is "+role);
         if(email!=null&&role!=null){
             User user=User.findByEmail(email,"global");
             user.roles=role;
@@ -70,6 +72,7 @@ public class SystemControll extends Controller {
     public static Result databasemanagement(){
 
         JsonNode json = request().body().asJson();
+        Logger.warn("delete database "+json.asText());
         Semester semester=Semester.findsemester(json.asText());
         semester.delete("global");
         return ok("database delete successful");

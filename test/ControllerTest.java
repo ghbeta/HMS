@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import controllers.Application;
 import controllers.account.settings.ModifySSH;
 import controllers.account.settings.routes;
@@ -6,6 +8,8 @@ import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import play.Logger;
+import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.Results;
 import play.test.FakeApplication;
@@ -178,5 +182,66 @@ public class ControllerTest {
         assertThat(after).isNull();
     }
 
+    @Test
+    public void testUsermanagement(){
+        User owner= new User();
+        owner.id="7788414";
+        owner.email="a@a.com";
+        owner.roles=UserRoll.Teachers.toString();
+        owner.firstname="Hao";
+        owner.lastname="Gao";
+        owner.save("global");
+        FakeRequest request = new FakeRequest("POST","/usermanage/admin").withSession("email","hms@hms.com");
+        Result result=route(request);
+        assertThat(status(result)).isEqualTo(OK);
+    }
+
+    @Test
+    public void testUsermanagementinit(){
+        FakeRequest request=new FakeRequest("GET","/usermanage/admin").withSession("email","hms@hms.com");
+        Result result=route(request);
+        assertThat(status(result)).isEqualTo(OK);
+    }
+
+    @Test
+    public void testChangeUserRole(){
+        User owner= new User();
+        owner.id="7788414";
+        owner.email="a@a.com";
+        owner.roles=UserRoll.Teachers.toString();
+        owner.firstname="Hao";
+        owner.lastname="Gao";
+        owner.save("global");
+        ObjectNode result = Json.newObject();
+        result.put("email","a@a.com");
+        result.put("role",UserRoll.Students.toString());
+        Logger.warn("start testing with json "+result.toString());
+        FakeRequest request=new FakeRequest("POST","/usermanage/changerole/admin").withSession("email","hms@hms.com").withJsonBody(result);
+        Result resultcontroller=route(request);
+        User newuser=User.findById("7788414","global");
+        assertThat(newuser.roles).isEqualTo(UserRoll.Students.toString());
+    }
+
+    @Test
+    public void testDatabaseManagement(){
+        Semester semestermodel=new Semester();
+        semestermodel.semester="WS2016";
+        semestermodel.save("global");
+        JsonNode newdata=Json.toJson("WS2016");
+        Logger.debug("test jsonnode like "+newdata.asText());
+        FakeRequest request=new FakeRequest("POST","/databasemanage/admin").withSession("email","hms@hms.com").withJsonBody(newdata);
+        Result resultcontroller=route(request);
+        assertThat(Semester.findsemester("WS2016")).isNull();
+    }
+
+    @Test
+    public void testInitDatabaseManagement(){
+        Semester semestermodel=new Semester();
+        semestermodel.semester="WS2016";
+        semestermodel.save("global");
+        FakeRequest request=new FakeRequest("GET","/databasemanage/admin").withSession("email","hms@hms.com");
+        Result result=route(request);
+        assertThat(status(result)).isEqualTo(OK);
+    }
 
 }
