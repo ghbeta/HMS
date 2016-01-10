@@ -6,6 +6,9 @@ import org.fluentlenium.adapter.FluentTest;
 
 import org.junit.*;
 import org.junit.runners.MethodSorters;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import play.test.Helpers;
 import play.test.TestServer;
 import play.test.WithServer;
@@ -35,6 +38,7 @@ import static play.test.Helpers.testServer;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AccountTest extends FluentTest{
     public static TestServer app=testServer(9000);
+
     @BeforeClass
     public static void cleanenv() throws IOException {
         Path p= Paths.get(System.getProperty("user.home"), "data_dynamic");
@@ -86,7 +90,7 @@ public class AccountTest extends FluentTest{
         fill("#SignUpPassword").with("123");
         click("#SignUpSubmit");
        //submit("#sb_form_go");
-        await().atMost(5, TimeUnit.SECONDS);
+        await().atMost(5, TimeUnit.SECONDS).until(".label-success").areDisplayed();
        assertThat(find(".label-success").getText()).isEqualTo("You will receive a confirmation email soon. Check your email to activate your account.");
     }
 

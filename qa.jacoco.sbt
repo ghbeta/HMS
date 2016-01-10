@@ -11,5 +11,5 @@ jacoco.outputDirectory in jacoco.Config := file("target/jacoco")
 
 jacoco.reportFormats   in jacoco.Config := Seq(HTMLReport("utf-8"))
 
-jacoco.excludes        in jacoco.Config := Seq("*Routes*", "controllers*routes*", "controllers*Reverse*", "controllers*javascript*", "controller*ref*","views*")
+jacoco.excludes        in jacoco.Config := Seq("*Routes*", "controllers*routes*", "controllers*Reverse*", "controllers*javascript*", "controller*ref*")
 
