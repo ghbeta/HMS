@@ -82,7 +82,15 @@ public class User extends Abstractuser{
     }
 
     public static List<User> findByName(String lastname,String firstname,String database){
-        return currentServer(database).find(User.class).where().eq("lastname",lastname).eq("firstname",firstname).findList();
+        if(lastname==null||lastname.isEmpty()){
+        return currentServer(database).find(User.class).where().eq("firstname",firstname).findList();}
+        if(firstname==null||firstname.isEmpty()){
+            return currentServer(database).find(User.class).where().eq("lastname",lastname).findList();
+        }
+        else
+        {
+            return currentServer(database).find(User.class).where().eq("firstname",firstname).eq("lastname",lastname).findList();
+        }
     }
 
     public static List<User> findAll(String database){

@@ -33,12 +33,13 @@ public class SystemControll extends Controller {
         String firstname=requestData.get("firstname");
         if(id!=null){
             userlist.add(User.findById(id,"global"));
+            //Logger.debug("findbyid result "+User.findById(id,"global").lastname);
         }
-        if(id == null&&lastname!=null&&firstname!=null){
-
+        if(id == null&&(lastname!=null||firstname!=null)){
+            Logger.debug("firstname "+firstname+" lastname "+lastname);
             userlist=User.findByName(lastname,firstname,"global");
         }
-        else{
+       if(id==null&&lastname==null&&firstname==null){
             userlist=User.findAll("global");
         }
 

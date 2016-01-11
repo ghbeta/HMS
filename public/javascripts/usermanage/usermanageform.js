@@ -1,7 +1,8 @@
 /**
  * Created by Hao on 2015/11/9.
  */
-$(function() {
+window.onload=function(){
+    console.log("i am admin");
     $('#searchForm2').hide();
     $('#searchForm0').hide();
     $('#searchtype').change(function(){
@@ -21,7 +22,7 @@ $(function() {
             $('#searchForm0').hide();
         }
     });
-});
+};
 function UserRoll(){
     this.email="";
     this.role="";
