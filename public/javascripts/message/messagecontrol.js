@@ -41,9 +41,9 @@ app.controller('messagecontroller',function($scope,$http,$websocket,Notification
         })
             .$on("noti",function(data){
             var namepart=data.split(";")[0];
-           // $scope.allmessages=JSON.parse(data.split(";")[1]);
-           //$scope.$digest();
-           $scope.success("you have a new message from "+namepart);
+            var datapart2=JSON.parse(data.split(";")[1]);
+               if(datapart2[0]["conversation"]["id"]!==currentconvid){
+           $scope.success("you have a new message from "+namepart);}
         });
     };
 
@@ -73,16 +73,18 @@ app.controller('messagecontroller',function($scope,$http,$websocket,Notification
 
       ws.$emit("newmessage",message);
        ws.$on("newmessage",function(data){
+
            $scope.allmessages=JSON.parse(data);
            $scope.newmessage="";
            $scope.$digest();
            //$scope.success("you have a new message");
-           console.log(JSON.parse(data));
+           console.log(currentconvid+" "+JSON.parse(data)[0]["conversation"]["id"]);
        });
        ws.$on("noti",function(data){
-          //var namepart=data.split(";")[0];
-           $scope.allmessages=JSON.parse(data.split(";")[1]);
-           $scope.$digest();
+           var datapart=JSON.parse(data.split(";")[1]);
+           if(datapart[0]["conversation"]["id"]===currentconvid){
+           $scope.allmessages=datapart;
+           $scope.$digest();}
           // $scope.success("you have a new message from "+namepart);
        });
 
