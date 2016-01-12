@@ -49,16 +49,13 @@ public class RepoManager {
 
         String reponame=lecture.courseName+"_"+user.userHash;
         nl.minicom.gitolite.manager.models.Repository repository = config.ensureRepositoryExists(lecture.courseName+"_"+user.userHash);
-        repository.setPermission(repouser, Permission.ALL);
+        if(!lecture.localrepo){
+        repository.setPermission(repouser, Permission.ALL);}
         repository.setPermission(admin, Permission.READ_ONLY);
 
         Logger.warn("size"+user.sshs.size());
-        if(!user.sshs.isEmpty()){
-//            for(int i=0;i<user.sshs.size();i++){
-//                Logger.warn("add repo now");
-//                repouser.setKey(user.sshs.get(i).title, user.sshs.get(i).ssh);
-//
-//            }
+        if(!user.sshs.isEmpty()||lecture.localrepo){
+
             Logger.warn("add repo now");
             manager.applyAsync(config);
             gitogit.pull().call();
