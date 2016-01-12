@@ -407,9 +407,13 @@ public class Lecturehome extends Controller {
         Lecture lecture = Lecture.getlecturebyname(lecturename,semester);
         try {
             Handin handin=Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment);
-            if(handin!=null){
-                handin.delete(semester);}
-            flash("success",Messages.get("Lecture.assignment.revertsuccess"));
+            if(handin!=null&&!handin.isevaluated){
+                handin.delete(semester);
+                flash("success",Messages.get("Lecture.assignment.revertsuccess"));}
+            if(handin==null){
+                flash("danger", Messages.get("Lecture.assignment.revertfail"));
+            }
+
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
         } catch (Exception e) {
             Logger.warn("Exceptione revert commit"+e.getMessage());
@@ -447,9 +451,14 @@ public class Lecturehome extends Controller {
             git.push().setRemote("origin").setRefSpecs(refSpec).call();
             git.getRepository().close();
             Handin handin=Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment);
-            if(handin!=null){
-            handin.delete(semester);}
-            flash("success",Messages.get("Lecture.assignment.revertsuccess"));
+            if(handin!=null&&!handin.isevaluated){
+            handin.delete(semester);
+                flash("success",Messages.get("Lecture.assignment.revertsuccess"));}
+            if(handin==null)
+            {
+                flash("danger", Messages.get("Lecture.assignment.revertfail"));
+            }
+
             return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
         } catch (Exception e) {
             Logger.warn("Exceptione revert commit"+e.getMessage());
