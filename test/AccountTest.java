@@ -518,13 +518,13 @@ public class AccountTest extends FluentTest{
     }
     @Test
     public void v_testDeleteStudent(){
-        String url="http://localhost:9000/students/Gao/WS2016/LocalLectureTest";
+        String url="http://localhost:9000/students/Gao/WS2016/RemoteLectureTest";
         StudentSignin();
         goTo(url);
-        await().atMost(5,TimeUnit.SECONDS).until("#locallecture_deletestudent").isPresent();
-        click("#locallecture_deletestudent");
-        await().atMost(5,TimeUnit.SECONDS).until("#locallecture_addstudent").areDisplayed();
-        assertThat(findFirst("#locallecture_addstudent").isDisplayed());
+        await().atMost(5,TimeUnit.SECONDS).until("#remotelecture_deletestudent").isPresent();
+        click("#remotelecture_deletestudent");
+        await().atMost(5,TimeUnit.SECONDS).until("#remotelecture_addstudent").areDisplayed();
+        assertThat(findFirst("#remotelecture_addstudent").isDisplayed());
     }
 
     @Test
@@ -533,11 +533,11 @@ public class AccountTest extends FluentTest{
         click("#UserSetting");
         await().atMost(5,TimeUnit.SECONDS).until("#ssh_delete").areDisplayed();
         click("#ssh_delete");
-        String url="http://localhost:9000/students/Gao/WS2016/LocalLectureTest";
+        String url="http://localhost:9000/students/Gao/WS2016/RemoteLectureTest";
         goTo(url);
-        await().atMost(5,TimeUnit.SECONDS).until("#locallecture_addstudent").areDisplayed();
-        click("#locallecture_addstudent");
-        await().atMost(10,TimeUnit.SECONDS).until("#localrepo_generate").areDisplayed();
+        await().atMost(5,TimeUnit.SECONDS).until("#remotelecture_addstudent").areDisplayed();
+        click("#remotelecture_addstudent");
+        await().atMost(10,TimeUnit.SECONDS).until("#remoterepo_generate").areDisplayed();
         await().untilPage().isLoaded();
         //-----------add ssh again
         String ssh="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8Cv4/YtLkjLZbIMtsRbp4sZOpG7aD4BHEvMLpsUMKfP+4MwIk9a0YBpHMfB+RHzDhN6UyG/ZKTmHbGnLTAQ2XxUXXfmSi8qHqOkTFsBokWz4MLWtoanIkZhoHM22csZVeESq7bYUVhqBrEVGUA5ys9xqG9om/Sm2w4zDGturHgMoZeRjO8lZ2WyAPTA+IJIpXJBJ+LwvY74RkW0CzP3Aoqszgu+XXtLjyRaJCuz3sSCoj6mqbxZAP2Vt7TXUoA3WFausd3Y6Lk8kJMZWR1M5N0hHRgu+OgJXlzV4ZlQVt6vj6mgMQ8gCpv/CAVw4PpMbomM1YjI1L8O9SurXUbrjp Administrator@china-9aa05637d";
@@ -548,10 +548,10 @@ public class AccountTest extends FluentTest{
         await().untilPage().isLoaded();
         //-------to homepage again
         goTo(url);
-        await().atMost(10,TimeUnit.SECONDS).until("#localrepo_generate").areDisplayed();
-        click("#localrepo_generate");
-        await().atMost(10,TimeUnit.SECONDS).until("#repo_exist").areDisplayed();
-        assertThat(find("#repo_exist").getText()).isEqualTo("Last Update of Repository:");
+        await().atMost(10,TimeUnit.SECONDS).until("#remoterepo_generate").areDisplayed();
+        click("#remoterepo_generate");
+        await().atMost(10,TimeUnit.SECONDS).until("#remoterepo_exist").areDisplayed();
+        assertThat(find("#remoterepo_exist").getText()).isEqualTo("Last Update of Repository:");
     }
 
     @Test
