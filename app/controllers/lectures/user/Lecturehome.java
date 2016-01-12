@@ -410,7 +410,7 @@ public class Lecturehome extends Controller {
             if(handin!=null&&!handin.isevaluated){
                 handin.delete(semester);
                 flash("success",Messages.get("Lecture.assignment.revertsuccess"));}
-            if(handin==null){
+            if(handin==null||handin.isevaluated){
                 flash("danger", Messages.get("Lecture.assignment.revertfail"));
             }
 
@@ -454,7 +454,7 @@ public class Lecturehome extends Controller {
             if(handin!=null&&!handin.isevaluated){
             handin.delete(semester);
                 flash("success",Messages.get("Lecture.assignment.revertsuccess"));}
-            if(handin==null)
+            if(handin==null||handin.isevaluated)
             {
                 flash("danger", Messages.get("Lecture.assignment.revertfail"));
             }
