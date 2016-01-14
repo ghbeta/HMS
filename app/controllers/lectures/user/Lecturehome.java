@@ -3,6 +3,7 @@ package controllers.lectures.user;
 import Permission.Securedstudents;
 import com.jcraft.jsch.Session;
 import models.*;
+import net.lingala.zip4j.core.ZipFile;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -326,18 +327,27 @@ public class Lecturehome extends Controller {
                 File file = homeworkfile.getFile();
 
                 Repo repo=Repo.findRepoByLectureAndOwner(assignment.semester,semesteruser,assignment.lecture);
-                File localPath = new File(localrepopullpath(semester,lecturename,currentuser.id,reponame(assignment.lecture, semesteruser)), "");
+                String localrepopath=localrepopullpath(semester,lecturename,currentuser.id,reponame(assignment.lecture, semesteruser));
+                File localPath = new File(localrepopath, "");
+                Git git=null;
                 //localPath.delete();
-                if(localPath.exists()) {
-                    FileUtils.forceDelete(localPath);
+                if(!localPath.exists()) {
+                    //FileUtils.forceDelete(localPath);
+                    Logger.debug("not exist should create local repo");
+                    Logger.debug("Cloning from "+repo.repofilepath+"to"+localPath);
+                    git = Git.cloneRepository()
+                            .setURI(repo.repofilepath)
+                            .setDirectory(localPath)
+                            .call();
+                }
+                else{
+                    Repository repository=new FileRepository(localrepopath+"/.git");
+                    git = new Git(repository);
+                    Logger.debug("starting merging remote to local");
+                    git.pull().call();
                 }
 
 
-                Logger.debug("Cloning from "+repo.repofilepath+"to"+localPath);
-                Git git = Git.cloneRepository()
-                        .setURI(repo.repofilepath)
-                        .setDirectory(localPath)
-                        .call();
 
                 //Logger.debug("create init commit");
                 //git.commit().setMessage("init commit").setAuthor(semesteruser.lastname,semesteruser.email).call();
@@ -348,7 +358,10 @@ public class Lecturehome extends Controller {
                     FileUtils.forceDelete(precheck);
                 }
                 FileUtils.moveFile(file, new File(localPath, des+fileName));
-                git.add().addFilepattern(des+fileName).call();
+                ZipFile zipFile= new ZipFile(new File(localPath, des+fileName));
+                if(zipFile.isValidZipFile()){
+                zipFile.extractAll(localrepopath+"/"+des);}
+                git.add().addFilepattern(assignment.title).call();
                 Logger.debug("add file finish"+des+fileName);
                 git.commit().setMessage(commit).setAuthor(semesteruser.lastname,semesteruser.email).call();
                 Logger.warn("start pushing");

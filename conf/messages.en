@@ -82,6 +82,7 @@ assginment.evaluation=Evaluation
 assginment.validhandin.sum=valid Handin/Total
 assginment.optional.sum=optional Handin/Total
 assignment.optional=Optional Assignment
+assignment.feedback.download=Download Corrected Handin
 evaluation.username=Name
 evaluation.repo=Repository
 evaluation.access=Accessible

@@ -397,7 +397,7 @@
                           </td>
                           <td>@if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment)!=null){
                             @if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).isevaluated){
-                              <a data-toggle="modal" data-target="#@assignment.id@stu.id" id="eval_result">@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).earndpoints/@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).totalpoints</a>
+                              <a data-toggle="modal" data-target="#eval@assignment.id@stu.id" id="eval_result">@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).earndpoints/@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).totalpoints</a>
                             }else{
                               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#eval@assignment.id@stu.id" id="add_eval_button">
                                 @Messages("evaluation.add")

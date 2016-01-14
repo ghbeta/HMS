@@ -3,11 +3,12 @@ package controllers.lectures;
 import Permission.Securedstudents;
 import Permission.Securedteacher;
 import controllers.Application;
-import models.Assignment;
-import models.Lecture;
-import models.Semester;
-import models.User;
+import models.*;
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.util.Zip4jConstants;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.io.Zip;
 import play.Logger;
 import play.i18n.Messages;
 import play.mvc.Controller;
@@ -25,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 
 import static play.data.Form.form;
+import static utils.RepoManager.reponame;
+import static utils.UploadPath.localrepopullpath;
 
 /**
  * Created by Hao on 2015/10/10.
@@ -86,6 +89,29 @@ public class Lecturehub extends Controller {
         }
     }
 
+    @Security.Authenticated(Securedstudents.class)
+    public static Result getFeedBackFiles(String semester,String lecturename,String assignmenttitle){
+        try{
+            User currentuser=User.findByEmail(ctx().session().get("email"),"global");
+            Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
+            Lecture lecture=Lecture.getlecturebyname(lecturename,semester);
+            String des=assignmenttitle+"/";
+            String localrepopath=localrepopullpath(semester,lecturename,currentuser.id,reponame(lecture, semesteruser));
+            String feedbackpath=localrepopath+"/"+des;
+            Logger.debug("zip download path "+feedbackpath);
+            ZipFile zipFile = new ZipFile(FileUtils.getTempDirectoryPath()+"/"+assignmenttitle+".zip");
+            ZipParameters parameters = new ZipParameters();
+            parameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
+            parameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_NORMAL);
+            zipFile.addFolder(feedbackpath,parameters);
+            return ok(new File(FileUtils.getTempDirectoryPath()+"/"+assignmenttitle+".zip"));
+        }
+        catch (Exception e){
+            flash("danger",Messages.get("file.notexist"));
+            Logger.debug(e.getMessage());
+            return badRequest(filestatus.render());
+        }
+    }
 //    @Security.Authenticated(Securedteacher.class)
 //    public static Result deleteFiles(String lecture,String assignment,String semester,String filename){
 //        //Lecture currentlecture = Lecture.getlecturebyname(lecture);

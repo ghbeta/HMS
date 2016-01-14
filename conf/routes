@@ -89,11 +89,13 @@ GET         /messages                                                        con
 #POST        /conversation/:semester/:convid/newmessage                       controllers.messages.Messagecontrol.addmessage(semester:String,convid:String)
 GET         /websocket                                                       controllers.messages.Messagecontrol.socket()
 #get repo status
-GET        /:semester/:course/:email/repostatus                                     controllers.lectures.user.Lecturehome.lastUpdateStatus(email:String,course:String,semester:String)
+GET         /:semester/:course/:email/repostatus                             controllers.lectures.user.Lecturehome.lastUpdateStatus(email:String,course:String,semester:String)
 #About static page
 GET         /about                                                           controllers.About.index()
 #File service (hosted file on host server)
-GET         /files/:semester/:lecturename/:assignmenttitle                                                     controllers.lectures.Lecturehub.getFiles(semester:String,lecturename:String,assignmenttitle:String)
+GET         /files/:semester/:lecturename/:assignmenttitle                   controllers.lectures.Lecturehub.getFiles(semester:String,lecturename:String,assignmenttitle:String)
+#Get Feedback assignment
+GET         /downloadfeedback/:semester/:lecturename/:assignmenttitle                controllers.lectures.Lecturehub.getFeedBackFiles(semester:String,lecturename:String,assignmenttitle:String)
 #GET         /files/delete/:filename                               controllers.lectures.Lecturehub.deleteFiles(lecture:String,assignment:String,semester:String,filename:String)
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                                                    controllers.Assets.at(path="/public", file)
