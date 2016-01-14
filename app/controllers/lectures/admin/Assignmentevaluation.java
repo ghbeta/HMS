@@ -29,6 +29,8 @@ import java.util.Iterator;
 
 import static utils.RepoManager.adminrepofilepath;
 import static utils.RepoManager.configrepopath;
+import static utils.RepoManager.reponame;
+import static utils.UploadPath.localrepopullpath;
 
 /**
  * Created by Hao on 2015/11/5.
@@ -58,7 +60,7 @@ public class Assignmentevaluation extends Controller {
                 String reponame = lecture.courseName + "_" + student.userHash;
                 Logger.warn("grand access for repo" +reponame);
                 nl.minicom.gitolite.manager.models.Repository repository = config.ensureRepositoryExists(lecture.courseName + "_" + student.userHash);
-                repository.setPermission(repoadmin, Permission.READ_ONLY);
+                repository.setPermission(repoadmin, Permission.READ_WRITE);
                 Logger.warn("add admin user to student repo now");
                 manager.applyAsync(config);
                 gitogit.pull().call();
@@ -128,7 +130,12 @@ public class Assignmentevaluation extends Controller {
         currenthandin.update(semester);
         eval.setPerformance(semester,currentlecture,students);
         eval.update(semester);
+        String localrepopath=localrepopullpath(semester,lecturename,students.id,reponame(currentlecture, students));
         try {
+            Repository repository=new FileRepository(localrepopath+"/.git");
+            Git git = new Git(repository);
+            Logger.debug("starting merging students remote to local");
+            git.pull().call();
             sendMailForEvaluation(students,currenthandin);
         } catch (Exception e) {
             e.getMessage();
