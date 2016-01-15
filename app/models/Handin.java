@@ -50,6 +50,8 @@ public class Handin extends Model {
 
     public boolean isevaluated;
 
+    public String comments;
+
     public void setishandin(){
         ishandin=(assignment.deadline !=null&&handin.before(assignment.deadline));
     }
@@ -64,17 +66,17 @@ public class Handin extends Model {
     }
 
         public void setTotalpoints(){
-        totalpoints=0f;
-        for(int i=0;i<exercises.size();i++){
-            totalpoints=totalpoints+exercises.get(i).totalpoints;
-        }
+        totalpoints=assignment.totalpoints;
+//        for(int i=0;i<exercises.size();i++){
+//            totalpoints=totalpoints+exercises.get(i).totalpoints;
+//        }
     }
 
-    public void setEarndpoints(){
-        earndpoints=0f;
-        for(int i=0;i<exercises.size();i++){
-            earndpoints=earndpoints+exercises.get(i).earndpoints;
-        }
+    public void setEarndpoints(float assignmentearndpoints){
+        earndpoints=assignmentearndpoints;
+//        for(int i=0;i<exercises.size();i++){
+//            earndpoints=earndpoints+exercises.get(i).earndpoints;
+//        }
     }
 
     public static List<Handin> getHandinofassignmentinlecture(Assignment assignment,Lecture lecture,String semester){

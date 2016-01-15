@@ -58,7 +58,7 @@ public class Lecturehome extends Controller {
 
     public static class Assignmentform{
 
-        public int numberofexercise;
+        //public int numberofexercise;
 
         public File uploadfile;
 
@@ -69,8 +69,6 @@ public class Lecturehome extends Controller {
         public String addtionalinfo;
 
         public String deadline;
-
-        public String deletefile;
 
         public String isoptional;
 
@@ -159,7 +157,7 @@ public class Lecturehome extends Controller {
 
         if(!assignmentformForm.hasErrors()){
         Assignment assignment=new Assignment();
-        assignment.numberofexercise=assignmentformForm.get().numberofexercise;
+        //assignment.numberofexercise=assignmentformForm.get().numberofexercise;
         if(assignmentformForm.get().isoptional==null){
             assignment.isoptional=false;
             assignment.title=Messages.get("lecture.homework")+(currentlecture.assignments.size()+1);
@@ -239,7 +237,7 @@ public class Lecturehome extends Controller {
         Form<Assignmentform> assignmentformForm=Form.form(Assignmentform.class).bindFromRequest();
         if(!assignmentformForm.hasErrors()){
         Assignment assignment=Assignment.findById(semester,assignmentid);
-        assignment.numberofexercise=assignmentformForm.get().numberofexercise;
+        //assignment.numberofexercise=assignmentformForm.get().numberofexercise;
         assignment.addtionalinfo=assignmentformForm.get().addtionalinfo;
         Logger.debug("date picker time string is "+assignmentformForm.get().deadline);
         assignment.deadline=DateConverter.fromString(assignmentformForm.get().deadline);

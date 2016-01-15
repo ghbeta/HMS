@@ -14,6 +14,9 @@ import org.eclipse.jgit.transport.JschConfigSessionFactory;
 import org.eclipse.jgit.transport.OpenSshConfig;
 import org.eclipse.jgit.transport.SshSessionFactory;
 import play.Logger;
+import play.data.DynamicForm;
+import play.data.Form;
+import play.data.validation.Constraints;
 import play.i18n.Messages;
 import play.libs.Json;
 import play.mvc.BodyParser;
@@ -80,51 +83,61 @@ public class Assignmentevaluation extends Controller {
 
     }
 
-    @BodyParser.Of(BodyParser.Json.class)
+    public static class EvaluationForm{
+        @Constraints.Required
+        public float pointsearnd;
+
+        public String evalcomments;
+    }
+
     @Security.Authenticated(Securedassistant.class)
     public static Result addevaluation(String semester,String lecturename,String assignment,String student){
-        JsonNode json = request().body().asJson();
+       //JsonNode json = request().body().asJson();
+       Form<EvaluationForm> evaldata = Form.form(EvaluationForm.class).bindFromRequest();
+
         Lecture currentlecture=Lecture.getlecturebyname(lecturename,semester);
         Semesteruser marker=Semesteruser.findByEmail(ctx().session().get("email"),semester);
+        if(!evaldata.hasErrors()){
         Semesteruser students=Semesteruser.findByEmail(student, semester);
         Assignment currentassignment=Assignment.findById(semester,assignment);
         Handin currenthandin=Handin.getHandinofassignmentofstudentinlecture(semester,currentlecture,students,currentassignment);
         Evaluation eval=Evaluation.findByLectureAndUser(semester, currentlecture, students);
-        Iterator<JsonNode> iter=json.elements();
-        int i=0;
-        int j=0;
-        while(iter.hasNext()) {
-            if (i%3 == 0) {
-              j=j+1;
-               // i=i+1;
-                //Logger.warn("add exercise number "+(j-1)+" totalpoints "+iter.next().findPath("value").textValue());
-                currenthandin.exercises.get(j-1).earndpoints= Float.parseFloat(iter.next().findPath("value").textValue());
-
-
-            }
+//        Iterator<JsonNode> iter=json.elements();
+//        int i=0;
+//        int j=0;
+//        while(iter.hasNext()) {
+//            if (i%3 == 0) {
+//              j=j+1;
+//               // i=i+1;
+//                //Logger.warn("add exercise number "+(j-1)+" totalpoints "+iter.next().findPath("value").textValue());
+//                currenthandin.exercises.get(j-1).earndpoints= Float.parseFloat(iter.next().findPath("value").textValue());
 //
-            if(i%3==1){
-                //i=i+1;
-                //Logger.warn("add exercise number "+(j-1)+" earndpoints "+iter.next().findPath("value").floatValue());
-                currenthandin.exercises.get(j-1).totalpoints= Float.parseFloat(iter.next().findPath("value").textValue());
-            }
 //
-            if(i%3==2){
-                //i=i+1;
-                //Logger.warn("add exercise number "+(j-1)+" comments "+iter.next().findPath("value").textValue());
-                currenthandin.exercises.get(j-1).comments=iter.next().findPath("value").textValue();
-                //currenthandin.exercises.get(j-1).update(semester);
-            }
-//        i++;
-//
-//          System.out.println(i%3);
-           i++;
-           //Logger.warn(""+i);
-            //Logger.warn("passed json data " + iter.next().findPath("value").textValue());
-        }
+//            }
+////
+//            if(i%3==1){
+//                //i=i+1;
+//                //Logger.warn("add exercise number "+(j-1)+" earndpoints "+iter.next().findPath("value").floatValue());
+//                currenthandin.exercises.get(j-1).totalpoints= Float.parseFloat(iter.next().findPath("value").textValue());
+//            }
+////
+//            if(i%3==2){
+//                //i=i+1;
+//                //Logger.warn("add exercise number "+(j-1)+" comments "+iter.next().findPath("value").textValue());
+//                currenthandin.exercises.get(j-1).comments=iter.next().findPath("value").textValue();
+//                //currenthandin.exercises.get(j-1).update(semester);
+//            }
+////        i++;
+////
+////          System.out.println(i%3);
+//           i++;
+//           //Logger.warn(""+i);
+//            //Logger.warn("passed json data " + iter.next().findPath("value").textValue());
+//        }
         currenthandin.marker=marker;
         currenthandin.isevaluated=true;
-        currenthandin.setEarndpoints();
+        currenthandin.setEarndpoints(evaldata.get().pointsearnd);
+        currenthandin.comments=evaldata.get().evalcomments;
         currenthandin.setTotalpoints();
         currenthandin.setIsvalid();
         currenthandin.update(semester);
@@ -140,7 +153,12 @@ public class Assignmentevaluation extends Controller {
         } catch (Exception e) {
             e.getMessage();
         }
-        return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(marker.lastname,semester,currentlecture.courseName));
+        return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(marker.lastname,semester,currentlecture.courseName));}
+        else
+        {
+            flash("danger",Messages.get("assignment.eval.fail"));
+            return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(marker.lastname, semester, currentlecture.courseName));
+        }
     }
 
     private static void sendMailForEvaluation(Semesteruser semesteruser, Handin handin) throws EmailException,MalformedURLException {

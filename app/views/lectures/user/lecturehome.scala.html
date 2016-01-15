@@ -152,14 +152,14 @@
                         </div>
                         <div class="modal-body">
                         @if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment)!=null&&Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).isevaluated){
-                            @for(exercise<- Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).exercises){
+
                               <div class="row">
-                                <div class="lable label-info text-center">@exercise.title</div>
-                                <div class="col-xs-2"><label>@Messages("gain")</label>@exercise.earndpoints</div>
-                                <div class="col-xs-2"><label>@Messages("total")</label>@exercise.totalpoints</div>
-                                <blockquote class="col-xs-12"><p>@exercise.comments</p><footer>@Messages("comment")</footer></blockquote>
+                                <div class="lable label-info text-center">@currentassignment.title</div>
+                                <div class="col-xs-2"><label>@Messages("gain")</label>@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).earndpoints</div>
+                                <div class="col-xs-2"><label>@Messages("total")</label>@currentassignment.totalpoints</div>
+                                <blockquote class="col-xs-12"><p>@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).comments</p><footer>@Messages("comment")</footer></blockquote>
                               </div>
-                            }
+
                            <p class="textfont">@Messages("lecture.handin.marker")
                              @if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).marker!=null){
                                @Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).marker.lastname,
@@ -259,14 +259,12 @@
                           </div>
                           <div class="modal-body">
                           @if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment)!=null){
-                            @for(exercise<-Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).exercises){
                               <div class="row">
-                                <div class="lable label-info text-center">@exercise.title</div>
-                                <div class="col-xs-2"><label>@Messages("gain")</label>@exercise.earndpoints</div>
-                                <div class="col-xs-2"><label>@Messages("total")</label>@exercise.totalpoints</div>
-                                <blockquote class="col-xs-12"><p>@exercise.comments</p><footer>@Messages("comment")</footer></blockquote>
+                                <div class="lable label-info text-center">@currentassignment.title</div>
+                                <div class="col-xs-2"><label>@Messages("gain")</label>@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).earndpoints</div>
+                                <div class="col-xs-2"><label>@Messages("total")</label>@currentassignment.totalpoints</div>
+                                <blockquote class="col-xs-12"><p>@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).comments</p><footer>@Messages("comment")</footer></blockquote>
                               </div>
-                            }
                             <p class="textfont">@Messages("lecture.handin.marker")@if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).marker!=null){ @Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).marker.lastname,@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).marker.firstname}</p>
                           }else{<span class="alert alert-warning">@Messages("nohandin")</span>}
                           </div>

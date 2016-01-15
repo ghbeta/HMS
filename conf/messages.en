@@ -74,6 +74,7 @@ assignment.lecture=Lecture
 assignment.exercise= Number of exercise
 assignment.action=Action
 assignment.status=Status
+assignment.eval.fail=Update Evaluation Failed
 repo.last.status=Last Update of Repository:
 assignment.status.repo=Last Commit
 assignment.expired=Dead line

@@ -290,7 +290,7 @@ public class AccountTest extends FluentTest{
         goTo(url);
         click("#create_local_homework");
         await().atMost(30, TimeUnit.SECONDS).until("#assignmentModal").areDisplayed();
-        fill("#number_exercise").with("4");
+        //fill("#number_exercise").with("4");
         fill("#total_points").with("80");
         fill("#assignment_deadline").with("03/10/2016");
         fill("#upload_file").with(System.getProperty("user.home")+"/Assignment1.txt");
@@ -494,14 +494,8 @@ public class AccountTest extends FluentTest{
         await().atMost(5,TimeUnit.SECONDS).until("#add_eval_button").areDisplayed();
         click("#add_eval_button");
         await().atMost(5,TimeUnit.SECONDS).until("#eval17788414").areDisplayed();
-        fill("#earndpoints0").with("10");
-        fill("#totalpoints0").with("20");
-        fill("#earndpoints1").with("10");
-        fill("#totalpoints1").with("20");
-        fill("#earndpoints2").with("10");
-        fill("#totalpoints2").with("20");
-        fill("#earndpoints3").with("10");
-        fill("#totalpoints3").with("20");
+        fill("#earndpoints_1").with("70");
+        fill("#comments_1").with("test comments");
         click("#submit_eval");
 
 //        await().atMost(5,TimeUnit.SECONDS).until("#open_assignment").areDisplayed();
