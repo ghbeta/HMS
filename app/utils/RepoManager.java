@@ -43,12 +43,12 @@ public class RepoManager {
         ConfigManager manager = ConfigManager.create(configrepopath());
 
         Config config = manager.get();
-        nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(user.userHash);
+        nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(user.id);
         nl.minicom.gitolite.manager.models.User admin=config.getUser("admin");
 
 
-        String reponame=lecture.courseName+"_"+user.userHash;
-        nl.minicom.gitolite.manager.models.Repository repository = config.ensureRepositoryExists(lecture.courseName+"_"+user.userHash);
+        String reponame=lecture.semester+"_"+lecture.courseName+"_"+user.id;
+        nl.minicom.gitolite.manager.models.Repository repository = config.ensureRepositoryExists(reponame);
         if(!lecture.localrepo){
         repository.setPermission(repouser, Permission.ALL);}
         repository.setPermission(admin, Permission.READ_ONLY);
@@ -75,7 +75,7 @@ public class RepoManager {
             }
         });
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(lecture.semester,user);
-        String reponame=lecture.courseName+"_"+user.userHash;
+        String reponame=lecture.semester+"_"+lecture.courseName+"_"+user.id;
         Repository adminrepo = new FileRepository(adminrepofilepath());
         Git gitogit = new Git(adminrepo);
         ConfigManager manager = ConfigManager.create(configrepopath());
@@ -129,7 +129,7 @@ public class RepoManager {
     }
 
     public static String reponame(Lecture lecture,Semesteruser semesteruser){
-        return lecture.courseName+"_"+semesteruser.userHash;
+        return lecture.semester+"_"+lecture.courseName+"_"+semesteruser.id;
     }
 
     public static String addSSHtoUser(User user, SSH ssh){
@@ -147,7 +147,7 @@ public class RepoManager {
         ConfigManager manager = ConfigManager.create(configrepopath());
 
         Config config = manager.get();
-        nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(user.userHash);
+        nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(user.id);
         repouser.setKey(ssh.title, ssh.ssh);
             manager.applyAsync(config);
             gitogit.pull().call();
@@ -174,7 +174,7 @@ public class RepoManager {
             ConfigManager manager = ConfigManager.create(configrepopath());
 
             Config config = manager.get();
-            nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(user.userHash);
+            nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(user.id);
             repouser.removeKey(ssh.title);
             manager.applyAsync(config);
             gitogit.pull().call();

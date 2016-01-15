@@ -189,7 +189,7 @@ public class Lecturehome extends Controller {
         Lecture lecture=Lecture.getlecturebyname(course,semester);
         Semesteruser semesteruser=Semesteruser.findByEmail(owneremail,semester);
         String serverhost=request().getHeader("Host");
-        String reponame=lecture.courseName+"_"+semesteruser.userHash;
+        String reponame=lecture.semester+"_"+lecture.courseName+"_"+semesteruser.id;
         String gitpath= "git@"+ hostparser(serverhost)+":"+reponame+".git";
         String result="";
         SshSessionFactory.setInstance(new JschConfigSessionFactory() {

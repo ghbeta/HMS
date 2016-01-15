@@ -60,9 +60,9 @@ public class Assignmentevaluation extends Controller {
                 Config config = manager.get();
                 nl.minicom.gitolite.manager.models.User repoadmin = config.ensureUserExists(currentadmin.userHash);
 
-                String reponame = lecture.courseName + "_" + student.userHash;
+                String reponame = lecture.semester+"_"+lecture.courseName + "_" + student.id;
                 Logger.warn("grand access for repo" +reponame);
-                nl.minicom.gitolite.manager.models.Repository repository = config.ensureRepositoryExists(lecture.courseName + "_" + student.userHash);
+                nl.minicom.gitolite.manager.models.Repository repository = config.ensureRepositoryExists(reponame);
                 repository.setPermission(repoadmin, Permission.READ_WRITE);
                 Logger.warn("add admin user to student repo now");
                 manager.applyAsync(config);

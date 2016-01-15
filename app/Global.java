@@ -7,6 +7,7 @@ import play.api.PlayException;
 import utils.CreateAdmin;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static utils.CreateDB.createServer;
+import static utils.FileWatcher.InitWatchService.setWatchService;
 
 /**
  * Created by Hao on 2015/6/15.
@@ -23,6 +25,12 @@ public class Global extends GlobalSettings{
     public void onStart(Application application) {
         super.onStart(application);
         Logger.info("Application started....");
+        Logger.info("starting file watch service");
+        try {
+            setWatchService();
+        } catch (IOException e) {
+            Logger.debug(e.getMessage());
+        }
         List<Class> entity = new ArrayList<Class>();
         entity.add(User.class);
         entity.add(Token.class);

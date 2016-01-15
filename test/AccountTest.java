@@ -77,13 +77,13 @@ public class AccountTest extends FluentTest{
 
     @Test
     public void a0_testAbout(){
-        goTo("http://localhost:9000");
+        goTo("http://192.168.0.198:9000");
         click("#about_page");
         await().atMost(5,TimeUnit.SECONDS).until("#used_works").areDisplayed();
     }
     @Test
     public void a_testRegistration(){
-       goTo("http://localhost:9000");
+       goTo("http://192.168.0.198:9000");
        fill("#SignUpEmail").with("123@123.com");
         fill("#SignUpLastname").with("123");
         fill("#SignUpFirstname").with("123");
@@ -101,7 +101,7 @@ public class AccountTest extends FluentTest{
         assertThat(teacher.confirmationToken).isNotEmpty();
         teacher.roles= UserRoll.Teachers.toString();
         teacher.update("global");
-        String url="http://localhost:9000"+"/confirm/"+teacher.confirmationToken;
+        String url="http://192.168.0.198:9000"+"/confirm/"+teacher.confirmationToken;
         goTo(url);
         await().atMost(5, TimeUnit.SECONDS);
         click("#DirectLogin");
@@ -114,7 +114,7 @@ public class AccountTest extends FluentTest{
     }
 
     public void testSignin(){
-        goTo("http://localhost:9000");
+        goTo("http://192.168.0.198:9000");
         fill("#LoginEmail").with("123@123.com");
         fill("#LoginPassword").with("123");
         click("#LoginButton");
@@ -126,7 +126,7 @@ public class AccountTest extends FluentTest{
     public void c_testSSH(){
         testSignin();
         String ssh="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDo1t61PiEAjqqfp9vKd9AaDmrxbMPiLfe9dC/F3Dm5QtftjpFasj1IrFvlQE9UXlJafOIKCcKb8yGeXDa1oXBD79n/mixFwec6LTRW34A3eBHxXl4Kr05FRkZyFvuItpAMPDG+N3xR3kZDRUZvQo7gSFWjq4/qv9d1+BKcOLOFo12GDh1QZ2T7lPE7+CqonTqQnpjAKpCQaghTjH4xwSpFdgFiT7V35K4Uiks/pA4lTC8Vv+5W4PUM86cjCb3Pn2CVGi7ExihLAKw+Xc9ju8wlFdwSqiNDP3Sxnt7u4Ch3U44+VxZpWaJ3lSFxhTPKm8lFxZyyTi2kboagGZ1CBQXX Hao@HAO-PC";
-        //goTo("http://localhost:9000/");
+        //goTo("http://192.168.0.198:9000/");
         await().atMost(5, TimeUnit.SECONDS);
         click("#UserSetting");
         fill("#SSHTitle").with("teacherSSH");
@@ -148,7 +148,7 @@ public class AccountTest extends FluentTest{
         await().atMost(5, TimeUnit.SECONDS);
         User teacher = User.findByEmail("123@123.com","global");
         Token token=Token.findTokenByUserId(teacher.id,"global");
-        String url="http://localhost:9000"+"/email/"+token.token;
+        String url="http://192.168.0.198:9000"+"/email/"+token.token;
         goTo(url);
         await().atMost(5, TimeUnit.SECONDS);
         assertThat(find(".label-success").getText()).isEqualTo("Email successfully validated (456@456.com)");
@@ -156,7 +156,7 @@ public class AccountTest extends FluentTest{
         click("#UpdatePasswordButton");
         await().atMost(5, TimeUnit.SECONDS);
         Token passwordtoken=Token.findTokenByUserId(teacher.id,"global");
-        String passwordreseturl="http://localhost:9000"+"/reset/"+passwordtoken.token;
+        String passwordreseturl="http://192.168.0.198:9000"+"/reset/"+passwordtoken.token;
         goTo(passwordreseturl);
         await().atMost(5, TimeUnit.SECONDS);
         fill("#password1").with("456");
@@ -168,7 +168,7 @@ public class AccountTest extends FluentTest{
 
     @Test
     public void e_testHomepageResetPassword(){
-        goTo("http://localhost:9000");
+        goTo("http://192.168.0.198:9000");
         click("#reset_home_password");
         await().until("#input_email_reset").areDisplayed();
         fill("#input_email_reset").with("456@456.com");
@@ -176,7 +176,7 @@ public class AccountTest extends FluentTest{
         await().untilPage().isLoaded();
         User teacher = User.findByEmail("456@456.com","global");
         Token passwordtoken=Token.findTokenByUserId(teacher.id,"global");
-        String passwordreseturl="http://localhost:9000"+"/reset/"+passwordtoken.token;
+        String passwordreseturl="http://192.168.0.198:9000"+"/reset/"+passwordtoken.token;
         goTo(passwordreseturl);
         await().atMost(5, TimeUnit.SECONDS);
         fill("#password1").with("456");
@@ -188,7 +188,7 @@ public class AccountTest extends FluentTest{
 
 
     public void testNewSignin(){
-        goTo("http://localhost:9000");
+        goTo("http://192.168.0.198:9000");
         fill("#LoginEmail").with("456@456.com");
         fill("#LoginPassword").with("456");
         click("#LoginButton");
@@ -226,7 +226,7 @@ public class AccountTest extends FluentTest{
 
     //-----------------start course setting---------------------------------------------
     public void Signin(){
-        goTo("http://localhost:9000");
+        goTo("http://192.168.0.198:9000");
         fill("#LoginEmail").with("456@456.com");
         fill("#LoginPassword").with("456");
         click("#LoginButton");
@@ -234,14 +234,14 @@ public class AccountTest extends FluentTest{
     }
 
     public void StudentSignin(){
-        goTo("http://localhost:9000");
+        goTo("http://192.168.0.198:9000");
         fill("#LoginEmail").with("a@a.com");
         fill("#LoginPassword").with("123");
         click("#LoginButton");
     }
 
     public void AssistantSignin(){
-        goTo("http://localhost:9000");
+        goTo("http://192.168.0.198:9000");
         fill("#LoginEmail").with("b@b.com");
         fill("#LoginPassword").with("123");
         click("#LoginButton");
@@ -285,7 +285,7 @@ public class AccountTest extends FluentTest{
 
     @Test
     public void i_createAssignment(){
-        String url="http://localhost:9000/admin/123/WS2016/LocalLectureTest";
+        String url="http://192.168.0.198:9000/admin/123/WS2016/LocalLectureTest";
         Signin();
         goTo(url);
         click("#create_local_homework");
@@ -302,7 +302,7 @@ public class AccountTest extends FluentTest{
 
     @Test
     public void j_createAssignmentRemote(){
-        String url="http://localhost:9000/admin/123/WS2016/RemoteLectureTest";
+        String url="http://192.168.0.198:9000/admin/123/WS2016/RemoteLectureTest";
         Signin();
         goTo(url);
         click("#create_remote_homework");
@@ -318,7 +318,7 @@ public class AccountTest extends FluentTest{
     }
     @Test
     public void k_modifyAssignment(){
-        String url="http://localhost:9000/admin/123/WS2016/LocalLectureTest";
+        String url="http://192.168.0.198:9000/admin/123/WS2016/LocalLectureTest";
         Signin();
         goTo(url);
         await().atMost(30,TimeUnit.SECONDS).until("#modify_assignment").isPresent();
@@ -333,7 +333,7 @@ public class AccountTest extends FluentTest{
 
     @Test
     public void l_modifyTerms(){
-        String url="http://localhost:9000/admin/123/WS2016/LocalLectureTest";
+        String url="http://192.168.0.198:9000/admin/123/WS2016/LocalLectureTest";
         Signin();
         goTo(url);
         await().atMost(30,TimeUnit.SECONDS).until("#modify_terms").isPresent();
@@ -345,7 +345,7 @@ public class AccountTest extends FluentTest{
 
     @Test
     public void m_modifyDescription(){
-        String url="http://localhost:9000/admin/123/WS2016/LocalLectureTest";
+        String url="http://192.168.0.198:9000/admin/123/WS2016/LocalLectureTest";
         Signin();
         goTo(url);
         click("#modify_description");
@@ -358,7 +358,7 @@ public class AccountTest extends FluentTest{
 
     @Test
     public void n_testForum(){
-        String url="http://localhost:9000/admin/123/WS2016/LocalLectureTest";
+        String url="http://192.168.0.198:9000/admin/123/WS2016/LocalLectureTest";
         Signin();
         goTo(url);
         click("#tab_forum");
@@ -381,7 +381,7 @@ public class AccountTest extends FluentTest{
     @Test
     public void o_testAddStudentLocal(){
         String ssh="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCn1XqMk4EPUXUtBllEVMvr+d1B3rH6UCqtyQMKrJbC/9qkfpNVHcMvklmrXXRt9x7PO8xUzXto4qTZGNw0Q9sxaqXyUCRKmYrYqCrDuq0gQ6TCDSZQQJOzW3wDMUqdDkeQ2Zd94SQ3VWWmeGZFjWLq+Y5Cdb1b4F9z9m+uXVax91+/9ZxKbfHAP4fZQXevgvCiH//UPTYIXM3CBYgHbTmvXXhRluWFqayrTegysPft/mfEbuEpzg8qbkI5d1v7gxovLiqiLAUCxePnlUsG80cocFpWtxcDRY2Z1zXSwnyBaj11N0/nsGRGOeqI57gUFfbvEaUZwDbCUeg5wrEnz6Ml Win7Client@Win7Client-PC";
-        goTo("http://localhost:9000/");
+        goTo("http://192.168.0.198:9000/");
         StudentSignin();
         await().atMost(5, TimeUnit.SECONDS);
         click("#UserSetting");
@@ -454,7 +454,7 @@ public class AccountTest extends FluentTest{
     }
     @Test
     public void s_testStudentRevert(){
-        String url="http://localhost:9000/students/Gao/WS2016/LocalLectureTest";
+        String url="http://192.168.0.198:9000/students/Gao/WS2016/LocalLectureTest";
         StudentSignin();
         goTo(url);
         click("#revert_handin");
@@ -463,7 +463,7 @@ public class AccountTest extends FluentTest{
     }
     @Test
     public void t_testStudentRemoteRevert(){
-        String url="http://localhost:9000/students/Gao/WS2016/RemoteLectureTest";
+        String url="http://192.168.0.198:9000/students/Gao/WS2016/RemoteLectureTest";
         StudentSignin();
         goTo(url);
         click("#revert_remote_handin");
@@ -471,7 +471,7 @@ public class AccountTest extends FluentTest{
     }
     @Test
     public void u_testEvaluation(){
-        String url="http://localhost:9000/students/Gao/WS2016/LocalLectureTest";
+        String url="http://192.168.0.198:9000/students/Gao/WS2016/LocalLectureTest";
         StudentSignin();
         goTo(url);
         await().atMost(15,TimeUnit.SECONDS).until("#handin_homework").areDisplayed();
@@ -485,7 +485,7 @@ public class AccountTest extends FluentTest{
         await().atMost(5,TimeUnit.SECONDS).until("#loggeduser").areDisplayed();
         click("#loggeduser");
 
-        String url1="http://localhost:9000/admin/123/WS2016/LocalLectureTest";
+        String url1="http://192.168.0.198:9000/admin/123/WS2016/LocalLectureTest";
         Signin();
         goTo(url1);
         click("#tab_correction");
@@ -512,7 +512,7 @@ public class AccountTest extends FluentTest{
     }
     @Test
     public void v_testDeleteStudent(){
-        String url="http://localhost:9000/students/Gao/WS2016/RemoteLectureTest";
+        String url="http://192.168.0.198:9000/students/Gao/WS2016/RemoteLectureTest";
         StudentSignin();
         goTo(url);
         await().atMost(5,TimeUnit.SECONDS).until("#remotelecture_deletestudent").isPresent();
@@ -527,7 +527,7 @@ public class AccountTest extends FluentTest{
         click("#UserSetting");
         await().atMost(5,TimeUnit.SECONDS).until("#ssh_delete").areDisplayed();
         click("#ssh_delete");
-        String url="http://localhost:9000/students/Gao/WS2016/RemoteLectureTest";
+        String url="http://192.168.0.198:9000/students/Gao/WS2016/RemoteLectureTest";
         goTo(url);
         await().atMost(5,TimeUnit.SECONDS).until("#remotelecture_addstudent").areDisplayed();
         click("#remotelecture_addstudent");
@@ -550,7 +550,7 @@ public class AccountTest extends FluentTest{
 
     @Test
     public void x_testMessage(){
-        String url="http://localhost:9000/students/Gao/WS2016/RemoteLectureTest";
+        String url="http://192.168.0.198:9000/students/Gao/WS2016/RemoteLectureTest";
         StudentSignin();
         goTo(url);
         click("#open_conversation");
