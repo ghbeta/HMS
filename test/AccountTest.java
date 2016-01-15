@@ -380,7 +380,7 @@ public class AccountTest extends FluentTest{
 
     @Test
     public void o_testAddStudentLocal(){
-        String ssh="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8Cv4/YtLkjLZbIMtsRbp4sZOpG7aD4BHEvMLpsUMKfP+4MwIk9a0YBpHMfB+RHzDhN6UyG/ZKTmHbGnLTAQ2XxUXXfmSi8qHqOkTFsBokWz4MLWtoanIkZhoHM22csZVeESq7bYUVhqBrEVGUA5ys9xqG9om/Sm2w4zDGturHgMoZeRjO8lZ2WyAPTA+IJIpXJBJ+LwvY74RkW0CzP3Aoqszgu+XXtLjyRaJCuz3sSCoj6mqbxZAP2Vt7TXUoA3WFausd3Y6Lk8kJMZWR1M5N0hHRgu+OgJXlzV4ZlQVt6vj6mgMQ8gCpv/CAVw4PpMbomM1YjI1L8O9SurXUbrjp Administrator@china-9aa05637d";
+        String ssh="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCn1XqMk4EPUXUtBllEVMvr+d1B3rH6UCqtyQMKrJbC/9qkfpNVHcMvklmrXXRt9x7PO8xUzXto4qTZGNw0Q9sxaqXyUCRKmYrYqCrDuq0gQ6TCDSZQQJOzW3wDMUqdDkeQ2Zd94SQ3VWWmeGZFjWLq+Y5Cdb1b4F9z9m+uXVax91+/9ZxKbfHAP4fZQXevgvCiH//UPTYIXM3CBYgHbTmvXXhRluWFqayrTegysPft/mfEbuEpzg8qbkI5d1v7gxovLiqiLAUCxePnlUsG80cocFpWtxcDRY2Z1zXSwnyBaj11N0/nsGRGOeqI57gUFfbvEaUZwDbCUeg5wrEnz6Ml Win7Client@Win7Client-PC";
         goTo("http://localhost:9000/");
         StudentSignin();
         await().atMost(5, TimeUnit.SECONDS);
@@ -540,7 +540,7 @@ public class AccountTest extends FluentTest{
         await().atMost(10,TimeUnit.SECONDS).until("#remoterepo_generate").areDisplayed();
         await().untilPage().isLoaded();
         //-----------add ssh again
-        String ssh="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8Cv4/YtLkjLZbIMtsRbp4sZOpG7aD4BHEvMLpsUMKfP+4MwIk9a0YBpHMfB+RHzDhN6UyG/ZKTmHbGnLTAQ2XxUXXfmSi8qHqOkTFsBokWz4MLWtoanIkZhoHM22csZVeESq7bYUVhqBrEVGUA5ys9xqG9om/Sm2w4zDGturHgMoZeRjO8lZ2WyAPTA+IJIpXJBJ+LwvY74RkW0CzP3Aoqszgu+XXtLjyRaJCuz3sSCoj6mqbxZAP2Vt7TXUoA3WFausd3Y6Lk8kJMZWR1M5N0hHRgu+OgJXlzV4ZlQVt6vj6mgMQ8gCpv/CAVw4PpMbomM1YjI1L8O9SurXUbrjp Administrator@china-9aa05637d";
+        String ssh="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCn1XqMk4EPUXUtBllEVMvr+d1B3rH6UCqtyQMKrJbC/9qkfpNVHcMvklmrXXRt9x7PO8xUzXto4qTZGNw0Q9sxaqXyUCRKmYrYqCrDuq0gQ6TCDSZQQJOzW3wDMUqdDkeQ2Zd94SQ3VWWmeGZFjWLq+Y5Cdb1b4F9z9m+uXVax91+/9ZxKbfHAP4fZQXevgvCiH//UPTYIXM3CBYgHbTmvXXhRluWFqayrTegysPft/mfEbuEpzg8qbkI5d1v7gxovLiqiLAUCxePnlUsG80cocFpWtxcDRY2Z1zXSwnyBaj11N0/nsGRGOeqI57gUFfbvEaUZwDbCUeg5wrEnz6Ml Win7Client@Win7Client-PC";
         click("#UserSetting");
         fill("#SSHTitle").with("studentSSH");
         fill("#SSHValue").with(ssh);

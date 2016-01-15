@@ -360,7 +360,9 @@ public class Lecturehome extends Controller {
                 FileUtils.moveFile(file, new File(localPath, des+fileName));
                 ZipFile zipFile= new ZipFile(new File(localPath, des+fileName));
                 if(zipFile.isValidZipFile()){
-                zipFile.extractAll(localrepopath+"/"+des);}
+                zipFile.extractAll(localrepopath+"/"+des);
+                File todelte=new File(localPath, des+fileName);
+                FileUtils.forceDelete(todelte);}
                 git.add().addFilepattern(assignment.title).call();
                 Logger.debug("add file finish"+des+fileName);
                 git.commit().setMessage(commit).setAuthor(semesteruser.lastname,semesteruser.email).call();
