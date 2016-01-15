@@ -58,7 +58,7 @@ public class Assignmentevaluation extends Controller {
                 Git gitogit = new Git(adminrepo);
                 ConfigManager manager = ConfigManager.create(configrepopath());
                 Config config = manager.get();
-                nl.minicom.gitolite.manager.models.User repoadmin = config.ensureUserExists(currentadmin.userHash);
+                nl.minicom.gitolite.manager.models.User repoadmin = config.ensureUserExists(currentadmin.id);
 
                 String reponame = lecture.semester+"_"+lecture.courseName + "_" + student.id;
                 Logger.warn("grand access for repo" +reponame);
