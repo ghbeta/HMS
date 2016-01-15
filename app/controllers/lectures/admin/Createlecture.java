@@ -148,7 +148,7 @@ public class Createlecture extends Controller {
                 List<Class> entity = new ArrayList<Class>();
                 entity.add(Semesteruser.class);
                 entity.add(Assignment.class);
-                entity.add(Exercise.class);
+                //entity.add(Exercise.class);
                 entity.add(Lecture.class);
                 entity.add(Message.class);
                 entity.add(Repo.class);
@@ -231,7 +231,7 @@ public class Createlecture extends Controller {
                 List<Class> entity = new ArrayList<Class>();
                 entity.add(Semesteruser.class);
                 entity.add(Assignment.class);
-                entity.add(Exercise.class);
+                //entity.add(Exercise.class);
                 entity.add(Lecture.class);
                 entity.add(Message.class);
                 entity.add(Repo.class);

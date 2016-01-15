@@ -307,7 +307,7 @@ public class AccountTest extends FluentTest{
         goTo(url);
         click("#create_remote_homework");
         await().atMost(30, TimeUnit.SECONDS).until("#assignmentModal").areDisplayed();
-        fill("#number_exercise").with("1");
+        //fill("#number_exercise").with("1");
         fill("#total_points").with("20");
         fill("#assignment_deadline").with("03/10/2016");
         fill("#upload_file").with(System.getProperty("user.home")+"/Assignment1.txt");

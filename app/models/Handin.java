@@ -32,8 +32,8 @@ public class Handin extends Model {
 //    @ManyToOne
 //    Evaluation evaluation;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "handin")
-    public List<Exercise> exercises;
+//    @OneToMany(cascade = CascadeType.ALL,mappedBy = "handin")
+//    public List<Exercise> exercises;
 
     @Version
     private Long version;

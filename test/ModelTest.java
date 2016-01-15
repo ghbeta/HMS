@@ -46,7 +46,7 @@ public class ModelTest {
         List<Class> entity = new ArrayList<Class>();
         entity.add(Semesteruser.class);
         entity.add(Assignment.class);
-        entity.add(Exercise.class);
+        //entity.add(Exercise.class);
         entity.add(Lecture.class);
         entity.add(Message.class);
         entity.add(Repo.class);
@@ -178,18 +178,18 @@ public class ModelTest {
 
     }
 
-    @Test
-    public void testExercise(){
-        Exercise exercise=new Exercise();
-        exercise.title="title";
-        exercise.semester="WS2016";
-        exercise.totalpoints=100f;
-        exercise.earndpoints=80f;
-        exercise.comments="abc";
-        exercise.handin=newHandin();
-        exercise.save("WS2016");
-        assertThat(exercise.id).isEqualTo("1");
-    }
+//    @Test
+//    public void testExercise(){
+//        Exercise exercise=new Exercise();
+//        exercise.title="title";
+//        exercise.semester="WS2016";
+//        exercise.totalpoints=100f;
+//        exercise.earndpoints=80f;
+//        exercise.comments="abc";
+//        exercise.handin=newHandin();
+//        exercise.save("WS2016");
+//        assertThat(exercise.id).isEqualTo("1");
+//    }
 
     @Test
     public void testForumPost(){
@@ -218,17 +218,17 @@ public class ModelTest {
         assignment.title="assignment1";
         assignment.save("WS2016");
         handin.assignment=assignment;
-        Exercise exercise=new Exercise();
-        exercise.title="title";
-        exercise.save("WS2016");
-        handin.exercises.add(exercise);
+        //Exercise exercise=new Exercise();
+        //exercise.title="title";
+        //exercise.save("WS2016");
+        //handin.exercises.add(exercise);
         handin.totalpoints=10f;
         handin.earndpoints=10f;
         handin.handin=new Date();
         handin.setishandin();
         handin.setIsvalid();
         handin.setTotalpoints();
-        handin.setEarndpoints();
+        handin.setEarndpoints(26f);
         handin.save("WS2016");
         assertThat(Handin.getOptionalAssignmentofStudentsinLecture("WS2016",handin.lecture,handin.student)).hasSize(0);
     }

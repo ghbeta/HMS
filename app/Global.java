@@ -32,7 +32,7 @@ public class Global extends GlobalSettings{
         List<Class> entity1 = new ArrayList<Class>();
         entity1.add(Semesteruser.class);
         entity1.add(Assignment.class);
-        entity1.add(Exercise.class);
+        //entity1.add(Exercise.class);
         entity1.add(Lecture.class);
         entity1.add(Message.class);
         entity1.add(Repo.class);

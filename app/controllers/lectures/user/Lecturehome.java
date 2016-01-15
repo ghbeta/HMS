@@ -259,16 +259,16 @@ public class Lecturehome extends Controller {
             handin.lecture=lecture;
             handin.assignment=assignment;
             //handin.exercises=new ArrayList<Exercise>();
-            for(int i=0;i<assignment.numberofexercise;i++){
-                Exercise exercise = new Exercise();
-                exercise.title=Messages.get("exercise.title")+(i+1);
-                exercise.semester=semester;
-                //exercise.handin=handin;
-                //exercise.save(semester);
-                //exercises.add(exercise);
-                handin.exercises.add(exercise);
-                //exercise.handin=handin;
-            }
+//            for(int i=0;i<assignment.numberofexercise;i++){
+//                Exercise exercise = new Exercise();
+//                exercise.title=Messages.get("exercise.title")+(i+1);
+//                exercise.semester=semester;
+//                //exercise.handin=handin;
+//                //exercise.save(semester);
+//                //exercises.add(exercise);
+//                handin.exercises.add(exercise);
+//                //exercise.handin=handin;
+//            }
 
             handin.handin=new Date();
             handin.setishandin();
@@ -382,16 +382,16 @@ public class Lecturehome extends Controller {
                 handin.lecture=lecture;
                 handin.assignment=assignment;
                 //handin.exercises=new ArrayList<Exercise>();
-                for(int i=0;i<assignment.numberofexercise;i++){
-                    Exercise exercise = new Exercise();
-                    exercise.title=Messages.get("exercise.title")+(i+1);
-                    exercise.semester=semester;
-                    //exercise.handin=handin;
-                    //exercise.save(semester);
-                    //exercises.add(exercise);
-                    handin.exercises.add(exercise);
-                    //exercise.handin=handin;
-                }
+//                for(int i=0;i<assignment.numberofexercise;i++){
+//                    Exercise exercise = new Exercise();
+//                    exercise.title=Messages.get("exercise.title")+(i+1);
+//                    exercise.semester=semester;
+//                    //exercise.handin=handin;
+//                    //exercise.save(semester);
+//                    //exercises.add(exercise);
+//                    handin.exercises.add(exercise);
+//                    //exercise.handin=handin;
+//                }
 
                 handin.handin=new Date();
                 handin.setishandin();
