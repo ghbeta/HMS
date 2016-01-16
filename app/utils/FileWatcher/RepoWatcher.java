@@ -2,10 +2,7 @@ package utils.FileWatcher;
 
 import play.Logger;
 
-import java.nio.file.Path;
-import java.nio.file.WatchEvent;
-import java.nio.file.WatchKey;
-import java.nio.file.WatchService;
+import java.nio.file.*;
 
 /**
  * Created by Hao on 2016/1/15.
@@ -24,9 +21,9 @@ public class RepoWatcher implements Runnable {
            while(key!=null){
                for (WatchEvent event:key.pollEvents()){
                    //Logger.debug("change file system detect"+" "+event.kind().name()+" " +event.context());
-
+                   if(event.context().toString().equals("master")){
                    Path dir=(Path)key.watchable();
-                   Logger.debug("change detected "+dir.toString()+" "+event.kind().name()+" "+event.context());
+                   Logger.debug("change detected "+dir.toString()+" "+event.kind().name()+" "+event.context());}
                    //break;
                }
                //WatchKey key = watchService.take();

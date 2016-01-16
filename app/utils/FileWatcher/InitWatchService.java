@@ -27,7 +27,7 @@ public class InitWatchService {
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
                     throws IOException {
-                dir.register(watchService, ENTRY_CREATE, ENTRY_MODIFY,ENTRY_DELETE);
+                dir.register(watchService,ENTRY_MODIFY);
                 return FileVisitResult.CONTINUE;
             }
         });

@@ -22,8 +22,12 @@ import play.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 
 import static play.mvc.Controller.ctx;
+import static utils.FileWatcher.InitWatchService.getWatchService;
 
 /**
  * Created by Hao on 2015/10/28.
@@ -60,6 +64,8 @@ public class RepoManager {
             manager.applyAsync(config);
             gitogit.pull().call();
             gitogit.push().call();
+            Path addToWatch= Paths.get(System.getProperty("user.home"), "repositories", reponame+".git", "logs", "refs", "heads");
+            addToWatch.register(getWatchService(), ENTRY_MODIFY);
             return "git@"+ hostparser(serverhost)+":"+reponame+".git";
         }
         else{

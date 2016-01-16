@@ -39,9 +39,10 @@ public class Global extends GlobalSettings{
             RepoWatcher repoWatcher= new RepoWatcher(getWatchService());
             Thread watchThread=new Thread(repoWatcher,"repoWatcherThread");
             watchThread.start();
-            Path toWatch= Paths.get(System.getProperty("user.home"),"repositories","WS2016_LocalLectureTest_7788414.git","logs","refs","heads");
-            toWatch.register(getWatchService(), ENTRY_MODIFY);
-            //registerALL(toWatch);
+            //Path toWatch= Paths.get(System.getProperty("user.home"),"repositories","WS2016_LocalLectureTest_7788414.git","logs","refs","heads");
+            Path toWatch= Paths.get(System.getProperty("user.home"),"repositories");
+            //toWatch.register(getWatchService(), ENTRY_MODIFY);
+            registerALL(toWatch);
 
         } catch (IOException e) {
             Logger.debug(e.getMessage());
