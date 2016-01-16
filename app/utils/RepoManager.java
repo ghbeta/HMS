@@ -64,7 +64,7 @@ public class RepoManager {
             manager.applyAsync(config);
             gitogit.pull().call();
             gitogit.push().call();
-            Path addToWatch= Paths.get(System.getProperty("user.home"), "repositories", reponame+".git", "logs", "refs", "heads");
+            Path addToWatch= Paths.get(System.getProperty("user.home"), "repositories", reponame+".git","refs", "heads");
             addToWatch.register(getWatchService(), ENTRY_MODIFY);
             return "git@"+ hostparser(serverhost)+":"+reponame+".git";
         }

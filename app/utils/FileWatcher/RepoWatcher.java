@@ -1,7 +1,7 @@
 package utils.FileWatcher;
 
 import play.Logger;
-
+import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 import java.nio.file.*;
 
 /**
@@ -12,6 +12,7 @@ public class RepoWatcher implements Runnable {
     public RepoWatcher(WatchService repowatcher){
         this.watchService=repowatcher;
     }
+    //public String lastchanged="";
     @Override
     public void run() {
        try{
@@ -19,13 +20,17 @@ public class RepoWatcher implements Runnable {
 
            Logger.debug("start key is valid "+(key==null));
            while(key!=null){
-               for (WatchEvent event:key.pollEvents()){
+               //for (WatchEvent event:key.pollEvents()){
                    //Logger.debug("change file system detect"+" "+event.kind().name()+" " +event.context());
-                   if(event.context().toString().equals("master")){
+                   key.pollEvents();
                    Path dir=(Path)key.watchable();
-                   Logger.debug("change detected "+dir.toString()+" "+event.kind().name()+" "+event.context());}
+                   if(dir.toString().contains("refs/heads")){
+
+                   Logger.debug("change detected "+dir.toString());//+" "+event.kind().name()+" "+event.context());
+                   //lastchanged=dir.toString();
+                   }
                    //break;
-               }
+              //}
                //WatchKey key = watchService.take();
 
 //todo filter based on the url
