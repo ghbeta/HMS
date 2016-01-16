@@ -26,8 +26,14 @@ import views.html.lectures.user.lecturehome;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import controllers.lectures.user.routes;
+
+import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
+import static utils.FileWatcher.InitWatchService.getWatchService;
+import static utils.FileWatcher.InitWatchService.registerALL;
 import static utils.RepoManager.hostparser;
 import static utils.RepoManager.reponame;
 import static utils.RepoManager.userrepofilepath;
@@ -123,6 +129,12 @@ public class Lecturehome extends Controller {
                     //semesteruser.repos.add(newrepo);
                     //semesteruser.update(lecture.semester);
                     //semesteruser.update(semester);
+                   // String reponame=lecture.semester+"_"+lecture.courseName+"_"+semesteruser.id;
+                    //Path addToWatch= Paths.get(System.getProperty("user.home"), "repositories", reponame + ".git", "refs", "heads");
+                    //addToWatch.register(getWatchService(), ENTRY_MODIFY);
+                    //Path addToWatch= Paths.get(System.getProperty("user.home"),"repositories");
+                    //registerALL(addToWatch);
+                    //Logger.debug("add new repo to watch"+addToWatch.toString());
                     return  redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,lecture.semester,lecture.courseName));}
                 else{
                     flash("danger",Messages.get("repo.create.after.fail.nossh"));

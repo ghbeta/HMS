@@ -1,24 +1,110 @@
 package utils;
 
+import models.Handin;
+import models.Lecture;
 import models.Semesteruser;
 import models.User;
+import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.*;
+import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.diff.DiffFormatter;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.*;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import play.Logger;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Hao on 2016/1/16.
  */
 public class PushEvaluation {
 
-    public static void LocalLectureGitEvaluation(String repoaddress){
+    public static void LocalLectureGitEvaluation(String repoaddress) throws GitAPIException, IOException {
         String[] addresspart=repoaddress.split("/");
-        Logger.debug("reponame is"+addresspart[4]);
+
+        String reponame =addresspart[4];
+
+        //Logger.debug("reponame is"+reponame);
+        String repopath=repoaddress.replace("/refs/heads","");
+
+        //Logger.debug("repopath is" +repopath);
         String userinformation=addresspart[4];
         String[] informationpart=userinformation.split("_");
-        Logger.debug("semester is "+informationpart[0]);
-        Logger.debug("Lecture name is "+informationpart[1]);
-        Logger.debug("user id is "+informationpart[2].replace(".git",""));
+        String semester=informationpart[0];
+        //Logger.debug("semester is "+semester);
+        String lecturename=informationpart[1];
+        //Logger.debug("Lecture name is "+lecturename);
         String userid=informationpart[2].replace(".git","");
+        //Logger.debug("user id is "+userid);
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(informationpart[0], User.findById(userid,"global"));
-        Logger.debug(semesteruser.lastname);
+        Lecture lecture= Lecture.getlecturebyname(lecturename,semester);
+        //Logger.debug(semesteruser.lastname);
+        String localrepopath=System.getProperty("user.home")+"/"+"data_dynamic"+"/"+semester+"/"+lecturename+"/"+userid+"/"+reponame.replace(".git","/.git");
+        Logger.debug(localrepopath);
+        Repository repository=new FileRepository(localrepopath);
+        Git git = new Git(repository);
+        //Logger.debug("starting merging remote to local");
+        git.pull().call();
+        Logger.debug("current branch "+repository.getBranch());
+        RevWalk walk= new RevWalk(repository);
+
+        ObjectId head=repository.resolve(Constants.HEAD);
+        RevCommit headCommit=walk.parseCommit(head);
+        Logger.debug("commit message for head "+headCommit.getFullMessage()+headCommit.getCommitterIdent().getName());
+        if(!headCommit.getCommitterIdent().getName().equals("hms")){
+           Logger.debug("ready to compare");
+            ObjectId newhead=repository.resolve("HEAD^{tree}");
+            ObjectId oldHead = repository.resolve("HEAD^^{tree}");
+            Logger.debug("Printing diff between tree: " + oldHead + " and " + head);
+            try(ObjectReader reader = repository.newObjectReader()){
+                CanonicalTreeParser oldTreeIter = new CanonicalTreeParser();
+                oldTreeIter.reset(reader, oldHead);
+                CanonicalTreeParser newTreeIter = new CanonicalTreeParser();
+                newTreeIter.reset(reader, newhead);
+
+                List<DiffEntry> diffs= git.diff()
+                        .setNewTree(newTreeIter)
+                        .setOldTree(oldTreeIter)
+                        .call();
+                ByteArrayOutputStream changes= new ByteArrayOutputStream();
+                DiffFormatter formatter = new DiffFormatter(changes);
+                formatter.setRepository(repository);
+                formatter.format(oldHead,newhead);
+                String diffresult=changes.toString();
+                Logger.debug("diffresult "+diffresult);
+//                for (DiffEntry entry : diffs) {
+//                    System.out.println("Entry: " + entry);
+//                    try (DiffFormatter formatter = new DiffFormatter()) {
+//                        formatter.setRepository(repository);
+//                        formatter.format(entry);
+//                    }
+//                }
+            }
+        }
+//        List<Handin> allHandins=Handin.getAllHandinofStudentsinLecture(semester,lecture,semesteruser);
+//        if(allHandins.size()>0){
+//           for(Handin handin:allHandins){
+//               if(!handin.isevaluated){
+//                   CommitParser(handin,repopath);
+//                   break;
+//               }
+//           }
+//        }
+
+
+    }
+
+    public static void updateFileRepository(String localrepopath) throws IOException, GitAPIException {
+
+    }
+
+    public static void CommitParser(Handin handin,String repopath){
+
     }
 }

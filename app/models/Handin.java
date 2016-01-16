@@ -96,7 +96,7 @@ public class Handin extends Model {
 
     public static List<Handin> getAllHandinofStudentsinLecture(String database,Lecture lecture,Semesteruser semesteruser){
         return getServer(database).find(Handin.class).where().eq("student.email", semesteruser.email).
-                eq("lecture.courseName", lecture.courseName).findList();
+                eq("lecture.courseName", lecture.courseName).orderBy("assignment.title").findList();
     }
 
     public static Handin getHandinofassignmentofstudentinlecture(String database,Lecture lecture,Semesteruser semesteruser,Assignment assignment){

@@ -41,6 +41,7 @@ public class Global extends GlobalSettings{
             watchThread.start();
             //Path toWatch= Paths.get(System.getProperty("user.home"),"repositories","WS2016_LocalLectureTest_7788414.git","logs","refs","heads");
             Path toWatch= Paths.get(System.getProperty("user.home"),"repositories");
+            //Path toWatch= Paths.get(System.getProperty("user.home"));
             //toWatch.register(getWatchService(), ENTRY_MODIFY);
             registerALL(toWatch);
 
