@@ -365,7 +365,7 @@ public class Lecturehome extends Controller {
                 FileUtils.forceDelete(todelte);}
                 git.add().addFilepattern(assignment.title).call();
                 Logger.debug("add file finish"+des+fileName);
-                git.commit().setMessage(commit).setAuthor(semesteruser.lastname,semesteruser.email).call();
+                git.commit().setMessage(commit).setAuthor("hms","hms@hms.com").call();
                 Logger.warn("start pushing");
                 RefSpec refSpec = new RefSpec("master");
                 git.push().setRemote("origin").setRefSpecs(refSpec).call();
@@ -459,7 +459,7 @@ public class Lecturehome extends Controller {
 
             Logger.debug("delete folder"+subfolder);
             git.rm().addFilepattern(subfolder).call();
-            git.commit().setMessage(commit).setAuthor(semesteruser.lastname,semesteruser.email).call();
+            git.commit().setMessage(commit).setAuthor("hms","hms@hms.com").call();
             Logger.warn("start pushing delete files");
 
             RefSpec refSpec = new RefSpec("master");
