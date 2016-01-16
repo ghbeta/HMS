@@ -12,7 +12,6 @@ import java.nio.file.WatchService;
  */
 public class RepoWatcher implements Runnable {
     public WatchService watchService;
-
     public RepoWatcher(WatchService repowatcher){
         this.watchService=repowatcher;
     }
@@ -20,14 +19,15 @@ public class RepoWatcher implements Runnable {
     public void run() {
        try{
            WatchKey key = watchService.take();
+
            Logger.debug("start key is valid "+(key==null));
            while(key!=null){
                for (WatchEvent event:key.pollEvents()){
                    //Logger.debug("change file system detect"+" "+event.kind().name()+" " +event.context());
 
                    Path dir=(Path)key.watchable();
-                   Logger.debug("change detected "+dir.toString());
-                   break;
+                   Logger.debug("change detected "+dir.toString()+" "+event.kind().name()+" "+event.context());
+                   //break;
                }
                //WatchKey key = watchService.take();
 
