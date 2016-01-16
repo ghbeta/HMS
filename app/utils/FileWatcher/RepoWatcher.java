@@ -2,6 +2,8 @@ package utils.FileWatcher;
 
 import play.Logger;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
+import static utils.PushEvaluation.LocalLectureGitEvaluation;
+
 import java.nio.file.*;
 
 /**
@@ -25,8 +27,8 @@ public class RepoWatcher implements Runnable {
                    key.pollEvents();
                    Path dir=(Path)key.watchable();
                    if(dir.toString().contains("refs/heads")){
-
-                   Logger.debug("change detected "+dir.toString());//+" "+event.kind().name()+" "+event.context());
+                    LocalLectureGitEvaluation(dir.toString());
+                   //Logger.debug("change detected "+dir.toString());//+" "+event.kind().name()+" "+event.context());
                    //lastchanged=dir.toString();
                    }
                    //break;
