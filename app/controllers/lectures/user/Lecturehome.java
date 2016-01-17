@@ -320,9 +320,9 @@ public class Lecturehome extends Controller {
         String commit="";
         String des=assignment.title+"/";
         if(handinform.get("commit")==null||handinform.get("commit").isEmpty()||handinform.get("commit").equals("")){
-            commit  =Messages.get("lecture.uploadsolution")+assignment.title;
+            commit  =assignment.title+"_"+Messages.get("lecture.uploadsolution");
         }else{
-            commit = handinform.get("commit");
+            commit = assignment.title+"_"+handinform.get("commit");
         }
         Logger.warn("commit message is "+commit);
         try{
