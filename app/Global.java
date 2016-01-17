@@ -102,6 +102,19 @@ public class Global extends GlobalSettings{
             //createServer("SS2016", entity1);
             //createServer("WS2016", entity1);
         }
+        List<models.RepoWatcher> allreponames=models.RepoWatcher.findAllReponame();
+        if(allreponames.size()>0){
+            for(models.RepoWatcher repoWatcher:allreponames){
+                Path toWatch= Paths.get(System.getProperty("user.home"),"repositories",repoWatcher.reponame,"refs","heads");
+                Logger.warn(toWatch.toString()+" was added to watch");
+                try {
+                    toWatch.register(getWatchService(), ENTRY_MODIFY);
+                } catch (IOException e) {
+                    Logger.debug(e.getMessage());
+                    //e.printStackTrace();
+                }
+            }
+        }
     }
 }
 

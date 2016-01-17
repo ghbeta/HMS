@@ -129,12 +129,7 @@ public class Lecturehome extends Controller {
                     //semesteruser.repos.add(newrepo);
                     //semesteruser.update(lecture.semester);
                     //semesteruser.update(semester);
-                   // String reponame=lecture.semester+"_"+lecture.courseName+"_"+semesteruser.id;
-                    //Path addToWatch= Paths.get(System.getProperty("user.home"), "repositories", reponame + ".git", "refs", "heads");
-                    //addToWatch.register(getWatchService(), ENTRY_MODIFY);
-                    //Path addToWatch= Paths.get(System.getProperty("user.home"),"repositories");
-                    //registerALL(addToWatch);
-                    //Logger.debug("add new repo to watch"+addToWatch.toString());
+
                     return  redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,lecture.semester,lecture.courseName));}
                 else{
                     flash("danger",Messages.get("repo.create.after.fail.nossh"));
