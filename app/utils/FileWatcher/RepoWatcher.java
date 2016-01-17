@@ -24,6 +24,7 @@ public class RepoWatcher implements Runnable {
            while(key!=null){
                //for (WatchEvent event:key.pollEvents()){
                    //Logger.debug("change file system detect"+" "+event.kind().name()+" " +event.context());
+               Logger.debug("change detect");
                    key.pollEvents();
                    Path dir=(Path)key.watchable();
                    if(dir.toString().contains("refs/heads")){

@@ -1,9 +1,6 @@
 package utils;
 
-import models.Handin;
-import models.Lecture;
-import models.Semesteruser;
-import models.User;
+import models.*;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.*;
@@ -32,7 +29,7 @@ public class PushEvaluation {
 
     public static void LocalLectureGitEvaluation(String repoaddress) throws GitAPIException, IOException {
         String[] addresspart=repoaddress.split("/");
-
+        String[] evaluationResult=null;
         String reponame =addresspart[4];
 
         //Logger.debug("reponame is"+reponame);
@@ -49,6 +46,10 @@ public class PushEvaluation {
         //Logger.debug("user id is "+userid);
         Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(informationpart[0], User.findById(userid,"global"));
         Lecture lecture= Lecture.getlecturebyname(lecturename,semester);
+        Assignment assignment=null;
+
+        Handin handin=null;
+        Evaluation eval=Evaluation.findByLectureAndUser(semester, lecture, semesteruser);
         //Logger.debug(semesteruser.lastname);
         String localrepopath=System.getProperty("user.home")+"/"+"data_dynamic"+"/"+semester+"/"+lecturename+"/"+userid+"/"+reponame.replace(".git","/.git");
         Logger.debug(localrepopath);
@@ -60,10 +61,10 @@ public class PushEvaluation {
         RevWalk walk= new RevWalk(repository);
 
         ObjectId head=repository.resolve(Constants.HEAD);
-        
-        RevCommit headCommit=walk.parseCommit(head);
-        String committerofhead=headCommit.getCommitterIdent().getName();
 
+        RevCommit headCommit=walk.parseCommit(head);
+
+        String committerofhead=headCommit.getAuthorIdent().getName();
 
 
         Logger.debug("committer for head "+committerofhead);
@@ -87,20 +88,49 @@ public class PushEvaluation {
                 formatter.setRepository(repository);
                 formatter.format(oldHead, newhead);
                 String diffresult = changes.toString();
-                CommitParser(diffresult);
-                //Logger.debug("diffresult " + diffresult);
+                evaluationResult=CommitParser(diffresult);
                 diffresult=null;
                 changes.reset();
+                ObjectId beforehead=repository.resolve("HEAD^");
+                RevCommit beforeheadCommit=walk.parseCommit(beforehead);
+                String commiterbeforehead=beforeheadCommit.getAuthorIdent().getName();
+                Logger.warn("commite before head "+commiterbeforehead);
+                if(commiterbeforehead.equals("hms")){
+                    String assignmentTitle=beforeheadCommit.getFullMessage().split("_")[0];
+                    Logger.warn("assignment title"+assignmentTitle);
+                    if(assignmentTitle.contains("Assignment")){
+                    assignment=Assignment.findByLectureAndName(semester,lecturename,assignmentTitle);
 
-
+                    handin=Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment);}
+                    else{
+                        Logger.warn("handin information not found");
+                    }
+                }
             }catch (Exception e){
                 Logger.warn(e.getMessage());
             }
         }
 
+        updateHandinResult(semester,handin,evaluationResult,eval,lecture,semesteruser);
+
 
     }
 
+    public static void updateHandinResult(String semester,Handin handin,String[] result,Evaluation eval,Lecture lecture, Semesteruser student){
+        if(handin!=null&&result!=null){
+            float earndpoints=Float.valueOf(result[0]);
+            String comments=result[1];
+            handin.comments=comments;
+            handin.setEarndpoints(earndpoints);
+            handin.setTotalpoints();
+            handin.setIsvalid();
+            handin.isevaluated=true;
+            handin.update(semester);
+            Logger.warn("handin update success");
+            eval.setPerformance(semester,lecture,student);
+            eval.update(semester);
+        }
+    }
     public static void updateFileRepository(String localrepopath) throws IOException, GitAPIException {
 
     }

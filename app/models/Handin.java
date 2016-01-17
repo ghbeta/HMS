@@ -50,6 +50,7 @@ public class Handin extends Model {
 
     public boolean isevaluated;
 
+    @Column(columnDefinition = "TEXT")
     public String comments;
 
     public void setishandin(){
