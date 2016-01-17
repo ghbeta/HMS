@@ -40,10 +40,10 @@ public class Global extends GlobalSettings{
             Thread watchThread=new Thread(repoWatcher,"repoWatcherThread");
             watchThread.start();
             //Path toWatch= Paths.get(System.getProperty("user.home"),"repositories","WS2016_LocalLectureTest_7788414.git","logs","refs","heads");
-            Path toWatch= Paths.get(System.getProperty("user.home"),"repositories");
+            //Path toWatch= Paths.get(System.getProperty("user.home"),"repositories");
             //Path toWatch= Paths.get(System.getProperty("user.home"));
             //toWatch.register(getWatchService(), ENTRY_MODIFY);
-            registerALL(toWatch);
+            //registerALL(toWatch);
 
         } catch (IOException e) {
             Logger.debug(e.getMessage());
@@ -55,6 +55,7 @@ public class Global extends GlobalSettings{
         entity.add(Token.class);
         entity.add(Semester.class);
         entity.add(SSH.class);
+        entity.add(models.RepoWatcher.class);
 
         List<Class> entity1 = new ArrayList<Class>();
         entity1.add(Semesteruser.class);

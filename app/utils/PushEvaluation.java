@@ -16,9 +16,14 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import play.Logger;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Hao on 2016/1/16.
@@ -55,47 +60,43 @@ public class PushEvaluation {
         RevWalk walk= new RevWalk(repository);
 
         ObjectId head=repository.resolve(Constants.HEAD);
+        
         RevCommit headCommit=walk.parseCommit(head);
-        Logger.debug("commit message for head "+headCommit.getFullMessage()+headCommit.getCommitterIdent().getName());
-        if(!headCommit.getCommitterIdent().getName().equals("hms")){
-           Logger.debug("ready to compare");
-            ObjectId newhead=repository.resolve("HEAD^{tree}");
+        String committerofhead=headCommit.getCommitterIdent().getName();
+
+
+
+        Logger.debug("committer for head "+committerofhead);
+        if(committerofhead!=null&&!committerofhead.isEmpty()&&!committerofhead.equals("hms")) {
+            Logger.debug("ready to compare");
+            ObjectId newhead = repository.resolve("HEAD^{tree}");
             ObjectId oldHead = repository.resolve("HEAD^^{tree}");
             Logger.debug("Printing diff between tree: " + oldHead + " and " + head);
-            try(ObjectReader reader = repository.newObjectReader()){
+            try (ObjectReader reader = repository.newObjectReader()) {
                 CanonicalTreeParser oldTreeIter = new CanonicalTreeParser();
                 oldTreeIter.reset(reader, oldHead);
                 CanonicalTreeParser newTreeIter = new CanonicalTreeParser();
                 newTreeIter.reset(reader, newhead);
 
-                List<DiffEntry> diffs= git.diff()
+                List<DiffEntry> diffs = git.diff()
                         .setNewTree(newTreeIter)
                         .setOldTree(oldTreeIter)
                         .call();
-                ByteArrayOutputStream changes= new ByteArrayOutputStream();
+                ByteArrayOutputStream changes = new ByteArrayOutputStream();
                 DiffFormatter formatter = new DiffFormatter(changes);
                 formatter.setRepository(repository);
-                formatter.format(oldHead,newhead);
-                String diffresult=changes.toString();
-                Logger.debug("diffresult "+diffresult);
-//                for (DiffEntry entry : diffs) {
-//                    System.out.println("Entry: " + entry);
-//                    try (DiffFormatter formatter = new DiffFormatter()) {
-//                        formatter.setRepository(repository);
-//                        formatter.format(entry);
-//                    }
-//                }
+                formatter.format(oldHead, newhead);
+                String diffresult = changes.toString();
+                CommitParser(diffresult);
+                //Logger.debug("diffresult " + diffresult);
+                diffresult=null;
+                changes.reset();
+
+
+            }catch (Exception e){
+                Logger.warn(e.getMessage());
             }
         }
-//        List<Handin> allHandins=Handin.getAllHandinofStudentsinLecture(semester,lecture,semesteruser);
-//        if(allHandins.size()>0){
-//           for(Handin handin:allHandins){
-//               if(!handin.isevaluated){
-//                   CommitParser(handin,repopath);
-//                   break;
-//               }
-//           }
-//        }
 
 
     }
@@ -104,7 +105,34 @@ public class PushEvaluation {
 
     }
 
-    public static void CommitParser(Handin handin,String repopath){
-
+    public static String[]  CommitParser(String diffs) throws IOException {
+        BufferedReader bufReader = new BufferedReader(new StringReader(diffs));
+        String[] evaluResult=new String[2];
+        String line=null;
+        float earndpoints=0;
+        Pattern getnumber1 = Pattern.compile("((//)([ ]*)([\\+\\-])?(\\d+(\\.\\d+)?)(?![\\d.x]))|([\\+\\-])?(\\d+(\\.\\d+)?)(?![\\d.x])$");
+        Pattern getnumber2 = Pattern.compile("([\\+\\-])?(\\d+(\\.\\d+)?)(?![\\d.x])");
+        Matcher firstmatch=null;
+        Matcher finalmatch=null;
+        while ((line=bufReader.readLine())!=null){
+            if(line.matches("^(\\+)([^\\+]).*$")){
+                Logger.debug("start match each line "+line);
+               firstmatch=getnumber1.matcher(line);
+                firstmatch.find();
+                String point=firstmatch.group();
+                Logger.debug("first match is "+point);
+               if(point.contains("//")){
+                   finalmatch=getnumber2.matcher(point);
+                   finalmatch.find();
+                   point=finalmatch.group();
+                   Logger.debug("final match is "+point);
+               }
+                earndpoints=earndpoints+Float.valueOf(point);
+            }
+        }
+        evaluResult[0]=earndpoints+"";
+        evaluResult[1]=diffs;
+        Logger.warn("points from commit "+evaluResult[0]);
+        return evaluResult;
     }
 }
