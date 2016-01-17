@@ -293,3 +293,4 @@ mail.evaluation.done.subject=Your Homework has been evaluated!
 email.handin.message=Your handin of
 email.handin.on=on
 email.handin.isevaluated=is evaluated by
+email.handin.isautoevaluated=is evaluated,feedback can find in this email or your lectures homepage.

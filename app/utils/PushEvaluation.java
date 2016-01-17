@@ -2,6 +2,7 @@ package utils;
 
 import models.*;
 import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.commons.mail.EmailException;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.*;
 import org.eclipse.jgit.diff.DiffEntry;
@@ -12,10 +13,12 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import play.Logger;
+import play.i18n.Messages;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -116,7 +119,7 @@ public class PushEvaluation {
 
     }
 
-    public static void updateHandinResult(String semester,Handin handin,String[] result,Evaluation eval,Lecture lecture, Semesteruser student){
+    public static void updateHandinResult(String semester,Handin handin,String[] result,Evaluation eval,Lecture lecture, Semesteruser student) {
         if(handin!=null&&result!=null){
             float earndpoints=Float.valueOf(result[0]);
             String comments=result[1];
@@ -129,7 +132,19 @@ public class PushEvaluation {
             Logger.warn("handin update success");
             eval.setPerformance(semester,lecture,student);
             eval.update(semester);
+            try {
+                sendMailForEvaluation(student,handin);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    static void sendMailForEvaluation(Semesteruser semesteruser, Handin handin) throws EmailException,MalformedURLException {
+        String subject = Messages.get("mail.evaluation.done.subject");
+        String message= Messages.get("email.handin.message")+handin.assignment.title+" "+handin.lecture.courseName+Messages.get("email.handin.isautoevaluated")+"\n"+handin.comments;
+        Mail.Envelop envelop = new Mail.Envelop(subject, message, semesteruser.email);
+        Mail.sendMail(envelop);
     }
     public static void updateFileRepository(String localrepopath) throws IOException, GitAPIException {
 
