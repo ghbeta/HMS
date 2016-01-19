@@ -12,8 +12,10 @@ function showcanvas(useremail,semester,lecture,user){
             var gitgraph = new GitGraph({
                 elementId:user,
                 template: "metro",
+                width:800,
                 orientation: "horizontal",
                 mode: "compact"
+
             });
             var master=gitgraph.branch("master");
             var commithistory=JSON.parse(xhr.responseText);
@@ -27,6 +29,7 @@ function showcanvas(useremail,semester,lecture,user){
                 elementId:user,
                 template: "metro",
                 orientation: "horizontal",
+                width:800,
                 mode: "compact"
             });
             var master=gitgraph.branch("master");
