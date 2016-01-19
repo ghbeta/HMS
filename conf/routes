@@ -67,6 +67,8 @@ POST        /admin/:semester/:lecture/mod_assignment                         con
 GET         /admin/:semester/:lecture/:assignment/delete_assignment          controllers.lectures.admin.Lecturehome.deleteAssignment(lecture:String,assignment:String,semester:String)
 #Add Evaluation to students of a assignment
 POST        /admin/:semester/:lecture/:assignment/:student/evaluation        controllers.lectures.admin.Assignmentevaluation.addevaluation(semester:String,lecture:String,assignment:String,student:String)
+#Grand access to student`s repository
+POST         /admin/:semester/:lecturename/:studentid/grandaccess                 controllers.lectures.admin.Assignmentevaluation.grandaccess(semester:String,studentid:String,lecturename:String)
 #Generate Lecture home page for students
 GET         /usr/:user/:semester/:lecture                                    controllers.lectures.user.Lecturehome.generatelecturehome(user:String,semester:String,lecture:String)
 #Hand in Homework(Students)
@@ -95,7 +97,7 @@ GET         /about                                                           con
 #File service (hosted file on host server)
 GET         /files/:semester/:lecturename/:assignmenttitle                   controllers.lectures.Lecturehub.getFiles(semester:String,lecturename:String,assignmenttitle:String)
 #Get Feedback assignment
-GET         /downloadfeedback/:semester/:lecturename/:assignmenttitle                controllers.lectures.Lecturehub.getFeedBackFiles(semester:String,lecturename:String,assignmenttitle:String)
+GET         /downloadfeedback/:semester/:lecturename/:assignmenttitle        controllers.lectures.Lecturehub.getFeedBackFiles(semester:String,lecturename:String,assignmenttitle:String)
 #GET         /files/delete/:filename                               controllers.lectures.Lecturehub.deleteFiles(lecture:String,assignment:String,semester:String,filename:String)
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                                                    controllers.Assets.at(path="/public", file)

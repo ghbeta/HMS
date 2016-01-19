@@ -41,7 +41,10 @@ import static utils.UploadPath.localrepopullpath;
 public class Assignmentevaluation extends Controller {
 
     @Security.Authenticated(Securedassistant.class)
-    public static boolean grandaccess(Semesteruser currentadmin,Semesteruser student, Lecture lecture) {
+    public static Result grandaccess(String semester,String studentid, String lecturename) {
+        Semesteruser currentadmin=Semesteruser.findByEmail(ctx().session().get("email"), semester);
+        Semesteruser student=Semesteruser.findById(studentid,semester);
+        Lecture lecture=Lecture.getlecturebyname(lecturename,semester);
         User admincredential= User.findByEmail(ctx().session().get("email"),"global");
         Repo studentrepo=student.getRepoByLecture(lecture);
         SshSessionFactory.setInstance(new JschConfigSessionFactory() {
@@ -71,14 +74,16 @@ public class Assignmentevaluation extends Controller {
                 studentrepo.owner.add(currentadmin);
                 studentrepo.update(lecture.semester);
                 Logger.warn("grand success");
-                return true;
+                return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentadmin.lastname,semester,lecture.courseName));
             } catch (Exception e) {
                 Logger.warn(e.getMessage());
-                return false;
+                flash("danger", Messages.get("admin.grandaccess"));
+                return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentadmin.lastname,semester,lecture.courseName));
             }
         }
        else{
-            return false;
+            flash("danger", Messages.get("admin.grandaccess"));
+            return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentadmin.lastname,semester,lecture.courseName));
         }
 
     }

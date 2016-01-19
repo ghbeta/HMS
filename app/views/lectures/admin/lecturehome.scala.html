@@ -376,16 +376,17 @@
                           }
                           </td>
                           <td>
-                          @if(stu.getRepoByLecture(lecture)!=null){
+                          @if(stu.getRepoByLecture(lecture)!=null&&stu.getRepoByLecture(lecture).owner.size()==1){
+                            <form action="@controllers.lectures.admin.routes.Assignmentevaluation.grandaccess(lecture.semester,stu.id,lecture.courseName)#editor" method="post">
+                              <button type="submit" class="btn btn-primary">@Messages("admin.access.grand")</button>
+                            </form>
+                          }
                           @if(stu.getRepoByLecture(lecture).owner.contains(semesteruser)){
                             @Messages("admin.access.student.true")
                             }else{
-                            @if(controllers.lectures.admin.Assignmentevaluation.grandaccess(semesteruser,stu,lecture)){
-                              @Messages("admin.access.student.true")}else{
-                              <div class="label label-danger">@Messages("admin.access.student.false")</div>                               @*todo show current viewer add button grand access*@
+                           @Messages("admin.access.other")
                             }
-                            }
-                          }
+
                           </td>
                           <td>@if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment)!=null){
                             @if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).isevaluated){
