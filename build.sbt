@@ -18,6 +18,7 @@ libraryDependencies ++= Seq(
   "org.fluentlenium" % "fluentlenium-testng" % "0.10.9",
   "org.assertj" % "assertj-core" % "3.2.0",
   "org.seleniumhq.selenium" % "selenium-java" % "2.48.2",
+  "org.apache.commons" % "commons-lang3" % "3.1",
   javaWs,
   filters
 )
