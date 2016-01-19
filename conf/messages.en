@@ -79,6 +79,7 @@ repo.last.status=Last Update of Repository:
 assignment.status.repo=Last Commit
 assignment.expired=Dead line
 assignment.delete= Assignment has been delete
+assignment.remote.status=Status
 assginment.evaluation=Evaluation
 assginment.validhandin.sum=valid Handin/Total
 assginment.optional.sum=optional Handin/Total
