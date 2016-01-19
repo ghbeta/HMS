@@ -22,14 +22,14 @@ public class InitWatchService {
         return watchService;
     }
 
-    public static void registerALL(final Path start) throws IOException{
-        Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
-                    throws IOException {
-                dir.register(watchService,ENTRY_MODIFY);
-                return FileVisitResult.CONTINUE;
-            }
-        });
-    }
+//    public static void registerALL(final Path start) throws IOException{
+//        Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
+//            @Override
+//            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
+//                    throws IOException {
+//                dir.register(watchService,ENTRY_MODIFY);
+//                return FileVisitResult.CONTINUE;
+//            }
+//        });
+//    }
 }

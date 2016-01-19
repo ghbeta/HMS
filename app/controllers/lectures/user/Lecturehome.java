@@ -33,7 +33,7 @@ import controllers.lectures.user.routes;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 import static utils.FileWatcher.InitWatchService.getWatchService;
-import static utils.FileWatcher.InitWatchService.registerALL;
+//import static utils.FileWatcher.InitWatchService.registerALL;
 import static utils.RepoManager.hostparser;
 import static utils.RepoManager.reponame;
 import static utils.RepoManager.userrepofilepath;

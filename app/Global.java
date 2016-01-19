@@ -22,7 +22,7 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 import static utils.CreateDB.createServer;
 import static utils.FileWatcher.InitWatchService.getWatchService;
-import static utils.FileWatcher.InitWatchService.registerALL;
+//import static utils.FileWatcher.InitWatchService.registerALL;
 import static utils.FileWatcher.InitWatchService.setWatchService;
 
 /**

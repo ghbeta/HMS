@@ -36,7 +36,6 @@ public class RepoWatcher implements Runnable {
               //}
                //WatchKey key = watchService.take();
 
-//todo filter based on the url
                //key.pollEvents();
                key.reset();
 
