@@ -82,6 +82,7 @@ public class PushEvaluation {
             assignment=Assignment.findByLectureAndName(semester,lecturename,assignmentTitle);
             handin=Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment);
             if(handin==null&&assignment!=null){
+
             handin= new Handin();
             handin.student=semesteruser;
             handin.lecture=lecture;
@@ -92,7 +93,12 @@ public class PushEvaluation {
             //assignment.handin=new Date();
             //assignment.setishandin();
             //handin.
+            if(handin.ishandin){
             handin.save(semester);
+            Logger.warn("remove student from repository until handin is corrected");
+            RepoManager.AccessChangerforEvaluation(semesteruser.id,reponame.replace(".git",""),true);
+
+            }
             }
             }
         }
@@ -135,7 +141,11 @@ public class PushEvaluation {
                     Logger.warn(e.getMessage());
                 }
                 student=Semesteruser.getSemesteruserfomrUser(informationpart[0], User.findById(userid,"global"));
-                updateHandinResult(semester,handin,evaluationResult,eval,lecture,student,semesteruser,git);
+                boolean updated=updateHandinResult(semester,handin,evaluationResult,eval,lecture,student,semesteruser,git);
+                if(updated){
+                    Logger.warn("readded user to repository");
+                    RepoManager.AccessChangerforEvaluation(student.id,reponame.replace(".git",""),false);
+                }
             }
         }
 
@@ -235,7 +245,7 @@ public class PushEvaluation {
 
     }
 
-    public static void updateHandinResult(String semester,Handin handin,String[] result,Evaluation eval,Lecture lecture, Semesteruser student,Semesteruser teacher,Git git) {
+    public static boolean updateHandinResult(String semester,Handin handin,String[] result,Evaluation eval,Lecture lecture, Semesteruser student,Semesteruser teacher,Git git) {
         if(handin!=null&&result!=null){
             float earndpoints=Float.valueOf(result[0]);
             handin.comments= result[1];
@@ -254,9 +264,14 @@ public class PushEvaluation {
                 Logger.debug("Merging Correction into Local repository and sending email");
                 git.pull().call();
                 sendMailForEvaluation(student, handin);
+                return true;
             } catch (Exception e) {
                 e.printStackTrace();
+                return false;
             }
+        }
+        else{
+            return false;
         }
     }
 

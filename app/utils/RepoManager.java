@@ -33,6 +33,37 @@ import static utils.FileWatcher.InitWatchService.getWatchService;
  * Created by Hao on 2015/10/28.
  */
 public class RepoManager {
+
+    public static boolean AccessChangerforEvaluation(String userid,String reponame,boolean remove){
+        SshSessionFactory.setInstance(new JschConfigSessionFactory() {
+            @Override
+            protected void configure(OpenSshConfig.Host host, Session session) {
+                session.setConfig("StrictHostKeyChecking", "no");
+            }
+        });
+        try{
+        Repository adminrepo = new FileRepository(adminrepofilepath());
+        Git gitogit = new Git(adminrepo);
+        ConfigManager manager = ConfigManager.create(configrepopath());
+
+        Config config = manager.get();
+        nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(userid);
+        nl.minicom.gitolite.manager.models.Repository repository = config.ensureRepositoryExists(reponame);
+        if(remove){
+        repository.setPermission(repouser,Permission.READ_ONLY);}
+        else{
+            repository.setPermission(repouser,Permission.ALL);
+        }
+        manager.applyAsync(config);
+        gitogit.pull().call();
+        gitogit.push().call();
+        Logger.debug("user access level is changed");
+        return true;
+        }catch (Exception e){
+            Logger.warn(e.getMessage());
+            return false;
+        }
+    }
     public static String createRemoteRepo(User user, Lecture lecture,String serverhost) throws ServiceUnavailable, IOException, GitException, ModificationException, GitAPIException {
         SshSessionFactory.setInstance(new JschConfigSessionFactory() {
             @Override
