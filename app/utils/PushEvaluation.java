@@ -16,6 +16,7 @@ import play.Logger;
 import play.i18n.Messages;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.MalformedURLException;
@@ -31,6 +32,29 @@ import static org.apache.commons.lang3.text.WordUtils.capitalize;
  * Created by Hao on 2016/1/16.
  */
 public class PushEvaluation {
+
+    public static void GitEvaluation(String repoaddress){
+        String[] addresspart=repoaddress.split("/");
+        String userinformation=addresspart[4];
+        String[] informationpart=userinformation.split("_");
+        String lecturename=informationpart[1];
+        String semester=informationpart[0];
+        Lecture lecture= Lecture.getlecturebyname(lecturename,semester);
+        if(lecture!=null&&lecture.localrepo){
+            try {
+                LocalLectureGitEvaluation(repoaddress);
+            } catch (Exception e) {
+                Logger.warn(e.getMessage());
+            }
+        }
+        if(lecture!=null&&!lecture.localrepo){
+            try {
+               RemoteLectureGitEvaluation(repoaddress);
+            } catch (Exception e) {
+                Logger.warn(e.getMessage());
+            }
+        }
+    }
 
     public static void RemoteLectureGitEvaluation(String repoaddress) throws IOException, GitAPIException {
         String[] addresspart=repoaddress.split("/");
@@ -58,12 +82,45 @@ public class PushEvaluation {
         Handin handin=null;
         Evaluation eval=null;//Evaluation.findByLectureAndUser(semester, lecture, semesteruser);
         //Logger.debug(semesteruser.lastname);
-        String localrepopath=System.getProperty("user.home")+"/"+"data_dynamic"+"/"+semester+"/"+lecturename+"/"+userid+"/"+reponame.replace(".git","/.git");
+        String localrepopath=System.getProperty("user.home")+"/"+"data_dynamic"+"/"+semester+"/"+lecturename+"/"+userid+"/"+reponame.replace(".git","");
         Logger.debug(localrepopath);
-        Repository repository=new FileRepository(localrepopath);
-        Git git = new Git(repository);
-        //Logger.debug("starting merging remote to local");
-        git.pull().call();
+
+        File localPath = new File(localrepopath, "");
+        Git git=null;
+        Repository repository=null;
+        //localPath.delete();
+        if(!localPath.exists()) {
+            //FileUtils.forceDelete(localPath);
+            Logger.debug("not exist should create local repo");
+            Logger.debug("Cloning from source "+repopath+"to"+localPath);
+            git = Git.cloneRepository()
+                    .setURI(repopath)
+                    .setDirectory(localPath)
+                    .call();
+            repository=new FileRepository(localrepopath+"/.git");
+        }
+        else{
+            repository=new FileRepository(localrepopath+"/.git");
+            git = new Git(repository);
+            Logger.debug("starting merging remote to local");
+            git.pull().call();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+//        Repository repository=new FileRepository(localrepopath);
+//        Git git = new Git(repository);
+//        //Logger.debug("starting merging remote to local");
+//        git.pull().call();
         Logger.debug("current branch "+repository.getBranch());
         RevWalk walk= new RevWalk(repository);
 
