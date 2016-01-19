@@ -3,30 +3,30 @@
  */
 //;(function($){
 
-    /**
-     * Store scroll position for and set it after reload
-     *
-     * @return {boolean} [loacalStorage is available]
-     */
-    //$.fn.scrollPosReaload = function(){
-    function scrollPosReaload(){
-        if (localStorage) {
-            var posReader = localStorage["posStorage"];
-
-            if (posReader) {
-                $(window).scrollTop(posReader);
-                localStorage.removeItem("posStorage");
-            }
-
-            $(this).click(function(e) {
-                localStorage["posStorage"] = $(window).scrollTop();
-            });
-
-            return true;
-        }
-
-        return false;
-    }
+    ///**
+    // * Store scroll position for and set it after reload
+    // *
+    // * @return {boolean} [loacalStorage is available]
+    // */
+    ////$.fn.scrollPosReaload = function(){
+    //function scrollPosReaload(){
+    //    if (localStorage) {
+    //        var posReader = localStorage["posStorage"];
+    //
+    //        if (posReader) {
+    //            $(window).scrollTop(posReader);
+    //            localStorage.removeItem("posStorage");
+    //        }
+    //
+    //        $(this).click(function(e) {
+    //            localStorage["posStorage"] = $(window).scrollTop();
+    //        });
+    //
+    //        return true;
+    //    }
+    //
+    //    return false;
+    //}
 
 $(document).ready(function () {
     $('.markstatus').click(function() {
