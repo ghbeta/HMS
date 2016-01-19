@@ -313,7 +313,7 @@
               <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="a@assignment.title">
                   <h4 class="panel-title">
-                  <a role="button" data-toggle="collapse" data-parent="#assignmentlist" href="#@assignment.title" aria-expanded="true" aria-controls="@assignment.title" id="open_assignment">
+                  <a role="button" class="markstatus" data-toggle="collapse" data-parent="#homeworkcorrectionlist" href="#@assignment.title" aria-expanded="true" aria-controls="@assignment.title" id="open_assignment">
                     @assignment.title <span class="badge pull-right">@Handin.getHandinofassignmentinlecture(assignment,lecture,lecture.semester).size()/@Semesteruser.findAllstudentsByLecture(lecture.semester,lecture).size()</span>
                   </a>
                     </h4>
@@ -407,7 +407,7 @@
                                   <h4 class="modal-title" id="myModalLabel">@Messages("homework.evaluation")_@stu.lastname _@assignment.title</h4>
                                 </div>
                                 <div class="modal-body">
-                             <form id="@assignment.title@stu.userHash" action="@controllers.lectures.admin.routes.Assignmentevaluation.addevaluation(lecture.semester,lecture.courseName,assignment.id,stu.email)" method="POST">
+                             <form id="@assignment.title@stu.userHash" action="@controllers.lectures.admin.routes.Assignmentevaluation.addevaluation(lecture.semester,lecture.courseName,assignment.id,stu.email)#editor" method="POST">
                                 @if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment)!=null){
                                    <div class="label label-info center-block">@assignment.title</div>
                                    <div class="row">
