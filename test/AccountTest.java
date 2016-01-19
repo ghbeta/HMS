@@ -438,20 +438,20 @@ public class AccountTest extends FluentTest{
         assertThat(find("#handin_status").getText()).isEqualTo("Handin exist");
     }
 
-    @Test
-    public void r_testStudentHandinRemote(){
-        StudentSignin();
-        click("#lecture_my");
-        await().atMost(5,TimeUnit.SECONDS).until("#my_semester_tab").isPresent();
-        click("#my_semester_tab");
-
-        await().atMost(10,TimeUnit.SECONDS).until("#my_lecture_contentRemoteLectureTest").areDisplayed();
-        await().untilPage().isLoaded();
-        click("#my_lecture_contentRemoteLectureTest");
-        await().atMost(15,TimeUnit.SECONDS).until("#handin_homework_remote").areDisplayed();
-        click("#handin_homework_remote");
-        assertThat(find("#remote_handin_result").getText()).isEqualTo("0.0/20.0");
-    }
+//    @Test
+//    public void r_testStudentHandinRemote(){
+//        StudentSignin();
+//        click("#lecture_my");
+//        await().atMost(5,TimeUnit.SECONDS).until("#my_semester_tab").isPresent();
+//        click("#my_semester_tab");
+//
+//        await().atMost(10,TimeUnit.SECONDS).until("#my_lecture_contentRemoteLectureTest").areDisplayed();
+//        await().untilPage().isLoaded();
+//        click("#my_lecture_contentRemoteLectureTest");
+//        await().atMost(15,TimeUnit.SECONDS).until("#handin_homework_remote").areDisplayed();
+//        click("#handin_homework_remote");
+//        assertThat(find("#remote_handin_result").getText()).isEqualTo("0.0/20.0");
+//    }
     @Test
     public void s_testStudentRevert(){
         String url="http://192.168.0.198:9000/students/Gao/WS2016/LocalLectureTest";
@@ -461,14 +461,14 @@ public class AccountTest extends FluentTest{
         await().atMost(5,TimeUnit.SECONDS).until("#handin_status_not").areDisplayed();
         assertThat(find("#handin_status_not").getText()).isEqualTo("No Handin");
     }
-    @Test
-    public void t_testStudentRemoteRevert(){
-        String url="http://192.168.0.198:9000/students/Gao/WS2016/RemoteLectureTest";
-        StudentSignin();
-        goTo(url);
-        click("#revert_remote_handin");
-        assertThat(find("#remote_handin_result").getText()).isEqualTo("0/20.0");
-    }
+//    @Test
+//    public void t_testStudentRemoteRevert(){
+//        String url="http://192.168.0.198:9000/students/Gao/WS2016/RemoteLectureTest";
+//        StudentSignin();
+//        goTo(url);
+//        click("#revert_remote_handin");
+//        assertThat(find("#remote_handin_result").getText()).isEqualTo("0/20.0");
+//    }
     @Test
     public void u_testEvaluation(){
         String url="http://192.168.0.198:9000/students/Gao/WS2016/LocalLectureTest";
