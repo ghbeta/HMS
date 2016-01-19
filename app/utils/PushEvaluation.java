@@ -168,9 +168,12 @@ public class PushEvaluation {
             if(!commiterbeforehead.equals(semesteruser.email)&&committerMsgofbeforeHead.toLowerCase().contains("assignment")){
                 lecture=Lecture.getlecturebyname(lecturename,semester);
                 assignmentTitle=capitalize(committerMsgofbeforeHead);
+                Logger.warn("assignmenttitle "+assignmentTitle);
                 assignment=Assignment.findByLectureAndName(semester,lecturename,assignmentTitle);
-                handin=Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment);
-                eval=Evaluation.findByLectureAndUser(semester, lecture, semesteruser);
+                Logger.warn("assignment object "+assignment.title);
+                student=Semesteruser.getSemesteruserfomrUser(informationpart[0], User.findById(userid,"global"));
+                handin=Handin.getHandinofassignmentofstudentinlecture(semester,lecture,student,assignment);
+                eval=Evaluation.findByLectureAndUser(semester, lecture, student);
                 Logger.debug("ready to compare");
                 ObjectId newhead = repository.resolve("HEAD^{tree}");
                 ObjectId oldHead = repository.resolve("HEAD^^{tree}");
@@ -193,11 +196,11 @@ public class PushEvaluation {
                     evaluationResult=CommitParser(diffresult);
                     diffresult=null;
                     changes.reset();
+
                 }
                 catch(Exception e){
                     Logger.warn(e.getMessage());
                 }
-                student=Semesteruser.getSemesteruserfomrUser(informationpart[0], User.findById(userid,"global"));
                 boolean updated=updateHandinResult(semester,handin,evaluationResult,eval,lecture,student,semesteruser,git);
                 if(updated){
                     Logger.warn("readded user to repository");
