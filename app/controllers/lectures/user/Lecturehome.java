@@ -253,68 +253,68 @@ public class Lecturehome extends Controller {
 
     }
 
-    @Security.Authenticated(Securedstudents.class)
-    public static Result handinhomeworkremote(String assignmentid,String user,String semester,String lecturename){
-        Assignment assignment=Assignment.findById(semester,assignmentid);
-        Lecture lecture = Lecture.getlecturebyname(lecturename,semester);
-        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
-        Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
-        DynamicForm handinform = Form.form().bindFromRequest();
-        try{
-        if(Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment)!=null){
-            Handin handin=Handin.getHandinofassignmentofstudentinlecture(semester, lecture, semesteruser, assignment);
-            handin.handin=new Date();
-            handin.setishandin();
-            handin.update(semester);
-        }else{
-            Handin handin= new Handin();
-            handin.student=semesteruser;
-            handin.lecture=lecture;
-            handin.assignment=assignment;
-            //handin.exercises=new ArrayList<Exercise>();
-//            for(int i=0;i<assignment.numberofexercise;i++){
-//                Exercise exercise = new Exercise();
-//                exercise.title=Messages.get("exercise.title")+(i+1);
-//                exercise.semester=semester;
-//                //exercise.handin=handin;
-//                //exercise.save(semester);
-//                //exercises.add(exercise);
-//                handin.exercises.add(exercise);
-//                //exercise.handin=handin;
+//    @Security.Authenticated(Securedstudents.class)
+//    public static Result handinhomeworkremote(String assignmentid,String user,String semester,String lecturename){
+//        Assignment assignment=Assignment.findById(semester,assignmentid);
+//        Lecture lecture = Lecture.getlecturebyname(lecturename,semester);
+//        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
+//        Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
+//        DynamicForm handinform = Form.form().bindFromRequest();
+//        try{
+//        if(Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment)!=null){
+//            Handin handin=Handin.getHandinofassignmentofstudentinlecture(semester, lecture, semesteruser, assignment);
+//            handin.handin=new Date();
+//            handin.setishandin();
+//            handin.update(semester);
+//        }else{
+//            Handin handin= new Handin();
+//            handin.student=semesteruser;
+//            handin.lecture=lecture;
+//            handin.assignment=assignment;
+//            //handin.exercises=new ArrayList<Exercise>();
+////            for(int i=0;i<assignment.numberofexercise;i++){
+////                Exercise exercise = new Exercise();
+////                exercise.title=Messages.get("exercise.title")+(i+1);
+////                exercise.semester=semester;
+////                //exercise.handin=handin;
+////                //exercise.save(semester);
+////                //exercises.add(exercise);
+////                handin.exercises.add(exercise);
+////                //exercise.handin=handin;
+////            }
+//
+//            handin.handin=new Date();
+//            handin.setishandin();
+//            handin.isevaluated=false;
+//            //assignment.handin=new Date();
+//            //assignment.setishandin();
+//            //handin.
+//            handin.save(semester);}
+//
+//            Repo repo=Repo.findRepoByLectureAndOwner(assignment.semester,semesteruser,assignment.lecture);
+//            File localPath = new File(localrepopullpath(semester,lecturename,currentuser.id,reponame(assignment.lecture, semesteruser)), "");
+//            //localPath.delete();
+//            if(localPath.exists()) {
+//                FileUtils.forceDelete(localPath);
 //            }
-
-            handin.handin=new Date();
-            handin.setishandin();
-            handin.isevaluated=false;
-            //assignment.handin=new Date();
-            //assignment.setishandin();
-            //handin.
-            handin.save(semester);}
-
-            Repo repo=Repo.findRepoByLectureAndOwner(assignment.semester,semesteruser,assignment.lecture);
-            File localPath = new File(localrepopullpath(semester,lecturename,currentuser.id,reponame(assignment.lecture, semesteruser)), "");
-            //localPath.delete();
-            if(localPath.exists()) {
-                FileUtils.forceDelete(localPath);
-            }
-
-            Logger.debug("Cloning from "+repo.repofilepath+"to"+localPath);
-            Git git = Git.cloneRepository()
-                    .setURI(repo.repofilepath)
-                    .setDirectory(localPath)
-                    .call();
-            //Logger.debug("create init commit");
-            //git.commit().setMessage("init commit").setAuthor(semesteruser.lastname,semesteruser.email).call();
-            Logger.debug("create local repo: "+git.getRepository().getDirectory());
-
-        Logger.warn("create handin success");
-        return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));}
-        catch (Exception e){
-            flash("danger", Messages.get("Lecture.assignment.uploadfail"));
-            Logger.warn(e.getMessage());
-            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
-        }
-    }
+//
+//            Logger.debug("Cloning from "+repo.repofilepath+"to"+localPath);
+//            Git git = Git.cloneRepository()
+//                    .setURI(repo.repofilepath)
+//                    .setDirectory(localPath)
+//                    .call();
+//            //Logger.debug("create init commit");
+//            //git.commit().setMessage("init commit").setAuthor(semesteruser.lastname,semesteruser.email).call();
+//            Logger.debug("create local repo: "+git.getRepository().getDirectory());
+//
+//        Logger.warn("create handin success");
+//        return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));}
+//        catch (Exception e){
+//            flash("danger", Messages.get("Lecture.assignment.uploadfail"));
+//            Logger.warn(e.getMessage());
+//            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
+//        }
+//    }
 
     @Security.Authenticated(Securedstudents.class)
     public static Result handinhomework(String assignmentid,String user,String semester,String lecturename){
@@ -427,28 +427,28 @@ public class Lecturehome extends Controller {
 
     }
 
-    @Security.Authenticated(Securedstudents.class)
-    public static Result reverthandinhomeworkremote(String assignmentid,String user,String semester,String lecturename){
-        Assignment assignment=Assignment.findById(semester,assignmentid);
-        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
-        Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
-        Lecture lecture = Lecture.getlecturebyname(lecturename,semester);
-        try {
-            Handin handin=Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment);
-            if(handin!=null&&!handin.isevaluated){
-                handin.delete(semester);
-                flash("success",Messages.get("Lecture.assignment.revertsuccess"));}
-            if(handin==null||handin.isevaluated){
-                flash("danger", Messages.get("Lecture.assignment.revertfail"));
-            }
-
-            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
-        } catch (Exception e) {
-            Logger.warn("Exceptione revert commit"+e.getMessage());
-            flash("danger", Messages.get("Lecture.assignment.revertfail"));
-            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
-        }
-    }
+//    @Security.Authenticated(Securedstudents.class)
+//    public static Result reverthandinhomeworkremote(String assignmentid,String user,String semester,String lecturename){
+//        Assignment assignment=Assignment.findById(semester,assignmentid);
+//        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
+//        Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
+//        Lecture lecture = Lecture.getlecturebyname(lecturename,semester);
+//        try {
+//            Handin handin=Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment);
+//            if(handin!=null&&!handin.isevaluated){
+//                handin.delete(semester);
+//                flash("success",Messages.get("Lecture.assignment.revertsuccess"));}
+//            if(handin==null||handin.isevaluated){
+//                flash("danger", Messages.get("Lecture.assignment.revertfail"));
+//            }
+//
+//            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
+//        } catch (Exception e) {
+//            Logger.warn("Exceptione revert commit"+e.getMessage());
+//            flash("danger", Messages.get("Lecture.assignment.revertfail"));
+//            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
+//        }
+//    }
 
     @Security.Authenticated(Securedstudents.class)
     public static Result reverthandinhomework(String assignmentid,String user,String semester,String lecturename){
