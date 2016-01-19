@@ -50,7 +50,8 @@ public class RepoManager {
         nl.minicom.gitolite.manager.models.User repouser=config.ensureUserExists(userid);
         nl.minicom.gitolite.manager.models.Repository repository = config.ensureRepositoryExists(reponame);
         if(remove){
-        repository.setPermission(repouser,Permission.READ_ONLY);}
+            repository.revokePermissions(repouser);
+        }
         else{
             repository.setPermission(repouser,Permission.ALL);
         }
