@@ -91,7 +91,6 @@
                 <thead>
                   <tr>
                     <th>@Messages("assignment.title")</th>
-                    <th>@Messages("assignment.exercise")</th>
                     <th>@Messages("lecture.form.addionalinfo")</th>
                     <th  class="text-center">@Messages("assignment.action")</th>
                     <th>@Messages("assignment.status")</th>
@@ -102,7 +101,6 @@
                 @for(currentassignment <- lecture.assignments){
                   <tr>
                     <td>@currentassignment.title@if(currentassignment.uploadfile!=null){<a href="@controllers.lectures.routes.Lecturehub.getFiles(lecture.semester,lecture.courseName,currentassignment.title)"><i class="fa fa-download"></i></a>}</td>
-                    <td>@currentassignment.numberofexercise</td>
                     <td>@currentassignment.addtionalinfo</td>
                     <td  class="text-center">
                     @if(currentassignment.isExpired){<a data-toggle="modal" data-target="#handin@currentassignment.id" title="@Messages("Assignment.handin")" id="handin_homework"><i class="fa fa-pencil-square-o"></i></a>
@@ -228,7 +226,6 @@
                   <thead>
                     <tr>
                       <th>@Messages("assignment.title")</th>
-                      <th>@Messages("assignment.exercise")</th>
                       <th>@Messages("lecture.form.addionalinfo")</th>
                       <th  class="text-center">@Messages("assignment.action")</th>
                       <th  class="text-center">@Messages("assignment.remote.status")</th>
@@ -239,7 +236,6 @@
                   @for(currentassignment <- lecture.assignments){
                     <tr>
                       <td>@currentassignment.title@if(currentassignment.uploadfile!=null){<a href="@controllers.lectures.routes.Lecturehub.getFiles(lecture.semester,lecture.courseName,currentassignment.title)"><i class="fa fa-download"></i></a>}</td>
-                      <td>@currentassignment.numberofexercise</td>
                       <td>@currentassignment.addtionalinfo</td>
                       <td  class="text-center">
                       @if(currentassignment.isExpired){

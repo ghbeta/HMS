@@ -91,7 +91,6 @@
           <thead>
             <tr>
               <th>@Messages("assignment.title")</th>
-              <th>@Messages("assignment.exercise")</th>
               <th>@Messages("lecture.form.addionalinfo")</th>
               <th  class="text-center">@Messages("assignment.action")</th>
               <th>@Messages("assignment.status")</th>
@@ -101,7 +100,6 @@
           @for(currentassignment <- lecture.assignments){
             <tr>
               <td>@currentassignment.title@if(currentassignment.uploadfile!=null){<a href="@controllers.lectures.routes.Lecturehub.getFiles(lecture.semester,lecture.courseName,currentassignment.title)"><i class="fa fa-download"></i></a>}</td>
-              <td>@currentassignment.numberofexercise</td>
               <td id="table_localinfo">@currentassignment.addtionalinfo</td>
               <td  class="text-center">
                 <a data-toggle="modal" data-target="#modify@currentassignment.id" title="@Messages("Assignment.modify")" id="modify_assignment"><i class="fa fa-pencil-square-o"></i></a>
@@ -180,7 +178,6 @@
             <thead>
               <tr>
                 <th>@Messages("assignment.title")</th>
-                <th>@Messages("assignment.exercise")</th>
                 <th>@Messages("lecture.form.addionalinfo")</th>
                 <th  class="text-center">@Messages("assignment.action")</th>
                 <th>@Messages("assignment.status")</th>
@@ -190,7 +187,6 @@
             @for(currentassignment <- lecture.assignments){
               <tr>
                 <td>@currentassignment.title@if(currentassignment.uploadfile!=null){<a href="@controllers.lectures.routes.Lecturehub.getFiles(lecture.semester,lecture.courseName,currentassignment.title)"><i class="fa fa-download"></i></a>}</td>
-                <td>@currentassignment.numberofexercise</td>
                 <td id="table_remoteinfo">@currentassignment.addtionalinfo</td>
                 <td  class="text-center">
                   <a data-toggle="modal" data-target="#modify@currentassignment.id" title="@Messages("Assignment.modify")"><i class="fa fa-pencil-square-o"></i></a>
