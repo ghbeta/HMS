@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import static org.apache.commons.lang3.text.WordUtils.capitalize;
+import static utils.RepoManager.AccessChangerforEvaluation;
 
 /**
  * Created by Hao on 2016/1/16.
@@ -50,6 +51,11 @@ public class PushEvaluation {
         if(lecture!=null&&!lecture.localrepo){
             try {
                RemoteLectureGitEvaluation(repoaddress);
+                if(!lecture.isExpired()){
+                    String userid=informationpart[2].replace(".git","");
+                    String reponame =addresspart[4];
+                    AccessChangerforEvaluation(userid,reponame.replace(".git",""),true);
+                }
             } catch (Exception e) {
                 Logger.warn(e.getMessage());
             }
@@ -107,20 +113,6 @@ public class PushEvaluation {
         }
 
 
-
-
-
-
-
-
-
-
-
-
-//        Repository repository=new FileRepository(localrepopath);
-//        Git git = new Git(repository);
-//        //Logger.debug("starting merging remote to local");
-//        git.pull().call();
         Logger.debug("current branch "+repository.getBranch());
         RevWalk walk= new RevWalk(repository);
 
@@ -153,7 +145,7 @@ public class PushEvaluation {
             if(handin.ishandin){
             handin.save(semester);
             Logger.warn("remove student from repository until handin is corrected");
-            RepoManager.AccessChangerforEvaluation(semesteruser.id,reponame.replace(".git",""),true);
+            AccessChangerforEvaluation(semesteruser.id, reponame.replace(".git", ""), true);
 
             }
             }
@@ -204,7 +196,7 @@ public class PushEvaluation {
                 boolean updated=updateHandinResult(semester,handin,evaluationResult,eval,lecture,student,semesteruser,git);
                 if(updated){
                     Logger.warn("readded user to repository");
-                    RepoManager.AccessChangerforEvaluation(student.id,reponame.replace(".git",""),false);
+                    AccessChangerforEvaluation(student.id, reponame.replace(".git", ""), false);
                 }
             }
         }
