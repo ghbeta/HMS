@@ -364,7 +364,7 @@
                                 <div class="input-group-btn">
                                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Messages("repo.eval.action") <span class="caret"></span></button>
                                   <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a class="ct" data-clipboard-text="@stu.getRepoByLecture(lecture).repopath">@Messages("repo.address.copy")</a></li>
+                                    <li><a class="ct" data-clipboard-text="@stu.getRepoByLecture(lecture).repopath" href="#">@Messages("repo.address.copy")</a></li>
                                     <li><a href="sourcetree://cloneRepo/@stu.getRepoByLecture(lecture).repopath">@Messages("repo.open.sourcetree")</a></li>
                                   </ul>
                                 </div><!-- /btn-group -->
@@ -379,8 +379,9 @@
                           }
                           @if(stu.getRepoByLecture(lecture).owner.contains(semesteruser)){
                             @Messages("admin.access.student.true")
-                            }else{
-                           @Messages("admin.access.other")
+                            }
+                          @if(!stu.getRepoByLecture(lecture).owner.contains(semesteruser)&&stu.getRepoByLecture(lecture).owner.size()==2) {
+                            @Messages("admin.access.other")
                             }
 
                           </td>

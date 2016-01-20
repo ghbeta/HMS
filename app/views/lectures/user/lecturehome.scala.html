@@ -208,7 +208,7 @@
                   <div class="input-group-btn">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Messages("repo.eval.action") <span class="caret"></span></button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                      <li><a href="javascript:copytoclip();">@Messages("repo.address.copy")</a></li>
+                      <li><a class="ct" data-clipboard-text="@Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture).repopath" href="#">@Messages("repo.address.copy")</a></li>
                       <li><a href="sourcetree://cloneRepo/@Repo.findRepoByLectureAndOwner(lecture.semester,semesteruser,lecture).repopath">@Messages("repo.open.sourcetree")</a></li>
                     </ul>
                   </div><!-- /btn-group -->
