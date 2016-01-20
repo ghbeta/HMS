@@ -434,28 +434,31 @@ public class Lecturehome extends Controller {
 
     }
 
-//    @Security.Authenticated(Securedstudents.class)
-//    public static Result reverthandinhomeworkremote(String assignmentid,String user,String semester,String lecturename){
-//        Assignment assignment=Assignment.findById(semester,assignmentid);
-//        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
-//        Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
-//        Lecture lecture = Lecture.getlecturebyname(lecturename,semester);
-//        try {
-//            Handin handin=Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment);
-//            if(handin!=null&&!handin.isevaluated){
-//                handin.delete(semester);
-//                flash("success",Messages.get("Lecture.assignment.revertsuccess"));}
-//            if(handin==null||handin.isevaluated){
-//                flash("danger", Messages.get("Lecture.assignment.revertfail"));
-//            }
-//
-//            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
-//        } catch (Exception e) {
-//            Logger.warn("Exceptione revert commit"+e.getMessage());
-//            flash("danger", Messages.get("Lecture.assignment.revertfail"));
-//            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
-//        }
-//    }
+    @Security.Authenticated(Securedstudents.class)
+    public static Result reverthandinhomeworkremote(String assignmentid,String user,String semester,String lecturename){
+        Assignment assignment=Assignment.findById(semester,assignmentid);
+        User currentuser=User.findByEmail(ctx().session().get("email"),"global");
+        Semesteruser semesteruser=Semesteruser.getSemesteruserfomrUser(semester,currentuser);
+        Lecture lecture = Lecture.getlecturebyname(lecturename,semester);
+        //Repo repo=Repo.findRepoByLectureAndOwner(semester,semesteruser,lecture);
+        String reponame=lecture.semester+"_"+lecture.courseName+"_"+semesteruser.id;
+        try {
+            Handin handin=Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment);
+            if(handin!=null&&!handin.isevaluated){
+                handin.delete(semester);
+                RepoManager.AccessChangerforEvaluation(semesteruser.id,reponame,false);
+                flash("success",Messages.get("Lecture.assignment.revertsuccess"));}
+            if(handin==null||handin.isevaluated){
+                flash("danger", Messages.get("Lecture.assignment.revertfail"));
+            }
+
+            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
+        } catch (Exception e) {
+            Logger.warn("Exceptione revert commit"+e.getMessage());
+            flash("danger", Messages.get("Lecture.assignment.revertfail"));
+            return redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname, assignment.semester, assignment.lecture.courseName));
+        }
+    }
 
     @Security.Authenticated(Securedstudents.class)
     public static Result reverthandinhomework(String assignmentid,String user,String semester,String lecturename){

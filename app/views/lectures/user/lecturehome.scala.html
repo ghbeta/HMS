@@ -230,6 +230,7 @@
                       <th>@Messages("assignment.title")</th>
                       <th>@Messages("assignment.exercise")</th>
                       <th>@Messages("lecture.form.addionalinfo")</th>
+                      <th  class="text-center">@Messages("assignment.action")</th>
                       <th  class="text-center">@Messages("assignment.remote.status")</th>
                       <th>@Messages("assginment.evaluation")</th>
                       <th>@Messages("assignment.expired")</th>
@@ -240,7 +241,11 @@
                       <td>@currentassignment.title@if(currentassignment.uploadfile!=null){<a href="@controllers.lectures.routes.Lecturehub.getFiles(lecture.semester,lecture.courseName,currentassignment.title)"><i class="fa fa-download"></i></a>}</td>
                       <td>@currentassignment.numberofexercise</td>
                       <td>@currentassignment.addtionalinfo</td>
-                      <td>@if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment)!=null){
+                      <td  class="text-center">
+                      @if(currentassignment.isExpired){
+                        <a title="remove last handin" href="@controllers.lectures.user.routes.Lecturehome.reverthandinhomeworkremote(currentassignment.id,semesteruser.lastname,lecture.semester,lecture.courseName)" id="revert_handin_remote"><i class="fa fa-times"></i></a>}
+                      </td>
+                      <td class="text-center">@if(Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment)!=null){
                         <div class="label label-success" id="handin_status_remote">@Messages("handin.ok")</div>
                       }else{<div class="label label-danger" id="handin_status_not_remote">@Messages("handin.notok")</div>}</td>
                       <td id="remote_handin_result"><a data-toggle="modal" data-target="#evalr@currentassignment.id" title="@Messages("click.for.detail")">
