@@ -339,13 +339,22 @@ public class PushEvaluation {
         BufferedReader bufReader = new BufferedReader(new StringReader(diffs));
         String[] evaluResult=new String[2];
         String line=null;
+        String compareLine=null;
         float earndpoints=0;
         Pattern getnumber1 = Pattern.compile("((//)([ ]*)([\\+\\-])?(\\d+(\\.\\d+)?)(?![\\d.x]))|([\\+\\-])?(\\d+(\\.\\d+)?)(?![\\d.x])$");
         Pattern getnumber2 = Pattern.compile("([\\+\\-])?(\\d+(\\.\\d+)?)(?![\\d.x])");
         Matcher firstmatch=null;
         Matcher finalmatch=null;
         while ((line=bufReader.readLine())!=null){
-            if(line.matches("^(\\+)([^\\+]).*$")){
+            if(line.matches("^(\\-)([^\\-]).*$")){
+                compareLine=line;
+                Logger.debug("compareLine minus is "+line);
+            }
+            if((compareLine!=null)&&(!compareLine.isEmpty())&&line.matches("^(\\+)([^\\+]).*$")){
+                if(line.contains(compareLine)){
+                    Logger.warn("remove student content");
+                    line=line.replace(compareLine,"");
+                }
                 Logger.debug("start match each line "+line);
                firstmatch=getnumber1.matcher(line);
                 firstmatch.find();
@@ -358,6 +367,7 @@ public class PushEvaluation {
                    Logger.debug("final match is "+point);
                }
                 earndpoints=earndpoints+Float.valueOf(point);
+                compareLine=null;
             }
         }
         evaluResult[0]=earndpoints+"";
