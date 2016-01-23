@@ -347,8 +347,8 @@ public class PushEvaluation {
         Matcher finalmatch=null;
         while ((line=bufReader.readLine())!=null){
             if(line.matches("^(\\-)([^\\-]).*$")){
-                compareLine=line;
-                Logger.debug("compareLine minus is "+line);
+                compareLine=line.substring(1);
+                Logger.debug("compareLine minus is "+compareLine);
             }
             if((compareLine!=null)&&(!compareLine.isEmpty())&&line.matches("^(\\+)([^\\+]).*$")){
                 if(line.contains(compareLine)){

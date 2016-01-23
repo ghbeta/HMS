@@ -364,7 +364,7 @@
                                 <div class="input-group-btn">
                                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Messages("repo.eval.action") <span class="caret"></span></button>
                                   <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a class="ct" data-clipboard-text="@stu.getRepoByLecture(lecture).repopath" href="#">@Messages("repo.address.copy")</a></li>
+                                    <li><a class="ct" data-clipboard-text="@stu.getRepoByLecture(lecture).repopath" href="#editor">@Messages("repo.address.copy")</a></li>
                                     <li><a href="sourcetree://cloneRepo/@stu.getRepoByLecture(lecture).repopath">@Messages("repo.open.sourcetree")</a></li>
                                   </ul>
                                 </div><!-- /btn-group -->
@@ -422,7 +422,7 @@
                                     <input type="number"  step="0.01" class="form-control" value="@assignment.totalpoints" disabled="disabled">
                                     </div>
                                      <div class="col-xs-12">
-                                  <textarea class="form-control"  rows="3" placeholder="@Messages("comment")" name="evalcomments" id="comments_1">@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).comments</textarea>
+                                  <textarea class="form-control"  rows="20" placeholder="@Messages("comment")" name="evalcomments" id="comments_1">@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,stu,assignment).comments</textarea>
                                      </div>
                                    </div>
                                    <hr>
