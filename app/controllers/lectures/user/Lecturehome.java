@@ -6,7 +6,6 @@ import models.*;
 import net.lingala.zip4j.core.ZipFile;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.*;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -29,7 +28,6 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import controllers.lectures.user.routes;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 import static utils.FileWatcher.InitWatchService.getWatchService;
@@ -38,7 +36,6 @@ import static utils.RepoManager.hostparser;
 import static utils.RepoManager.reponame;
 import static utils.RepoManager.userrepofilepath;
 import static utils.UploadPath.localrepopullpath;
-import static utils.UploadPath.uploadpath;
 
 /**
  * Created by Hao on 2015/10/15.
@@ -93,7 +90,7 @@ public class Lecturehome extends Controller {
            Path addToWatch= Paths.get(System.getProperty("user.home"), "repositories", reponame + ".git", "refs", "heads");
            addToWatch.register(getWatchService(), ENTRY_MODIFY);
            Logger.debug("add new repo to watch"+addToWatch.toString());
-           RepoWatcher repoWatcher=new RepoWatcher();
+           RepoToWatch repoWatcher=new RepoToWatch();
            repoWatcher.reponame=reponame + ".git";
            repoWatcher.save("global");
         return  redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,lecture.semester,lecture.courseName));}
@@ -140,7 +137,7 @@ public class Lecturehome extends Controller {
                     Path addToWatch= Paths.get(System.getProperty("user.home"), "repositories", reponame + ".git", "refs", "heads");
                     addToWatch.register(getWatchService(), ENTRY_MODIFY);
                     Logger.debug("add new repo to watch"+addToWatch.toString());
-                    RepoWatcher repoWatcher=new RepoWatcher();
+                    RepoToWatch repoWatcher=new RepoToWatch();
                     repoWatcher.reponame=reponame + ".git";
                     repoWatcher.save("global");
                     return  redirect(routes.Lecturehome.generatelecturehome(semesteruser.lastname,lecture.semester,lecture.courseName));}

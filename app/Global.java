@@ -1,24 +1,18 @@
 
-import com.sun.nio.file.ExtendedWatchEventModifier;
 import models.*;
 import org.h2.tools.Server;
 import play.*;
 import play.Application;
-import play.api.PlayException;
 import utils.CreateAdmin;
 import utils.FileWatcher.RepoWatcher;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardWatchEventKinds;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 import static utils.CreateDB.createServer;
 import static utils.FileWatcher.InitWatchService.getWatchService;
@@ -55,7 +49,7 @@ public class Global extends GlobalSettings{
         entity.add(Token.class);
         entity.add(Semester.class);
         entity.add(SSH.class);
-        entity.add(models.RepoWatcher.class);
+        entity.add(RepoToWatch.class);
 
         List<Class> entity1 = new ArrayList<Class>();
         entity1.add(Semesteruser.class);
@@ -103,9 +97,9 @@ public class Global extends GlobalSettings{
             //createServer("SS2016", entity1);
             //createServer("WS2016", entity1);
         }
-        List<models.RepoWatcher> allreponames=models.RepoWatcher.findAllReponame();
+        List<RepoToWatch> allreponames= RepoToWatch.findAllReponame();
         if(allreponames.size()>0){
-            for(models.RepoWatcher repoWatcher:allreponames){
+            for(RepoToWatch repoWatcher:allreponames){
                 Path toWatch= Paths.get(System.getProperty("user.home"),"repositories",repoWatcher.reponame,"refs","heads");
                 Logger.warn(toWatch.toString()+" was added to watch");
                 try {

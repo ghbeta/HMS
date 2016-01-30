@@ -15,16 +15,16 @@ import static com.avaje.ebean.Ebean.getServer;
  */
 @Entity
 @Table(name="repositories")
-public class RepoWatcher extends Model {
+public class RepoToWatch extends Model {
     @Id
     public String reponame;
 
-    public static RepoWatcher findByReponame(String reponame){
-        return getServer("global").find(RepoWatcher.class).where().eq("reponame",reponame).findUnique();
+    public static RepoToWatch findByReponame(String reponame){
+        return getServer("global").find(RepoToWatch.class).where().eq("reponame",reponame).findUnique();
     }
 
-    public static List<RepoWatcher> findAllReponame(){
-        return getServer("global").find(RepoWatcher.class).findList();
+    public static List<RepoToWatch> findAllReponame(){
+        return getServer("global").find(RepoToWatch.class).findList();
     }
 
 }
