@@ -33,7 +33,7 @@ app.controller('messagecontroller',function($scope,$http,$websocket,Notification
 
             ws .$on('allconversations',function(data){
                 //console.log("allconversations");
-                $scope.talks=JSON.parse(data);
+                $scope.talks=JSON.parse(data);                  // register all conversation channel at first connect
                 $scope.$digest();
                 //console.log(JSON.parse(data));
             })
@@ -41,7 +41,7 @@ app.controller('messagecontroller',function($scope,$http,$websocket,Notification
                     var namepart=data.split(";")[0];
                     var datapart2=JSON.parse(data.split(";")[1]);
                     if(datapart2[0]["conversation"]["id"]!==currentconvid){
-                        $scope.success("you have a new message from "+namepart);
+                        $scope.success("you have a new message from "+namepart);   //register notification channel
                     }else{
                         $scope.allmessages=datapart2;
                         $scope.$digest();
@@ -54,20 +54,20 @@ app.controller('messagecontroller',function($scope,$http,$websocket,Notification
                 $scope.newmessage="";
                 $scope.$digest();
                 //$scope.success("you have a new message");
-                console.log(currentconvid+" "+JSON.parse(data)[0]["conversation"]["id"]);
+                console.log(currentconvid+" "+JSON.parse(data)[0]["conversation"]["id"]);// register newmessage channel
             });
 
 
             ws.$on('chatcontent',function(data){
                 $scope.allmessages=JSON.parse(data);
-                $scope.$digest();
+                $scope.$digest();                                  // register chat content channel
                 console.log(JSON.parse(data));
             });
 
 
         });
 
-        ws.$emit('allconversations', initdata);
+        ws.$emit('allconversations', initdata);     //emit allconversation request based on the click from webpage
 
     };
 
