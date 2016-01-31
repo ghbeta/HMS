@@ -155,7 +155,7 @@
                                 <div class="lable label-info text-center">@currentassignment.title</div>
                                 <div class="col-xs-2"><label>@Messages("gain")</label>@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).earndpoints</div>
                                 <div class="col-xs-2"><label>@Messages("total")</label>@currentassignment.totalpoints</div>
-                                <blockquote class="col-xs-12"><p>@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).comments</p><footer>@Messages("comment")</footer></blockquote>
+                                <textarea class="form-control"  rows="20" placeholder="@Messages("comment")">@Handin.getHandinofassignmentofstudentinlecture(lecture.semester,lecture,semesteruser,currentassignment).comments</textarea>
                               </div>
 
                            <p class="textfont">@Messages("lecture.handin.marker")
