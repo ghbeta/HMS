@@ -43,7 +43,11 @@ app.controller('messagecontroller',function($scope,$http,$websocket,Notification
             var namepart=data.split(";")[0];
             var datapart2=JSON.parse(data.split(";")[1]);
                if(datapart2[0]["conversation"]["id"]!==currentconvid){
-           $scope.success("you have a new message from "+namepart);}
+           $scope.success("you have a new message from "+namepart);
+               }else{
+                   $scope.allmessages=datapart2;
+                   $scope.$digest();
+               }
         });
     };
 
