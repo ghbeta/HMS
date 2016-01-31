@@ -22,17 +22,18 @@ app.controller('messagecontroller',function($scope,$http,$websocket,Notification
         semester1=semester;
         var url="ws://"+location.host+"/websocket";
         console.log(url);
+        var initdata={
+            semester:semester,
+            email:userid
+        };
         ws = $websocket.$new(url);
         ws.$on('$open', function () {
-            //console.log('Oh my gosh, websocket is really open! Fukken awesome!');
-
-            var initdata={
-                semester:semester,
-                email:userid
-            };
-
+            console.log('connected emit first message');
             ws.$emit('allconversations', initdata);
+
         });
+
+        ws.$emit('allconversations', initdata);
        ws .$on('allconversations',function(data){
             //console.log("allconversations");
                 $scope.talks=JSON.parse(data);
