@@ -98,6 +98,7 @@ public class Chatsocket {
                         out.write(result.toString());
                         notification.put("event","noti");
                         notification.put("data",semesteruser.lastname+","+semesteruser.firstname+";"+jsonoutput);
+                        Logger.debug("send out new message");
                         if(connections.get(other)!=null){
                         connections.get(other).write(notification.toString());}
                         //Logger.warn("after adding message "+jsonoutput);

@@ -31,25 +31,44 @@ app.controller('messagecontroller',function($scope,$http,$websocket,Notification
             console.log('connected emit first message');
             ws.$emit('allconversations', initdata);
 
+            ws .$on('allconversations',function(data){
+                //console.log("allconversations");
+                $scope.talks=JSON.parse(data);
+                $scope.$digest();
+                //console.log(JSON.parse(data));
+            })
+                .$on("noti",function(data){
+                    var namepart=data.split(";")[0];
+                    var datapart2=JSON.parse(data.split(";")[1]);
+                    if(datapart2[0]["conversation"]["id"]!==currentconvid){
+                        $scope.success("you have a new message from "+namepart);
+                    }else{
+                        $scope.allmessages=datapart2;
+                        $scope.$digest();
+                    }
+                });
+
+            ws.$on("newmessage",function(data){
+                console.log("get new message");
+                $scope.allmessages=JSON.parse(data);
+                $scope.newmessage="";
+                $scope.$digest();
+                //$scope.success("you have a new message");
+                console.log(currentconvid+" "+JSON.parse(data)[0]["conversation"]["id"]);
+            });
+
+
+            ws.$on('chatcontent',function(data){
+                $scope.allmessages=JSON.parse(data);
+                $scope.$digest();
+                console.log(JSON.parse(data));
+            });
+
+
         });
 
         ws.$emit('allconversations', initdata);
-       ws .$on('allconversations',function(data){
-            //console.log("allconversations");
-                $scope.talks=JSON.parse(data);
-                $scope.$digest();
-            //console.log(JSON.parse(data));
-        })
-            .$on("noti",function(data){
-            var namepart=data.split(";")[0];
-            var datapart2=JSON.parse(data.split(";")[1]);
-               if(datapart2[0]["conversation"]["id"]!==currentconvid){
-           $scope.success("you have a new message from "+namepart);
-               }else{
-                   $scope.allmessages=datapart2;
-                   $scope.$digest();
-               }
-        });
+
     };
 
     $scope.socketchatcontent=function showcontent(convid,otheremail){
@@ -61,11 +80,7 @@ app.controller('messagecontroller',function($scope,$http,$websocket,Notification
         };
       ws.$emit("chatcontent",request);
         console.log("request chat content"+request);
-        ws.$on('chatcontent',function(data){
-            $scope.allmessages=JSON.parse(data);
-            $scope.$digest();
-            console.log(JSON.parse(data));
-        });
+
     };
 
 
@@ -78,25 +93,18 @@ app.controller('messagecontroller',function($scope,$http,$websocket,Notification
        };
 
       ws.$emit("newmessage",message);
-       ws.$on("newmessage",function(data){
 
-           $scope.allmessages=JSON.parse(data);
-           $scope.newmessage="";
-           $scope.$digest();
-           //$scope.success("you have a new message");
-           console.log(currentconvid+" "+JSON.parse(data)[0]["conversation"]["id"]);
-       });
-       ws.$on("noti",function(data){
-           var datapart=JSON.parse(data.split(";")[1]);
-           if(datapart[0]["conversation"]["id"]===currentconvid){
-           $scope.allmessages=datapart;
-           $scope.$digest();}
-          // $scope.success("you have a new message from "+namepart);
-       });
 
    };
 
 
+    //ws.$on("noti",function(data){
+    //    var datapart=JSON.parse(data.split(";")[1]);
+    //    if(datapart[0]["conversation"]["id"]===currentconvid){
+    //        $scope.allmessages=datapart;
+    //        $scope.$digest();}
+    //    // $scope.success("you have a new message from "+namepart);
+    //});
 
     //$scope.filter=function filter(semester){
     //    semester1=semester;
