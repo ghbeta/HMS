@@ -58,13 +58,14 @@ app.controller('messagecontroller',function($scope,$http,$websocket,Notification
         var request={
             convid:convid,
             semester:semester1
-        }
+        };
       ws.$emit("chatcontent",request);
+        console.log("request chat content"+request);
         ws.$on('chatcontent',function(data){
             $scope.allmessages=JSON.parse(data);
             $scope.$digest();
             console.log(JSON.parse(data));
-        })
+        });
     };
 
 
