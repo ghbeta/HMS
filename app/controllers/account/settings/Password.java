@@ -11,10 +11,6 @@ import play.mvc.Security;
 
 import java.net.MalformedURLException;
 
-/**
- * User: yesnault
- * Date: 15/05/12
- */
 @Security.Authenticated(Secureddefault.class)
 public class Password extends Controller {
 

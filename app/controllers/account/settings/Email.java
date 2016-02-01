@@ -16,12 +16,7 @@ import java.net.MalformedURLException;
 
 import static play.data.Form.form;
 
-/**
- * Settings -> Email page.
- * <p/>
- * User: yesnault
- * Date: 23/06/12
- */
+
 @Security.Authenticated(Secureddefault.class)
 public class Email extends Controller {
 

@@ -25,10 +25,6 @@ import java.util.UUID;
 
 import static play.data.Form.form;
 
-/**
- * Signup to PlayStartApp : save and send confirm mail.
- * <p/>
- */
 public class Signup extends Controller {
 
     /**
