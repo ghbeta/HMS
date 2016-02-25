@@ -20,7 +20,7 @@ public class CreateAdmin {
         Path p= Paths.get(System.getProperty("user.home"), "HMS_Config", "config.hms");
         File config=p.toFile();
         Logger.warn("analysing super user config at "+p.toString());
-        if(config.exists()){
+        if(config.exists()&&User.findByEmail("hms@hms.com","global")!=null){
             return true;
         }
         else{
@@ -56,6 +56,7 @@ public class CreateAdmin {
                     sysadmin.save("global");
                 }
                 System.out.println("Super admin is created");
+                FileUtils.deleteQuietly(config);
                 FileUtils.writeStringToFile(config,email);
                 FileUtils.writeStringToFile(config,password,true);
                 return true;
