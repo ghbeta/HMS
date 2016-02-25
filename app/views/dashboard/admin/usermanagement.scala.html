@@ -58,9 +58,10 @@
           <td>@selectuser.email</td>
           <td>@selectuser.roles</td>
           <td><select onchange="changerole('@selectuser.email','@selectuser.id')" id='@selectuser.id' class="form-control">
-            @if(selectuser.roles!=UserRoll.Students.toString){<option value=@UserRoll.Students.toString>@UserRoll.Students.toString</option>}
-            @if(selectuser.roles!=UserRoll.Assistants.toString){<option value=@UserRoll.Assistants.toString>@UserRoll.Assistants.toString</option>}
-            @if(selectuser.roles!=UserRoll.Assistants.toString){<option value=@UserRoll.Teachers.toString>@UserRoll.Teachers.toString</option>}
+            <option selected="selected" disabled>@Messages("admin.role.select")</option>
+            <option value=@UserRoll.Students.toString>@UserRoll.Students.toString</option>
+            <option value=@UserRoll.Assistants.toString>@UserRoll.Assistants.toString</option>
+            <option value=@UserRoll.Teachers.toString>@UserRoll.Teachers.toString</option>
           </select></td>
         </tr>
       }

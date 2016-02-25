@@ -210,6 +210,7 @@ admin.access.grand=Grand Access
 admin.access.other=Repository has already been Checked Out by other admin, pls choose another repository
 admin.access.student.false=You do not have a ssh pub key, add one and try again
 admin.homework.correction=No handin of this student
+admin.role.select=Select
 click.for.detail=click for details
 file.notexist= File not exist
 file.delete= File delete sucess

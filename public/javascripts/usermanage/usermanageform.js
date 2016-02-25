@@ -40,7 +40,7 @@ function changerole(email,selectid){
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            alert(xhr.responseText);
+            if(!alert(xhr.responseText)){window.location.reload();}
         }
     }
     xhr.send(senddata);
