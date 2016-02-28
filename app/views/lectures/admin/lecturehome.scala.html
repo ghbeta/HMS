@@ -440,11 +440,10 @@
                         </tr>
                         <tr>
                           <td colspan="5">
-                            <div class="label label-success col-md-12">@Messages("repo.status")</div>
+                            <div class="label label-success col-md-12">@Messages("repo.status")<a style="color:#FFFFFF" onclick="showstatus('@stu.email','@lecture.semester','@lecture.courseName','@stu.userHash@assignment.title')"><i class="fa fa-plus-square-o"></i></a></div>
+                            <div hidden id="con@stu.userHash@assignment.title" class="col-md-12"  style="height:400px;overflow:scroll;">
                             <canvas id="@stu.userHash@assignment.title"></canvas>
-                            <script type="text/javascript">
-                   showcanvas('@stu.email','@lecture.semester','@lecture.courseName','@stu.userHash@assignment.title');
-                  </script>
+                         </div>
                           </td>
                         </tr>
                       }

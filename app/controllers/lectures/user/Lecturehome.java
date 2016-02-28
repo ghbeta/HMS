@@ -237,12 +237,15 @@ public class Lecturehome extends Controller {
 ////       return "Commit-Message: " + commit.getFullMessage();}
 //           }}
                //List<Ref> branches=git.branchList().call();//branches
-               List<String> allcommit=new ArrayList<>();
+               List<String[]> allcommit=new ArrayList<>();
 
                    RevCommit commit=walk.parseCommit(head.getObjectId());
                    walk.markStart(commit);
                   for(RevCommit rev:walk){
-                      allcommit.add(rev.getFullMessage());
+                      String[] info=new String[2];
+                      info[0]=rev.getFullMessage();
+                      info[1]=rev.getCommitterIdent().getEmailAddress();
+                      allcommit.add(info);
                   }
                  walk.dispose();
                return ok(Json.toJson(allcommit));

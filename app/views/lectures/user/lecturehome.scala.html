@@ -79,10 +79,12 @@
                 <div class="textfont">@Messages("lecture.home.homework.local.exist")<br>
                 <div class="label label-success" id="repo_exist">@Messages("repo.last.status")</div>
                 </div>
+                <div class="col-md-12" style="height:300px; overflow:scroll;">
                 <canvas id="@semesteruser.userHash"></canvas>
                 <script type="text/javascript">
                    showcanvas('@semesteruser.email','@lecture.semester','@lecture.courseName','@semesteruser.userHash');
                   </script>
+                </div>
                 }else{
                 <form action="@controllers.lectures.user.routes.Lecturehome.addRemoteRepotoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" method="post"><div class="alert alert-warning" role="alert">@Messages("lecture.home.homework.local.noexist") </div><button class="btn btn-success pull-right" type="submit" id="localrepo_generate">@Messages("lecture.remote.generate")</button></form>
               }
@@ -214,10 +216,12 @@
                   </div><!-- /btn-group -->
                 </div><!-- /input-group -->
                 <div class="label label-success col-md-12" id="remoterepo_exist">@Messages("repo.last.status")</div>
+                <div class="col-md-12" style="height:300px; overflow:scroll;">
                 <canvas id="@semesteruser.userHash"></canvas>
                 <script type="text/javascript">
                    showcanvas('@semesteruser.email','@lecture.semester','@lecture.courseName','@semesteruser.userHash');
                   </script>
+                  </div>
               }else{
                 <form action="@controllers.lectures.user.routes.Lecturehome.addRemoteRepotoLecture(semesteruser.lastname,lecture.semester,lecture.courseName)" method="post"><div class="alert alert-warning" role="alert">@Messages("lecture.home.homework.remote.noexist") </div><button class="btn btn-success pull-right" type="submit" id="remoterepo_generate">@Messages("lecture.remote.generate")</button></form>
               }

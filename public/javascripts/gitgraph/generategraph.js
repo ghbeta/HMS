@@ -1,6 +1,16 @@
 /**
  * Created by Hao on 2015/11/20.
  */
+function showstatus(useremail,semester,lecture,user){
+    var elementid="#con"+user;
+    if($(elementid).is(":visible")){
+        $(elementid).hide();
+    }
+    else{
+    $(elementid).show();
+        showcanvas(useremail,semester,lecture,user)}
+}
+
 function showcanvas(useremail,semester,lecture,user){
     var posturl="/"+semester+"/"+lecture+"/"+useremail+"/repostatus";
     console.log(posturl);
@@ -12,28 +22,31 @@ function showcanvas(useremail,semester,lecture,user){
             var gitgraph = new GitGraph({
                 elementId:user,
                 template: "metro",
-                width:800,
-                orientation: "horizontal",
-                mode: "compact"
+                orientation: "vertical",
+                mode: "extended"
 
             });
+
             var master=gitgraph.branch("master");
             var commithistory=JSON.parse(xhr.responseText);
-            for(textmessage in commithistory){
+            //console.log(commithistory);
+            for(index in commithistory){
                   master.commit({
-                      message:textmessage
+                      message:commithistory[index][0],
+                      author:commithistory[index][1]
+
                   });
             }
+
         }else{
             var gitgraph = new GitGraph({
                 elementId:user,
                 template: "metro",
-                orientation: "horizontal",
-                width:800,
-                mode: "compact"
+                orientation: "vertical",
+                mode: "extended"
             });
             var master=gitgraph.branch("master");
-            master.commit();
+            master.commit({message:"init",author:"system"});
         }
     };
     xhr.send();
