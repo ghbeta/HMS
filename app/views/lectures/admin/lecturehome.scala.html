@@ -374,14 +374,14 @@
                           <td>
                           @if(stu.getRepoByLecture(lecture)!=null&&stu.getRepoByLecture(lecture).owner.size()==1){
                             <form action="@controllers.lectures.admin.routes.Assignmentevaluation.grandaccess(lecture.semester,stu.id,lecture.courseName)#editor" method="post">
-                              <button type="submit" class="btn btn-primary">@Messages("admin.access.grand")</button>
+                              <button type="submit" class="btn btn-primary" id="grand_access">@Messages("admin.access.grand")</button>
                             </form>
                           }
                           @if(stu.getRepoByLecture(lecture).owner.contains(semesteruser)){
-                            @Messages("admin.access.student.true")
+                            <p id="access_status">@Messages("admin.access.student.true")</p>
                             }
                           @if(!stu.getRepoByLecture(lecture).owner.contains(semesteruser)&&stu.getRepoByLecture(lecture).owner.size()==2) {
-                            @Messages("admin.access.other")
+                            <p>@Messages("admin.access.other")</p>
                             }
 
                           </td>

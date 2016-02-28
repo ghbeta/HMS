@@ -461,14 +461,14 @@ public class AccountTest extends FluentTest{
         await().atMost(5,TimeUnit.SECONDS).until("#handin_status_not").areDisplayed();
         assertThat(find("#handin_status_not").getText()).isEqualTo("No Handin");
     }
-//    @Test
-//    public void t_testStudentRemoteRevert(){
-//        String url="http://192.168.0.198:9000/students/Gao/WS2016/RemoteLectureTest";
-//        StudentSignin();
-//        goTo(url);
-//        click("#revert_remote_handin");
-//        assertThat(find("#remote_handin_result").getText()).isEqualTo("0/20.0");
-//    }
+    @Test
+    public void t_testStudentRemoteRevert(){
+        String url="http://192.168.0.198:9000/students/Gao/WS2016/RemoteLectureTest";
+        StudentSignin();
+        goTo(url);
+        click("#revert_handin_remote");
+        assertThat(find("#remote_handin_result").getText()).isEqualTo("0/20.0");
+    }
     @Test
     public void u_testEvaluation(){
         String url="http://192.168.0.198:9000/students/Gao/WS2016/LocalLectureTest";
@@ -491,6 +491,9 @@ public class AccountTest extends FluentTest{
         click("#tab_correction");
         await().atMost(5,TimeUnit.SECONDS).until("#open_assignment").isPresent();
         click("#open_assignment");
+        await().atMost(5,TimeUnit.SECONDS).until("#grand_access").areDisplayed();
+        click("#grand_access");
+        await().atMost(5, TimeUnit.SECONDS).until("#access_status").areDisplayed();
         await().atMost(5,TimeUnit.SECONDS).until("#add_eval_button").areDisplayed();
         click("#add_eval_button");
         await().atMost(5,TimeUnit.SECONDS).until("#eval17788414").areDisplayed();
