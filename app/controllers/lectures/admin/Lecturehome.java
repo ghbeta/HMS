@@ -293,10 +293,14 @@ public class Lecturehome extends Controller {
             Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
 
             Assignment currentassignment = Assignment.findByLectureAndName(semester,lecture,assignment);
+            if(currentassignment.handins.size()==0){
             Assignment.deleteAssignment(semester,currentassignment);
-
             flash("success", Messages.get("assignment.delete"));
-            return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));
+            return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,currentlecture.courseName));}
+            else{
+                flash("danger",Messages.get("assignment.delete.fail"));
+                return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,lecture));
+            }
         }catch (Exception e){
             flash("danger",Messages.get("assignment.delete.fail"));
             return redirect(controllers.lectures.admin.routes.Lecturehome.generatelecturehome(currentuser.lastname,semester,lecture));
