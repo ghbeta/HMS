@@ -288,7 +288,7 @@ public class Lecturehome extends Controller {
     @Security.Authenticated(Securedteacher.class)
     public static Result deleteAssignment(String lecture,String assignment,String semester){
         User currentuser=User.findByEmail(ctx().session().get("email"),"global");
-        //todo ifuser has upload something it can not be deleted anymore
+
         try{
             Lecture currentlecture=Lecture.getlecturebyname(lecture,semester);
 
