@@ -52,7 +52,7 @@ public class ForumThread extends Model {
     public List<ForumPost> replyposts;
 
     public static List<ForumThread> findByLecture(String semester,Lecture lecture){
-        return getServer(semester).find(ForumThread.class).where().eq("lecture.courseName", lecture.courseName).orderBy("lastupdatetimestamp,lastupdatetimestamp desc").findList();
+        return getServer(semester).find(ForumThread.class).where().eq("lecture.courseName", lecture.courseName).orderBy("lastupdatetimestamp desc").findList();
     }
 
     public static ForumThread findById(String semester,String id){
@@ -60,6 +60,6 @@ public class ForumThread extends Model {
     }
 
     public static List<ForumThread> findByLectureByStudent(String semester,Lecture lecture,Semesteruser semesteruser){
-        return getServer(semester).find(ForumThread.class).where().eq("lecture.courseName",lecture.courseName).eq("creator.id",semesteruser.id).orderBy("lastupdatetimestamp,lastupdatetimestamp desc").findList();
+        return getServer(semester).find(ForumThread.class).where().eq("lecture.courseName",lecture.courseName).eq("creator.id",semesteruser.id).orderBy("lastupdatetimestamp desc").findList();
     }
 }
