@@ -220,8 +220,20 @@ public class AccountTest extends FluentTest{
         assistent.dateCreation=new Date();
         assistent.validated=true;
         assistent.save("global");
+
+        User anotherteacher = new User();
+        assistent.id="externa-b-d";
+        assistent.email="c@c.com";
+        assistent.firstname="Guo";
+        assistent.lastname="Wei";
+        assistent.roles=UserRoll.Teachers.toString();
+        assistent.setUserHash();
+        assistent.passwordHash=Hash.createPassword("123");
+        assistent.dateCreation=new Date();
+        assistent.validated=true;
+        assistent.save("global");
         List<User> tests=User.findAll("global");
-        assertThat(tests).hasSize(4);
+        assertThat(tests).hasSize(5);
     }
 
     //-----------------start course setting---------------------------------------------
