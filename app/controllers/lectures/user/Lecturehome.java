@@ -471,27 +471,27 @@ public class Lecturehome extends Controller {
         String commit="delete last upload of "+assignment.title;
 
         try {
-            Repo repo=Repo.findRepoByLectureAndOwner(assignment.semester,semesteruser,assignment.lecture);
-            File localPath = File.createTempFile(reponame(assignment.lecture, semesteruser), "");
-            localPath.delete();
-            Logger.debug("Cloning from "+repo.repofilepath+"to"+localPath);
-            Git git = Git.cloneRepository()
-                    .setURI(repo.repofilepath)
-                    .setDirectory(localPath)
-                    .call();
-            Logger.debug("create local repo: "+git.getRepository().getDirectory());
-            String subfolder=assignment.title;
-
-            Logger.debug("delete folder"+subfolder);
-            git.rm().addFilepattern(subfolder).call();
-            git.commit().setMessage(commit).setAuthor("hms","hms@hms.com").call();
-            Logger.warn("start pushing delete files");
-
-            RefSpec refSpec = new RefSpec("master");
-            git.push().setRemote("origin").setRefSpecs(refSpec).call();
-            git.getRepository().close();
             Handin handin=Handin.getHandinofassignmentofstudentinlecture(semester,lecture,semesteruser,assignment);
             if(handin!=null&&!handin.isevaluated){
+                Repo repo=Repo.findRepoByLectureAndOwner(assignment.semester,semesteruser,assignment.lecture);
+                File localPath = File.createTempFile(reponame(assignment.lecture, semesteruser), "");
+                localPath.delete();
+                Logger.debug("Cloning from "+repo.repofilepath+"to"+localPath);
+                Git git = Git.cloneRepository()
+                        .setURI(repo.repofilepath)
+                        .setDirectory(localPath)
+                        .call();
+                Logger.debug("create local repo: "+git.getRepository().getDirectory());
+                String subfolder=assignment.title;
+
+                Logger.debug("delete folder"+subfolder);
+                git.rm().addFilepattern(subfolder).call();
+                git.commit().setMessage(commit).setAuthor("hms","hms@hms.com").call();
+                Logger.warn("start pushing delete files");
+
+                RefSpec refSpec = new RefSpec("master");
+                git.push().setRemote("origin").setRefSpecs(refSpec).call();
+                git.getRepository().close();
             handin.delete(semester);
                 flash("success",Messages.get("Lecture.assignment.revertsuccess"));}
             if(handin==null||handin.isevaluated)
