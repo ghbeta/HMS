@@ -135,7 +135,9 @@ public class Global extends GlobalSettings{
                                 if(lecture!=null&&!lecture.isExpired()){
                                     String userid=informationpart[2].replace(".git","");
                                     String reponame =repo.reponame;
+                                    if(!lecture.localrepo){
                                     AccessChangerforEvaluation(userid,reponame.replace(".git",""),true);
+                                    }
                                     repo.delete("global");
 
                                 }
