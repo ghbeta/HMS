@@ -54,11 +54,11 @@ public class Signup extends Controller {
         Form<Application.Register> registerForm = form(Application.Register.class).bindFromRequest();
 
         if (registerForm.hasErrors()) {
-            return badRequest(index.render());
+            return badRequest(views.html.index.render());
         }
 
         Application.Register register = registerForm.get();
-        Result resultError = checkBeforeSave(registerForm, register.email);
+        Result resultError = checkBeforeSave(registerForm, register.email,register.id);
 
         if (resultError != null) {
             return resultError;
@@ -92,7 +92,7 @@ public class Signup extends Controller {
             Logger.error("Signup.save error", e);
             flash("danger", Messages.get("error.technical"));
         }
-        return badRequest(create.render(registerForm));
+        return badRequest(views.html.index.render());
     }
 
     /**
@@ -102,11 +102,11 @@ public class Signup extends Controller {
      * @param email email address
      * @return Index if there was a problem, null otherwise
      */
-    private static Result checkBeforeSave(Form<Application.Register> registerForm, String email) {
+    private static Result checkBeforeSave(Form<Application.Register> registerForm, String email,String id) {
         // Check unique email
-        if (User.findByEmail(email,"global") != null) {
+        if (User.findByEmail(email,"global") != null||User.findById(id,"global")!=null) {
             flash("danger", Messages.get("error.email.already.exist"));
-            return badRequest(create.render(registerForm));
+            return badRequest(views.html.index.render());
         }
 
         return null;
