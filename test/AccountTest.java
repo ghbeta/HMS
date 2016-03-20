@@ -245,7 +245,7 @@ public class AccountTest extends FluentTest{
         anotherteacher.validated=true;
         anotherteacher.save("global");
         List<User> tests=User.findAll("global");
-        assertThat(tests).hasSize(5);
+        assertThat(tests).hasSize(6);
     }
 
     //-----------------start course setting---------------------------------------------
