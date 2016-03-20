@@ -378,10 +378,10 @@
                             </form>
                           }
                           @if(stu.getRepoByLecture(lecture).owner.contains(semesteruser)){
-                            <p id="access_status">@Messages("admin.access.student.true")</p>
+                            <div class="alert alert-info" id="access_status">@Messages("admin.access.student.true")</div>
                             }
                           @if(!stu.getRepoByLecture(lecture).owner.contains(semesteruser)&&stu.getRepoByLecture(lecture).owner.size()==2) {
-                            <p>@Messages("admin.access.other")</p>
+                            <div class="alert alert-danger">@Messages("admin.access.other")</div>
                             }
 
                           </td>
