@@ -209,6 +209,18 @@ public class AccountTest extends FluentTest{
         student.validated=true;
         student.save("global");
 
+        User student1 = new User();
+        student1.id="77884145";
+        student1.email="g@g.com";
+        student1.firstname="Dan";
+        student1.lastname="Wang";
+        student1.roles=UserRoll.Students.toString();
+        student1.setUserHash();
+        student1.passwordHash = Hash.createPassword("123");
+        student1.dateCreation=new Date();
+        student1.validated=true;
+        student1.save("global");
+
         User assistent = new User();
         assistent.id="externa-b-c";
         assistent.email="b@b.com";
@@ -273,7 +285,7 @@ public class AccountTest extends FluentTest{
         fill("#percentage_validassignment").with("0.5");
         fill("#percentage_exam").with("0.5");
         fill("#number_validassignment").with("10");
-        fill("#createlecture_closingdate").with("03/10/2016");
+        fill("#createlecture_closingdate").with("03/31/2016");
         fill("#course_description").with("test course under local mode");
         click("#create_course_button");
         await().atMost(5, TimeUnit.SECONDS);
@@ -288,7 +300,7 @@ public class AccountTest extends FluentTest{
         click("option", withText("WS"));
         fill("#CourseYear").with("2016");
         fill("#CourseName").with("RemoteLectureTest");
-        fill("#createlecture_closingdate").with("03/10/2016");
+        fill("#createlecture_closingdate").with("03/31/2016");
         fill("#course_description").with("test course under remote mode");
         click("#create_course_button");
         await().atMost(5, TimeUnit.SECONDS);
@@ -304,7 +316,7 @@ public class AccountTest extends FluentTest{
         await().atMost(30, TimeUnit.SECONDS).until("#assignmentModal").areDisplayed();
         //fill("#number_exercise").with("4");
         fill("#total_points").with("80");
-        fill("#assignment_deadline").with("03/10/2016");
+        fill("#assignment_deadline").with("03/31/2016");
         fill("#upload_file").with(System.getProperty("user.home")+"/Assignment1.txt");
         fill("#additional_info").with("test adding new assignment");
         click("#submit_assignment");
@@ -321,7 +333,7 @@ public class AccountTest extends FluentTest{
         await().atMost(30, TimeUnit.SECONDS).until("#assignmentModal").areDisplayed();
         //fill("#number_exercise").with("1");
         fill("#total_points").with("20");
-        fill("#assignment_deadline").with("03/10/2016");
+        fill("#assignment_deadline").with("03/31/2016");
         fill("#upload_file").with(System.getProperty("user.home")+"/Assignment1.txt");
         fill("#additional_info").with("test adding new assignment");
         click("#submit_assignment");
@@ -336,7 +348,7 @@ public class AccountTest extends FluentTest{
         await().atMost(30,TimeUnit.SECONDS).until("#modify_assignment").isPresent();
         click("#modify_assignment");
         await().atMost(30,TimeUnit.SECONDS).until("#modify1").areDisplayed();
-        fill("#modify_assignment_deadline").with("03/09/2016");
+        fill("#modify_assignment_deadline").with("03/30/2016");
         fill("#modify_assignment_info").with("test modify assignment");
         click("#submit_modify_assignment");
         await().atMost(30,TimeUnit.SECONDS).until("#table_localinfo").isPresent();
