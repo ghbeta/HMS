@@ -55,7 +55,7 @@ public class Assignmentevaluation extends Controller {
         });
         Logger.debug("admin repo path" + ctx().request().getHeader("Host") + System.getProperty("user.home"));
         //ConfigManager manager = ConfigManager.create("git@localhost:gitolite-admin");
-        if(!admincredential.sshs.isEmpty()&&!studentrepo.owner.contains(currentadmin)) {
+        if(!admincredential.sshs.isEmpty()&&!studentrepo.owner.contains(currentadmin)&&(studentrepo.owner.size()<2)) {
             try {
                 Repository adminrepo = new FileRepository(adminrepofilepath());
                 Git gitogit = new Git(adminrepo);
